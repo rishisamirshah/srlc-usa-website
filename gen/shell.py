@@ -36,8 +36,8 @@ def head(title, desc, path, overlay=False):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="{FONTS}">
-<link rel="stylesheet" href="/assets/css/site.css?v=3">
-<script src="/assets/js/site.js?v=3" defer></script>
+<link rel="stylesheet" href="/assets/css/site.css?v=4">
+<script src="/assets/js/site.js?v=4" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -95,15 +95,17 @@ def footer():
     return f"""</main>
 <footer class="footer">
   <div class="container">
-    <div class="footer__grid">
+    <div class="footer__top">
       <div class="footer__brand">
         <img src="/assets/img/srlc-logo-white.png" alt="Shrimad Rajchandra Love and Care">
         <p>An initiative of Shrimad Rajchandra Mission Dharampur, serving communities across the United States and around the world.</p>
-        <div class="social">
-          <a href="{IG}" aria-label="Instagram" rel="noopener" target="_blank">{SOCIAL_SVG['ig']}</a>
-          <a href="{FB}" aria-label="Facebook" rel="noopener" target="_blank">{SOCIAL_SVG['fb']}</a>
-        </div>
       </div>
+      <div class="social">
+        <a href="{IG}" aria-label="Instagram" rel="noopener" target="_blank">{SOCIAL_SVG['ig']}</a>
+        <a href="{FB}" aria-label="Facebook" rel="noopener" target="_blank">{SOCIAL_SVG['fb']}</a>
+      </div>
+    </div>
+    <div class="footer__grid">
       <div>
         <h4>Our Work</h4>
         <ul>
