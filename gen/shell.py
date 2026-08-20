@@ -79,19 +79,20 @@ def nav():
     </a>
     <nav class="primary-nav" aria-label="Primary">
       <ul class="primary-nav__list">
-        <li class="primary-nav__item"><button class="primary-nav__trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="navpanel-about">About Us</button>
+        <li class="primary-nav__item primary-nav__item--has-panel" data-nav-key="about"><button class="primary-nav__trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="navpanel-about">About Us</button>
           <div class="primary-nav__panel" id="navpanel-about" role="menu" aria-label="About Us submenu">
             {nav_panel_link("/about/our-inspiration/", "Our Inspiration", "The spiritual lineage that inspires SRLC&rsquo;s mission.")}
             {nav_panel_link("/about/who-we-are/", "Who We Are", "A modern overview of SRLC USA. Who, what, and how.")}
             {nav_panel_link("/about/our-impact/", "Our Impact", "Program outcomes, impact stories, aggregate numbers.")}
             {nav_panel_link("/about/management/", "Management Team", "Board, leadership, and team profiles.")}
-            {nav_panel_link("/about/financials/", "Financials", "Annual reports and Form 990 filings.")}
+            {nav_panel_link("/about/financials/", "Financials", "Annual reports, audited statements, and 990s.")}
+            {nav_panel_link("/about/faqs/", "FAQs", "Common questions on giving, programs, and transparency.")}
           </div>
         </li>
-        <li class="primary-nav__item"><button class="primary-nav__trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="navpanel-work">Our Work</button>
+        <li class="primary-nav__item primary-nav__item--has-panel" data-nav-key="work"><button class="primary-nav__trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="navpanel-work">Our Work</button>
           <div class="primary-nav__panel" id="navpanel-work" role="menu" aria-label="Our Work submenu">
             {nav_panel_link("/our-work/10-care-program/", "10 Care Program", "The 10 focus areas that frame SRLC&rsquo;s work globally.")}
-            {nav_panel_link("/our-work/united-states/", "Where We Serve", "The three places SRLC operates.")}
+            <a class="primary-nav__sublink primary-nav__sublink--has-children" role="menuitem" href="/our-work/united-states/"><span class="primary-nav__sublabel">Where We Serve</span><span class="primary-nav__subdesc">Regional hub for the three places SRLC operates.</span></a>
             <div class="primary-nav__subnest">
               <a class="primary-nav__sublink--nested" role="menuitem" href="/our-work/united-states/">United States</a>
               <a class="primary-nav__sublink--nested" role="menuitem" href="/our-work/india/">India</a>
@@ -99,10 +100,14 @@ def nav():
             </div>
           </div>
         </li>
-        <li class="primary-nav__item"><button class="primary-nav__trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="navpanel-involved">Get Involved</button>
+        <li class="primary-nav__item primary-nav__item--has-panel" data-nav-key="involved"><button class="primary-nav__trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="navpanel-involved">Get Involved</button>
           <div class="primary-nav__panel" id="navpanel-involved" role="menu" aria-label="Get Involved submenu">
-            {nav_panel_link("/donate/", "Donate", "One-time or recurring giving, matching gifts, DAF grants.")}
+            {nav_panel_link("/donate/", "Donate", "One-time or recurring giving with dollar-to-outcome options.")}
             {nav_panel_link("/volunteer/", "Volunteer", "Sign up for SRLC volunteer opportunities across U.S. cities.")}
+            {nav_panel_link("/events/", "Events", "Chapter events, galas, and community gatherings.")}
+            {nav_panel_link("/fundraise/", "Start a Fundraiser", "Birthday, memorial, wedding, run. Any moment.")}
+            {nav_panel_link("/corporate-giving/", "Corporate Giving", "Matching gifts, sponsorships, and employee giving.")}
+            {nav_panel_link("/partner-with-us/", "Partner With Us", "Strategic partnerships for organizations and NGOs.")}
           </div>
         </li>
       </ul>
@@ -137,12 +142,14 @@ def footer():
           <li><a href="/about/our-impact/">Our Impact</a></li>
           <li><a href="/about/management/">Management Team</a></li>
           <li><a href="/about/financials/">Financials</a></li>
+          <li><a href="/about/faqs/">FAQs</a></li>
         </ul>
       </div>
       <div>
         <h4>Our Work</h4>
         <ul>
           <li><a href="/our-work/10-care-program/">10 Care Program</a></li>
+          <li><a href="/our-work/united-states/">Where We Serve</a></li>
           <li><a href="/our-work/united-states/">United States</a></li>
           <li><a href="/our-work/india/">India</a></li>
           <li><a href="/our-work/mission-africa/">Mission Africa</a></li>
@@ -153,7 +160,10 @@ def footer():
         <ul>
           <li><a href="/donate/">Donate</a></li>
           <li><a href="/volunteer/">Volunteer</a></li>
-          <li><a href="/donate/#matching">Corporate Matching</a></li>
+          <li><a href="/events/">Events</a></li>
+          <li><a href="/fundraise/">Start a Fundraiser</a></li>
+          <li><a href="/corporate-giving/">Corporate Giving</a></li>
+          <li><a href="/partner-with-us/">Partner With Us</a></li>
         </ul>
       </div>
       <div>

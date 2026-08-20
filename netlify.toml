@@ -4,6 +4,21 @@
   status = 301
 
 [[redirects]]
+  from = "/faqs/*"
+  to = "/about/faqs/"
+  status = 301
+
+[[redirects]]
+  from = "/event/*"
+  to = "/events/"
+  status = 301
+
+[[redirects]]
+  from = "/grants/*"
+  to = "/corporate-giving/"
+  status = 301
+
+[[redirects]]
   from = "/management/*"
   to = "/about/management/"
   status = 301

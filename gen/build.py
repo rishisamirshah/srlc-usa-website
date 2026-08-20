@@ -11,6 +11,7 @@ from data_cares import CARES
 from data_india import INSTITUTES
 import pages_work as W
 import pages_core as C
+import pages_involve as I
 
 OP_STATES = {
     s["svg"].lower(): (s["name"], f'/our-work/united-states/{s["slug"]}/', f'{s["name"]} — {s["cities"]}')
@@ -133,6 +134,11 @@ def main():
     emit("/", C.render_home(svg), "1.0")
     emit("/donate/", C.render_donate(), "0.9")
     emit("/volunteer/", C.render_volunteer(), "0.9")
+    emit("/events/", I.render_events())
+    emit("/fundraise/", I.render_fundraise())
+    emit("/corporate-giving/", I.render_corporate())
+    emit("/partner-with-us/", I.render_partner())
+    emit("/about/faqs/", I.render_faqs())
 
     emit("/our-work/united-states/", W.render_us_hub(svg), "0.9")
     for i, s in enumerate(STATES):
@@ -165,6 +171,9 @@ def main():
 
     redirects = [
         ("/inspiration/*", "/about/our-inspiration/"),
+        ("/faqs/*", "/about/faqs/"),
+        ("/event/*", "/events/"),
+        ("/grants/*", "/corporate-giving/"),
         ("/management/*", "/about/management/"),
         ("/financials/*", "/about/financials/"),
         ("/annual-reports/*", "/about/financials/"),

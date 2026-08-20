@@ -40,19 +40,20 @@
     </a>
     <nav class="primary-nav" aria-label="Primary">
       <ul class="primary-nav__list">
-        <li class="primary-nav__item"><button class="primary-nav__trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="navpanel-about">About Us</button>
+        <li class="primary-nav__item primary-nav__item--has-panel" data-nav-key="about"><button class="primary-nav__trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="navpanel-about">About Us</button>
           <div class="primary-nav__panel" id="navpanel-about" role="menu" aria-label="About Us submenu">
             <a class="primary-nav__sublink" role="menuitem" href="/about/our-inspiration/"><span class="primary-nav__sublabel">Our Inspiration</span><span class="primary-nav__subdesc">The spiritual lineage that inspires SRLC&rsquo;s mission.</span></a>
             <a class="primary-nav__sublink" role="menuitem" href="/about/who-we-are/"><span class="primary-nav__sublabel">Who We Are</span><span class="primary-nav__subdesc">A modern overview of SRLC USA. Who, what, and how.</span></a>
             <a class="primary-nav__sublink" role="menuitem" href="/about/our-impact/"><span class="primary-nav__sublabel">Our Impact</span><span class="primary-nav__subdesc">Program outcomes, impact stories, aggregate numbers.</span></a>
             <a class="primary-nav__sublink" role="menuitem" href="/about/management/"><span class="primary-nav__sublabel">Management Team</span><span class="primary-nav__subdesc">Board, leadership, and team profiles.</span></a>
-            <a class="primary-nav__sublink" role="menuitem" href="/about/financials/"><span class="primary-nav__sublabel">Financials</span><span class="primary-nav__subdesc">Annual reports and Form 990 filings.</span></a>
+            <a class="primary-nav__sublink" role="menuitem" href="/about/financials/"><span class="primary-nav__sublabel">Financials</span><span class="primary-nav__subdesc">Annual reports, audited statements, and 990s.</span></a>
+            <a class="primary-nav__sublink" role="menuitem" href="/about/faqs/"><span class="primary-nav__sublabel">FAQs</span><span class="primary-nav__subdesc">Common questions on giving, programs, and transparency.</span></a>
           </div>
         </li>
-        <li class="primary-nav__item"><button class="primary-nav__trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="navpanel-work">Our Work</button>
+        <li class="primary-nav__item primary-nav__item--has-panel" data-nav-key="work"><button class="primary-nav__trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="navpanel-work">Our Work</button>
           <div class="primary-nav__panel" id="navpanel-work" role="menu" aria-label="Our Work submenu">
             <a class="primary-nav__sublink" role="menuitem" href="/our-work/10-care-program/"><span class="primary-nav__sublabel">10 Care Program</span><span class="primary-nav__subdesc">The 10 focus areas that frame SRLC&rsquo;s work globally.</span></a>
-            <a class="primary-nav__sublink" role="menuitem" href="/our-work/united-states/"><span class="primary-nav__sublabel">Where We Serve</span><span class="primary-nav__subdesc">The three places SRLC operates.</span></a>
+            <a class="primary-nav__sublink primary-nav__sublink--has-children" role="menuitem" href="/our-work/united-states/"><span class="primary-nav__sublabel">Where We Serve</span><span class="primary-nav__subdesc">Regional hub for the three places SRLC operates.</span></a>
             <div class="primary-nav__subnest">
               <a class="primary-nav__sublink--nested" role="menuitem" href="/our-work/united-states/">United States</a>
               <a class="primary-nav__sublink--nested" role="menuitem" href="/our-work/india/">India</a>
@@ -60,10 +61,14 @@
             </div>
           </div>
         </li>
-        <li class="primary-nav__item"><button class="primary-nav__trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="navpanel-involved">Get Involved</button>
+        <li class="primary-nav__item primary-nav__item--has-panel" data-nav-key="involved"><button class="primary-nav__trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="navpanel-involved">Get Involved</button>
           <div class="primary-nav__panel" id="navpanel-involved" role="menu" aria-label="Get Involved submenu">
-            <a class="primary-nav__sublink" role="menuitem" href="/donate/"><span class="primary-nav__sublabel">Donate</span><span class="primary-nav__subdesc">One-time or recurring giving, matching gifts, DAF grants.</span></a>
+            <a class="primary-nav__sublink" role="menuitem" href="/donate/"><span class="primary-nav__sublabel">Donate</span><span class="primary-nav__subdesc">One-time or recurring giving with dollar-to-outcome options.</span></a>
             <a class="primary-nav__sublink" role="menuitem" href="/volunteer/"><span class="primary-nav__sublabel">Volunteer</span><span class="primary-nav__subdesc">Sign up for SRLC volunteer opportunities across U.S. cities.</span></a>
+            <a class="primary-nav__sublink" role="menuitem" href="/events/"><span class="primary-nav__sublabel">Events</span><span class="primary-nav__subdesc">Chapter events, galas, and community gatherings.</span></a>
+            <a class="primary-nav__sublink" role="menuitem" href="/fundraise/"><span class="primary-nav__sublabel">Start a Fundraiser</span><span class="primary-nav__subdesc">Birthday, memorial, wedding, run. Any moment.</span></a>
+            <a class="primary-nav__sublink" role="menuitem" href="/corporate-giving/"><span class="primary-nav__sublabel">Corporate Giving</span><span class="primary-nav__subdesc">Matching gifts, sponsorships, and employee giving.</span></a>
+            <a class="primary-nav__sublink" role="menuitem" href="/partner-with-us/"><span class="primary-nav__sublabel">Partner With Us</span><span class="primary-nav__subdesc">Strategic partnerships for organizations and NGOs.</span></a>
           </div>
         </li>
       </ul>
@@ -142,12 +147,14 @@
           <li><a href="/about/our-impact/">Our Impact</a></li>
           <li><a href="/about/management/">Management Team</a></li>
           <li><a href="/about/financials/">Financials</a></li>
+          <li><a href="/about/faqs/">FAQs</a></li>
         </ul>
       </div>
       <div>
         <h4>Our Work</h4>
         <ul>
           <li><a href="/our-work/10-care-program/">10 Care Program</a></li>
+          <li><a href="/our-work/united-states/">Where We Serve</a></li>
           <li><a href="/our-work/united-states/">United States</a></li>
           <li><a href="/our-work/india/">India</a></li>
           <li><a href="/our-work/mission-africa/">Mission Africa</a></li>
@@ -158,7 +165,10 @@
         <ul>
           <li><a href="/donate/">Donate</a></li>
           <li><a href="/volunteer/">Volunteer</a></li>
-          <li><a href="/donate/#matching">Corporate Matching</a></li>
+          <li><a href="/events/">Events</a></li>
+          <li><a href="/fundraise/">Start a Fundraiser</a></li>
+          <li><a href="/corporate-giving/">Corporate Giving</a></li>
+          <li><a href="/partner-with-us/">Partner With Us</a></li>
         </ul>
       </div>
       <div>
