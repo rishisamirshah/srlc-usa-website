@@ -14,142 +14,171 @@
 <link rel="icon" type="image/png" href="/assets/img/srlc-mark.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..640;1,9..144,300..640&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-<link rel="stylesheet" href="/assets/css/site.css?v=4">
-<script src="/assets/js/site.js?v=4" defer></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&display=swap">
+<link rel="stylesheet" href="/assets/css/site.css?v=5">
+<script src="/assets/js/site.js?v=5" defer></script>
 </head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
-<header class="header header--solid">
-  <div class="header__inner">
-    <a class="brand" href="/" aria-label="SRLC USA home">
-      <img class="brand__mark" src="/assets/img/srlc-logo-color.png" alt="Shrimad Rajchandra Love and Care">
-      <img class="brand__mark--light" src="/assets/img/srlc-logo-white.png" alt="Shrimad Rajchandra Love and Care">
+<a class="skip-link" href="#main">Skip to content</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<symbol id="vu-i-heart-hand" viewBox="0 0 24 24"><path d="M12 21s-7-4.6-7-10.3a4.7 4.7 0 0 1 8-3.3 4.7 4.7 0 0 1 8 3.3C21 16.4 14 21 12 21Z"/></symbol>
+<symbol id="vu-i-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9" r="2.6"/><path d="M3 19c.5-3 3-5 6-5s5.5 2 6 5"/><path d="M14 18c.5-2.4 2.3-4 4-4 1.5 0 3 1.2 3.5 3"/></symbol>
+<symbol id="vu-i-medical-cross" viewBox="0 0 24 24"><path d="M10 3h4v6h6v4h-6v6h-4v-6H4V9h6z"/></symbol>
+<symbol id="vu-i-graduation-cap" viewBox="0 0 24 24"><path d="M3 9 12 4l9 5-9 5L3 9Z"/><path d="M7 11v4c0 1 2.2 2.5 5 2.5s5-1.5 5-2.5v-4"/><path d="M21 9v5"/></symbol>
+<symbol id="vu-i-shield" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8.5 8 9 4.5-.5 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></symbol>
+<symbol id="vu-i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></symbol>
+<symbol id="vu-i-doc" viewBox="0 0 24 24"><path d="M6 3h9l5 5v13H6z"/><path d="M14 3v6h6"/><path d="M9 13h7M9 17h7"/></symbol>
+<symbol id="vu-i-chart" viewBox="0 0 24 24"><rect x="4" y="12" width="3" height="8"/><rect x="10" y="8" width="3" height="12"/><rect x="16" y="4" width="3" height="16"/></symbol>
+<symbol id="vu-i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+<symbol id="vu-i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+</defs></svg>
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="brand" href="/" aria-label="Shrimad Rajchandra Love and Care USA home">
+      <img class="brand__flame" src="/assets/img/srlc-mark.png" alt="" width="44" height="38" loading="eager">
+      <span class="brand__lockup-h"><span class="brand__name-h">SHRIMAD RAJCHANDRA</span><span class="brand__tag-h">Love and Care</span></span>
     </a>
-    <button class="navtoggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
-    <nav class="nav" aria-label="Primary">
-      <div class="nav__item">
-        <button class="nav__link" aria-expanded="false">Our Work <span class="caret"></span></button>
-        <div class="dropdown">
-          <div class="dd-label">Where We Serve</div>
-          <a href="/our-work/united-states/">United States</a>
-          <a href="/our-work/india/">India</a>
-          <a href="/our-work/mission-africa/">Mission Africa</a>
-          <hr>
-          <a href="/our-work/10-care-program/">The 10 Care Program</a>
-        </div>
-      </div>
-      <div class="nav__item">
-        <button class="nav__link" aria-expanded="false">About <span class="caret"></span></button>
-        <div class="dropdown">
-          <a href="/about/who-we-are/">Who We Are</a>
-          <a href="/about/our-impact/">Our Impact</a>
-          <a href="/about/our-inspiration/">Our Inspiration</a>
-          <a href="/about/management/">Management Team</a>
-          <a href="/about/financials/">Financials</a>
-        </div>
-      </div>
-      <div class="nav__item"><a class="nav__link" href="/volunteer/">Volunteer</a></div>
-      <a class="btn btn--fill mobile-only" href="/donate/">Donate</a>
+    <nav class="primary-nav" aria-label="Primary">
+      <ul class="primary-nav__list">
+        <li class="primary-nav__item"><button class="primary-nav__trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="navpanel-about">About Us</button>
+          <div class="primary-nav__panel" id="navpanel-about" role="menu" aria-label="About Us submenu">
+            <a class="primary-nav__sublink" role="menuitem" href="/about/our-inspiration/"><span class="primary-nav__sublabel">Our Inspiration</span><span class="primary-nav__subdesc">The spiritual lineage that inspires SRLC&rsquo;s mission.</span></a>
+            <a class="primary-nav__sublink" role="menuitem" href="/about/who-we-are/"><span class="primary-nav__sublabel">Who We Are</span><span class="primary-nav__subdesc">A modern overview of SRLC USA. Who, what, and how.</span></a>
+            <a class="primary-nav__sublink" role="menuitem" href="/about/our-impact/"><span class="primary-nav__sublabel">Our Impact</span><span class="primary-nav__subdesc">Program outcomes, impact stories, aggregate numbers.</span></a>
+            <a class="primary-nav__sublink" role="menuitem" href="/about/management/"><span class="primary-nav__sublabel">Management Team</span><span class="primary-nav__subdesc">Board, leadership, and team profiles.</span></a>
+            <a class="primary-nav__sublink" role="menuitem" href="/about/financials/"><span class="primary-nav__sublabel">Financials</span><span class="primary-nav__subdesc">Annual reports and Form 990 filings.</span></a>
+          </div>
+        </li>
+        <li class="primary-nav__item"><button class="primary-nav__trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="navpanel-work">Our Work</button>
+          <div class="primary-nav__panel" id="navpanel-work" role="menu" aria-label="Our Work submenu">
+            <a class="primary-nav__sublink" role="menuitem" href="/our-work/10-care-program/"><span class="primary-nav__sublabel">10 Care Program</span><span class="primary-nav__subdesc">The 10 focus areas that frame SRLC&rsquo;s work globally.</span></a>
+            <a class="primary-nav__sublink" role="menuitem" href="/our-work/united-states/"><span class="primary-nav__sublabel">Where We Serve</span><span class="primary-nav__subdesc">The three places SRLC operates.</span></a>
+            <div class="primary-nav__subnest">
+              <a class="primary-nav__sublink--nested" role="menuitem" href="/our-work/united-states/">United States</a>
+              <a class="primary-nav__sublink--nested" role="menuitem" href="/our-work/india/">India</a>
+              <a class="primary-nav__sublink--nested" role="menuitem" href="/our-work/mission-africa/">Mission Africa</a>
+            </div>
+          </div>
+        </li>
+        <li class="primary-nav__item"><button class="primary-nav__trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="navpanel-involved">Get Involved</button>
+          <div class="primary-nav__panel" id="navpanel-involved" role="menu" aria-label="Get Involved submenu">
+            <a class="primary-nav__sublink" role="menuitem" href="/donate/"><span class="primary-nav__sublabel">Donate</span><span class="primary-nav__subdesc">One-time or recurring giving, matching gifts, DAF grants.</span></a>
+            <a class="primary-nav__sublink" role="menuitem" href="/volunteer/"><span class="primary-nav__sublabel">Volunteer</span><span class="primary-nav__subdesc">Sign up for SRLC volunteer opportunities across U.S. cities.</span></a>
+          </div>
+        </li>
+      </ul>
+      <a class="btn btn--primary primary-nav__cta" href="/donate/">Donate</a>
     </nav>
-    <a class="btn btn--fill" href="/donate/">Donate</a>
+    <button class="nav-toggle" aria-expanded="false" aria-label="Open menu"><span></span></button>
   </div>
-</header>
-<main id="main">
-
-<section class="pagehero pagehero--band grain">
-  <img class="pagehero__flame" src="/assets/img/srlc-mark.png" alt="">
+</header><main class="main" id="main">
+<section class="hero hero--purple">
+  <div class="container hero__inner">
+    <p class="hero__crumb"><a href="/our-work/india/">Our Institutes in India</a> &middot; Science College</p>
+    <h1 class="hero__title">The First Science College Across <em>238 Villages</em></h1>
+    <p class="hero__sub">Across 238 villages in South Gujarat, young people who dreamed of a science career had nowhere close to go. Shrimad Rajchandra Vidyapeeth changed that in 2016. Your support keeps the doors open.</p>
+    <div class="chip-row"><span>501(c)(3) Nonprofit</span><span>3.28M+ Students Reached Globally</span><span>Parent body: UN ECOSOC Special Consultative Status</span></div>
+    <div class="hero__ctas"><a class="btn btn--primary" href="/donate/">Support Shrimad Rajchandra Vidyapeeth</a></div>
+  </div>
+</section>
+<section class="vu-shell vu-shell--lav">
   <div class="container">
-    <div class="eyebrow reveal"><a href="/our-work/india/" style="color:inherit">Our Institutes in India</a> &middot; Science College</div>
-    <h1 class="pagehero__title lines" style="max-width:20ch"><span class="ln"><span>The First Science College</span></span><span class="ln"><span>Across <em>238 Villages</em></span></span></h1>
-    <p class="lead reveal" data-d="1">Across 238 villages in South Gujarat, young people who dreamed of a science career had nowhere close to go. Shrimad Rajchandra Vidyapeeth changed that in 2016. Your support keeps the doors open.</p>
-    <div style="margin-top:var(--sp-6)" class="reveal" data-d="2"><div class="statechips"><a style="pointer-events:none">501(c)(3) Nonprofit</a><a style="pointer-events:none">3.28M+ Students Reached Globally</a><a style="pointer-events:none">Parent body: UN ECOSOC Special Consultative Status</a></div></div>
-    <div style="margin-top:var(--sp-6)" class="reveal" data-d="3"><a class="btn btn--fill" href="/donate/">Support Shrimad Rajchandra Vidyapeeth <span class="arr">&rarr;</span></a></div>
-  </div>
-</section>
-
-<section class="sect">
-  <div class="container"><div class="split split--wideL">
-    <div><div class=""><div class="eyebrow reveal">The need</div><h2 class="reveal">Before 2016, a science degree meant leaving home or giving up.</h2></div><p class="reveal">The 238 villages of Dharampur and Kaprada in South Gujarat are home to tens of thousands of young people. For years, if a student there wanted to study science at the undergraduate level, there was no local college to go to. The closest options required leaving the community entirely. For students from families with limited resources, that meant most of them didn&rsquo;t go.</p><p class="reveal">That&rsquo;s the gap Shrimad Rajchandra Vidyapeeth (SRV) was built to close. Dedicated to the community in October 2016 in Dharampur, India, SRV became the first and only science college to serve this entire region.</p></div>
-    <div class="reveal" data-d="2"><div class="media media--plain frame-tilt" style="min-height:360px"><div class="ph"><img class="ph__mark" src="/assets/img/srlc-mark.png" alt=""><span>The Dharampur region &middot; Media Bank</span></div></div></div>
-  </div></div>
-</section>
-
-<section class="sect sect--band grain">
-  <div class="container">
-    <div class=""><div class="eyebrow reveal">What your support funds</div><h2 class="reveal">A full path from enrollment to career.</h2><p class="lead reveal" data-d="1">SRV offers a range of science degrees and professional programs built around students who are the first in their families to reach higher education.</p></div>
-    <div class="grid grid--3" style="margin-top:var(--sp-8)"><div class="card card--flat reveal" data-d="0"><h3 style="font-size:1.05rem">Bachelor of Science (B.Sc.)</h3><p style="font-size:var(--fs-sm);color:var(--ink-soft)">A three-year undergraduate degree in Chemistry, Microbiology, Botany, or Mathematics.</p></div><div class="card card--flat reveal" data-d="1"><h3 style="font-size:1.05rem">Master of Science (M.Sc.)</h3><p style="font-size:var(--fs-sm);color:var(--ink-soft)">A two-year postgraduate degree in Chemistry or Microbiology for students who want to go further in their field.</p></div><div class="card card--flat reveal" data-d="2"><h3 style="font-size:1.05rem">B.Voc. in Industrial Management</h3><p style="font-size:var(--fs-sm);color:var(--ink-soft)">A vocational degree that connects science training directly to employment in the region&rsquo;s industries.</p></div><div class="card card--flat reveal" data-d="3"><h3 style="font-size:1.05rem">PGDMLT</h3><p style="font-size:var(--fs-sm);color:var(--ink-soft)">A professional credential preparing graduates for careers in diagnostics and clinical laboratory care.</p></div><div class="card card--flat reveal" data-d="4"><h3 style="font-size:1.05rem">Certificate Courses</h3><p style="font-size:var(--fs-sm);color:var(--ink-soft)">Specialized programs that build specific career skills alongside or after a degree.</p></div></div>
-    <p class="reveal" style="margin-top:var(--sp-10);max-width:70ch">Getting into college is only part of the challenge for students who have had limited academic preparation. SRV pairs every program with bridge courses for students who need academic reinforcement, English language coaching, personal counseling, and career placement support through a dedicated Placement Cell. The Placement Cell works directly with regional employers, manages career counseling and professional skills training, and stays connected with graduates through an alumni network after they leave campus. SRV is the first science college in Gujarat to earn both ISO 9001 and ISO 29990 certifications.</p>
-    <div class="grid grid--4" style="margin-top:var(--sp-8)"><div class="card card--flat reveal" data-d="0"><div class="stepnum">01</div><h3 style="font-size:1.05rem">Academic Support</h3><p style="font-size:var(--fs-sm);color:var(--ink-soft)">Bridge courses for students who need academic reinforcement.</p></div><div class="card card--flat reveal" data-d="1"><div class="stepnum">02</div><h3 style="font-size:1.05rem">Language Coaching</h3><p style="font-size:var(--fs-sm);color:var(--ink-soft)">English language coaching alongside every program.</p></div><div class="card card--flat reveal" data-d="2"><div class="stepnum">03</div><h3 style="font-size:1.05rem">Career Placement</h3><p style="font-size:var(--fs-sm);color:var(--ink-soft)">A dedicated Placement Cell working directly with regional employers.</p></div><div class="card card--flat reveal" data-d="3"><div class="stepnum">04</div><h3 style="font-size:1.05rem">Alumni Network</h3><p style="font-size:var(--fs-sm);color:var(--ink-soft)">Staying connected with graduates after they leave campus.</p></div></div>
-  </div>
-</section>
-
-<section class="sect">
-  <div class="container center">
-    <div class="center"><div class="eyebrow reveal">Impact</div><h2 class="reveal">Your gift joins a network that has reached millions.</h2></div>
-    <div style="margin-top:var(--sp-8);display:flex;justify-content:center;gap:clamp(2rem,8vw,6rem);flex-wrap:wrap">
-      <div class="reveal" data-d="0"><div class="stat__num counter">3.28M+</div><div class="stat__label" style="margin-inline:auto">students reached globally through Educational Care</div></div><div class="reveal" data-d="1"><div class="stat__num counter">33M+</div><div class="stat__label" style="margin-inline:auto">lives touched globally across all SRLC programs</div></div>
-    </div>
-  </div>
-</section>
-
-<section class="sect sect--dark ctaband grain">
-  <div class="flamewash"></div>
-  <div class="container center" style="position:relative">
-    <h2 class="reveal">Be the <em>reason</em> a student graduates.</h2>
-    <p class="lead reveal" data-d="1" style="margin-inline:auto">When a young person in Dharampur, India walks into a science lab for the first time, or earns a degree their family never had access to before, that is the outcome of your gift. SRV has made that possible for students across 238 villages. Your support makes it possible for the next generation.</p>
-    <div class="hero__cta reveal" data-d="2" style="justify-content:center">
-      <a class="btn btn--gold" href="/donate/">Support Shrimad Rajchandra Vidyapeeth <span class="arr">&rarr;</span></a>
-      
-    </div>
-  </div>
-</section>
-</main>
-<footer class="footer">
-  <div class="container">
-    <div class="footer__top">
-      <div class="footer__brand">
-        <img src="/assets/img/srlc-logo-white.png" alt="Shrimad Rajchandra Love and Care">
-        <p>An initiative of Shrimad Rajchandra Mission Dharampur, serving communities across the United States and around the world.</p>
+    <div class="vu-split">
+      <div class="vu-split__copy">
+        <h3>Before 2016, a science degree meant leaving home or giving up.</h3>
+        <p>The 238 villages of Dharampur and Kaprada in South Gujarat are home to tens of thousands of young people. For years, if a student there wanted to study science at the undergraduate level, there was no local college to go to. The closest options required leaving the community entirely. For students from families with limited resources, that meant most of them didn&rsquo;t go.</p><p>That&rsquo;s the gap Shrimad Rajchandra Vidyapeeth (SRV) was built to close. Dedicated to the community in October 2016 in Dharampur, India, SRV became the first and only science college to serve this entire region.</p>
       </div>
-      <div class="social">
-        <a href="https://www.instagram.com/srlc_usa/" aria-label="Instagram" rel="noopener" target="_blank"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2m0 1.8c-3.1 0-3.5 0-4.8.1-1.1.1-1.5.2-1.8.3-.5.2-.8.4-1.1.7-.3.3-.5.6-.7 1.1-.1.3-.3.8-.3 1.8-.1 1.2-.1 1.6-.1 4.8s0 3.5.1 4.8c.1 1.1.2 1.5.3 1.8.2.5.4.8.7 1.1.3.3.6.5 1.1.7.3.1.8.3 1.8.3 1.2.1 1.6.1 4.8.1s3.5 0 4.8-.1c1.1-.1 1.5-.2 1.8-.3.5-.2.8-.4 1.1-.7.3-.3.5-.6.7-1.1.1-.3.3-.8.3-1.8.1-1.2.1-1.6.1-4.8s0-3.5-.1-4.8c-.1-1.1-.2-1.5-.3-1.8-.2-.5-.4-.8-.7-1.1-.3-.3-.6-.5-1.1-.7-.3-.1-.8-.3-1.8-.3-1.2-.1-1.6-.1-4.8-.1M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 1.8a3.2 3.2 0 1 0 0 6.4 3.2 3.2 0 0 0 0-6.4m5.2-3a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4"/></svg></a>
-        <a href="https://www.facebook.com/SRLCUSA/" aria-label="Facebook" rel="noopener" target="_blank"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12"/></svg></a>
+      <div class="vu-split__photo"><div class="ph-media "><span><img class="ph-mark" src="/assets/img/srlc-mark.png" alt=""><br>The Dharampur region &middot; Media Bank</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="vu-shell vu-shell--cream">
+  <div class="container">
+    <h2 class="vu-h reveal">A full path from enrollment to career.</h2>
+    <p class="vu-lead">SRV offers a range of science degrees and professional programs built around students who are the first in their families to reach higher education.</p>
+    <div class="card-grid mt-6"><div class="cause-card reveal" data-stagger="1"><h3>Bachelor of Science (B.Sc.)</h3><p>A three-year undergraduate degree in Chemistry, Microbiology, Botany, or Mathematics.</p></div><div class="cause-card reveal" data-stagger="2"><h3>Master of Science (M.Sc.)</h3><p>A two-year postgraduate degree in Chemistry or Microbiology for students who want to go further in their field.</p></div><div class="cause-card reveal" data-stagger="3"><h3>B.Voc. in Industrial Management</h3><p>A vocational degree that connects science training directly to employment in the region&rsquo;s industries.</p></div><div class="cause-card reveal" data-stagger="4"><h3>PGDMLT</h3><p>A professional credential preparing graduates for careers in diagnostics and clinical laboratory care.</p></div><div class="cause-card reveal" data-stagger="1"><h3>Certificate Courses</h3><p>Specialized programs that build specific career skills alongside or after a degree.</p></div></div>
+    <p class="mt-8 maxw-70">Getting into college is only part of the challenge for students who have had limited academic preparation. SRV pairs every program with bridge courses for students who need academic reinforcement, English language coaching, personal counseling, and career placement support through a dedicated Placement Cell. The Placement Cell works directly with regional employers, manages career counseling and professional skills training, and stays connected with graduates through an alumni network after they leave campus. SRV is the first science college in Gujarat to earn both ISO 9001 and ISO 29990 certifications.</p>
+    <div class="card-grid mt-6"><div class="cause-card reveal" data-stagger="1"><h3>Academic Support</h3><p>Bridge courses for students who need academic reinforcement.</p></div><div class="cause-card reveal" data-stagger="2"><h3>Language Coaching</h3><p>English language coaching alongside every program.</p></div><div class="cause-card reveal" data-stagger="3"><h3>Career Placement</h3><p>A dedicated Placement Cell working directly with regional employers.</p></div><div class="cause-card reveal" data-stagger="4"><h3>Alumni Network</h3><p>Staying connected with graduates after they leave campus.</p></div></div>
+  </div>
+</section>
+
+<section class="vu-shell vu-shell--purple vu-shell--narrow">
+  <div class="container text-center">
+    <h2 class="vu-h reveal" style="color:#fff">Your gift joins a network that has reached millions.</h2>
+    <div style="display:flex;justify-content:center;gap:clamp(2rem,8vw,6rem);flex-wrap:wrap;margin-top:1.6rem">
+      <div class="reveal" data-stagger="1"><p class="impact-stat__n count-up" style="color:var(--color-warm-orange);margin:0 0 .3rem">3.28M+</p><p style="color:#E8DDF2;margin:0;max-width:24ch">students reached globally through Educational Care</p></div><div class="reveal" data-stagger="2"><p class="impact-stat__n count-up" style="color:var(--color-warm-orange);margin:0 0 .3rem">33M+</p><p style="color:#E8DDF2;margin:0;max-width:24ch">lives touched globally across all SRLC programs</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="vu-shell vu-shell--lav">
+  <div class="container">
+    <div class="vu-actionbar reveal">
+      <div class="vu-actionbar__copy">
+        <h3>Be the reason a student graduates.</h3>
+        <p>When a young person in Dharampur, India walks into a science lab for the first time, or earns a degree their family never had access to before, that is the outcome of your gift. SRV has made that possible for students across 238 villages. Your support makes it possible for the next generation.</p>
+      </div>
+      <div class="vu-actionbar__ctas">
+        <a class="btn btn--primary" href="/donate/">Support Shrimad Rajchandra Vidyapeeth</a>
+        
       </div>
     </div>
-    <div class="footer__grid">
+  </div>
+</section>
+</main><footer class="site-footer" role="contentinfo">
+  <div class="container">
+    <div class="site-footer__cols">
       <div>
-        <h4>Our Work</h4>
-        <ul>
-          <li><a href="/our-work/united-states/">United States</a></li>
-          <li><a href="/our-work/india/">India</a></li>
-          <li><a href="/our-work/mission-africa/">Mission Africa</a></li>
-          <li><a href="/our-work/10-care-program/">10 Care Program</a></li>
-        </ul>
+        <p class="site-footer__brand"><img class="brand__logo-img" src="/assets/img/srlc-logo-color.png" alt="Shrimad Rajchandra Love and Care" loading="lazy"></p>
+        <p class="site-footer__legal">SRLC USA is a registered 501(c)(3).</p>
+        <p class="site-footer__legal">EIN: 81-5162502</p>
+        <p class="site-footer__legal"><a href="mailto:info@srlc-usa.org" style="color:inherit;text-decoration:none;border-bottom:1px solid currentColor">info@srlc-usa.org</a></p>
+        <p class="site-footer__legal">500 Paterson Plank Rd #33685<br>Union City, NJ 07087, USA<br>1.551.SRLC.USA</p>
+        <div class="social">
+          <a href="https://www.instagram.com/srlc_usa/" aria-label="Instagram" rel="noopener" target="_blank"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2m0 4.8a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 1.8a3.2 3.2 0 1 0 0 6.4 3.2 3.2 0 0 0 0-6.4m5.2-3a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4"/></svg></a>
+          <a href="https://www.facebook.com/SRLCUSA/" aria-label="Facebook" rel="noopener" target="_blank"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12"/></svg></a>
+        </div>
       </div>
       <div>
-        <h4>About</h4>
+        <h4>About Us</h4>
         <ul>
+          <li><a href="/about/our-inspiration/">Our Inspiration</a></li>
           <li><a href="/about/who-we-are/">Who We Are</a></li>
           <li><a href="/about/our-impact/">Our Impact</a></li>
-          <li><a href="/about/our-inspiration/">Our Inspiration</a></li>
           <li><a href="/about/management/">Management Team</a></li>
           <li><a href="/about/financials/">Financials</a></li>
         </ul>
       </div>
       <div>
+        <h4>Our Work</h4>
+        <ul>
+          <li><a href="/our-work/10-care-program/">10 Care Program</a></li>
+          <li><a href="/our-work/united-states/">United States</a></li>
+          <li><a href="/our-work/india/">India</a></li>
+          <li><a href="/our-work/mission-africa/">Mission Africa</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Get Involved</h4>
+        <ul>
+          <li><a href="/donate/">Donate</a></li>
+          <li><a href="/volunteer/">Volunteer</a></li>
+          <li><a href="/donate/#matching">Corporate Matching</a></li>
+        </ul>
+      </div>
+      <div>
         <h4>Connect</h4>
         <ul>
-          <li><a href="mailto:info@srlc-usa.org">info@srlc-usa.org</a></li>
+          <li><a href="mailto:info@srlc-usa.org">Contact Us</a></li>
+          <li><a href="/#final-newsletter">Newsletter Signup</a></li>
           <li><a href="tel:+15517752872">1.551.775.2872</a></li>
-          <li><a href="/volunteer/">Volunteer with us</a></li>
-          <li><a href="/donate/">Ways to give</a></li>
         </ul>
       </div>
     </div>
-    <div class="footer__legal">
-      <span>Shrimad Rajchandra Love and Care USA is a registered 501(c)(3) nonprofit organization. EIN 81-5162502. Contributions are tax deductible to the extent permitted by law.</span>
-      <span>&copy; <span data-year>2026</span> SRLC USA</span>
+    <div class="site-footer__bottom">
+      <p>&copy; Copyright <span data-year>2026</span> Shrimad Rajchandra Love and Care USA, All Rights Reserved</p>
+      <p>Shrimad Rajchandra Love and Care USA is a registered 501(c)(3) nonprofit organization. EIN 81-5162502. Contributions are tax deductible to the extent permitted by law.</p>
     </div>
   </div>
 </footer>

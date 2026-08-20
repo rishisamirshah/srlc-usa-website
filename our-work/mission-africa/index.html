@@ -14,170 +14,198 @@
 <link rel="icon" type="image/png" href="/assets/img/srlc-mark.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..640;1,9..144,300..640&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
-<link rel="stylesheet" href="/assets/css/site.css?v=4">
-<script src="/assets/js/site.js?v=4" defer></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&display=swap">
+<link rel="stylesheet" href="/assets/css/site.css?v=5">
+<script src="/assets/js/site.js?v=5" defer></script>
 </head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
-<header class="header header--solid">
-  <div class="header__inner">
-    <a class="brand" href="/" aria-label="SRLC USA home">
-      <img class="brand__mark" src="/assets/img/srlc-logo-color.png" alt="Shrimad Rajchandra Love and Care">
-      <img class="brand__mark--light" src="/assets/img/srlc-logo-white.png" alt="Shrimad Rajchandra Love and Care">
+<a class="skip-link" href="#main">Skip to content</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<symbol id="vu-i-heart-hand" viewBox="0 0 24 24"><path d="M12 21s-7-4.6-7-10.3a4.7 4.7 0 0 1 8-3.3 4.7 4.7 0 0 1 8 3.3C21 16.4 14 21 12 21Z"/></symbol>
+<symbol id="vu-i-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9" r="2.6"/><path d="M3 19c.5-3 3-5 6-5s5.5 2 6 5"/><path d="M14 18c.5-2.4 2.3-4 4-4 1.5 0 3 1.2 3.5 3"/></symbol>
+<symbol id="vu-i-medical-cross" viewBox="0 0 24 24"><path d="M10 3h4v6h6v4h-6v6h-4v-6H4V9h6z"/></symbol>
+<symbol id="vu-i-graduation-cap" viewBox="0 0 24 24"><path d="M3 9 12 4l9 5-9 5L3 9Z"/><path d="M7 11v4c0 1 2.2 2.5 5 2.5s5-1.5 5-2.5v-4"/><path d="M21 9v5"/></symbol>
+<symbol id="vu-i-shield" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8.5 8 9 4.5-.5 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></symbol>
+<symbol id="vu-i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></symbol>
+<symbol id="vu-i-doc" viewBox="0 0 24 24"><path d="M6 3h9l5 5v13H6z"/><path d="M14 3v6h6"/><path d="M9 13h7M9 17h7"/></symbol>
+<symbol id="vu-i-chart" viewBox="0 0 24 24"><rect x="4" y="12" width="3" height="8"/><rect x="10" y="8" width="3" height="12"/><rect x="16" y="4" width="3" height="16"/></symbol>
+<symbol id="vu-i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+<symbol id="vu-i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+</defs></svg>
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="brand" href="/" aria-label="Shrimad Rajchandra Love and Care USA home">
+      <img class="brand__flame" src="/assets/img/srlc-mark.png" alt="" width="44" height="38" loading="eager">
+      <span class="brand__lockup-h"><span class="brand__name-h">SHRIMAD RAJCHANDRA</span><span class="brand__tag-h">Love and Care</span></span>
     </a>
-    <button class="navtoggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
-    <nav class="nav" aria-label="Primary">
-      <div class="nav__item">
-        <button class="nav__link" aria-expanded="false">Our Work <span class="caret"></span></button>
-        <div class="dropdown">
-          <div class="dd-label">Where We Serve</div>
-          <a href="/our-work/united-states/">United States</a>
-          <a href="/our-work/india/">India</a>
-          <a href="/our-work/mission-africa/">Mission Africa</a>
-          <hr>
-          <a href="/our-work/10-care-program/">The 10 Care Program</a>
-        </div>
-      </div>
-      <div class="nav__item">
-        <button class="nav__link" aria-expanded="false">About <span class="caret"></span></button>
-        <div class="dropdown">
-          <a href="/about/who-we-are/">Who We Are</a>
-          <a href="/about/our-impact/">Our Impact</a>
-          <a href="/about/our-inspiration/">Our Inspiration</a>
-          <a href="/about/management/">Management Team</a>
-          <a href="/about/financials/">Financials</a>
-        </div>
-      </div>
-      <div class="nav__item"><a class="nav__link" href="/volunteer/">Volunteer</a></div>
-      <a class="btn btn--fill mobile-only" href="/donate/">Donate</a>
+    <nav class="primary-nav" aria-label="Primary">
+      <ul class="primary-nav__list">
+        <li class="primary-nav__item"><button class="primary-nav__trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="navpanel-about">About Us</button>
+          <div class="primary-nav__panel" id="navpanel-about" role="menu" aria-label="About Us submenu">
+            <a class="primary-nav__sublink" role="menuitem" href="/about/our-inspiration/"><span class="primary-nav__sublabel">Our Inspiration</span><span class="primary-nav__subdesc">The spiritual lineage that inspires SRLC&rsquo;s mission.</span></a>
+            <a class="primary-nav__sublink" role="menuitem" href="/about/who-we-are/"><span class="primary-nav__sublabel">Who We Are</span><span class="primary-nav__subdesc">A modern overview of SRLC USA. Who, what, and how.</span></a>
+            <a class="primary-nav__sublink" role="menuitem" href="/about/our-impact/"><span class="primary-nav__sublabel">Our Impact</span><span class="primary-nav__subdesc">Program outcomes, impact stories, aggregate numbers.</span></a>
+            <a class="primary-nav__sublink" role="menuitem" href="/about/management/"><span class="primary-nav__sublabel">Management Team</span><span class="primary-nav__subdesc">Board, leadership, and team profiles.</span></a>
+            <a class="primary-nav__sublink" role="menuitem" href="/about/financials/"><span class="primary-nav__sublabel">Financials</span><span class="primary-nav__subdesc">Annual reports and Form 990 filings.</span></a>
+          </div>
+        </li>
+        <li class="primary-nav__item"><button class="primary-nav__trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="navpanel-work">Our Work</button>
+          <div class="primary-nav__panel" id="navpanel-work" role="menu" aria-label="Our Work submenu">
+            <a class="primary-nav__sublink" role="menuitem" href="/our-work/10-care-program/"><span class="primary-nav__sublabel">10 Care Program</span><span class="primary-nav__subdesc">The 10 focus areas that frame SRLC&rsquo;s work globally.</span></a>
+            <a class="primary-nav__sublink" role="menuitem" href="/our-work/united-states/"><span class="primary-nav__sublabel">Where We Serve</span><span class="primary-nav__subdesc">The three places SRLC operates.</span></a>
+            <div class="primary-nav__subnest">
+              <a class="primary-nav__sublink--nested" role="menuitem" href="/our-work/united-states/">United States</a>
+              <a class="primary-nav__sublink--nested" role="menuitem" href="/our-work/india/">India</a>
+              <a class="primary-nav__sublink--nested" role="menuitem" href="/our-work/mission-africa/">Mission Africa</a>
+            </div>
+          </div>
+        </li>
+        <li class="primary-nav__item"><button class="primary-nav__trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="navpanel-involved">Get Involved</button>
+          <div class="primary-nav__panel" id="navpanel-involved" role="menu" aria-label="Get Involved submenu">
+            <a class="primary-nav__sublink" role="menuitem" href="/donate/"><span class="primary-nav__sublabel">Donate</span><span class="primary-nav__subdesc">One-time or recurring giving, matching gifts, DAF grants.</span></a>
+            <a class="primary-nav__sublink" role="menuitem" href="/volunteer/"><span class="primary-nav__sublabel">Volunteer</span><span class="primary-nav__subdesc">Sign up for SRLC volunteer opportunities across U.S. cities.</span></a>
+          </div>
+        </li>
+      </ul>
+      <a class="btn btn--primary primary-nav__cta" href="/donate/">Donate</a>
     </nav>
-    <a class="btn btn--fill" href="/donate/">Donate</a>
+    <button class="nav-toggle" aria-expanded="false" aria-label="Open menu"><span></span></button>
   </div>
-</header>
-<main id="main">
-
-<section class="pagehero pagehero--band grain">
-  <img class="pagehero__flame" src="/assets/img/srlc-mark.png" alt="">
+</header><main class="main" id="main">
+<section class="hero hero--purple">
+  <div class="container hero__inner">
+    <p class="hero__crumb"><a href="/">Home</a> &middot; Our Work &middot; Where We Serve</p>
+    <h1 class="hero__title">Distance never decides who receives <em>care</em>.</h1>
+    <p class="hero__sub">Mission Africa brings doctors, medicine, and follow-up care to communities where the nearest clinic can be hours away, at no cost to patients. We work with local health workers and community partners across 16 countries in Africa.</p>
+    <div class="chip-row"><span>501(c)(3) Nonprofit</span><span>33M+ Lives Touched Globally</span><span>Parent body: UN ECOSOC Special Consultative Status</span></div>
+    <div class="hero__ctas"><a class="btn btn--primary" href="/donate/">Stand With Mission Africa</a></div>
+  </div>
+</section>
+<section class="vu-shell vu-shell--lav">
   <div class="container">
-    <div class="eyebrow reveal">Our Work &middot; Where We Serve</div>
-    <h1 class="pagehero__title lines" style="max-width:18ch"><span class="ln"><span>Distance never decides</span></span><span class="ln"><span>who receives <em>care</em>.</span></span></h1>
-    <p class="lead reveal" data-d="1">Mission Africa brings doctors, medicine, and follow-up care to communities where the nearest clinic can be hours away, at no cost to patients. We work with local health workers and community partners across 16 countries in Africa.</p>
-    <div style="margin-top:var(--sp-6)" class="reveal" data-d="2"><div class="statechips"><a style="pointer-events:none">501(c)(3) Nonprofit</a><a style="pointer-events:none">33M+ Lives Touched Globally</a><a style="pointer-events:none">Parent body: UN ECOSOC Special Consultative Status</a></div></div>
-    <div style="margin-top:var(--sp-6)" class="reveal" data-d="3"><a class="btn btn--fill" href="/donate/">Stand With Mission Africa <span class="arr">&rarr;</span></a></div>
+    <div class="vu-split">
+      <div class="vu-split__copy">
+        <h3>Distance should not decide who gets care</h3>
+        <p>In much of the region Mission Africa serves, the barrier to health is not the treatment. It is the miles between a family and anyone who can provide it, the distance where a curable illness quietly becomes a permanent one. Launched in 2024 by Shrimad Rajchandra Love and Care (SRLC), Mission Africa now works across 16 countries in Africa to close that distance.</p>
+        <div style="display:flex;gap:clamp(1.6rem,5vw,3.4rem);flex-wrap:wrap;margin-top:1.2rem">
+          <div><p class="impact-stat__n count-up" style="margin:0 0 .3rem">16</p><p style="margin:0;font-size:.92rem;color:var(--color-ink-muted)">countries reached</p></div>
+          <div><p class="impact-stat__n count-up" style="margin:0 0 .3rem">7,500+</p><p style="margin:0;font-size:.92rem;color:var(--color-ink-muted);max-width:26ch">patients treated at a free eye and ENT medical camp in Nairobi, Kenya</p></div>
+        </div>
+      </div>
+      <div class="vu-split__photo"><div class="ph-media "><span><img class="ph-mark" src="/assets/img/srlc-mark.png" alt=""><br>Camp registration, morning light &middot; Mission Africa team photos pending</span></div></div>
+    </div>
   </div>
 </section>
 
-<section class="sect">
-  <div class="container"><div class="split split--wideL">
-    <div>
-      <div class=""><div class="eyebrow reveal">The need</div><h2 class="reveal">Distance should not decide who gets care</h2></div>
-      <p class="reveal" data-d="1">In much of the region Mission Africa serves, the barrier to health is not the treatment. It is the miles between a family and anyone who can provide it, the distance where a curable illness quietly becomes a permanent one. Launched in 2024 by Shrimad Rajchandra Love and Care (SRLC), Mission Africa now works across 16 countries in Africa to close that distance.</p>
-      <div style="margin-top:var(--sp-8);display:flex;gap:clamp(2rem,6vw,4rem);flex-wrap:wrap">
-        <div class="reveal"><div class="stat__num counter">16</div><div class="stat__label">countries reached</div></div>
-        <div class="reveal" data-d="1"><div class="stat__num counter">7,500+</div><div class="stat__label">patients treated at a free eye and ENT medical camp in Nairobi, Kenya</div></div>
+<section class="vu-shell vu-shell--cream">
+  <div class="container">
+    <h2 class="vu-h reveal">A clinic that comes to you</h2>
+    <p class="vu-lead">Mission Africa brings the full spectrum of care to the community. Full medical camps staged inside the community, with doctors, diagnostics, and medicine in one place, free to every patient who walks in. And when the camp packs up, the care does not leave. Community programs carry it between visits.</p>
+    <div class="vu-pair-grid mt-6">
+      <div class="vu-card reveal" style="grid-template-columns:1fr"><h3 class="vu-card__h">Healthcare access</h3><div class="vu-card__body"><p>Medical camps, medicine placed directly into waiting hands, and training for community health workers, so care remains long after the visiting doctors have gone.</p></div></div>
+      <div class="vu-card reveal" data-stagger="1" style="grid-template-columns:1fr"><h3 class="vu-card__h">Community development</h3><div class="vu-card__body"><p>Education, nutrition, and livelihood programs built with local communities rather than for them, so the change outlasts the camp.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="vu-shell vu-shell--lav">
+  <div class="container">
+    <h2 class="vu-h reveal">Proven far from here</h2>
+    <p class="maxw-70">Mission Africa did not start from zero and your gift does not land on an experiment. It extends a healthcare model refined over decades in Dharampur, India, where a 250-bed hospital accredited by the National Accreditation Board for Hospitals and Healthcare Providers (NABH) treats patients regardless of their ability to pay. The movement behind it has touched 33M+ lives globally, and volunteers across the United States help fund and power the work.</p>
+    <div class="vu-toc--inline">
+      <a href="/our-work/10-care-program/">Our Causes</a>
+      <a href="/our-work/india/">India</a>
+      <a href="/our-work/united-states/">United States</a>
+    </div>
+  </div>
+</section>
+
+<section class="vu-shell vu-shell--cream vu-shell--narrow">
+  <div class="container">
+    <div class="fc-newsletter reveal">
+      <div class="fc-newsletter__copy">
+        <h3>Stay close to the work</h3>
+        <p>Camps are episodic; your connection to them does not have to be. Leave your email and we will send you what your support built: photos with consent, numbers with verification, and the occasional story worth your inbox.</p>
+      </div>
+      <form class="fc-newsletter__form" name="updates" method="POST" data-netlify="true" data-netlify-inline netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="updates">
+        <input type="hidden" name="source" value="mission-africa">
+        <p class="hp-field"><input name="bot-field" tabindex="-1"></p>
+        <input type="email" name="email" required placeholder="you@example.com" aria-label="Email address" class="form-hidewrap">
+        <button type="submit" class="btn btn--primary form-hidewrap">Get Camp Updates</button>
+        <span class="form-success" style="color:var(--color-srlc-purple);font-weight:600">Thank you. You are on the list.</span>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="vu-shell vu-shell--lav">
+  <div class="container">
+    <div class="vu-actionbar reveal">
+      <div class="vu-actionbar__copy">
+        <h3>Help the next camp happen.</h3>
+        <p>Somewhere right now, a mother is measuring the distance between her child and a doctor. Your gift shortens it. Put medicine on the road, and hope alongside it.</p>
+      </div>
+      <div class="vu-actionbar__ctas">
+        <a class="btn btn--primary" href="/donate/">Stand With Mission Africa</a>
+        
       </div>
     </div>
-    <div class="reveal" data-d="2"><div class="media media--plain frame-tilt--r" style="min-height:400px"><div class="ph"><img class="ph__mark" src="/assets/img/srlc-mark.png" alt=""><span>Camp registration, morning light &middot; Mission Africa team photos pending</span></div></div></div>
-  </div></div>
+  </div>
 </section>
-
-<section class="sect sect--band grain">
+</main><footer class="site-footer" role="contentinfo">
   <div class="container">
-    <div class=""><div class="eyebrow reveal">The work</div><h2 class="reveal">A clinic that comes to you</h2></div>
-    <p class="reveal" data-d="1" style="max-width:70ch">Mission Africa brings the full spectrum of care to the community. Full medical camps staged inside the community, with doctors, diagnostics, and medicine in one place, free to every patient who walks in. And when the camp packs up, the care does not leave. Community programs carry it between visits.</p>
-    <div class="grid grid--2" style="margin-top:var(--sp-8)">
-      <div class="card reveal"><h3>Healthcare access</h3><p style="color:var(--ink-soft)">Medical camps, medicine placed directly into waiting hands, and training for community health workers, so care remains long after the visiting doctors have gone.</p></div>
-      <div class="card reveal" data-d="1"><h3>Community development</h3><p style="color:var(--ink-soft)">Education, nutrition, and livelihood programs built with local communities rather than for them, so the change outlasts the camp.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="sect">
-  <div class="container container--narrow">
-    <div class=""><div class="eyebrow reveal">Proven far from here</div><h2 class="reveal">Your gift does not land on an experiment</h2></div>
-    <p class="reveal" data-d="1">Mission Africa did not start from zero and your gift does not land on an experiment. It extends a healthcare model refined over decades in Dharampur, India, where a 250-bed hospital accredited by the National Accreditation Board for Hospitals and Healthcare Providers (NABH) treats patients regardless of their ability to pay. The movement behind it has touched 33M+ lives globally, and volunteers across the United States help fund and power the work.</p>
-    <div class="reveal" data-d="2" style="margin-top:var(--sp-5);display:flex;gap:1.6rem;flex-wrap:wrap">
-      <a class="textlink" href="/our-work/10-care-program/">Our Causes</a>
-      <a class="textlink" href="/our-work/india/">India</a>
-      <a class="textlink" href="/our-work/united-states/">United States</a>
-    </div>
-  </div>
-</section>
-
-<section class="sect sect--dark grain">
-  <div class="container container--narrow center">
-    <div class="eyebrow reveal">Stay close to the work</div>
-    <h2 class="reveal">Camps are episodic. Your connection<br>doesn&rsquo;t have to be.</h2>
-    <p class="lead reveal" data-d="1" style="margin-inline:auto">Leave your email and we will send you what your support built: photos with consent, numbers with verification, and the occasional story worth your inbox.</p>
-    <form class="newsband reveal" data-d="2" style="margin:var(--sp-8) auto 0" name="updates" method="POST" data-netlify="true" data-netlify-inline netlify-honeypot="bot-field">
-      <input type="hidden" name="form-name" value="updates">
-      <input type="hidden" name="source" value="mission-africa">
-      <p style="display:none"><input name="bot-field"></p>
-      <input type="email" name="email" required placeholder="Your email" aria-label="Email address" class="form-hidewrap">
-      <button class="btn btn--gold form-hidewrap" type="submit">Get Camp Updates</button>
-      <div class="form-success" style="display:none;color:var(--gold);font-weight:600">Thank you. You are on the list.</div>
-    </form>
-  </div>
-</section>
-
-<section class="sect sect--dark ctaband grain">
-  <div class="flamewash"></div>
-  <div class="container center" style="position:relative">
-    <h2 class="reveal">Help the next camp <em>happen</em>.</h2>
-    <p class="lead reveal" data-d="1" style="margin-inline:auto">Somewhere right now, a mother is measuring the distance between her child and a doctor. Your gift shortens it. Put medicine on the road, and hope alongside it.</p>
-    <div class="hero__cta reveal" data-d="2" style="justify-content:center">
-      <a class="btn btn--gold" href="/donate/">Stand With Mission Africa <span class="arr">&rarr;</span></a>
-      
-    </div>
-  </div>
-</section>
-</main>
-<footer class="footer">
-  <div class="container">
-    <div class="footer__top">
-      <div class="footer__brand">
-        <img src="/assets/img/srlc-logo-white.png" alt="Shrimad Rajchandra Love and Care">
-        <p>An initiative of Shrimad Rajchandra Mission Dharampur, serving communities across the United States and around the world.</p>
-      </div>
-      <div class="social">
-        <a href="https://www.instagram.com/srlc_usa/" aria-label="Instagram" rel="noopener" target="_blank"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2m0 1.8c-3.1 0-3.5 0-4.8.1-1.1.1-1.5.2-1.8.3-.5.2-.8.4-1.1.7-.3.3-.5.6-.7 1.1-.1.3-.3.8-.3 1.8-.1 1.2-.1 1.6-.1 4.8s0 3.5.1 4.8c.1 1.1.2 1.5.3 1.8.2.5.4.8.7 1.1.3.3.6.5 1.1.7.3.1.8.3 1.8.3 1.2.1 1.6.1 4.8.1s3.5 0 4.8-.1c1.1-.1 1.5-.2 1.8-.3.5-.2.8-.4 1.1-.7.3-.3.5-.6.7-1.1.1-.3.3-.8.3-1.8.1-1.2.1-1.6.1-4.8s0-3.5-.1-4.8c-.1-1.1-.2-1.5-.3-1.8-.2-.5-.4-.8-.7-1.1-.3-.3-.6-.5-1.1-.7-.3-.1-.8-.3-1.8-.3-1.2-.1-1.6-.1-4.8-.1M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 1.8a3.2 3.2 0 1 0 0 6.4 3.2 3.2 0 0 0 0-6.4m5.2-3a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4"/></svg></a>
-        <a href="https://www.facebook.com/SRLCUSA/" aria-label="Facebook" rel="noopener" target="_blank"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12"/></svg></a>
-      </div>
-    </div>
-    <div class="footer__grid">
+    <div class="site-footer__cols">
       <div>
-        <h4>Our Work</h4>
-        <ul>
-          <li><a href="/our-work/united-states/">United States</a></li>
-          <li><a href="/our-work/india/">India</a></li>
-          <li><a href="/our-work/mission-africa/">Mission Africa</a></li>
-          <li><a href="/our-work/10-care-program/">10 Care Program</a></li>
-        </ul>
+        <p class="site-footer__brand"><img class="brand__logo-img" src="/assets/img/srlc-logo-color.png" alt="Shrimad Rajchandra Love and Care" loading="lazy"></p>
+        <p class="site-footer__legal">SRLC USA is a registered 501(c)(3).</p>
+        <p class="site-footer__legal">EIN: 81-5162502</p>
+        <p class="site-footer__legal"><a href="mailto:info@srlc-usa.org" style="color:inherit;text-decoration:none;border-bottom:1px solid currentColor">info@srlc-usa.org</a></p>
+        <p class="site-footer__legal">500 Paterson Plank Rd #33685<br>Union City, NJ 07087, USA<br>1.551.SRLC.USA</p>
+        <div class="social">
+          <a href="https://www.instagram.com/srlc_usa/" aria-label="Instagram" rel="noopener" target="_blank"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2m0 4.8a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 1.8a3.2 3.2 0 1 0 0 6.4 3.2 3.2 0 0 0 0-6.4m5.2-3a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4"/></svg></a>
+          <a href="https://www.facebook.com/SRLCUSA/" aria-label="Facebook" rel="noopener" target="_blank"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12"/></svg></a>
+        </div>
       </div>
       <div>
-        <h4>About</h4>
+        <h4>About Us</h4>
         <ul>
+          <li><a href="/about/our-inspiration/">Our Inspiration</a></li>
           <li><a href="/about/who-we-are/">Who We Are</a></li>
           <li><a href="/about/our-impact/">Our Impact</a></li>
-          <li><a href="/about/our-inspiration/">Our Inspiration</a></li>
           <li><a href="/about/management/">Management Team</a></li>
           <li><a href="/about/financials/">Financials</a></li>
         </ul>
       </div>
       <div>
+        <h4>Our Work</h4>
+        <ul>
+          <li><a href="/our-work/10-care-program/">10 Care Program</a></li>
+          <li><a href="/our-work/united-states/">United States</a></li>
+          <li><a href="/our-work/india/">India</a></li>
+          <li><a href="/our-work/mission-africa/">Mission Africa</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Get Involved</h4>
+        <ul>
+          <li><a href="/donate/">Donate</a></li>
+          <li><a href="/volunteer/">Volunteer</a></li>
+          <li><a href="/donate/#matching">Corporate Matching</a></li>
+        </ul>
+      </div>
+      <div>
         <h4>Connect</h4>
         <ul>
-          <li><a href="mailto:info@srlc-usa.org">info@srlc-usa.org</a></li>
+          <li><a href="mailto:info@srlc-usa.org">Contact Us</a></li>
+          <li><a href="/#final-newsletter">Newsletter Signup</a></li>
           <li><a href="tel:+15517752872">1.551.775.2872</a></li>
-          <li><a href="/volunteer/">Volunteer with us</a></li>
-          <li><a href="/donate/">Ways to give</a></li>
         </ul>
       </div>
     </div>
-    <div class="footer__legal">
-      <span>Shrimad Rajchandra Love and Care USA is a registered 501(c)(3) nonprofit organization. EIN 81-5162502. Contributions are tax deductible to the extent permitted by law.</span>
-      <span>&copy; <span data-year>2026</span> SRLC USA</span>
+    <div class="site-footer__bottom">
+      <p>&copy; Copyright <span data-year>2026</span> Shrimad Rajchandra Love and Care USA, All Rights Reserved</p>
+      <p>Shrimad Rajchandra Love and Care USA is a registered 501(c)(3) nonprofit organization. EIN 81-5162502. Contributions are tax deductible to the extent permitted by law.</p>
     </div>
   </div>
 </footer>
