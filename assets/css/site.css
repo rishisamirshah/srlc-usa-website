@@ -166,7 +166,7 @@ strong { font-weight: 600; }
 .header--solid, .header--scrolled { background: rgba(251, 247, 239, 0.88); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 1px 0 var(--line); }
 .header--hidden { transform: translateY(-100%); }
 
-.brand { display: flex; align-items: center; gap: 0.7rem; }
+.brand { display: flex; align-items: center; gap: 0.7rem; position: relative; z-index: 140; }
 .brand img { height: 46px; width: auto; transition: height var(--t-base) var(--ease); }
 .header--scrolled .brand img, .header--solid .brand img { height: 40px; }
 .brand__mark--light { display: none; }
@@ -205,7 +205,7 @@ strong { font-weight: 600; }
 
 .header .btn--fill { padding: 0.66em 1.35em; font-size: 0.94rem; margin-left: 0.4rem; }
 
-.navtoggle { display: none; appearance: none; background: none; border: 0; cursor: pointer; margin-left: auto; padding: 10px; }
+.navtoggle { display: none; appearance: none; background: none; border: 0; cursor: pointer; margin-left: auto; padding: 10px; position: relative; z-index: 150; }
 .navtoggle span { display: block; width: 24px; height: 2px; background: var(--ink); margin: 5px 0; border-radius: 2px; transition: transform var(--t-base) var(--ease), opacity var(--t-fast); }
 .header--overlay:not(.header--scrolled) .navtoggle span { background: #FFF6EC; }
 body.nav-open .navtoggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -216,9 +216,10 @@ body.nav-open .navtoggle span:nth-child(3) { transform: translateY(-7px) rotate(
 @media (max-width: 920px) {
   .nav {
     position: fixed; inset: 0; top: 0; padding: calc(var(--nav-h) + 1rem) var(--gutter) 2.5rem;
-    background: var(--cream); overflow-y: auto;
+    background: var(--cream); overflow-y: auto; z-index: 120;
     display: block; opacity: 0; visibility: hidden; transition: opacity var(--t-base) var(--ease), visibility var(--t-base);
   }
+  .dropdown::before { display: none; }
   body.nav-open .nav { opacity: 1; visibility: visible; }
   body.nav-open { overflow: hidden; }
   body.nav-open .header { background: var(--cream); box-shadow: none; }
@@ -229,7 +230,11 @@ body.nav-open .navtoggle span:nth-child(3) { transform: translateY(-7px) rotate(
   .nav a.nav__link, .nav button.nav__link { width: 100%; justify-content: space-between; font-size: 1.16rem; padding: 1rem 0.2rem; border-radius: 0; }
   .nav a.nav__link:hover, .nav button.nav__link:hover { background: none; }
   .dropdown { position: static; transform: none; opacity: 1; visibility: hidden; height: 0; overflow: hidden; box-shadow: none; border: 0; background: none; padding: 0 0 0 0.6rem; min-width: 0; pointer-events: auto; transition: none; }
-  .nav__item.open .dropdown { visibility: visible; height: auto; padding-bottom: 0.8rem; }
+  .nav__item.open .dropdown { position: static; transform: none; visibility: visible; height: auto; padding-bottom: 0.8rem; }
+  body.nav-open .header .nav a.nav__link, body.nav-open .header .nav button.nav__link,
+  body.nav-open .header--overlay:not(.header--scrolled) .nav a.nav__link:hover,
+  body.nav-open .header--overlay:not(.header--scrolled) .nav button.nav__link:hover { color: var(--ink); background: none; }
+  body.nav-open .header .nav .nav__item.open > .nav__link { color: var(--maroon); background: none; }
   .dropdown a { font-size: 1.02rem; padding: 0.55em 0.6em; }
   .header .btn--fill { display: none; }
   .nav .btn--fill { display: inline-flex !important; margin: 1.4rem 0 0; width: 100%; font-size: 1.05rem; }
@@ -422,9 +427,11 @@ a.card { color: var(--ink); display: block; }
 @keyframes fadeup { from { opacity: 0; transform: translateY(14px); } }
 
 .contactcard {
-  display: flex; align-items: center; gap: 1rem; margin-top: var(--sp-8);
+  display: flex; align-items: center; flex-wrap: wrap; gap: 1rem; margin-top: var(--sp-8);
   background: var(--cream-deep); border-radius: var(--r-md); padding: 1.1rem 1.4rem; border: 1px solid var(--line);
+  min-width: 0;
 }
+.contactcard a { word-break: break-word; }
 .contactcard .dot { width: 44px; height: 44px; border-radius: 50%; background: var(--grad-flame); display: grid; place-items: center; color: #FFF; font-family: var(--serif); font-size: 1.15rem; flex: 0 0 auto; }
 .contactcard b { display: block; color: var(--maroon); }
 .contactcard a { font-size: var(--fs-sm); }

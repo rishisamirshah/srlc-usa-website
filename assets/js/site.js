@@ -20,10 +20,21 @@
   win.addEventListener("scroll", onScroll, { passive: true });
 
   var toggle = doc.querySelector(".navtoggle");
+  function closeDrawer() {
+    doc.body.classList.remove("nav-open");
+    if (toggle) toggle.setAttribute("aria-expanded", "false");
+  }
   if (toggle) toggle.addEventListener("click", function () {
     doc.body.classList.toggle("nav-open");
     toggle.setAttribute("aria-expanded", doc.body.classList.contains("nav-open"));
   });
+  doc.querySelectorAll(".nav a[href]").forEach(function (a) {
+    a.addEventListener("click", closeDrawer);
+  });
+  win.addEventListener("resize", function () {
+    if (win.innerWidth > 920) closeDrawer();
+  });
+  win.addEventListener("pageshow", function (e) { if (e.persisted) closeDrawer(); });
 
   /* Dropdowns: hover on desktop, click everywhere */
   doc.querySelectorAll(".nav__item").forEach(function (item) {
