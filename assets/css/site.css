@@ -197,6 +197,7 @@ strong { font-weight: 600; }
   transition: opacity var(--t-fast) var(--ease), transform var(--t-fast) var(--ease), visibility var(--t-fast);
 }
 .nav__item.open .dropdown { opacity: 1; visibility: visible; pointer-events: auto; transform: translate(-50%, 0); }
+.dropdown::before { content: ""; position: absolute; left: 0; right: 0; top: -14px; height: 14px; }
 .dropdown a { display: block; padding: 0.62em 0.9em; border-radius: var(--r-sm); color: var(--ink); font-weight: 500; font-size: 0.97rem; }
 .dropdown a:hover { background: var(--cream-deep); color: var(--maroon); }
 .dropdown .dd-label { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); padding: 0.7em 0.9em 0.3em; }
@@ -247,10 +248,11 @@ body.nav-open .navtoggle span:nth-child(3) { transform: translateY(-7px) rotate(
 .hero__media.kenburns img { animation: kenburns 26s var(--ease) both alternate infinite; transform-origin: 60% 40%; }
 @keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.09) translate(-1.2%, -1%); } }
 .hero__scrim { position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(191deg, rgba(37, 19, 16, 0.18) 34%, rgba(37, 19, 16, 0.66) 78%, rgba(30, 14, 11, 0.82) 100%); }
-.hero__scrim::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(37, 19, 16, 0.38), transparent 55%); }
+  background: linear-gradient(191deg, rgba(37, 19, 16, 0.34) 30%, rgba(37, 19, 16, 0.72) 76%, rgba(30, 14, 11, 0.86) 100%); }
+.hero__scrim::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(37, 19, 16, 0.5), transparent 58%); }
 .hero__inner { width: 100%; padding-block: clamp(4.5rem, 9vw, 7rem) clamp(3.2rem, 7vw, 5.4rem); }
-.hero .eyebrow { color: var(--gold); }
+.hero .eyebrow { color: #FFF3DC; text-shadow: 0 1px 12px rgba(30, 14, 11, 0.6); }
+.hero__title, .hero__sub { text-shadow: 0 2px 20px rgba(30, 14, 11, 0.4); }
 .hero__title {
   font-size: var(--fs-hero); font-weight: 420; color: inherit; max-width: 13ch; margin-bottom: 0.35em;
   text-wrap: balance;
@@ -349,9 +351,8 @@ a.card { color: var(--ink); display: block; }
 .railwrap { position: relative; }
 .rail {
   display: grid; grid-auto-flow: column; grid-auto-columns: min(78vw, 340px);
-  gap: clamp(1rem, 2vw, 1.5rem); overflow-x: auto; padding: 0.5rem var(--gutter) 1.6rem;
-  scroll-snap-type: x mandatory; scrollbar-width: none; cursor: grab;
-  margin-inline: calc(var(--gutter) * -1);
+  gap: clamp(1rem, 2vw, 1.5rem); overflow-x: auto; padding: 1.1rem 0.4rem 2.1rem;
+  scroll-snap-type: x mandatory; scroll-padding-inline: 0.4rem; scrollbar-width: none; cursor: grab;
 }
 .rail::-webkit-scrollbar { display: none; }
 .rail > * { scroll-snap-align: start; }
@@ -457,8 +458,7 @@ a.card { color: var(--ink); display: block; }
 .timeline { position: relative; }
 .timeline__track {
   display: grid; grid-auto-flow: column; grid-auto-columns: min(80vw, 380px); gap: clamp(1.2rem, 2.5vw, 2rem);
-  overflow-x: auto; scroll-snap-type: x mandatory; padding: 1rem var(--gutter) 1.8rem; scrollbar-width: none; cursor: grab;
-  margin-inline: calc(var(--gutter) * -1);
+  overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 0.4rem; padding: 1rem 0.4rem 1.8rem; scrollbar-width: none; cursor: grab;
 }
 .timeline__track::-webkit-scrollbar { display: none; }
 .tl-node { scroll-snap-align: start; position: relative; padding-top: 2.1rem; }

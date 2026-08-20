@@ -37,8 +37,15 @@
       btn.setAttribute("aria-expanded", !was);
     });
     if (win.matchMedia("(hover: hover) and (min-width: 921px)").matches) {
-      item.addEventListener("mouseenter", function () { item.classList.add("open"); });
-      item.addEventListener("mouseleave", function () { item.classList.remove("open"); });
+      var closeT = null;
+      item.addEventListener("mouseenter", function () {
+        clearTimeout(closeT);
+        doc.querySelectorAll(".nav__item.open").forEach(function (o) { if (o !== item) o.classList.remove("open"); });
+        item.classList.add("open");
+      });
+      item.addEventListener("mouseleave", function () {
+        closeT = setTimeout(function () { item.classList.remove("open"); }, 260);
+      });
     }
   });
   doc.addEventListener("click", function () {

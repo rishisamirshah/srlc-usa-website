@@ -36,8 +36,8 @@ def head(title, desc, path, overlay=False):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="{FONTS}">
-<link rel="stylesheet" href="/assets/css/site.css">
-<script src="/assets/js/site.js" defer></script>
+<link rel="stylesheet" href="/assets/css/site.css?v=2">
+<script src="/assets/js/site.js?v=2" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
