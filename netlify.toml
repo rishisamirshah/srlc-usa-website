@@ -1,0 +1,134 @@
+[[redirects]]
+  from = "/inspiration/*"
+  to = "/about/our-inspiration/"
+  status = 301
+
+[[redirects]]
+  from = "/management/*"
+  to = "/about/management/"
+  status = 301
+
+[[redirects]]
+  from = "/financials/*"
+  to = "/about/financials/"
+  status = 301
+
+[[redirects]]
+  from = "/annual-reports/*"
+  to = "/about/financials/"
+  status = 301
+
+[[redirects]]
+  from = "/10-care-program/*"
+  to = "/our-work/10-care-program/"
+  status = 301
+
+[[redirects]]
+  from = "/causes/healthcare/*"
+  to = "/our-work/10-care-program/health-care/"
+  status = 301
+
+[[redirects]]
+  from = "/causes/education/*"
+  to = "/our-work/10-care-program/educational-care/"
+  status = 301
+
+[[redirects]]
+  from = "/causes/child-care/*"
+  to = "/our-work/10-care-program/child-care/"
+  status = 301
+
+[[redirects]]
+  from = "/causes/women-empowerment/*"
+  to = "/our-work/10-care-program/woman-care/"
+  status = 301
+
+[[redirects]]
+  from = "/causes/tribal-welfare/*"
+  to = "/our-work/10-care-program/tribal-care/"
+  status = 301
+
+[[redirects]]
+  from = "/causes/community-welfare/*"
+  to = "/our-work/10-care-program/community-care/"
+  status = 301
+
+[[redirects]]
+  from = "/causes/humanitarian-care/*"
+  to = "/our-work/10-care-program/humanitarian-care/"
+  status = 301
+
+[[redirects]]
+  from = "/causes/animal-welfare/*"
+  to = "/our-work/10-care-program/animal-care/"
+  status = 301
+
+[[redirects]]
+  from = "/causes/environmental-care/*"
+  to = "/our-work/10-care-program/environmental-care/"
+  status = 301
+
+[[redirects]]
+  from = "/causes/emergency-relief/*"
+  to = "/our-work/10-care-program/emergency-relief-care/"
+  status = 301
+
+[[redirects]]
+  from = "/causes/*"
+  to = "/our-work/10-care-program/"
+  status = 301
+
+[[redirects]]
+  from = "/institutes/hospital-and-research-center/*"
+  to = "/our-work/india/hospital-and-research-center/"
+  status = 301
+
+[[redirects]]
+  from = "/institutes/science-college/*"
+  to = "/our-work/india/vidyapeeth/"
+  status = 301
+
+[[redirects]]
+  from = "/institutes/primary-school/*"
+  to = "/our-work/india/gurukul/"
+  status = 301
+
+[[redirects]]
+  from = "/institutes/skill-development-center/*"
+  to = "/our-work/india/skill-development-center/"
+  status = 301
+
+[[redirects]]
+  from = "/institutes/animal-hospital/*"
+  to = "/our-work/india/jivamaitridham/"
+  status = 301
+
+[[redirects]]
+  from = "/institutes/*"
+  to = "/our-work/india/"
+  status = 301
+
+[[redirects]]
+  from = "/educational-care/shrimad-rajchandra-vidyapeeth/*"
+  to = "/our-work/india/vidyapeeth/"
+  status = 301
+
+[[redirects]]
+  from = "/back-to-school/*"
+  to = "/our-work/united-states/"
+  status = 301
+
+[[redirects]]
+  from = "/intern-with-us/*"
+  to = "/volunteer/"
+  status = 301
+
+[[redirects]]
+  from = "/us-chapters/*"
+  to = "/our-work/united-states/"
+  status = 301
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
