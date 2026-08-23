@@ -38,11 +38,34 @@ def render_us_hub(svg_inner):
         "SRLC&rsquo;s Nationwide Presence",
         US_HERO_BODY,
     ) + f"""
-<section class="vu-shell vu-shell--lav vu-shell--first">
-  <div class="container">
-    {cf_map(svg_inner)}
-    <div class="mt-6">{state_chips()}</div>
+<section class="chapter-finder chapter-finder--v3 vu-shell--first" style="padding-top:1.5rem">
+  <div class="container chapter-finder__inner">
+    <div class="chapter-finder__cols">
+      <div class="chapter-finder__search">
+        <p class="chapter-finder__search-title">Search by ZIP</p>
+        <form class="chapter-finder__form" onsubmit="event.preventDefault(); window.__cfZipLookup &amp;&amp; window.__cfZipLookup();">
+          <input type="text" id="zipInput" inputmode="numeric" maxlength="5" placeholder="ZIP code (e.g. 08820)" aria-label="ZIP code" pattern="\\d{{5}}">
+          <button type="submit" class="btn btn--primary" id="zipBtn">Find Chapter</button>
+        </form>
+        <div class="chapter-finder__result" id="zipResult" hidden>
+          <p class="chapter-finder__city" id="zipCity"></p>
+          <p class="chapter-finder__meta" id="zipMeta"></p>
+          <div class="chapter-finder__actions">
+            <a id="zipJoinBtn" class="btn btn--primary" href="/get-involved/volunteer/">Join This Chapter</a>
+          </div>
+          <div class="chapter-finder__chips" id="zipChips" hidden>
+            <p class="chapter-finder__chips-label">Centers in this chapter</p>
+            <div class="chapter-finder__chips-list" id="zipChipsList"></div>
+          </div>
+        </div>
+        <p class="chapter-finder__search-hint">We&rsquo;ll point you to your nearest SRLC USA chapter.</p>
+      </div>
+    </div>
+    <div class="chapter-finder__map-wrap">
+      {cf_map(svg_inner)}
+    </div>
   </div>
+  <div class="container mt-6">{state_chips()}</div>
 </section>
 
 <section class="vu-shell vu-shell--cream" id="campaigns">
@@ -424,6 +447,7 @@ def render_africa():
       <a href="/our-work/india/">India</a>
       <a href="/our-work/united-states/">United States</a>
     </div>
+    <div class="mt-6">{ph("50/50 photo pairing: a US chapter moment beside a camp moment, equal weight. Media Bank.", style="min-height:180px")}</div>
   </div>
 </section>
 

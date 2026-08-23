@@ -310,6 +310,6 @@ CAMPAIGNS = [
     },
 ]
 
-US_HERO_BODY = ("SRLC operates across 25+ cities in the United States, bringing compassionate "
+US_HERO_BODY = ("SRLC operates across 11 states and Washington, D.C., bringing compassionate "
                 "service and community-driven initiatives to thousands of lives. Explore our work "
                 "by state and find out how you can get involved near you.")

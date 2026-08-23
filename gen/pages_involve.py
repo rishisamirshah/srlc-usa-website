@@ -41,8 +41,10 @@ def render_volunteer():
     ) + trust_bar() + f"""
 <section class="vu-shell vu-shell--lav">
   <div class="container">
+    {ph("Eight to ten SRLC USA volunteers at an active community event, working rather than posed. Warm natural light, landscape crop. Media Bank.", style="min-height:280px;margin-bottom:2rem")}
     <h2 class="vu-h reveal">More than volunteering. A community.</h2>
     <div class="card-grid mt-6">{cards_html}</div>
+    <div class="mt-6">{ph("Two to three volunteers in conversation at a chapter event. Candid, shoulders-up crop. Media Bank.", style="min-height:160px")}</div>
   </div>
 </section>
 
@@ -50,6 +52,7 @@ def render_volunteer():
   <div class="container">
     <h2 class="vu-h reveal">Getting started is simple</h2>
     <div class="card-grid mt-6">{steps_html}</div>
+    <div class="mt-6">{ph("Horizontal banner: a chapter event in progress, volunteers engaged in a visible task. Media Bank.", style="min-height:140px")}</div>
   </div>
 </section>
 

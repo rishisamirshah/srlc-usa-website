@@ -277,3 +277,9 @@ img { max-width: 100%; }
   .chapter-finder--v3 .chapter-finder__form { flex-wrap: wrap; }
   .chapter-finder--v3 .chapter-finder__form .btn { flex: 1 1 100%; }
 }
+
+/* Map fills unscoped: the US hub + Our Impact maps live outside .chapter-finder--v3 */
+.cf-map .cf-state { fill: #EFE6FB; stroke: #fff; stroke-width: 1; transition: fill .25s ease; }
+.cf-map .cf-state--active { fill: #FD954F; cursor: pointer; }
+.cf-map .cf-state--active:hover, .cf-map .cf-state--active:focus { fill: #693D84; }
+.cf-map .cf-state.is-flashed { fill: #693D84; }

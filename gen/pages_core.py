@@ -453,6 +453,7 @@ def render_who_we_are():
     ) + f"""
 <section class="vu-shell vu-shell--lav vu-shell--first">
   <div class="container">
+    {ph("SRLC USA volunteers in genuine action at a community event, mid-task. Warm natural daylight, wide 16:9. Media Bank.", style="min-height:280px;margin-bottom:2rem")}
     <div class="vu-split">
       <div class="vu-split__copy">
         <h3>Care you can point to</h3>
@@ -490,6 +491,7 @@ def render_who_we_are():
   <div class="container">
     <h2 class="vu-h reveal">Built to be trusted</h2>
     <div class="card-grid mt-6">{how_html}</div>
+    <div class="mt-6">{ph("Close crops of hands at work: packing line, supply detail, planning table, young volunteers leading. Graded as a set. Media Bank.", style="min-height:160px")}</div>
   </div>
 </section>
 
@@ -524,6 +526,7 @@ TIMELINE = [
 
 def render_our_impact(svg_inner):
     nodes = "".join(f"""<li class="reveal" data-stagger="{i % 4 + 1}">
+      <div class="ph-media" style="min-height:90px;margin-bottom:.6rem"><span>Era photo</span></div>
       <span class="ft-year">{y}</span>
       <h4 class="ft-name">{t}</h4>
       <p class="ft-body">{b}</p>
@@ -537,6 +540,7 @@ def render_our_impact(svg_inner):
     ) + f"""
 <section class="vu-shell vu-shell--lav vu-shell--first">
   <div class="container">
+    {ph("Wide field photograph with honest scale: a medical camp, a school courtyard, a packed community hall. Media Bank.", style="min-height:280px;margin-bottom:2rem")}
     <h2 class="vu-h reveal">Global results</h2>
     <p class="vu-lead">SRLC USA is one chapter of a global movement carried largely by volunteers. The figures below reflect the movement&rsquo;s worldwide reach and behind them are individual people whose circumstances changed because someone was in a position to help.</p>
     <div class="mt-6">{impact_stats(six)}</div>
@@ -585,7 +589,7 @@ def render_our_impact(svg_inner):
   <div class="container" style="max-width:820px">
     <div class="vu-card vu-card--accent reveal" style="grid-template-columns:1fr">
       <h3 class="vu-card__h">What these figures mean in practice</h3>
-      <div class="vu-card__body"><p>Laxmibhai, a 52-year-old farmer, had been living with triple-vessel heart disease, and the surgery he needed was beyond his family&rsquo;s means. He received the region&rsquo;s first cardiothoracic bypass at Shrimad Rajchandra Hospital at no cost, and he has since returned home to his fields. His recovery is one outcome among millions, and it is the kind of outcome every figure on this page represents.</p>
+      <div class="vu-card__body">{ph("Dignified portrait of Laxmibhai in his own setting. Consent per Media Bank SOP.", style="min-height:150px;margin-bottom:1rem")}<p>Laxmibhai, a 52-year-old farmer, had been living with triple-vessel heart disease, and the surgery he needed was beyond his family&rsquo;s means. He received the region&rsquo;s first cardiothoracic bypass at Shrimad Rajchandra Hospital at no cost, and he has since returned home to his fields. His recovery is one outcome among millions, and it is the kind of outcome every figure on this page represents.</p>
       <p><a href="/about/financials/">Read the full record on the Financials page</a></p></div>
     </div>
   </div>
@@ -623,6 +627,7 @@ def render_inspiration():
     ) + f"""
 <section class="vu-shell vu-shell--lav vu-shell--first">
   <div class="container prose">
+    {ph("The Lord Mahavir and Pujya Gurudevshri figures artwork, pending asset reuse confirmation.", style="min-height:240px;margin-bottom:2rem")}
     <h2 class="vu-h">Jainism and Lord Mahavir</h2>
     <p>Jainism, one of the world&rsquo;s oldest spiritual philosophies, teaches enduring, universal principles of love and kindness.</p>
     <p>Lord Mahavir, a revered spiritual leader who graced the Indian subcontinent over 2,500 years ago, illuminated a path to inner peace through understanding and kindness toward all, a message that continues to guide the modern world.</p>
@@ -656,6 +661,12 @@ def render_inspiration():
   <div class="container prose text-center">
     <h2 class="vu-h">Inner Awakening and Compassionate Action</h2>
     <p class="vu-lead" style="margin-inline:auto">Pujya Gurudevshri teaches a simple and complete path. Inner awakening brings clarity and harmony within, and love naturally flows outward as kindness in action. This path leads toward lasting peace and compassionate living in the world.</p>
+  </div>
+</section>
+
+<section class="vu-shell vu-shell--lav vu-shell--narrow">
+  <div class="container" style="max-width:820px">
+    {ph("Pujya Gurudevshri and His Holiness the Dalai Lama at the World Alliance of Religions: Peace Summit in Seoul, South Korea (2014).", style="min-height:200px")}
   </div>
 </section>
 
