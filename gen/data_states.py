@@ -299,7 +299,7 @@ CAMPAIGNS = [
     {
         "name": "Giving Tuesday",
         "img_label": "Volunteer group photo &middot; Media Bank",
-        "body": "SRLC USA&rsquo;s largest annual campaign, channeling donor support into our most pertinent global initiatives. From healthcare to educational care to direct aid, your gift reaches the underserved communities that need it most, in the United States and around the world.",
+        "body": "SRLC USA&rsquo;s largest annual campaign, channeling donor support into our most pertinent global initiatives. From healthcare to educational care to essential support, your gift reaches the underserved communities that need it most, in the United States and around the world.",
         "cta": "Help Provide Care",
     },
     {

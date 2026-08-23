@@ -320,7 +320,7 @@ def render_institute(inst):
   <div class="container">
     <div class="vu-split">
       <div class="vu-split__copy">
-        <h3>What This Institution Does</h3>
+        <h3>What This Institute Does</h3>
         <p class="vu-lead--xl" style="margin-top:0">{inst["desc"]}</p>
         {"<p>" + inst["extra"] + "</p>" if inst.get("extra") else ""}
       </div>
@@ -333,7 +333,7 @@ def render_institute(inst):
   <div class="container">
     <div class="vu-split">
       <div class="vu-split__copy">
-        <h3>What This Institution Does</h3>
+        <h3>What This Institute Does</h3>
         {ph("Approved description pending. Placed verbatim once supplied.", style="min-height:140px")}
       </div>
       <div class="vu-split__photo">{ph(inst["img"])}</div>

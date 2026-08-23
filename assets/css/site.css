@@ -3213,5 +3213,14 @@ img { max-width: 100%; }
 .cf-map .cf-state--active:hover, .cf-map .cf-state--active:focus { fill: #693D84; }
 .cf-map .cf-state.is-flashed { fill: #693D84; }
 
+/* Ken Burns hero zoom per the edits list: scale only, ~15s, restarts per slide,
+   off under reduced motion. Uses the CSS scale property so it composes with the
+   parallax translate on the same pseudo-element. */
+.hero-carousel__slide.is-active::before { animation: heroKb 15s ease-out both; }
+@keyframes heroKb { from { scale: 1.0; } to { scale: 1.05; } }
+@media (prefers-reduced-motion: reduce) {
+  .hero-carousel__slide.is-active::before { animation: none; scale: none; }
+}
+
 .scroll-progress { position: fixed; top: 0; left: 0; height: 3px; width: 0;
   background: var(--color-warm-orange); z-index: 300; pointer-events: none; }

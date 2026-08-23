@@ -74,7 +74,7 @@ def render_home(svg_inner):
       <div class="hero-carousel__overlay"></div>
       <div class="container hero-carousel__content">
         <p class="hero-carousel__eyebrow">{s["eyebrow"]}</p>
-        <h1 class="hero-carousel__title">{s["title"]}</h1>
+        {"<h1" if i == 0 else "<p"} class="hero-carousel__title">{s["title"]}{"</h1>" if i == 0 else "</p>"}
         <p class="hero-carousel__sub">{s["sub"]}</p>
         <div class="hero-carousel__ctas">
           <a class="btn btn--primary" href="{s["cta1"][1]}">{s["cta1"][0]}</a>
@@ -475,7 +475,7 @@ def render_who_we_are():
 <section class="vu-shell vu-shell--cream">
   <div class="container">
     <h2 class="vu-h reveal">Ten ways we care</h2>
-    <p class="maxw-70">Every initiative we run belongs to one of ten focus areas, together the 10 Care Program: Health Care, Educational Care, Child Care, Woman Care, Tribal Care, Community Care, Humanitarian Care, Animal Care, Environmental Care, and Emergency Relief Care. In the United States, that vision looks like service in your own city, on your own street. Globally, it stands as permanent institutions in India and Mission Africa.</p>
+    <p class="maxw-70">Every initiative we run belongs to one of ten focus areas, together the 10 Care Program: Health Care, Educational Care, Child Care, Woman Care, Tribal Care, Community Care, Humanitarian Care, Animal Care, Environmental Care, and Emergency Relief Care. In the United States, that vision looks like service in your own city, on your own street. Globally, it stands as permanent institutes in India and Mission Africa.</p>
     <div class="mt-8">{impact_stats([("33M+", "lives touched globally"), ("3.28M+", "students reached globally"), ("12.24M+", "reached through Humanitarian Care globally")], cols=3)}</div>
     <div class="recognition-cluster mt-8">{recognition_chips()}</div>
     <div class="vu-toc--inline">
@@ -580,7 +580,7 @@ def render_our_impact(svg_inner):
 <section class="vu-shell vu-shell--lav">
   <div class="container">
     <h2 class="vu-h reveal">Two decades of documented growth</h2>
-    <p class="vu-lead">The milestones below are drawn from the movement&rsquo;s published record. They trace twenty years of steady growth, from volunteers delivering medicine to rural doorsteps to permanent institutions that now serve millions.</p>
+    <p class="vu-lead">The milestones below are drawn from the movement&rsquo;s published record. They trace twenty years of steady growth, from volunteers delivering medicine to rural doorsteps to permanent institutes that now serve millions.</p>
     <ol class="founder-timeline vu-tl-rail">{nodes}</ol>
   </div>
 </section>
@@ -652,7 +652,7 @@ def render_inspiration():
     <h3>Steady Force of Compassion</h3>
     <p>Through Shrimad Rajchandra Love and Care (SRLC), Pujya Gurudevshri translates compassion into action. Guided by His philosophy of empathy and universal harmony, SRLC is a comprehensive program that addresses critical needs in healthcare, education, environmental sustainability, and social welfare, earning Special Consultative Status with the United Nations Economic and Social Council (ECOSOC) for its far-reaching impact.</p>
     <h3>A Movement Reaching America</h3>
-    <p>That vision now lives across the United States. Through SRLC USA, volunteers in communities nationwide carry this spirit of seva, selfless service, into action: serving their neighborhoods through the 10 Care Program and supporting institutions in India and initiatives around the world.</p>
+    <p>That vision now lives across the United States. Through SRLC USA, volunteers in communities nationwide carry this spirit of seva, selfless service, into action: serving their neighborhoods through the 10 Care Program and supporting institutes in India and initiatives around the world.</p>
     <blockquote>Spearheading a global movement, while remaining steady in universal peace and untethered compassion.<br><br>Pujya Gurudevshri is the unmoved mover.</blockquote>
   </div>
 </section>
@@ -683,7 +683,7 @@ def render_inspiration():
   </div>
 </section>
 
-{flat_cta("That is the inspiration.", "The rest of this site is what it looks like in practice: ten Care programs, institutions in India, medical camps in Africa, and volunteers across the United States.", "Explore the 10 Care Program", "/our-work/10-care-program/")}
+{flat_cta("That is the inspiration.", "The rest of this site is what it looks like in practice: ten Care programs, institutes in India, medical camps in Africa, and volunteers across the United States.", "Explore the 10 Care Program", "/our-work/10-care-program/")}
 """
     return page(
         "Our Inspiration | Shrimad Rajchandraji | SRLC USA",
