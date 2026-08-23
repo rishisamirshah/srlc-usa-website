@@ -247,6 +247,9 @@ def main():
         ("/back-to-school/*", "/our-work/united-states/"),
         ("/intern-with-us/*", "/get-involved/volunteer/"),
         ("/us-chapters/*", "/our-work/united-states/"),
+        # interim Aug-23 structure shared with the team before the hierarchy move
+        ("/us/*", "/our-work/united-states/:splat"),
+        ("/10-care-program/*", "/our-work/10-care-program/:splat"),
         ("/map/*", "/our-work/united-states/"),
         ("/locations/*", "/our-work/united-states/"),
     ]

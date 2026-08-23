@@ -184,6 +184,16 @@
   status = 301
 
 [[redirects]]
+  from = "/us/*"
+  to = "/our-work/united-states/:splat"
+  status = 301
+
+[[redirects]]
+  from = "/10-care-program/*"
+  to = "/our-work/10-care-program/:splat"
+  status = 301
+
+[[redirects]]
   from = "/map/*"
   to = "/our-work/united-states/"
   status = 301
