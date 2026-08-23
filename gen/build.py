@@ -225,7 +225,7 @@ def main():
         ("/management-team/*", "/about/management-team/"),
         ("/financials/*", "/about/financials/"),
         ("/annual-reports/*", "/about/financials/"),
-        ("/10-care-program/*", "/our-work/10-care-program/"),
+        ("/10-care-program/*", "/our-work/10-care-program/:splat"),
         ("/causes/healthcare/*", "/our-work/10-care-program/health-care/"),
         ("/causes/education/*", "/our-work/10-care-program/educational-care/"),
         ("/causes/child-care/*", "/our-work/10-care-program/child-care/"),
@@ -249,7 +249,6 @@ def main():
         ("/us-chapters/*", "/our-work/united-states/"),
         # interim Aug-23 structure shared with the team before the hierarchy move
         ("/us/*", "/our-work/united-states/:splat"),
-        ("/10-care-program/*", "/our-work/10-care-program/:splat"),
         ("/map/*", "/our-work/united-states/"),
         ("/locations/*", "/our-work/united-states/"),
     ]
