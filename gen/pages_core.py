@@ -323,13 +323,13 @@ def render_home(svg_inner):
 def render_donate():
     tiles = "".join(f"""<button type="button" class="donate-tile{' is-active' if amt == '100' else ''}" data-amount="{amt}">
         <span class="donate-tile__amount">${amt}</span>
-        <span class="donate-tile__outcome">{outcome}</span>
-      </button>""" for amt, outcome in [
-        ("25", "Outcome line pending finance sign-off"),
+        {{outcome_html}}
+      </button>""".replace("{{outcome_html}}", f'<span class="donate-tile__outcome">{outcome}</span>' if outcome else "") for amt, outcome in [
+        ("25", ""),
         ("50", "Provides a month of nutrition support for a child"),
-        ("100", "Outcome line pending finance sign-off"),
-        ("250", "Outcome line pending finance sign-off"),
-        ("500", "Outcome line pending finance sign-off"),
+        ("100", ""),
+        ("250", ""),
+        ("500", ""),
     ])
     ways = [
         ("Give by ACH, check, or wire", "Bank transfer and mailed checks are our most efficient ways to receive your gift: more of every dollar reaches the programs. Write to us and we will send the details the same week.", f"mailto:{EMAIL}?subject=Donation%20to%20SRLC%20USA", "Email Us to Give"),
@@ -391,8 +391,6 @@ def render_donate():
 
 <section class="vu-shell vu-shell--cream vu-shell--narrow">
   <div class="container" style="max-width:820px;text-align:center">
-    <h2 class="vu-h reveal">Questions about giving</h2>
-    {ph("Donation FAQ accordion pending: the seven questions port from the cowork donate.html once Naman shares the file.", style="min-height:120px")}
     <p style="font-size:.9rem;color:var(--color-ink-muted);margin-top:1.2rem">{EIN_LINE}</p>
     <p style="font-size:.9rem;color:var(--color-ink-muted)">Reach us at <a href="mailto:{EMAIL}">{EMAIL}</a> or {PHONE}.</p>
   </div>
@@ -490,7 +488,7 @@ def render_who_we_are():
 <section class="vu-shell vu-shell--lav">
   <div class="container">
     <h2 class="vu-h reveal">Built to be trusted</h2>
-    <div class="card-grid mt-6">{how_html}</div>
+    <div class="card-grid card-grid--2x2 mt-6">{how_html}</div>
     <div class="mt-6">{ph("Close crops of hands at work: packing line, supply detail, planning table, young volunteers leading. Graded as a set. Media Bank.", style="min-height:160px")}</div>
   </div>
 </section>
@@ -587,7 +585,7 @@ def render_our_impact(svg_inner):
 
 <section class="vu-shell vu-shell--cream vu-shell--narrow">
   <div class="container" style="max-width:820px">
-    <div class="vu-card vu-card--accent reveal" style="grid-template-columns:1fr">
+    <div class="vu-card vu-card--accent vu-card--stack reveal">
       <h3 class="vu-card__h">What these figures mean in practice</h3>
       <div class="vu-card__body">{ph("Dignified portrait of Laxmibhai in his own setting. Consent per Media Bank SOP.", style="min-height:150px;margin-bottom:1rem")}<p>Laxmibhai, a 52-year-old farmer, had been living with triple-vessel heart disease, and the surgery he needed was beyond his family&rsquo;s means. He received the region&rsquo;s first cardiothoracic bypass at Shrimad Rajchandra Hospital at no cost, and he has since returned home to his fields. His recovery is one outcome among millions, and it is the kind of outcome every figure on this page represents.</p>
       <p><a href="/about/financials/">Read the full record on the Financials page</a></p></div>
@@ -731,7 +729,7 @@ F990_YEARS = ["2024", "2023", "2022", "2021", "2020", "2019", "2018", "2017"]
 
 
 def render_financials():
-    cards = "".join(f"""<div class="vu-card reveal" data-stagger="{i % 4 + 1}" style="grid-template-columns:1fr">
+    cards = "".join(f"""<div class="vu-card vu-card--stack reveal" data-stagger="{i % 4 + 1}">
       <h3 class="vu-card__h">{y} Form 990</h3>
       <div class="vu-card__body"><p>Annual IRS filing. <a href="mailto:{EMAIL}?subject=Request%3A%20{y}%20Form%20990">Request a copy</a></p></div>
     </div>""" for i, y in enumerate(F990_YEARS))

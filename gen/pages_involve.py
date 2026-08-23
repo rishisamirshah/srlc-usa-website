@@ -43,7 +43,7 @@ def render_volunteer():
   <div class="container">
     {ph("Eight to ten SRLC USA volunteers at an active community event, working rather than posed. Warm natural light, landscape crop. Media Bank.", style="min-height:280px;margin-bottom:2rem")}
     <h2 class="vu-h reveal">More than volunteering. A community.</h2>
-    <div class="card-grid mt-6">{cards_html}</div>
+    <div class="card-grid card-grid--2x2 mt-6">{cards_html}</div>
     <div class="mt-6">{ph("Two to three volunteers in conversation at a chapter event. Candid, shoulders-up crop. Media Bank.", style="min-height:160px")}</div>
   </div>
 </section>

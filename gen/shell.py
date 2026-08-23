@@ -183,10 +183,15 @@ def page(title, desc, path, body, overlay=False):
 # ---------- Components ----------
 
 def ph(label, cls="", style=""):
-    """Grey placeholder block with a one-line label from the tab's visual
-    direction line. Swapped for Media Bank photography as consent clears."""
+    """Grey placeholder block. Short one-line label on the block; the tab's full
+    image-direction line rides in the title attribute for the team."""
     s = f' style="{style}"' if style else ""
-    return f'<div class="ph-media {cls}"{s}><span>{label}</span></div>'
+    short = label.split(".")[0].split(",")[0].strip()
+    if len(short) > 44:
+        short = short[:44].rsplit(" ", 1)[0]
+    while short.split() and short.split()[-1].lower() in ("at", "in", "of", "a", "the", "with", "for", "to", "and", "or"):
+        short = short.rsplit(" ", 1)[0]
+    return f'<div class="ph-media {cls}"{s} title="{label}"><span>{short}</span></div>'
 
 
 def page_header(eyebrow, h1, sub=None, cta=None):

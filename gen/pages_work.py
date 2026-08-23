@@ -217,7 +217,7 @@ def render_care(c):
         h, b = c["story"]
         story = f"""<section class="vu-shell vu-shell--lav vu-shell--narrow">
   <div class="container">
-    <div class="vu-card vu-card--accent reveal" style="grid-template-columns:1fr">
+    <div class="vu-card vu-card--accent vu-card--stack reveal">
       <h3 class="vu-card__h" style="grid-column:1">{h}</h3>
       <div class="vu-card__body"><p>{b}</p></div>
     </div>
@@ -432,8 +432,8 @@ def render_africa():
     <h2 class="vu-h reveal">A clinic that comes to you</h2>
     <p class="vu-lead">Mission Africa brings the full spectrum of care to the community. Full medical camps staged inside the community, with doctors, diagnostics, and medicine in one place, free to every patient who walks in. And when the camp packs up, the care does not leave. Community programs carry it between visits.</p>
     <div class="vu-pair-grid mt-6">
-      <div class="vu-card reveal" style="grid-template-columns:1fr"><h3 class="vu-card__h">Healthcare access</h3><div class="vu-card__body"><p>Medical camps, medicine placed directly into waiting hands, and training for community health workers, so care remains long after the visiting doctors have gone.</p></div></div>
-      <div class="vu-card reveal" data-stagger="1" style="grid-template-columns:1fr"><h3 class="vu-card__h">Community development</h3><div class="vu-card__body"><p>Education, nutrition, and livelihood programs built with local communities rather than for them, so the change outlasts the camp.</p></div></div>
+      <div class="vu-card vu-card--stack reveal"><h3 class="vu-card__h">Healthcare access</h3><div class="vu-card__body"><p>Medical camps, medicine placed directly into waiting hands, and training for community health workers, so care remains long after the visiting doctors have gone.</p></div></div>
+      <div class="vu-card vu-card--stack reveal" data-stagger="1"><h3 class="vu-card__h">Community development</h3><div class="vu-card__body"><p>Education, nutrition, and livelihood programs built with local communities rather than for them, so the change outlasts the camp.</p></div></div>
     </div>
   </div>
 </section>
