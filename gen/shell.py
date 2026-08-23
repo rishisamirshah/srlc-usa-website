@@ -13,6 +13,9 @@ EIN_LINE = ("Shrimad Rajchandra Love and Care USA is a registered 501(c)(3) nonp
 IG = "https://www.instagram.com/srlc_usa/"
 FB = "https://www.facebook.com/SRLCUSA/"
 
+CSS_FILE = "/assets/css/site.css"
+JS_FILE = "/assets/js/site.js"
+
 FONTS = ("https://fonts.googleapis.com/css2?"
          "family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&"
          "family=Jost:ital,wght@0,300..700;1,300..700&display=swap")
@@ -46,9 +49,9 @@ def head(title, desc, path, overlay=False):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="{FONTS}">
-<link rel="stylesheet" href="/assets/css/site.css?v=6">
+<link rel="stylesheet" href="{CSS_FILE}">
 <script>document.documentElement.classList.replace("no-js","js")</script>
-<script src="/assets/js/site.js?v=6" defer></script>
+<script src="{JS_FILE}" defer></script>
 </head>
 <body{body_cls}>
 <a class="skip-link" href="#main">Skip to content</a>

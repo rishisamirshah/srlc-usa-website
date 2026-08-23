@@ -71,8 +71,7 @@ def assemble_assets():
         "url('/assets/img/photos/event-recent.jpg')")
 
     supplement = open(os.path.join(ROOT, "gen", "supplement.css")).read()
-    with open(os.path.join(ROOT, "assets", "css", "site.css"), "w") as f:
-        f.write(css + "\n\n" + supplement + EXTRA_CSS)
+    css_out = css + "\n\n" + supplement + EXTRA_CSS
 
     scripts = re.findall(r"<script(?:\s+id=\"[^\"]*\")?>(.*?)</script>", html, re.S)
     keep = []
@@ -88,9 +87,27 @@ def assemble_assets():
             "var _rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;\n  if (sp && !_rm) {")
         keep.append(s.strip())
     supplement_js = open(os.path.join(ROOT, "gen", "supplement.js")).read()
+    js_out = "\n\n".join(keep) + "\n\n" + supplement_js + EXTRA_JS
+
+    # Content-hashed filenames: no cache layer can serve a stale bundle.
+    import hashlib, glob
+    ch = hashlib.md5(css_out.encode()).hexdigest()[:8]
+    jh = hashlib.md5(js_out.encode()).hexdigest()[:8]
+    for old in glob.glob(os.path.join(ROOT, "assets", "css", "site-*.css")) + glob.glob(os.path.join(ROOT, "assets", "js", "site-*.js")):
+        os.remove(old)
+    with open(os.path.join(ROOT, "assets", "css", f"site-{ch}.css"), "w") as f:
+        f.write(css_out)
+    with open(os.path.join(ROOT, "assets", "js", f"site-{jh}.js"), "w") as f:
+        f.write(js_out)
+    # legacy names keep working so any stale cached HTML still picks up current styles
+    with open(os.path.join(ROOT, "assets", "css", "site.css"), "w") as f:
+        f.write(css_out)
     with open(os.path.join(ROOT, "assets", "js", "site.js"), "w") as f:
-        f.write("\n\n".join(keep) + "\n\n" + supplement_js + EXTRA_JS)
-    print(f"  assets: site.css ({(len(css) + len(supplement)) // 1024}KB), site.js assembled")
+        f.write(js_out)
+    import shell as _shell
+    _shell.CSS_FILE = f"/assets/css/site-{ch}.css"
+    _shell.JS_FILE = f"/assets/js/site-{jh}.js"
+    print(f"  assets: site-{ch}.css, site-{jh}.js (+legacy names)")
 
 
 def process_map():
@@ -237,9 +254,19 @@ def main():
         f'[[redirects]]\n  from = "{f}"\n  to = "{t}"\n  status = 301\n' for f, t in redirects)
     toml += """
 [[headers]]
-  for = "/assets/*"
+  for = "/assets/css/*"
   [headers.values]
-    Cache-Control = "public, max-age=604800"
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=300"
 
 [[headers]]
   for = "/*"
