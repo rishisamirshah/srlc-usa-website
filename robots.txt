@@ -1,3 +1,2 @@
 User-agent: *
-Allow: /
-Sitemap: https://srlcusa.netlify.app/sitemap.xml
+Disallow: /

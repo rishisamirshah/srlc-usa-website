@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""SRLC USA static site builder (purple system). Run: python3 gen/build.py"""
+"""SRLC USA static site builder — flat pass. Run: python3 gen/build.py"""
 import os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -14,7 +14,7 @@ import pages_core as C
 import pages_involve as I
 
 OP_STATES = {
-    s["svg"].lower(): (s["name"], f'/our-work/united-states/{s["slug"]}/', f'{s["name"]} — {s["cities"]}')
+    s["svg"].lower(): (s["name"], f'/our-work/united-states/{s["slug"]}/', f'{s["name"]}: {s["cities"]}')
     for s in STATES
 }
 
@@ -24,7 +24,7 @@ EXTRA_CSS = """
 """
 
 EXTRA_JS = """
-/* Newsletter modal close wiring + session suppression (final iteration: exit-intent only) */
+/* Newsletter modal close wiring + session suppression */
 (function () {
   var m = document.getElementById("newsletterModal");
   if (!m) return;
@@ -39,7 +39,7 @@ EXTRA_JS = """
 
 
 def assemble_assets():
-    html = open(os.path.join(ROOT, "gen", "base-homepage.html")).read()
+    html = open(os.path.join(ROOT, "gen", "base-homepage-v2.html")).read()
 
     blocks = re.findall(r"<style[^>]*>(.*?)</style>", html, re.S)
     css = "\n\n".join(b.strip() for b in blocks)
@@ -53,9 +53,23 @@ def assemble_assets():
             continue
         out_rules.append(chunk)
     css = "}".join(out_rules)
+
+    # Flat-pass overrides applied at assembly:
+    # 1. Brand fonts (edits list + Brand Guide): Cormorant Garamond + Jost.
+    css = css.replace("'Newsreader', Georgia, serif", "'Cormorant Garamond', Georgia, serif")
+    css = css.replace('"Newsreader", "Times New Roman", Georgia, serif', "'Cormorant Garamond', Georgia, serif")
+    css = css.replace("'Newsreader', serif", "'Cormorant Garamond', serif")
+    css = css.replace("'DM Sans', sans-serif", "'Jost', sans-serif")
+    css = css.replace('"DM Sans", "Helvetica Neue", Arial, sans-serif', "'Jost', 'Helvetica Neue', Arial, sans-serif")
+    css = re.sub(r"font-variation-settings:[^;]+;", "", css)  # Newsreader opsz axes do not exist in Cormorant
+    # 2. One radius value site-wide, 4px max (no pills, no 16px cards).
+    css = re.sub(r"border-radius:\s*(\d+)px", lambda m: "border-radius: 4px" if int(m.group(1)) > 4 else m.group(0), css)
+    # 3. Drop the purple glow shadows; borders stay.
+    css = re.sub(r"box-shadow:[^;}]*rgba\(105,\s*61,\s*132[^;}]*[;}]", "box-shadow: none;", css)
     css = css.replace(
         "url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=2400&q=85&auto=format&fit=crop')",
         "url('/assets/img/photos/event-recent.jpg')")
+
     supplement = open(os.path.join(ROOT, "gen", "supplement.css")).read()
     with open(os.path.join(ROOT, "assets", "css", "site.css"), "w") as f:
         f.write(css + "\n\n" + supplement + EXTRA_CSS)
@@ -63,13 +77,12 @@ def assemble_assets():
     scripts = re.findall(r"<script(?:\s+id=\"[^\"]*\")?>(.*?)</script>", html, re.S)
     keep = []
     for s in scripts:
-        if "zipToChapter" in s or "TABLE = [" in s:
-            continue  # regenerated for the confirmed 12-state roster
+        if "zipToChapter" in s or "TABLE = [" in s or "RELATED = {" in s:
+            continue  # ZIP finder regenerated for the confirmed roster
         if "targets = ['27'" in s:
-            continue  # crude integer counter; the design-v2 counter handles all stats
+            continue  # banned-number counter stub
         if "}, 8000)" in s and "newsletterDismissed" in s:
-            continue  # superseded by the exit-intent trigger
-        # base bug: reducedMotion referenced out of scope in the scroll-progress block
+            continue  # superseded by exit-intent
         s = s.replace(
             "if (sp && !reducedMotion) {",
             "var _rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;\n  if (sp && !_rm) {")
@@ -128,17 +141,24 @@ def emit(url, html, pri="0.7"):
 
 
 def main():
+    # retire moved/removed output dirs
+    import shutil
+    for stale in ["volunteer", "events", "fundraise", "corporate-giving", "partner-with-us",
+                  "about/faqs", "about/management"]:
+        p = os.path.join(ROOT, stale)
+        if os.path.isdir(p):
+            shutil.rmtree(p)
+            print(f"  - removed stale /{stale}/")
+
     assemble_assets()
     svg = process_map()
 
     emit("/", C.render_home(svg), "1.0")
     emit("/donate/", C.render_donate(), "0.9")
-    emit("/volunteer/", C.render_volunteer(), "0.9")
-    emit("/events/", I.render_events())
-    emit("/fundraise/", I.render_fundraise())
-    emit("/corporate-giving/", I.render_corporate())
-    emit("/partner-with-us/", I.render_partner())
-    emit("/about/faqs/", I.render_faqs())
+    emit("/get-involved/volunteer/", I.render_volunteer(), "0.9")
+    emit("/get-involved/events/", I.render_events())
+    emit("/get-involved/fundraise/", I.render_fundraise())
+    emit("/get-involved/partner-with-us/", I.render_partner())
 
     emit("/our-work/united-states/", W.render_us_hub(svg), "0.9")
     for i, s in enumerate(STATES):
@@ -160,21 +180,32 @@ def main():
     emit("/about/who-we-are/", C.render_who_we_are(), "0.8")
     emit("/about/our-impact/", C.render_our_impact(svg), "0.8")
     emit("/about/our-inspiration/", C.render_inspiration(), "0.8")
-    emit("/about/management/", C.render_management())
+    emit("/about/management-team/", C.render_management())
     emit("/about/financials/", C.render_financials())
 
     write("/404.html", C.render_404())
 
     urls = "".join(f"<url><loc>{SITE}{u}</loc><priority>{p}</priority></url>" for u, p in PAGES)
     write("/sitemap.xml", f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{urls}</urlset>\n')
-    write("/robots.txt", f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n")
+    # staging: keep crawlers out entirely until cutover
+    write("/robots.txt", "User-agent: *\nDisallow: /\n")
 
     redirects = [
+        # this build's own URL moves
+        ("/volunteer/*", "/get-involved/volunteer/"),
+        ("/events/*", "/get-involved/events/"),
+        ("/fundraise/*", "/get-involved/fundraise/"),
+        ("/partner-with-us/*", "/get-involved/partner-with-us/"),
+        ("/corporate-giving/*", "/donate/"),
+        ("/about/faqs/*", "/"),
+        ("/about/management/*", "/about/management-team/"),
+        # legacy WordPress slugs
         ("/inspiration/*", "/about/our-inspiration/"),
-        ("/faqs/*", "/about/faqs/"),
-        ("/event/*", "/events/"),
-        ("/grants/*", "/corporate-giving/"),
-        ("/management/*", "/about/management/"),
+        ("/faqs/*", "/"),
+        ("/event/*", "/get-involved/events/"),
+        ("/grants/*", "/donate/"),
+        ("/management/*", "/about/management-team/"),
+        ("/management-team/*", "/about/management-team/"),
         ("/financials/*", "/about/financials/"),
         ("/annual-reports/*", "/about/financials/"),
         ("/10-care-program/*", "/our-work/10-care-program/"),
@@ -197,8 +228,10 @@ def main():
         ("/institutes/*", "/our-work/india/"),
         ("/educational-care/shrimad-rajchandra-vidyapeeth/*", "/our-work/india/vidyapeeth/"),
         ("/back-to-school/*", "/our-work/united-states/"),
-        ("/intern-with-us/*", "/volunteer/"),
+        ("/intern-with-us/*", "/get-involved/volunteer/"),
         ("/us-chapters/*", "/our-work/united-states/"),
+        ("/map/*", "/our-work/united-states/"),
+        ("/locations/*", "/our-work/united-states/"),
     ]
     toml = "\n".join(
         f'[[redirects]]\n  from = "{f}"\n  to = "{t}"\n  status = 301\n' for f, t in redirects)
@@ -207,9 +240,14 @@ def main():
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex"
 """
     write("/netlify.toml", toml)
-    print(f"\nBuilt {len(PAGES)} pages + 404, sitemap, robots, netlify.toml")
+    print(f"\nBuilt {len(PAGES)} pages + 404, sitemap, robots (staging noindex), netlify.toml")
 
 
 if __name__ == "__main__":

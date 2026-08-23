@@ -5,7 +5,7 @@ NY and PA hero intros are newly written per the doc's instruction (flagged for N
 
 STATES = [
     {
-        "slug": "arizona", "name": "Arizona", "svg": "AZ", "cities": "Phoenix",
+        "slug": "arizona", "meta_title": 'Volunteer in Arizona | SRLC Arizona Chapter', "meta_desc": 'Join SRLC volunteers in Phoenix. Meal services, school drives, and community care in Arizona. Find your chapter and serve. SRLC USA.', "gallery_note": 'One photo appears within the Phoenix center tab. Gallery images from the Media Bank.', "name": "Arizona", "svg": "AZ", "cities": "Phoenix",
         "hero": "The Phoenix chapter of Shrimad Rajchandra Love and Care has been a steady light of compassion, benefiting thousands of lives through various acts of service! Month after month, volunteers came together to prepare nourishing meals and lovingly delivered them to the ones most in need.",
         "gallery": 1,
         "stats": [("50+", "Total volunteers mobilized"), ("500+", "Total service hours"), ("5,000+", "Total beneficiaries reached")],
@@ -20,7 +20,7 @@ STATES = [
         }],
     },
     {
-        "slug": "california", "name": "California", "svg": "CA", "cities": "San Francisco, Los Angeles, San Diego",
+        "slug": "california", "meta_title": 'Volunteer in California | SRLC California Chapter', "meta_desc": 'Join SRLC volunteers in California. Local meal services, school drives, and community care. Find your chapter and serve. SRLC USA.', "gallery_note": 'Scrolling gallery: beach cleanup, volunteer events, San Francisco group photo. Media Bank.', "name": "California", "svg": "CA", "cities": "San Francisco, Los Angeles, San Diego",
         "hero": "From the sunlit shores of San Diego to the bustling streets of San Francisco and Los Angeles, our centers unite local partners and volunteers in transformative acts of service. To get involved in these exciting activities, contact your local SRLC leaders!",
         "gallery": 8,
         "stats": [("200+", "Total volunteers mobilized"), ("2,200+", "Total service hours"), ("85,000+", "Total beneficiaries reached")],
@@ -55,7 +55,7 @@ STATES = [
         ],
     },
     {
-        "slug": "georgia", "name": "Georgia", "svg": "GA", "cities": "Atlanta",
+        "slug": "georgia", "meta_title": 'Volunteer in Georgia | SRLC Georgia Chapter', "meta_desc": 'Join SRLC volunteers in Atlanta. Meal services, school drives, and community care in Georgia. Find your chapter and serve. SRLC USA.', "gallery_note": 'Photos from the current page gallery. Media Bank.', "name": "Georgia", "svg": "GA", "cities": "Atlanta",
         "hero": "From the heart of Georgia, our Atlanta center radiates warmth and service through consistent food relief, school supply drives, and clothing distributions. Volunteers of all ages come together, transforming warehouses into food pantries and classrooms into brighter places of learning. To get involved, connect with your local SRLC leaders!",
         "gallery": 6,
         "stats": [("250+", "Volunteers mobilized"), ("4,300+", "Service hours"), ("90,000+", "Beneficiaries served"), ("Atlanta", "Communities served")],
@@ -70,7 +70,7 @@ STATES = [
         }],
     },
     {
-        "slug": "illinois", "name": "Illinois", "svg": "IL", "cities": "Chicago",
+        "slug": "illinois", "meta_title": 'Volunteer in Illinois | SRLC Illinois Chapter', "meta_desc": 'Join SRLC volunteers in Chicago. Meal services, school drives, and community care in Illinois. Find your chapter and serve. SRLC USA.', "gallery_note": 'Photos from the current page gallery. Media Bank.', "name": "Illinois", "svg": "IL", "cities": "Chicago",
         "hero": "In Illinois, SRLC volunteers serve with heart in partnership with local organizations to combat hunger and uplift education, with the Chicago center leading impactful initiatives that reach children, families, and neighbors in need.",
         "gallery": 5,
         "stats": [("40+", "Volunteers mobilized"), ("150+", "Service hours"), ("2,400+", "Beneficiaries served")],
@@ -85,7 +85,7 @@ STATES = [
         }],
     },
     {
-        "slug": "indiana", "name": "Indiana", "svg": "IN", "cities": "Indianapolis",
+        "slug": "indiana", "meta_title": 'Volunteer in Indiana | SRLC Indiana Chapter', "meta_desc": 'Join SRLC volunteers in Indianapolis. Meal services, school drives, and community care in Indiana. Find your chapter and serve. SRLC USA.', "gallery_note": 'Photos from the current page gallery. Media Bank.', "name": "Indiana", "svg": "IN", "cities": "Indianapolis",
         "hero": "From the crossroads of Indianapolis to communities across the Hoosier State, our Indiana center embraces volunteering in many forms: feeding the hungry, uplifting youth, protecting the environment, and extending compassion beyond borders.",
         "gallery": 5,
         "stats": [("40+", "Volunteers mobilized"), ("700+", "Service hours"), ("5,000+", "Lives impacted")],
@@ -100,7 +100,7 @@ STATES = [
         }],
     },
     {
-        "slug": "massachusetts", "name": "Massachusetts", "svg": "MA", "cities": "Boston",
+        "slug": "massachusetts", "meta_title": 'Volunteer in Massachusetts | SRLC Massachusetts Chapter', "meta_desc": 'Join SRLC volunteers in Boston. Meal services, school drives, and community care in Massachusetts. Find your chapter and serve. SRLC USA.', "gallery_note": 'Photos from the current page gallery. Media Bank.', "name": "Massachusetts", "svg": "MA", "cities": "Boston",
         "hero": "From the cobblestone streets of Beacon Hill to the vibrant harbors of the North Shore, our Boston community unites families and volunteers in service projects that nourish both body and spirit.",
         "gallery": 5,
         "stats": [("20+", "Volunteers mobilized"), ("300+", "Beneficiaries served")],
@@ -115,7 +115,7 @@ STATES = [
         }],
     },
     {
-        "slug": "new-jersey", "name": "New Jersey", "svg": "NJ", "cities": "Parsippany, Edison, Princeton, Cherry Hill",
+        "slug": "new-jersey", "meta_title": 'Volunteer in New Jersey | SRLC New Jersey Chapter', "meta_desc": 'Join SRLC volunteers in New Jersey. Local meal services, school drives, and community care. Find your chapter and serve. SRLC USA.', "gallery_note": 'Classroom of Change distributions, PB&J drives, oatmeal kit packing, winter blanket drive, youth donation events. Media Bank.', "name": "New Jersey", "svg": "NJ", "cities": "Parsippany, Edison, Princeton, Cherry Hill",
         "hero": "From the serene suburbs of Princeton, Parsippany, and Cherry Hill to the bustling centers of Jersey City and Edison, our centers come together with local partners and volunteers to serve with compassion and purpose. Join hands with SRLC New Jersey to make a difference in your community. Reach out to your local SRLC leaders to get involved!",
         "gallery": 20,
         "stats": [("150+", "Volunteers mobilized"), ("1,700+", "Service hours"), ("40,000+", "Beneficiaries served")],
@@ -159,7 +159,7 @@ STATES = [
         ],
     },
     {
-        "slug": "new-york", "name": "New York", "svg": "NY", "cities": "Long Island, Queens, Manhattan",
+        "slug": "new-york", "meta_title": 'Volunteer in New York | SRLC New York Chapter', "meta_desc": 'Join SRLC volunteers in Long Island, Manhattan, and Queens. Meal services, school drives, and community care in New York. Find your chapter and serve. SRLC USA.', "gallery_note": 'Photos from the current page gallery. Media Bank.', "name": "New York", "svg": "NY", "cities": "Long Island, Queens, Manhattan",
         # Newly written per the doc instruction (no hero on the live page). Flag for Naman.
         "hero": "From Long Island to Queens and Manhattan, our New York centers bring volunteers together to nourish neighbors, support students, and stand with families navigating hard seasons. To get involved, connect with your local SRLC leaders!",
         "gallery": 5,
@@ -195,7 +195,7 @@ STATES = [
         ],
     },
     {
-        "slug": "pennsylvania", "name": "Pennsylvania", "svg": "PA", "cities": "East Stroudsburg, Philadelphia",
+        "slug": "pennsylvania", "meta_title": 'Volunteer in Pennsylvania | SRLC Pennsylvania Chapter', "meta_desc": 'Join SRLC volunteers in Pennsylvania. Local meal services, school drives, and community care. Find your chapter and serve. SRLC USA.', "gallery_note": 'Photos from the current page gallery. Media Bank.', "name": "Pennsylvania", "svg": "PA", "cities": "East Stroudsburg, Philadelphia",
         # Newly written per the doc instruction (no hero on the live page). Flag for Naman.
         "hero": "From the Pocono foothills of East Stroudsburg to the historic streets of Philadelphia, our Pennsylvania centers keep pantry shelves stocked, students supplied, and families supported through every season. To get involved, connect with your local SRLC leaders!",
         "gallery": 5,
@@ -223,7 +223,7 @@ STATES = [
         ],
     },
     {
-        "slug": "texas", "name": "Texas", "svg": "TX", "cities": "Dallas, Austin, Houston",
+        "slug": "texas", "meta_title": 'Volunteer in Texas | SRLC Texas Chapter', "meta_desc": 'Join SRLC volunteers in Dallas, Austin, and Houston. Meal services, school drives, and community care in Texas. Find your chapter and serve. SRLC USA.', "gallery_note": 'Photos from the current page gallery. Media Bank.', "name": "Texas", "svg": "TX", "cities": "Dallas, Austin, Houston",
         "hero": "From the cultural vibrancy of Dallas to the creative energy of Austin and the welcoming neighborhoods of Houston, our centers weave compassion into the fabric of Texas life. Volunteers of all ages roll up their sleeves, prepare meals, and uplift underserved families. To join in, connect with your local SRLC leaders!",
         "gallery": 8,
         "stats": [("300+", "Volunteers mobilized"), ("1,150+", "Service hours"), ("10,000+", "Beneficiaries served")],
@@ -258,7 +258,7 @@ STATES = [
         ],
     },
     {
-        "slug": "washington", "name": "Washington", "svg": "WA", "cities": "Seattle",
+        "slug": "washington", "meta_title": 'Volunteer in Washington | SRLC Washington Chapter', "meta_desc": 'Join SRLC volunteers in Seattle. Meal services, school drives, and community care in Washington. Find your chapter and serve. SRLC USA.', "gallery_note": 'Photos from the current page gallery. Media Bank.', "name": "Washington", "svg": "WA", "cities": "Seattle",
         "hero": "In Washington, SRLC&rsquo;s Seattle volunteers are dedicated to compassion, stepping in where the need is greatest. From gathering essential supplies to sharing snack boxes with shelters, their work is guided by a simple but powerful goal: making life a little brighter and easier for neighbors experiencing hardship.",
         "gallery": 5,
         "stats": [("20+", "Volunteers mobilized"), ("Seattle", "Eastside communities served")],
@@ -273,7 +273,7 @@ STATES = [
         }],
     },
     {
-        "slug": "washington-dc", "name": "Washington, D.C.", "svg": "DC", "cities": "Washington, D.C.",
+        "slug": "washington-dc", "meta_title": 'Volunteer in Washington, D.C. | SRLC DC Chapter', "meta_desc": 'Join SRLC volunteers in Washington, D.C. Meal services, school supply drives, and community care. Find your chapter and serve. SRLC USA.', "gallery_note": 'Photos from the current page gallery. Media Bank.', "name": "Washington, D.C.", "svg": "DC", "cities": "Washington, D.C.",
         "hero": "From the nation&rsquo;s capital, our Washington, D.C. volunteers show up for neighbors through steady food relief, educational aid drives, environmental stewardship, and essential needs distributions.",
         "gallery": 5,
         "stats": [("40+", "Volunteers mobilized"), ("300+", "Service hours"), ("2,600+", "Lives impacted")],

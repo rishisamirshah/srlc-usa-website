@@ -1,0 +1,2328 @@
+﻿Content Wireframe Overview
+Content Wireframe Overview
+Core Pages
+Homepage
+* Sections: hero carousel, mission statement, 10 Care grid, chapter finder with US map, Latest Articles, recognition cluster
+Donate
+* Content owner: Naman · Build owner: Rishi (backend)
+* Sections: amount-chip hero, giving options, matching gifts (Double the Donation), named-story slot
+Our Work: Where We Serve
+United States (this doc, United States tab)
+* Content owner: Naman · Build owner: Rishi
+* Sections: hero, interactive US map, Our Campaigns (Classroom of Change, Giving Tuesday, Meals of Love and Care)
+* Operating states, each with its own landing page:
+   * Arizona (Phoenix)
+   * California (San Francisco, Los Angeles, San Diego)
+   * Georgia (Atlanta)
+   * Illinois (Chicago)
+   * Indiana (Indianapolis)
+   * Massachusetts (Boston)
+   * New Jersey (Parsippany, Edison, Princeton, Cherry Hill)
+   * New York (Long Island, Queens, Manhattan)
+   * Pennsylvania (East Stroudsburg, Philadelphia)
+   * Texas (Dallas, Austin, Houston)
+   * Washington (Seattle)
+   * Washington D.C.
+* 12 state landing pages total, built from one shared template (tab: State Page Template, to be drafted)
+India
+* Content owner: Naman · Build owner: Rishi
+* Hub page plus one page per institute, using the approved descriptions verbatim, Center spelling throughout:
+   * Shrimad Rajchandra Hospital and Research Center
+   * Shrimad Rajchandra Vidyapeeth
+   * Shrimad Rajchandra Gurukul
+   * Shrimad Rajchandra Skill Development Center
+   * Shrimad Rajchandra Jivamaitridham
+   * Shrimad Rajchandra Center of Excellence for Women
+Mission Africa
+* Content owner: Naman · Build owner: Rishi
+* Written from scratch; may require outreach to the Mission Africa team before drafting
+* Positioned as one initiative among peers (level with the institutes), never elevated; self-hosted page, no external link
+Our Work: 10 Care Program
+10 Care Program hub plus one page per Care
+* Content owner: Parshva · Build owner: Parshva
+* Exact proper names, one page each:
+   * Health Care
+   * Educational Care
+   * Child Care
+   * Woman Care
+   * Tribal Care
+   * Community Care
+   * Humanitarian Care
+   * Animal Care
+   * Environmental Care
+   * Emergency Relief Care
+* Every Care page needs one dollar-to-outcome line (finance pending) and one approved named story before publish
+About Us
+* Our Inspiration: content pulled from the SRA site as approved source, stylistic tweaks only. Owner: Millen
+* Who We Are: Owner: Millen
+* Our Impact: Owner: Millen. Uses approved global stats only
+* Management Team: Owner: TBD (unresolved between Naman and Millen)
+* Financials: Owner: TBD (unresolved between Naman and Millen)
+Get Involved
+* Volunteer: written from scratch. Owner: Riyan
+
+
+
+
+United States
+United States Page
+
+
+Section 1: Hero
+Purpose
+Introduce SRLC USA’s national footprint and invite the visitor to explore the work state by state.
+Content
+[Headline]
+SRLC’s Nationwide Presence
+[Body]
+SRLC operates across 25+ cities in the United States, bringing compassionate service and community-driven initiatives to thousands of lives. Explore our work by state and find out how you can get involved near you.
+
+
+Section 2: Interactive Map
+Purpose
+Show where SRLC operates, with each highlighted state clickable through to its state landing page.
+Content
+[Interactive US map. Operating states highlighted; clicking a highlighted state opens that state’s landing page.]
+Note: the live page renders this map through a plugin whose state data could not be scraped. The operating-state list for the rebuild comes from the confirmed chapter roster (12 jurisdictions, 22 centers), not from this page.
+
+
+Section 3: Our Campaigns
+Purpose
+Present SRLC USA’s three national campaigns, each with its own description, image, and call to action.
+Content
+[Heading]
+Our Campaigns
+[Campaign tabs / anchors: Back2School · Giving Tuesday · Meals of Love and Care]
+[Campaign 1. Image: Back2School distribution photo (current site image)]
+Classroom of Change
+Access to supplies can transform a student’s journey. Each year, SRLC USA donors and volunteers unite across the country to pack and distribute backpacks, learning materials, and digital tools to Title 1 schools, leveling the playing field and igniting hope in classrooms.
+[CTA Button]
+Support a Student Today
+[Campaign 2. Image: volunteer group photo (current site image)]
+Giving Tuesday
+SRLC USA’s largest annual campaign, channeling donor support into our most pertinent global initiatives. From healthcare to educational care to direct aid, your gift reaches the underserved communities that need it most, in the United States and around the world.
+[CTA Button]
+Help Provide Care
+[Campaign 3. Image: food packing photo (current site image)]
+Meals of Love and Care
+Year-round, SRLC USA centers across the country pack and distribute food in partnership with local food banks and pantries, putting meals in the hands of families, seniors, and neighbors facing food insecurity right where they live.
+[CTA Button]
+Share Compassion
+Metadata
+Title tag: SRLC in the United States | Local Programs and Chapters (55 characters)
+Meta description: SRLC volunteers serve communities in eleven states and D.C. Find your state, see local programs, and join a chapter near you. SRLC USA. (135 characters)
+Arizona
+Arizona
+State Landing Page Wireframe
+Section 1: Hero
+Purpose
+Welcome the visitor to the state, name the centers, and invite local involvement.
+Content
+[Headline]
+Arizona
+[Body]
+The Phoenix chapter of Shrimad Rajchandra Love and Care has been a steady light of compassion, benefiting thousands of lives through various acts of service! Month after month, volunteers came together to prepare nourishing meals and lovingly delivered them to the ones most in need.
+Section 2: Photo Gallery
+Content
+[No gallery on the current page; one photo appears within the Phoenix center tab. Add gallery images if available from the Media Bank.]
+Section 3: State Impact Stats
+Content
+* 50+ Total volunteers mobilized
+* 500+ Total service hours
+* 5,000+ Total beneficiaries reached
+Section 4: Constantly Serving Communities
+Content
+[Center tabs: Phoenix]
+Phoenix
+[Sub-heading] Hunger Relief
+Our Phoenix volunteers come together year-round to prepare and distribute hot meals, PB&J kits, and breakfast packs for individuals experiencing food insecurity. Partnering with organizations such as Tempe Community Action Agency (TCAA) and Andre House, these efforts help serve underserved communities across the region with dignity and care.
+[Sub-heading] Back-to-School Drive
+In addition to food relief, our Phoenix team supports local Title I schools through a successful Back-to-School campaign. Volunteers also donate clothing, toys, blankets, kitchenware, and other essential items throughout the year, helping uplift underprivileged communities and extend consistent support across Arizona.
+Rebrand note: Back-to-School references become Classroom of Change in the rebuild.
+[Contact] Kiran Shah, phoenix@srlc-usa.org
+[Beneficiary partner logos: Tempe Community Action Agency, Andre House]
+Metadata
+Title tag: Volunteer in Arizona | SRLC Arizona Chapter (43 characters)
+Meta description: Join SRLC volunteers in Phoenix. Meal services, school drives, and community care in Arizona. Find your chapter and serve. SRLC USA. (132 characters)
+California
+California
+State Landing Page Wireframe
+Section 1: Hero
+Purpose
+Welcome the visitor to the state, name the centers, and invite local involvement.
+Content
+[Headline]
+California
+[Body]
+From the sunlit shores of San Diego to the bustling streets of San Francisco and Los Angeles, our centers unite local partners and volunteers in transformative acts of service. To get involved in these exciting activities, contact your local SRLC leaders!
+Section 2: Photo Gallery
+Purpose
+Show real chapter activity across the state.
+Content
+[Scrolling gallery, 8 photos from the current page: beach cleanup, volunteer events, San Francisco group photo]
+Section 3: State Impact Stats
+Content
+* 200+ Total volunteers mobilized
+* 2,200+ Total service hours
+* 85,000+ Total beneficiaries reached
+Section 4: Constantly Serving Communities
+Purpose
+One tab per center: what the center does, who leads it, and which local organizations it serves alongside.
+Content
+[Center tabs: San Diego, San Francisco, Los Angeles]
+San Diego
+[Sub-heading] Community Stewardship
+Throughout the year, our San Diego team actively serves the local community by participating in Adopt-a-Beach and Adopt-a-Highway initiatives. Volunteers dedicate their time to restoring coastal areas and maintaining roadways, helping preserve the natural beauty of the region while fostering a sense of environmental responsibility and civic pride.
+[Sub-heading] Hunger Relief
+Our San Diego volunteers also collaborate with partners, including Target and National Hunger Relief, to assemble food parcels and distribute warm meals. These efforts support individuals experiencing food insecurity at the Neil Good Day Center, ensuring access to nourishing food while offering care and compassion to those in need.
+[Contact] Punita Shah, sandiego@srlc-usa.org
+San Francisco
+[Sub-heading] Community Care
+In the heart of the Bay Area, our San Francisco team partners with organizations such as Noah’s Bagels and Safeway to support local shelters and community programs. Volunteers help prepare and distribute meals while organizing care packages filled with essential items to meet immediate community needs.
+[Sub-heading] Family & Student Support
+Our volunteers also assemble care packages containing diapers, baby wipes, and household essentials for families and students in San Leandro and Castro Valley through Building Futures. These efforts help support vulnerable families while strengthening stability and well-being across the surrounding communities.
+[Contact] Divya Doshi, sf@srlc-usa.org
+Los Angeles
+[Sub-heading] Education Support
+Across Los Angeles, our volunteers partner with organizations like Dreams for Schools to spark curiosity and learning among local students. By assembling STEM kits and backpacks filled with school supplies, the team helps provide children with the tools they need to succeed both inside and outside the classroom.
+[Sub-heading] Hunger Relief & Essential Needs
+In addition to education initiatives, our Los Angeles volunteers work with local partners to gather clothing, hygiene supplies, and pantry staples. These items are distributed to underserved communities, helping address food insecurity and essential needs while reinforcing a culture of generosity and service.
+[Contact] Aditi Shah, la@srlc-usa.org
+[Beneficiary partner logos: Dreams for Schools]
+Metadata
+Title tag: Volunteer in California | SRLC California Chapter (49 characters)
+Meta description: Join SRLC volunteers in California. Local meal services, school drives, and community care. Find your chapter and serve. SRLC USA. (130 characters)
+Georgia
+Georgia
+State Landing Page Wireframe
+Section 1: Hero
+Content
+[Headline]
+Georgia
+[Body]
+From the heart of Georgia, our Atlanta center radiates warmth and service through consistent food relief, school supply drives, and clothing distributions. Volunteers of all ages come together, transforming warehouses into food pantries and classrooms into brighter places of learning. To get involved, connect with your local SRLC leaders!
+Section 2: Photo Gallery
+Content
+[Scrolling gallery, 6 photos from the current page]
+Section 3: State Impact Stats
+Content
+* 250+ Volunteers mobilized
+* 4,300+ Service hours
+* 90,000+ Beneficiaries served
+* Atlanta Communities served
+Section 4: Constantly Serving Communities
+Content
+[Center tabs: Atlanta]
+Atlanta
+[Sub-heading] Hunger Relief
+Our Atlanta volunteers lead large-scale hunger relief efforts throughout the year, donating thousands of pounds of food to support families facing food insecurity. Working with partners such as North Fulton Community Charities, Meals by Grace, and New Bethel Church, these initiatives help ensure consistent access to nourishing meals across the community.
+[Sub-heading] Education & Essential Support
+In addition to food relief, our Atlanta team supports local schools by donating back-to-school supply kits filled with notebooks, pencils, and backpacks. Volunteers also organize clothing drives and distribute hygiene and essential items, helping uplift students, families, and individuals in need while restoring dignity and stability during challenging times.
+Rebrand note: back-to-school references become Classroom of Change in the rebuild.
+[Contact] Dipal Gandhi, atlanta@srlc-usa.org
+Metadata
+Title tag: Volunteer in Georgia | SRLC Georgia Chapter (43 characters)
+Meta description: Join SRLC volunteers in Atlanta. Meal services, school drives, and community care in Georgia. Find your chapter and serve. SRLC USA. (132 characters)
+
+
+
+
+
+
+Illinois
+Illinois
+State Landing Page Wireframe
+Section 1: Hero
+Content
+[Headline]
+Illinois
+[Body]
+In Illinois, SRLC volunteers serve with heart in partnership with local organizations to combat hunger and uplift education, with the Chicago center leading impactful initiatives that reach children, families, and neighbors in need.
+Section 2: Photo Gallery
+Content
+[Scrolling gallery, 5 photos from the current page]
+Section 3: State Impact Stats
+Content
+* 40+ Volunteers mobilized
+* 150+ Service hours
+* 2,400+ Beneficiaries served
+Section 4: Constantly Serving Communities
+Content
+[Center tabs: Chicago]
+Chicago
+[Sub-heading] Back-to-School Drive
+At the beginning of each school year, our Chicago team comes together while mobilizing friends and family to fund and assemble hundreds of back-to-school kits. Filled with essential supplies like notebooks, pencils, scissors, and gluesticks, these kits are distributed to Title I schools throughout the city, giving local children the tools they need to thrive in the classroom.
+Rebrand note: Back-to-School references become Classroom of Change in the rebuild.
+[Sub-heading] Hunger Relief
+Our Chicago volunteers also recently joined forces to pack over 500 peanut butter and jelly sandwiches and donate over 1,000 pounds of food. These contributions are delivered to The Salvation Army, Crystal Lake Food Pantry, Veterans Path to Hope, Frida’s Place, and Elgin Cares, ensuring that vulnerable individuals across the city and surrounding communities have access to nourishing meals.
+[Contact] Paavan Shah, chicago@srlc-usa.org
+[Beneficiary partner logos: The Salvation Army, Crystal Lake Food Pantry, Veterans Path to Hope, Frida’s Place]
+Metadata
+Title tag: Volunteer in Illinois | SRLC Illinois Chapter (45 characters)
+Meta description: Join SRLC volunteers in Chicago. Meal services, school drives, and community care in Illinois. Find your chapter and serve. SRLC USA. (133 characters)
+
+
+
+
+Indiana
+Indiana
+State Landing Page Wireframe
+Section 1: Hero
+Content
+[Headline]
+Indiana
+[Body]
+From the crossroads of Indianapolis to communities across the Hoosier State, our Indiana center embraces volunteering in many forms: feeding the hungry, uplifting youth, protecting the environment, and extending compassion beyond borders.
+Section 2: Photo Gallery
+Content
+[Scrolling gallery, 5 photos from the current page]
+Section 3: State Impact Stats
+Content
+* 40+ Volunteers mobilized
+* 700+ Service hours
+* 5,000+ Lives impacted
+Section 4: Constantly Serving Communities
+Content
+[Center tabs: Indianapolis]
+Indianapolis
+[Sub-heading] Hunger Relief
+Our Indianapolis volunteers regularly prepare and distribute meals, snacks, and grocery items to local shelters and families facing food insecurity. These ongoing efforts help provide nourishment and dignity while supporting individuals and households in need across the community through consistent, hands-on service.
+[Sub-heading] Local Community
+Beyond food relief, the Indianapolis team supports education and community well-being through supply drives, mentoring, and learning-focused activities that help children build confidence and stability. Volunteers also take part in environmental stewardship efforts, including Adopt-a-Street cleanups, helping care for shared spaces while reinforcing responsibility, pride, and long-term community health.
+[Contact] Sonal Sanghani, indianapolis@srlc-usa.org
+[Beneficiary partner logos: two partners shown, including We Care Charity]
+Metadata
+Title tag: Volunteer in Indiana | SRLC Indiana Chapter (43 characters)
+Meta description: Join SRLC volunteers in Indianapolis. Meal services, school drives, and community care in Indiana. Find your chapter and serve. SRLC USA. (137 characters)
+
+
+Massachusetts
+Massachusetts
+State Landing Page Wireframe
+Section 1: Hero
+Content
+[Headline]
+Massachusetts
+[Body]
+From the cobblestone streets of Beacon Hill to the vibrant harbors of the North Shore, our Boston community unites families and volunteers in service projects that nourish both body and spirit.
+Section 2: Photo Gallery
+Content
+[Scrolling gallery, 5 photos from the current page]
+Section 3: State Impact Stats
+Content
+* 20+ Volunteers mobilized
+* 300+ Beneficiaries served
+Section 4: Constantly Serving Communities
+Content
+[Center tabs: Boston]
+Boston
+[Sub-heading] Hunger Relief
+Our Boston volunteers come together across generations to assemble meal kits filled with breakfast foods, hearty meals, snacks, and beverages. Each bag is thoughtfully decorated with drawings and notes and delivered through Open Table, helping provide nourishment while offering moments of comfort and joy.
+[Sub-heading] Community Support
+In partnership with We Care Charity, volunteers also prepare and distribute lunch bags containing peanut butter and jelly sandwiches, juice, and granola bars. Shared with individuals experiencing homelessness in Salem, New Hampshire, these efforts help extend dignity, care, and consistent support to those in need.
+[Contact] Shaileja Mittal, boston@srmd.org
+[Beneficiary partner logos: Open Table, We Care Charity]
+Metadata
+Title tag: Volunteer in Massachusetts | SRLC Massachusetts Chapter (55 characters)
+Meta description: Join SRLC volunteers in Boston. Meal services, school drives, and community care in Massachusetts. Find your chapter and serve. SRLC USA. (137 characters)
+
+
+New Jersey
+New Jersey
+State Landing Page Wireframe
+Section 1: Hero
+Purpose
+Welcome the visitor to the state, name the centers, and invite local involvement.
+Content
+[Headline]
+New Jersey
+[Body]
+From the serene suburbs of Princeton, Parsippany, and Cherry Hill to the bustling centers of Jersey City and Edison, our centers come together with local partners and volunteers to serve with compassion and purpose. Join hands with SRLC New Jersey to make a difference in your community. Reach out to your local SRLC leaders to get involved!
+Section 2: Photo Gallery
+Purpose
+Show real chapter activity: distributions, drives, and volunteer events across the state.
+Content
+[Scrolling gallery, approximately 20 photos from the current page: Classroom of Change distributions, PB&J drives, oatmeal kit packing, winter blanket drive, youth donation events]
+Section 3: State Impact Stats
+Content
+* 150+ Volunteers mobilized
+* 1700+ Service hours
+* 40,000+ Beneficiaries served
+Section 4: Constantly Serving Communities
+Purpose
+One tab per center: what the center does, who leads it, and which local organizations it serves alongside.
+Content
+[Center tabs: Edison, Cherry Hill, Princeton, Parsippany]
+Edison
+[Sub-heading] Hunger Relief
+Our Edison volunteers support families in need through recurring food drives and meal distributions. By donating pantry staples and preparing lunch bags filled with sandwiches, fruit, and juice, these efforts help ensure access to nourishing meals for households facing food insecurity.
+[Sub-heading] Education & Community Support
+In addition to food relief, volunteers organize back-to-school drives to provide children with essential supplies and donate hygiene kits, toys, and books to patients in local hospitals. Clothing and blanket drives further extend care across the community, helping uplift families while reinforcing a steady commitment to dignity and support.
+[Contact] Chintan Sheth, edison@srlc-usa.org
+[Beneficiary partner logos: Township]
+Cherry Hill
+[Sub-heading] Hunger Relief
+Our Cherry Hill volunteers regularly prepare and serve meals while hosting community lunches for individuals experiencing homelessness at local shelters and churches. These efforts help provide nourishment and consistent care to those facing food insecurity across the community.
+[Sub-heading] Education & Community Support
+In addition to meal service, volunteers participate in neighborhood cleanups and organize donation drives that provide clothing, jackets, and hygiene items to families in need. The Cherry Hill team also supports education by delivering backpacks and school supplies through the Center for Family Services, helping equip students for a successful school year.
+[Contact] Ketki Shah, cherryhill@srlc-usa.org
+[Beneficiary partner logos: Cathedral Kitchen, St. Joseph’s, Asbury, Center for Family Services]
+Princeton
+[Sub-heading] Hunger Relief
+Our Princeton volunteers support local families through ongoing hunger relief efforts, preparing and distributing essential food items to individuals facing food insecurity. Working in partnership with RISE Food Pantry, these initiatives help provide consistent nourishment while addressing immediate community needs.
+[Sub-heading] Education & Community Support
+In addition to food relief, volunteers organize back-to-school drives at Klockner Elementary School to help students begin the year with essential supplies. The Princeton team also leads clothing and essentials drives, donating warm clothing, shoes, scarves, and blankets to families supported by HomeFront NJ, helping uplift vulnerable households with dignity and care.
+[Contact] Ketan & Bhavna Ravani, princeton@srmd.org
+[Beneficiary partner logos: RISE, HomeFront]
+Parsippany
+[Sub-heading] Hunger Relief
+Our Parsippany volunteers regularly support families facing food insecurity through recurring food distributions and community partnerships. Working with local delis, volunteers collect and donate hundreds of bagels and essential food items to nearby shelters and households in need.
+[Sub-heading] Community Support
+In addition to local efforts, the Parsippany team partners with corporate groups such as AIG to lead large-scale food drives that bring together dozens of volunteers. These initiatives help assemble and distribute essential supplies while strengthening community bonds and reinforcing a shared commitment to service and compassion.
+[Contact] Vikas Shah, parsippany@srlc-usa.org
+Metadata
+Title tag: Volunteer in New Jersey | SRLC New Jersey Chapter (49 characters)
+Meta description: Join SRLC volunteers in New Jersey. Local meal services, school drives, and community care. Find your chapter and serve. SRLC USA. (130 characters)
+
+
+New York
+New York
+State Landing Page Wireframe
+Section 1: Hero
+Content
+[Headline]
+New York
+[Body]
+Note: the current live page has no hero intro paragraph. It goes straight from the headline to the photo gallery. An intro needs to be written for the rebuild, matching the pattern of the other state pages (name the centers, invite involvement).
+Section 2: Photo Gallery
+Content
+[Scrolling gallery, 5 photos from the current page]
+Section 3: State Impact Stats
+Content
+* 150+ Volunteers mobilized
+* 1,800+ Service hours
+* 52,000+ Lives impacted
+Section 4: Constantly Serving Communities
+Content
+[Center tabs: Long Island, Manhattan, Queens]
+Long Island
+[Sub-heading] Hunger Relief
+Across Nassau and Suffolk counties, Long Island volunteers regularly gather and deliver fresh food and pantry staples to support families facing food insecurity. Working with partners such as Ronald McDonald House Charities, Soup to Nuts Soup Kitchen, The Interfaith Nutrition Network, Pax Christi Hospitality Center, Faith Mission Food Pantry, and Tri Community & Youth Agency, these efforts help keep community kitchens stocked and households supported.
+[Sub-heading] Education & Community Support
+In addition to food relief, volunteers lead back-to-school and mid-year drives that distribute backpacks and school supply kits to local schools and youth organizations. Support also extends to seniors and patients through meal deliveries, comfort-item donations to hospitals, and wellness-focused community programs, helping strengthen care and connection across Long Island.
+Rebrand note: back-to-school references become Classroom of Change in the rebuild.
+[Contact] Dharmendra Mehta, longisland@srlc-usa.org
+Manhattan
+[Sub-heading] Hunger Relief & Essential Support
+Our Manhattan volunteers assemble and deliver warm clothing and essential items to support children and families facing immediate need. Working in coordination with the NYC Mayor’s Office, these efforts help ensure that newly arrived and immigrant households receive timely, dignified assistance.
+[Sub-heading] Community Care
+Through focused distribution efforts, volunteers help provide stability and comfort to families navigating challenging transitions. These initiatives reinforce Manhattan’s commitment to compassionate service while addressing essential needs with care and respect.
+[Contact] Parth Kamdar, newyork.youth@srlc-usa.org
+Queens
+[Sub-heading] Hunger Relief
+Queens volunteers regularly prepare and distribute hearty meals and care packs to support families facing food insecurity. Partnering with organizations such as Ronald McDonald House Charities and Commonpoint Queens, these efforts help deliver ready-to-eat meals, fresh fruit, and pantry staples to local households.
+[Sub-heading] Community Support
+In addition to meal distribution, service days bring volunteers together with partners like Sairam Narayana Seva to expand outreach across the borough. Through collaboration and consistent service, the Queens team helps strengthen community connections while extending care to those in need.
+[Contact] Pramodini Mehta, queens@srlc-usa.org
+Metadata
+Title tag: Volunteer in New York | SRLC New York Chapter (45 characters)
+Meta description: Join SRLC volunteers in Long Island, Manhattan, and Queens. Meal services, school drives, and community care in New York. Find your chapter and serve. SRLC USA. (160 characters)
+
+
+
+
+Pennsylvania
+Pennsylvania
+State Landing Page Wireframe
+Section 1: Hero
+Content
+[Headline]
+Pennsylvania
+[Body]
+Note: the current live page has no hero intro paragraph. It goes straight from the headline to the photo gallery. An intro needs to be written for the rebuild, matching the pattern of the other state pages (name the centers, invite involvement).
+Section 2: Photo Gallery
+Content
+[Scrolling gallery, 5 photos from the current page]
+Section 3: State Impact Stats
+Content
+* 1,000+ Volunteers mobilized
+* 200+ Service hours
+* 4,000+ Lives impacted
+Section 4: Constantly Serving Communities
+Content
+[Center tabs: East Stroudsburg, Philadelphia]
+East Stroudsburg
+[Sub-heading] Mega Humanitarian Event
+Note: this heading appears on the live page with no body copy beneath it. Either content is missing in WordPress or the heading is a leftover. Needs content or removal in the rebuild.
+[Sub-heading] Food Security & Pantry Support
+Near the Shrimad Rajchandra Spiritual Center, volunteers built a reliable rhythm of pantry support: preparing PB&J materials, gathering bakery items (including bagels donated by a local deli), and delivering staples to Christ Episcopal Church Food Pantry, East Stroudsburg Salvation Army, Stroudsburg Wesleyan Pantry & SK, and Swiftwater Eglise Evangelique Renaissance Pantry. Each visit kept shelves a bit fuller and spirits a bit lighter.
+[Sub-heading] Hygiene & Clothing Essentials
+Care took practical form with hygiene kits and new clothing assembled and distributed through trusted local channels. Partners included Christ Episcopal Church Food Pantry and Violette Stand for the Children Home, ensuring families received exactly the kind of everyday essentials that ease the month.
+[Sub-heading] Back-to-School & Youth Support
+Volunteers readied kids for learning with school kits, sling bags, and essential kits shared through Monroe County Children Youth and Foster Care and Christ Episcopal Church, supporting students in neighborhoods surrounding the ashram.
+Rebrand note: back-to-school references become Classroom of Change in the rebuild.
+[Contact] Note: no contact is listed for East Stroudsburg on the live page. One needs to be added in the rebuild.
+Philadelphia
+[Sub-heading] Hunger Relief
+Our Philadelphia volunteers focus on steady, reliable nourishment to support families facing food insecurity. Through PB&J donations and pantry staple distributions, volunteers partner with organizations such as Somerset County Food Pantry and the People’s Pantry of Malvern to ensure neighbors have access to consistent, nourishing meals.
+[Sub-heading] Education & Community Support
+In addition to food relief, volunteers prepare and distribute school bags and essential supplies for students, including deliveries to Dr. Tanner G. Duckrey Public School and Monroe County Children & Youth and Foster Care. The team also supports families through donation drives benefiting the Coatesville Community Youth and Women’s Alliance, helping ensure household essentials remain within reach during challenging times.
+[Contact] Priti Jain, philadelphia@srlc-usa.org
+Metadata
+Title tag: Volunteer in Pennsylvania | SRLC Pennsylvania Chapter (53 characters)
+Meta description: Join SRLC volunteers in Pennsylvania. Local meal services, school drives, and community care. Find your chapter and serve. SRLC USA. (132 characters)
+
+
+Texas
+Texas
+State Landing Page Wireframe
+Section 1: Hero
+Content
+[Headline]
+Texas
+[Body]
+From the cultural vibrancy of Dallas to the creative energy of Austin and the welcoming neighborhoods of Houston, our centers weave compassion into the fabric of Texas life. Volunteers of all ages roll up their sleeves, prepare meals, and uplift underserved families. To join in, connect with your local SRLC leaders!
+Section 2: Photo Gallery
+Content
+[Scrolling gallery, 8 photos from the current page]
+Section 3: State Impact Stats
+Content
+* 300+ Volunteers mobilized
+* 1,150+ Service hours
+* 10,000+ Beneficiaries served
+Section 4: Constantly Serving Communities
+Content
+[Center tabs: Dallas, Austin, Houston]
+Dallas
+[Sub-heading] Hunger Relief
+In the heart of North Texas, our Dallas team organizes food drives and grocery distributions to support families facing food insecurity. Volunteers work closely with local partners to ensure that meals and essential items reach vulnerable households across the community.
+[Sub-heading] Community Engagement
+Partnering with organizations such as Community Partners of Dallas, Dallas Life, and Malvern Elementary School, our volunteers bring families and youth together through service. These efforts combine hands-on support with values-based activities that strengthen compassion and foster a shared spirit of service.
+[Contact] Dhaval Shah, dallas@srlc-usa.org
+Austin
+[Sub-heading] Hunger Relief
+Our Austin volunteers regularly prepare and deliver food packs and lunch bags to shelters, schools, and local families in need. These consistent efforts help provide nourishment while supporting community members experiencing food insecurity.
+[Sub-heading] Youth & Family Support
+Families and young volunteers often serve side by side at partner locations such as Texas Baptist Children’s Home, as well as schools, including McBee Elementary and Round Rock High School. Through these ongoing initiatives, volunteers help instill compassion, responsibility, and service from an early age.
+[Contact] Nirmal Khanderia, austin@srlc-usa.org
+Houston
+[Sub-heading] Hunger Relief
+In Houston, families gather in community kitchens to donate ingredients and prepare warm meals for neighbors experiencing hunger. These efforts help ensure that individuals and families have access to nourishing food during times of need.
+[Sub-heading] Community Partnerships
+Working alongside partners such as Loaves and Fishes Soup Kitchen and Pantry and Fort Bend ISD, our Houston volunteers support both food relief and educational needs. Through shared service, these initiatives build resilience, strengthen community bonds, and promote dignity and care.
+[Contact] Naresh Shah, houston@srlc-usa.org
+Metadata
+Title tag: Volunteer in Texas | SRLC Texas Chapter (39 characters)
+Meta description: Join SRLC volunteers in Dallas, Austin, and Houston. Meal services, school drives, and community care in Texas. Find your chapter and serve. SRLC USA. (150 characters)
+
+
+Washington
+Washington
+State Landing Page Wireframe
+Section 1: Hero
+Content
+[Headline]
+Washington
+[Body]
+In Washington, SRLC’s Seattle volunteers are dedicated to compassion, stepping in where the need is greatest. From gathering essential supplies to sharing snack boxes with shelters, their work is guided by a simple but powerful goal: making life a little brighter and easier for neighbors experiencing hardship.
+Section 2: Photo Gallery
+Content
+[Scrolling gallery, 5 photos from the current page]
+Section 3: State Impact Stats
+Content
+* 20+ Volunteers mobilized
+* Eastside Seattle area Communities served
+Section 4: Constantly Serving Communities
+Content
+[Center tabs: Seattle]
+Seattle
+[Sub-heading] Hunger Relief
+Our Seattle volunteers assemble and deliver snack boxes and essential food items to local organizations serving families and individuals in need throughout the Eastside region. These efforts help ensure that community members facing food insecurity receive consistent access to nourishing meals.
+[Sub-heading] Community Support
+In partnership with shelters such as New Bethlehem Day Center and The Sophia Way, our Seattle team supports individuals experiencing homelessness with both food and care. Through regular service efforts, volunteers help foster dignity, stability, and a sense of support during challenging times.
+[Contact] Jayesh Khandhar, (425) 753-2900
+[Beneficiary partner logos: New Bethlehem Day Center, The Sophia Way]
+Metadata
+Title tag: Volunteer in Washington | SRLC Washington Chapter (49 characters)
+Meta description: Join SRLC volunteers in Seattle. Meal services, school drives, and community care in Washington. Find your chapter and serve. SRLC USA. (135 characters)
+
+
+
+
+Washington, D.C.
+Washington, D.C.
+State Landing Page Wireframe
+Section 1: Hero
+Content
+[Headline]
+Washington, D.C.
+[Body]
+From the nation’s capital, our Washington, D.C. volunteers show up for neighbors through steady food relief, educational aid drives, environmental stewardship, and essential needs distributions.
+Section 2: Photo Gallery
+Content
+[Scrolling gallery, 5 photos from the current page]
+Section 3: State Impact Stats
+Content
+* 40+ Volunteers mobilized
+* 300+ Service hours
+* 2,600+ Lives impacted
+Section 4: Constantly Serving Communities
+Content
+[Center tabs: Washington, D.C.]
+Washington, D.C.
+[Sub-heading] Hunger Relief
+Our Washington, D.C. volunteers host monthly service events where families prepare and deliver sandwiches to individuals experiencing food insecurity. Working in partnership with organizations such as Martha’s Table, Artemis House, Christ House, Friendship Place – La Casa, and the Loudoun Homeless Shelter, these efforts help ensure consistent access to nourishing meals for those in need.
+[Sub-heading] Education & Essential Support
+In addition to food relief, volunteers assemble school supply kits for Title I schools in Fairfax County, helping students begin the school year with essential materials. The D.C. team also organizes annual hygiene kit drives, collecting personal care items that are distributed through local shelters and service organizations to support individuals experiencing homelessness with dignity and care.
+[Contact] Bella Desai, washingtondc@srlc-usa.org
+Metadata
+Title tag: Volunteer in Washington, D.C. | SRLC DC Chapter (47 characters)
+Meta description: Join SRLC volunteers in Washington, D.C. Meal services, school supply drives, and community care. Find your chapter and serve. SRLC USA. (136 characters)
+
+
+India
+India
+India Hub Page Wireframe (current live page: Our Institutes)
+Section 1: Hero
+Content
+[Headline]
+Our Institutes
+[Anchor tabs: Hospital & Research Center · Science College · High School · Skill Development Center · Animal Sanctuary · Women’s Empowerment]
+Note: the live page has no intro paragraph between the headline and the institute blocks. Consider a short one for the rebuild.
+Section 2: Institute Blocks
+Purpose
+One block per institute: name, approved short description, image, and a link to the institute’s detail page. Descriptions below are the approved verbatim versions from the Institute reference section of the Writing Guidelines. Where the live page differs, the delta is noted.
+Content
+Shrimad Rajchandra Hospital and Research Center (SRHRC)
+A NABH-accredited, 250-bed, multi-specialty charitable hospital in Dharampur, with 20+ departments and specialties, including a Neonatal Intensive Care Unit and District Early Intervention Center. The hospital was virtually inaugurated by Shri Narendra Modi, Hon’ble Prime Minister of India, in 2022.
+Live-page delta: the live hub uses “multi-speciality” (British spelling) and “Shri Narendrabhai Modi.” The approved version above governs.
+[Link: institute detail page]
+Shrimad Rajchandra Vidyapeeth (SRV) (Science College)
+The first science college across 238 villages of South Gujarat, offering B.Sc., B.Voc., M.Sc., PGDMLT, and certificate courses, paired with holistic learning and career support.
+[Link: institute detail page]
+Shrimad Rajchandra Gurukul (SRG) (High School)
+A progressive secondary and higher-secondary school for underserved students.
+[Link: institute detail page. Note: the live URL slug is /institutes/primary-school/ even though the institute is a secondary school. Fix the slug in the rebuild and add a redirect.]
+Shrimad Rajchandra Skill Development Center (SRSDC)
+A hub for relevant, technical courses preparing a new generation to enter the workforce.
+[Link: institute detail page]
+Shrimad Rajchandra Jivamaitridham (SRJMD) (Animal Sanctuary)
+An upcoming animal sanctuary comprising a 150-ward animal hospital, veterinary college, ahimsa experience center, and animal shelters.
+Live-page delta: the live hub spells it “ahimsa experience centre.” Approved spelling is “center.” “Ahimsa” stays because it is part of the facility’s proper name; do not add philosophical framing around it in surrounding prose.
+[Link: institute detail page]
+Shrimad Rajchandra Sarvamangal Center of Excellence for Women (SRCOEW)
+A state-of-the-art facility dedicated to the holistic development and empowerment of tribal women, reaching 10,000–12,000 women annually through an integrated program spanning awareness, social security, skilling, and leadership.
+Live-page deltas: the live hub omits “Sarvamangal” from the name, describes the facility as “upcoming,” and omits the 10,000–12,000 reach figure. It also links to a Causes page rather than an institute page; a dedicated COEW detail page needs creating in the rebuild. Confirm whether “Sarvamangal” belongs in the public-facing name and whether “upcoming” is still accurate.
+[Link: institute detail page, to be created]
+Metadata
+Title tag: Our Institutes in India | SRLC USA (34 characters)
+Meta description: Six permanent institutes in India: a hospital, schools, skill training, women's livelihoods, and animal care. See the work. SRLC USA. (133 characters)
+
+
+
+
+10 Care Program
+10 Care Program
+/our-work/10-care-program/
+Icons
+Hero
+[H1]
+10 Care Program
+[Intro]
+SRLC’s holistic, multi-pronged community support and development programs are powered by genuine empathy and selfless care by highly motivated volunteers. SRLC constantly endeavors to deliver high quality and sustainable initiatives for the welfare of humans, animals, and the environment.
+Jump Grid
+[Ten chips, each with its Care icon and name, anchor-linked to its panel below]
+01 Health Care  ·  02 Educational Care  ·  03 Child Care  ·  04 Woman Care  ·  05 Tribal Care  ·  06 Community Care  ·  07 Humanitarian Care  ·  08 Animal Care  ·  09 Environmental Care  ·  10 Emergency Relief Care
+Care Panels
+[One full-viewport parallax panel per Care, in this order. Each panel: Care icon, ghosted number, name as H2, one-liner, stat where listed. Each panel links through to its individual Care page (the Care name is the link). Jump grid and right-edge progress rail link to panels.]
+01 Health Care  [Icon: heart with pulse line]
+Delivering a charitable hospital and rural medical camps to provide life-changing medical solutions for those lacking access or resources.
+[Stat] 8.35M+ patients treated globally
+02 Educational Care  [Icon: open book]
+Equipping underserved children with quality education, unlocking their potential to learn, grow, and lead.
+[Stat] 3.28M+ students supported globally
+03 Child Care  [Icon: two children playing]
+Nurturing children’s lives through holistic care that nourishes their well-being, development, and happiness.
+04 Woman Care  [Icon: woman portrait]
+Transforming women’s lives with vocational training, education, and healthcare that fuel independence and opportunity.
+05 Tribal Care  [Icon: figure with wheat sprig]
+Supporting Indigenous communities in rural India through far-reaching social and economic programs.
+06 Community Care  [Icon: group of people]
+Strengthening local communities through projects such as organ donation campaigns, educational classes, and programs supporting incarcerated individuals.
+07 Humanitarian Care  [Icon: raised hands with heart]
+Bringing hope to those in crisis by distributing essential resources, whenever and wherever they are needed most.
+[Stat] 12.24M+ people reached globally
+08 Animal Care  [Icon: cow]
+Extending compassion and care to injured or abandoned animals through rescue, shelter, and treatment.
+[Stat] 450K+ animals served globally
+09 Environmental Care  [Icon: globe]
+Safeguarding the planet through bold conservation and sustainability efforts, such as tree planting, water conservation, and alternative energy resources.
+10 Emergency Relief Care  [Icon: parachute care package]
+Rapid response with food, medicine, and essentials during floods, earthquakes, pandemics, and more, as well as long-term rehabilitation for affected communities.
+[Stat] 8.90M+ lives supported globally
+Metadata
+Title tag: The 10 Care Program | Ten Ways to Care | SRLC USA
+Meta description: Ten areas of service, one promise: care for every life. Explore the 10 Care Program, from Health Care to Emergency Relief Care. SRLC USA.
+
+
+Health Care
+Health Care
+/our-work/10-care-program/health-care/
+Hero
+[H1]
+Health Care
+[Opening]
+Health Care delivers comprehensive medical services of high quality, free or deeply subsidized, for those who cannot access or afford them. From a charitable hospital to medical camps deep in rural India, the full spectrum of care reaches the people other systems overlook.
+[Hero image] Shows: a medical care moment, clinician and patient together. Mood: gentle, hopeful. Avoid: graphic clinical detail. Search: hospital camp checkup.
+The Work in India
+[Body]
+Rural communities in South Gujarat rank among the poorest in the country. Health Care covers primary, secondary, and tertiary care for those who cannot access or afford it, anchored by the Shrimad Rajchandra Hospital and Research Center and extended by outreach programs that carry treatment the last mile.
+[Program cards, one line each]
+Shrimad Rajchandra Hospital and Research Center: a multi-specialty charitable hospital serving the medically underserved at no cost or highly subsidized rates. [Links to the institute page]
+Neonatal Intensive Care Unit: specialized medical care for newborn babies.
+District Early Intervention Center: preventing and minimizing physical and neurological disabilities in newborns and infants.
+Medical Camps: free multi-diagnostic camps for the rural population.
+Health Awareness and Education: spreading health awareness across rural communities.
+[Section image] Shows: hospital campus or camp in progress. Mood: capable, steadfast. Search: hospital campus dawn, mega medical camp.
+In the United States
+[Body]
+SRLC USA chapters bring Health Care home: volunteers assemble hygiene kits for shelters and families in need, deliver comfort items, toys, and books to patients in local hospitals, and run wellness-focused programs for seniors and community members across our chapter cities.
+[Section image] Shows: US volunteers assembling hygiene kits or delivering to a hospital. Mood: neighborly. Search: hygiene kit drive volunteers, hospital donation delivery.
+Story
+[Story heading]
+Laxmibhai’s second chance
+[Story body]
+Laxmibhai, a 52-year-old farmer, was diagnosed with severe triple-vessel heart disease, the kind of diagnosis that ends a working life in a place without care. Instead, he received the region’s first-ever cardiothoracic bypass surgery, performed entirely free of charge. Today he is back on his feet.
+[Photo and consent confirmation with Millen before the story runs with a face.]
+Impact
+[Stat]
+8.35M+ patients treated globally
+Giving
+[FINANCE-PENDING: replace $XX before build]
+$XX provides a family with essential medicines for one month.
+[CTA button]
+Support Health Care
+Metadata
+Title tag: Health Care | Free and Affordable Treatment | SRLC USA
+Meta description: Hospitals, camps, and clinics bringing treatment to families who need it most. 8.35M+ patients treated globally. Support Health Care. SRLC USA.
+
+
+Educational Care
+Educational Care
+/our-work/10-care-program/educational-care/
+Hero
+[H1]
+Educational Care
+[Opening]
+Educational Care provides children in need with education, value-based learning, and programs designed for their overall development, from schools and scholarships to the supplies a student needs to start the year ready.
+[Hero image] Shows: students with new supplies. Mood: bright. Avoid: empty classrooms. Search: students backpacks classroom.
+The Work in India
+[Body]
+Access to education is limited in one of the major tribal belts of South Gujarat. Educational Care answers with permanent schools, higher education, skilling, and outreach that carries learning to villages without it.
+[Program cards, one line each]
+Shrimad Rajchandra Vidyapeeth: the first science college across 238 villages of South Gujarat. [Links to the institute page]
+Shrimad Rajchandra Gurukul: a progressive secondary and higher-secondary school for underserved students. [Links to the institute page]
+Shrimad Rajchandra Skill Development Center: technical courses preparing a new generation to enter the workforce. [Links to the institute page]
+Educational Outreach: programs carrying learning and school support into surrounding villages.
+[Section image] Shows: students engaged in a classroom. Mood: bright. Search: classroom students engaged, science college lab.
+In the United States
+[Body]
+Across the United States, Classroom of Change fills backpacks with the supplies students at Title I schools need to begin the year ready. Chapter volunteers also assemble STEM kits with partners like Dreams for Schools in Los Angeles and deliver school supplies to partner schools from New Jersey to Texas.
+[Section image] Shows: backpack or supply distribution at a US school. Mood: bright, forward-looking. Search: backpack distribution school, STEM kit assembly.
+Story
+[Story heading]
+Harshil’s rank
+[Story body]
+Harshil Patel was not among the top performers at Shrimad Rajchandra Vidyapeeth. His faculty saw something anyway, and mentored him through the NET exam. He cleared it with All India Rank 71. Today he is a PhD student in Chemistry at IIT Bombay.
+[Photo and consent confirmation with Millen before the story runs with a face.]
+Impact
+[Stat]
+3.28M+ students supported globally
+Giving
+[FINANCE-PENDING: replace $XX before build]
+$XX covers a child's school essentials for a full academic term.
+[CTA button]
+Support Educational Care
+Metadata
+Title tag: Educational Care | Schools and Scholarships | SRLC USA
+Meta description: Schools, scholarships, and supplies for students with potential and no resources. 3.28M+ students supported globally. SRLC USA.
+
+
+Child Care
+Child Care
+/our-work/10-care-program/child-care/
+Hero
+[H1]
+Child Care
+[Opening]
+Child Care nurtures children’s lives through care that supports their well-being, development, and happiness, beginning with the most fragile: newborns and infants who need specialized medical attention.
+[Hero image] Shows: children playing together, joyful. Mood: warm. Avoid: distress framing. Search: children smiling program.
+The Work in India
+[Body]
+The youngest patients receive dedicated care through specialized facilities at the Shrimad Rajchandra Hospital and Research Center, with programs that follow a child from birth through early development.
+[Program cards, one line each]
+Neonatal Intensive Care Unit: specialized medical care for newborn babies.
+District Early Intervention Center: preventing and minimizing physical and neurological disabilities in newborns and infants, with therapy that continues through early childhood.
+[Section image] Shows: gentle pediatric care moment. Mood: tender, hopeful. Avoid: clinical distress. Search: pediatric care smile, early intervention therapy.
+In the United States
+[Body]
+US chapters stand with children in their communities: volunteers assemble care packages of diapers, wipes, and essentials for families through partners like Building Futures in the Bay Area, and support children's homes and foster care agencies from Texas to Pennsylvania with supplies, toys, and school kits.
+[Section image] Shows: volunteers packing children's care packages. Mood: warm. Search: diaper drive volunteers, children donation packing.
+Story
+[Story heading]
+Kunj takes his own steps
+[Story body]
+Kunj was diagnosed with cerebral palsy at age two. What followed was complex surgery and years of physiotherapy at the District Early Intervention Center, appointment after appointment, small gain after small gain. Today, Kunj stands and walks independently.
+[Photo and consent confirmation with Millen before the story runs with a face.]
+Giving
+[FINANCE-PENDING: replace $XX before build]
+$XX provides a child with nutrition support for one month.
+[CTA button]
+Support Child Care
+Metadata
+Title tag: Child Care | A Strong Start for Children | SRLC USA
+Meta description: Nutrition, health, and early support for children in need. Give a child a strong start with SRLC USA, a 501(c)(3) nonprofit.
+
+
+Woman Care
+Woman Care
+/our-work/10-care-program/woman-care/
+Hero
+[H1]
+Woman Care
+[Opening]
+Woman Care transforms women’s lives with vocational training, education, and healthcare that fuel independence and opportunity.
+[Hero image] Shows: women in training or at work. Mood: confident. Avoid: pity framing. Search: vocational training women.
+The Work in India
+[Body]
+The Shrimad Rajchandra Sarvamangal Center of Excellence for Women anchors this work: a state-of-the-art facility dedicated to the development and empowerment of tribal women, reaching 10,000 to 12,000 women annually through an integrated program spanning awareness, social security, skilling, and leadership. [Confirm public-facing name per the pending Sarvamangal ruling; links to the institute page]
+[Section image] Shows: women in training, artisans at work. Mood: confident, dignified. Search: vocational training women, artisan craft.
+In the United States
+[Body]
+US chapters extend care to women facing hardship, supporting women's shelters like The Sophia Way in the Seattle area and organizations like the Coatesville Community Youth and Women's Alliance in Pennsylvania with essentials, meals, and donation drives.
+[Section image] Shows: volunteers preparing donations for a women's shelter. Mood: respectful, warm. Search: shelter donation drive volunteers.
+Story
+[STORY SLOT: a Center of Excellence for Women artisan story fits best here. Not yet on the approved roster; source with the India team, written consent and photo approval required.]
+Giving
+[FINANCE-PENDING: replace $XX before build]
+$XX funds skills training for one woman for one month.
+[CTA button]
+Support Woman Care
+Metadata
+Title tag: Woman Care | Skills and Livelihoods for Women | SRLC USA
+Meta description: Training, artisanship, and steady income for women building independence. Support Woman Care with SRLC USA, a 501(c)(3) nonprofit.
+
+
+Tribal Care
+Tribal Care
+/our-work/10-care-program/tribal-care/
+Hero
+[H1]
+Tribal Care
+[Opening]
+Tribal Care supports Indigenous communities in rural India through far-reaching social and economic programs, carrying health, education, and opportunity to communities that other systems overlook.
+[Hero image] Shows: rural community program in progress. Mood: dignified. Avoid: poverty-gaze shots. Search: rural community program.
+The Work in India
+[Body]
+Thousands of people in tribal communities cannot reach hospitals or camps: they cannot leave work, cannot afford the journey, or are too old to travel. So the care travels to them, into the remote areas of Dharampur, Valsad, Vansda, Chikhli, and Kaprada.
+[Program cards, one line each]
+Mobile Medical Care: daily teams of doctors, paramedics, and trained staff visiting tribal families at home with free medical assistance.
+Mobile Dental Clinic: a dental van making regular visits to remote tribal areas for checkups and treatment.
+Consolidated Community Development: a village-by-village program that connects with residents, understands their needs, and develops local leaders, farmers, women, and youth.
+[Section image] Shows: mobile medical van or home visit in a village. Mood: dignified, on their own ground. Avoid: poverty-gaze shots. Search: mobile health camp village, community health visit.
+Story
+[Story heading]
+Madhubhai’s diagnosis
+[Story body]
+Decades of tobacco chewing had led to oral cancer, and Madhubhai, a farmer, did not know it. A mega medical camp reached his community before the disease reached the point of no return. He received a free, life-saving surgery, and the counseling to stay well after it.
+[Photo and consent confirmation with Millen before the story runs with a face.]
+Giving
+[FINANCE-PENDING: replace $XX before build]
+$XX brings mobile healthcare to a remote family for one month.
+[CTA button]
+Support Tribal Care
+Metadata
+Title tag: Tribal Care | Reaching Remote Communities | SRLC USA
+Meta description: Health, education, and opportunity carried to remote communities. Support Tribal Care with SRLC USA, a 501(c)(3) nonprofit.
+
+
+Community Care
+Community Care
+/our-work/10-care-program/community-care/
+Hero
+[H1]
+Community Care
+[Opening]
+Community Care undertakes initiatives that strengthen community bonding, from organ donation campaigns and educational classes to programs supporting incarcerated individuals.
+[Hero image] Shows: community event, mixed group mid-activity. Mood: connected. Search: community program event.
+The Work in India
+[Body]
+Community Care builds stronger communities through campaigns and welfare projects: organ donation pledge drives spanning cities in many countries, outreach programs bringing care and rehabilitation support to incarcerated individuals, and village development work that identifies local needs and builds local leadership.
+[Program cards, one line each]
+Organ Donation Campaigns: pledge drives that have reached cities across many countries.
+Outreach for Incarcerated Individuals: programs bringing care, learning, and rehabilitation support into prisons.
+Consolidated Community Development: connecting with villages, understanding their needs, and developing local leaders.
+[Section image] Shows: community program or campaign event. Mood: connected. Search: community program event, pledge campaign.
+In the United States
+[Body]
+In the United States, chapters strengthen the neighborhoods they live in: serving meals and handwritten thank-you cards to police officers, firefighters, and nurses, hosting community lunches, and organizing neighborhood cleanups from New Jersey to California.
+[Section image] Shows: volunteers with first responders or a community lunch. Mood: neighborly gratitude. Search: first responder appreciation, community lunch volunteers.
+Story
+[STORY SLOT: a US chapter story fits well here, one volunteer or one neighborhood program with a named person and specific outcome. Source from a chapter lead, written consent required.]
+Giving
+[FINANCE-PENDING: replace $XX before build]
+$XX supports a community program serving one neighborhood for one week.
+[CTA button]
+Support Community Care
+Metadata
+Title tag: Community Care | Local Programs That Last | SRLC USA
+Meta description: Local programs that make neighborhoods stronger, run by the neighbors they serve. Support Community Care. SRLC USA.
+
+
+Humanitarian Care
+Humanitarian Care
+/our-work/10-care-program/humanitarian-care/
+Hero
+[H1]
+Humanitarian Care
+[Opening]
+Humanitarian Care brings hope to those in crisis by distributing essential resources, whenever and wherever they are needed most.
+[Hero image] Shows: distribution of essentials. Mood: urgent but hopeful. Search: relief distribution volunteers.
+The Work in India
+[Body]
+With purposeful compassion, Humanitarian Care helps ease pain and suffering through sustenance, emotional support, and vocational support, leading toward self-reliance and dignity. The work spans homes for people with physical disabilities, support for elder care homes and homes for the terminally ill, vocational training for families with low incomes, food distribution for people experiencing homelessness, and mass distribution of essential items to those in need.
+[Section image] Shows: distribution of essentials, hands passing supplies. Mood: urgent but hopeful. Avoid: suffering-forward imagery. Search: relief distribution volunteers.
+In the United States
+[Body]
+This is the heartbeat of US chapter service: meal preparation and service at shelters and community kitchens in nearly every chapter city, winter clothing and blanket drives, and essentials for newly arrived immigrant families in partnership with the NYC Mayor's Office.
+[Section image] Shows: US volunteers serving meals at a shelter. Mood: warm, hands-on. Search: meal service volunteers shelter.
+Story
+[STORY SLOT: no roster story is a natural fit; source one distribution story with a named person, written consent required.]
+Impact
+[Stat]
+12.24M+ people reached globally
+Giving
+[FINANCE-PENDING: replace $XX before build]
+$XX provides meals and essentials for a family for one week.
+[CTA button]
+Support Humanitarian Care
+Metadata
+Title tag: Humanitarian Care | Meals and Essentials | SRLC USA
+Meta description: Meals, essentials, and dignity for people facing hardship. 12.24M+ reached globally. Support Humanitarian Care. SRLC USA.
+
+
+Animal Care
+Animal Care
+/our-work/10-care-program/animal-care/
+Hero
+[H1]
+Animal Care
+[Opening]
+Animal Care extends compassion to injured and abandoned animals through rescue, shelter, and treatment.
+[Hero image] Shows: an animal being tended. Mood: tender. Search: animal shelter care cow.
+The Work in India
+[Body]
+Shrimad Rajchandra Jivamaitridham anchors this work: an animal sanctuary comprising an animal hospital, veterinary college, ahimsa experience center, and animal shelters. Satellite clinics and animal outreach programs extend rescue and treatment into the surrounding region. [Links to the institute page]
+[Section image] Shows: an animal being treated or fed, eye contact welcome. Mood: tender. Avoid: animals in visible distress. Search: animal care feeding, veterinary treatment.
+Story
+[STORY SLOT: a Jivamaitridham rescue story, sourced with the India team. One animal, one rescue, one recovery.]
+Impact
+[Stat]
+450K+ animals served globally
+Giving
+[FINANCE-PENDING: replace $XX before build]
+$XX funds treatment for one rescued animal.
+[CTA button]
+Support Animal Care
+Metadata
+Title tag: Animal Care | Rescue and Sanctuary | SRLC USA
+Meta description: Rescue, veterinary treatment, and sanctuary for animals in need. 450K+ animals served globally. Support Animal Care. SRLC USA.
+
+
+Environmental Care
+Environmental Care
+/our-work/10-care-program/environmental-care/
+Hero
+[H1]
+Environmental Care
+[Opening]
+Environmental Care safeguards the planet through conservation and sustainability efforts, such as tree planting, water conservation, and alternative energy resources.
+[Hero image] Shows: tree planting or cleanup in progress. Mood: fresh, green. Search: tree planting volunteers.
+The Work in India
+[Body]
+Environmental Care works toward the protection and sustainability of the environment through efforts including the efficient use of natural resources, tree planting, water conservation, alternative energy resources, and eco-friendly products.
+[Section image] Shows: tree planting in progress. Mood: fresh, green. Search: tree planting volunteers.
+In the United States
+[Body]
+US chapters are stewards of their own backyards: Adopt-a-Beach and Adopt-a-Highway programs in Southern California, Adopt-a-Street cleanups in Indianapolis, and neighborhood cleanup drives across chapter cities.
+[Section image] Shows: US volunteers at a beach or street cleanup. Mood: energetic. Search: beach cleanup volunteers, adopt a highway.
+Story
+[STORY SLOT: an Earth Day or local cleanup story fits well, one volunteer or one site with a specific outcome. Source from a chapter lead.]
+Giving
+[FINANCE-PENDING: replace $XX before build]
+$XX plants and tends trees in a community that needs shade and clean air.
+[CTA button]
+Support Environmental Care
+Metadata
+Title tag: Environmental Care | Local Stewardship | SRLC USA
+Meta description: Tree planting, cleanups, and conservation in the communities we serve. Support Environmental Care. SRLC USA.
+
+
+Emergency Relief Care
+Emergency Relief Care
+/our-work/10-care-program/emergency-relief-care/
+Hero
+[H1]
+Emergency Relief Care
+[Opening]
+Emergency Relief Care provides immediate response and long-term rehabilitation to communities affected by natural disasters and crises.
+[Hero image] Shows: relief supplies or response team in motion. Mood: resolute. Avoid: victims in distress. Search: emergency relief supplies.
+The Work in India
+[Body]
+When floods, droughts, or public health emergencies strike, relief arrives in two waves: immediate essentials in the first days, then the long work of rebuilding: schools and homes reconstructed for families who lost everything, dedicated care facilities during the pandemic, and door-to-door support for the communities hardest hit.
+[Section image] Shows: relief supplies staged or rebuilding work. Mood: resolute, capable. Avoid: disaster victims in distress. Search: emergency relief supplies, rebuilding homes.
+Story
+[STORY SLOT: one family, one disaster, one recovery. Source with the India team from a recent relief response, written consent required.]
+Impact
+[Stat]
+8.90M+ lives supported globally
+Giving
+[FINANCE-PENDING: replace $XX before build]
+$XX delivers an emergency essentials kit to a family within days of a disaster.
+[CTA button]
+Support Emergency Relief Care
+Metadata
+Title tag: Emergency Relief Care | Rapid Disaster Response | SRLC USA
+Meta description: Food, medicine, and essentials delivered fast when disaster strikes. 8.90M+ lives supported globally. SRLC USA.
+
+
+Our Inspiration
+Our Inspiration
+/about/our-inspiration/  ·  Source: SRA Inspiration & Founder page, adapted where marked
+Hero
+[Eyebrow]
+A timeless legacy flowing through a present-day visionary
+[H1]
+Our Inspiration
+[Hero image: the Lord Mahavir and Pujya Gurudevshri figures artwork from the SRA page, pending asset reuse confirmation]
+Our Roots
+[Section label] Our Roots
+[H2] Jainism and Lord Mahavir
+Jainism, one of the world’s oldest spiritual philosophies, teaches enduring, universal principles of love and kindness.
+Lord Mahavir, a revered spiritual leader who graced the Indian subcontinent over 2,500 years ago, illuminated a path to inner peace through understanding and kindness toward all, a message that continues to guide the modern world.
+Our Inspiration
+[Section label] Our Inspiration
+[H2] Shrimad Rajchandraji
+In the late 19th century, the self-realized saint and poet-philosopher Shrimad Rajchandraji illuminated the wisdom of Lord Mahavir with remarkable clarity, shaping a spiritual path for a new era.
+Grounded in direct inner experience, He articulated the subtle truths of spirituality through His own life, valuable teachings, and influential writings, including Shri Atmasiddhi Shastra, blending deep philosophical insights with practical steps for inner transformation.
+Shrimad Rajchandraji’s formative influence on Mahatma Gandhi’s philosophy of truth and non-violence stands as a testament to the enduring impact of His message, which continues to resonate today.
+[Pull-quote block]
+Standing at the foot of a hill, all that is visible are your immediate surroundings. Upon ascending the peak, you can see all of existence.
+Shrimad Rajchandraji was at that vantage point.
+Every word emerged from inner experience, every expression from universal vision, and every message from limitless compassion.
+Our Founder
+[Section label] Our Founder
+[H2] Pujya Gurudevshri Rakeshji
+[Sub-heading] Legacy of Wisdom
+Pujya Gurudevshri Rakeshji is an enlightened visionary, global ambassador of peace, and the founder of Shrimad Rajchandra Mission Dharampur (SRMD). Following the revered footsteps of Shrimad Rajchandraji, Pujya Gurudevshri carries forward a legacy of timeless wisdom, translating profound spiritual truths into transformative teachings that make spirituality accessible to all.
+[Sub-heading] Steady Force of Compassion
+Through Shrimad Rajchandra Love and Care (SRLC), Pujya Gurudevshri translates compassion into action. Guided by His philosophy of empathy and universal harmony, SRLC is a comprehensive program that addresses critical needs in healthcare, education, environmental sustainability, and social welfare, earning Special Consultative Status with the United Nations Economic and Social Council (ECOSOC) for its far-reaching impact.
+[Sub-heading] A Movement Reaching America [adapted from the SRA original]
+That vision now lives across the United States. Through SRLC USA, volunteers in communities nationwide carry this spirit of seva, selfless service, into action: serving their neighborhoods through the 10 Care Program and supporting institutions in India and initiatives around the world.
+[Pull-quote block]
+Spearheading a global movement, while remaining steady in universal peace and untethered compassion.
+Pujya Gurudevshri is the unmoved mover.
+Our Philosophy
+[Section label] Our Philosophy
+[H2] Inner Awakening and Compassionate Action
+Pujya Gurudevshri teaches a simple and complete path. Inner awakening brings clarity and harmony within, and love naturally flows outward as kindness in action. This path leads toward lasting peace and compassionate living in the world.
+Voices of Respect
+[Section label] Voices of Respect
+[H3] A Movement of Interfaith and International Harmony
+A beacon of unity that transcends faiths and boundaries, Pujya Gurudevshri’s message and Mission resonate across traditions and communities.
+[Image with caption: Pujya Gurudevshri and His Holiness the Dalai Lama at the World Alliance of Religions: Peace Summit in Seoul, South Korea (2014).]
+[Testimonial carousel, 6 slides]
+“No matter how much I praise Gurudev Rakeshji, it will not be enough. He walks on the path of right knowledge as well as the path of selfless action. To have the opportunity of meeting Rakeshji, I consider it my great fortune.”
+– Honorable Narendra Modi, Prime Minister of India
+“One of the great things that has come out of Jainism is this Mission and the great work that it is doing now as I understand, all over the world, for humanity, and may this movement go onwards and upwards.”
+– Honorable David John Clarke, Member, New South Wales Legislative Council, Australia
+“This is not a meet of knowledge, but a meet of love. He has such a pleasant personality. He has immense love for saints, no matter which saint it is.”
+– His Holiness Mahant Swami Maharaj, Spiritual Head, BAPS Swaminarayan Sanstha
+“My most beloved, most revered Rakeshji. You are invaluable to this world. May You keep spreading such light.”
+– Sri Sri Ravi Shankar, Founder and Spiritual Head, The Art of Living
+“We have all become confined in our pigeon holes, while this saint has broken down all walls and come out. One needs to have such magnanimity.”
+– Pujyashri Morari Bapu, Renowned Ram Katha Narrator
+“Each time I see Him, it’s a special experience. So calm and quiet and so peaceful. To experience true peace, you don’t need to listen to much talk. You just need to come closer to Gurudev Rakeshji, and just sit.”
+– Venerable Bhikkhu Sanghasena, Founder, Mahabodhi International Meditation Centre, Ladakh
+Closing Bridge
+[Body]
+That is the inspiration. The rest of this site is what it looks like in practice: ten Care programs, institutions in India, medical camps in Africa, and volunteers across the United States.
+[CTA]
+Explore the 10 Care Program
+Metadata
+Title tag: Our Inspiration | Shrimad Rajchandraji | SRLC USA
+Meta description: The story and philosophy behind SRLC’s work: Shrimad Rajchandraji, Pujya Gurudevshri Rakeshji, and the movement of selfless service they inspire. SRLC USA.
+Financials
+Financials
+/about/financials/  ·  Redirects in: /financials/ and /annual-reports/
+Hero
+[H1]
+Financials
+[Opening]
+We know how much it matters to you that your gift reaches the people it’s meant for. It matters just as much to us. That’s why every filing, report, and financial record we produce is published here in full, for anyone to read.
+Recognition
+[Badge row, three items, same assets and attribution labels as the homepage recognition cluster. Each badge links to its verification page.]
+SRLC (Global): UN ECOSOC Special Consultative Status, 2020
+SRLC USA: Top-Rated on GreatNonprofits [links to the SRLC USA GreatNonprofits listing]
+SRLC USA: Candid Gold Transparency Seal, 2025 [links to the SRLC USA Candid profile]
+Documents by Year
+[Document card grid, newest first. The annual report renders as one featured wide card with its cover image and a download button; each Form 990 is a uniform small card: year, document type, download link. All self-hosted PDFs. Future years append as new cards.]
+2024–2025
+Annual Report 2024–2025
+2024 Form 990
+2023
+2023 Form 990
+2022
+2022 Form 990
+2021
+2021 Form 990
+2020
+2020 Form 990
+2019
+2019 Form 990
+2018
+2018 Form 990
+2017
+2017 Form 990
+Legal and Contact Block
+Shrimad Rajchandra Love and Care USA is a registered 501(c)(3) nonprofit organization. EIN 81-5162502. Contributions are tax deductible to the extent permitted by law.
+Additional financial information is available on request at info@srlc-usa.org.
+Metadata
+Title tag: Financials | Form 990 and Reports | SRLC USA
+Meta description: Annual filings, financial statements, and governing documents, published in full. SRLC USA is a 501(c)(3) nonprofit. EIN on page.
+Needed From Finance
+Eight 990 PDFs with Schedule B redacted, for self-hosting.
+
+
+Volunteer
+Volunteer page
+/volunteer/
+Section 1: Hero
+[H1]
+Volunteer with SRLC USA
+[Subhead]
+Thousands of people across 25+ US cities give their time, their skills, and their energy to SRLC USA. Not because they have to. Because service is who they are.
+[Flag: “25+ US cities” in the sub-heading is not on the A4 approved statistics list. Document A Change Log notes this figure is pending roster reconciliation. Cannot be published until Naman confirms the reconciliation is complete and the figure is approved. Decision needed: confirm and add to the approved list, change the figure, or remove.]
+[Trust bar]
+[Editorial preset specifies trust bar “Not used.” Content doc calls for it. Naman to decide: remove to match Editorial preset and record the override in Document C, or retain as an exception.]
+501(c)(3) Nonprofit
+[Flag: “25+ US Cities” badge uses the same unapproved figure as the sub-heading. Same resolution applies.]
+Parent body: UN ECOSOC Special Consultative Status
+[Flag: “400+ Community Partners” badge removed — not on the A4 approved statistics list. Naman to confirm whether this figure has been approved or should remain off the page.]
+[CTA]
+Volunteer With Us
+[Secondary CTA — text link beneath button]
+Find My State’s Chapter
+[Flag: Content doc links this CTA to /us-chapters. Current site architecture uses 12 state landing pages, not city-level pages. Label updated to “Find My State’s Chapter” to reflect the state-page structure. Naman to confirm: (a) correct destination URL and (b) whether the label should reference “state” or “city.”]
+[Image: Group of eight to ten SRLC USA volunteers at an active community event, working rather than posed. Warm natural light. Landscape crop. Avoid posed smiles, religious or spiritual symbols, India-specific attire or decor, single-person portraits. Search terms: community volunteers service event nonprofit teamwork multicultural.]
+________________
+
+
+Section 2: What volunteers build here
+[H2]
+More than volunteering. A community.
+[Four-column card grid on desktop. Each column: icon above bold title, two to three sentences of body copy. Two-by-two grid on tablet. Single-column stack on mobile. Icon set sourced from Avada icon library or a consistent line-icon pack.]
+[Card: Community]
+SRLC USA’s 25+ chapters are built by people who show up for each other. At every event, volunteers meet neighbors, professionals, and students who share a commitment to service. Many join for the cause and stay for the community.
+[Card: Purpose]
+Every event organized, every food distribution completed, every campaign supported reaches real people across the United States, India, and Africa. The effort on the ground connects directly to lives changed.
+[Card: Growth]
+Leadership, event management, fundraising, communications, and logistics are all part of active chapter work. The skills built through SRLC USA are practical and lasting. Many of our chapter leaders developed those skills here.
+[Card: Belonging]
+Service is not something SRLC USA volunteers do occasionally. For many, it becomes part of how they identify. That is why so many volunteers who start with a single event stay involved for years.
+[Flag: Original “Belonging” card used “seva” twice. Seva is locked to Our Inspiration only per A4 Standing Rules. Card rewritten to preserve the meaning without the restricted term. Naman to confirm the replacement copy is acceptable.]
+[Flag: Content doc note reads “Confirm which of these nine roles are active needs across current chapters.” The roles referenced appear only in the Section 6 form dropdown, which lists 11 options, not nine. Naman to clarify: (a) was the note misplaced, (b) should any dropdown options be removed, and (c) does Section 2 have any missing content.]
+[Image: Two to three volunteers in conversation at a chapter event. Candid, shoulders-up crop. Warm but not high-energy. Avoid posed group photos, religious symbols, India-specific cultural markers. Search terms: nonprofit volunteers conversation community service indoor candid.]
+________________
+
+
+Section 3: Getting started is simple
+[H2]
+Getting started is simple
+[Three-column numbered layout on desktop. Single-column stack on mobile. Oversized step numerals (01, 02, 03) in SRLC USA accent color above each step title. Thin vertical divider between columns optional.]
+[Step 1: Sign up]
+Fill out the form at the bottom of this page. Share where you are, what skills or interests you can offer, and how much time you have each month. It takes under two minutes.
+[Step 2: Meet your chapter]
+A coordinator from the SRLC chapter in your area will reach out within a few days. They will introduce themselves and walk you through what the chapter is currently working on.
+[Step 3: Show up]
+Attend your first event. Meet the people who make the chapter run. Most volunteers return for the next one within a month.
+[Flag: Step 3 in the content doc originally read “Experience what seva feels like in practice.” Seva is locked to Our Inspiration only per A4 Standing Rules. Rewritten above to remove the term entirely. Naman to confirm the replacement is acceptable.]
+[Image: Optional. Horizontal banner showing a chapter event in progress. Active, candid, volunteers engaged in a visible task. Avoid spiritual symbols, posed shots. Search terms: nonprofit community event volunteers setup tables indoor.]
+________________
+
+
+Section 4: Volunteer story
+[Flag: No named volunteer story exists in either source document. Editorial preset requires one story. This section cannot be drafted without an approved source. Naman to supply: volunteer’s first and last name, city, chapter role, how long they have been involved, and one to two sentences about what they do and what they have gained. Story must be factual and from an approved source; do not invent. This section can be removed for launch and added in Phase 2 if no approved story is available in time.]
+[H2]
+[Flag: No heading copy available. Heading is dependent on volunteer story. Draft once story is supplied.]
+[Two-column card on desktop. Left column: volunteer headshot — consent documentation required per Media Bank SOP before use. Right column: volunteer name, city, role, and two to three sentences of body copy. Pull quote optional, set at larger type. Single column on mobile, photo above text.]
+[Image: Approved volunteer headshot, candid preferred over posed. Clear background or chapter event context. Mood: warm but restrained. Avoid spiritual symbols or SRMD visual identifiers. Consent documentation must be on file.]
+________________
+
+
+Section 5: The work volunteers support
+[H2]
+The work volunteers support
+[Body]
+SRLC USA is the U.S. chapter of Shrimad Rajchandra Love and Care, a global humanitarian organization. Collectively, the initiatives that SRLC USA volunteers help fund and organize are part of a network that has reached 33M+ lives globally. Across medical programs alone, the parent organization has served 8.35M+ patients globally.
+[Flag: Three statistics are required by the Editorial preset. Two approved stats are used above: 33M+ lives globally and 8.35M+ patients globally. A third stat is needed. Approved options: 3.28M+ students globally (Educational Care), 12.24M+ people reached through Humanitarian Care globally, or 8.90M+ lives supported through Emergency Relief Care globally. Naman to select the one most directly connected to the work US volunteers support. The chosen stat must appear with “globally” labeled per A4.]
+[Three-stat display. Large numerals, short descriptors, “globally” appended to each. Three-column layout or horizontal data bar. Use only approved statistics.]
+[Image: No image required. Three-stat display with large numerals and short descriptors on a clean background.]
+________________
+
+
+Section 6: Sign up to volunteer
+[H2]
+Join the mission. Sign up to volunteer.
+[Interactive sign-up form. Required fields unless marked optional.]
+[Form fields]
+First Name
+Last Name
+Email Address
+City / ZIP Code
+What skills or interests do you bring?
+[Dropdown: Events and Logistics / Food and Distribution / Community Outreach / Fundraising and Campaigns / Communications and Social Media / Healthcare Outreach / University and Youth Programs / Operations and Administration / Chapter Leadership / Internship / Other]
+[Flag: Content doc note says “Confirm which of these nine roles are active needs.” The dropdown as written has 11 options, not nine. Naman to confirm the final list before the form is built.]
+How much time can you offer per month?
+[Dropdown: 2 to 4 hours / 4 to 8 hours / 8+ hours / Flexible]
+Phone Number (Optional — field label: So your chapter coordinator can reach you directly.)
+[CTA]
+I Want to Volunteer
+[Body — below form]
+Not ready to sign up yet? Follow us on Instagram and Facebook to see what SRLC USA chapters are doing in your city.
+[Build note: WPForms or Gravity Forms, styled to match Avada theme. Route form submissions to chapter coordinator inbox by ZIP code. Coordinator email list sourced from current chapter directory. Confirmation message on submit: “Thank you. A chapter coordinator from your area will be in touch within a few days.” Input fields must meet WCAG 2.2 Level AA minimum contrast ratio of 4.5 to 1.]
+[Image: No image. Clean white form area with high-contrast input fields.]
+________________
+
+
+Metadata
+[Title tag]
+Volunteer with SRLC USA | Give Your Time, Build Community
+[Character count: 57. Compliant (60-character maximum).]
+[Meta description]
+Serve communities across the US with SRLC USA. A 501(c)(3) nonprofit whose work has reached 33M+ lives globally. Sign up to volunteer in two minutes.
+[Character count: 149. Compliant (160-character maximum).]
+[Meta description formula check (A4): Benefit | Credibility signal | CTA | Brand. Compliant.]
+________________
+________________
+
+
+Flags, layout suggestions, and compliance issues
+Flags requiring resolution before build
+Flag 1 — Stat not on approved list: “25+ US cities”
+This figure appears in the hero sub-heading and the trust bar. It is not on the A4 approved statistics list. Document A Change Log notes “US city footprint figure pending roster reconciliation.” Decision needed: confirm and add to the approved list, change the figure, or remove the references.
+Flag 2 — Same as Flag 1 applied to trust bar badge
+The “25+ US Cities” trust bar badge uses the same unapproved figure. Same resolution applies.
+Flag 3 — Stat not on approved list: “400+ Community Partners”
+This badge appeared in the source content doc. Not on the A4 approved statistics list. Removed from this draft. Naman to confirm whether this figure has been approved or should remain off the page.
+Flag 4 — Secondary CTA destination URL
+Content doc links “Find my city’s chapter” to /us-chapters. Current site architecture uses 12 state landing pages. Label updated to “Find My State’s Chapter.” Naman to confirm: (a) correct destination URL and (b) whether the label should reference “state” or “city.”
+Flag 5 — “Seva” removed from Belonging card
+Original card used seva twice. Removed per A4 Standing Rules. Replacement written. Naman to confirm the replacement copy is acceptable.
+Flag 6 — Content doc internal note: “nine roles” mismatch
+Note says “nine roles” but the dropdown lists 11 options. Naman to clarify: (a) was the note misplaced, (b) should any dropdown options be removed, (c) does Section 2 have any missing content.
+Flag 7 — “Seva” removed from Step 3
+Step 3 originally ended “Experience what seva feels like in practice.” Removed per A4. Rewritten as: “Attend your first event. Meet the people who make the chapter run. Most volunteers return for the next one within a month.” Naman to confirm.
+Flag 8 — Volunteer story: content needed
+Editorial preset requires one volunteer story. No named story in either source document. Section 4 is a placeholder. Naman to supply: volunteer name, city, role, duration of involvement, and one to two sentences of specific outcome or experience.
+Flag 9 — Third statistic needed
+Editorial preset requires three statistics. Two used: 33M+ lives globally and 8.35M+ patients globally. Third needed. Options: 3.28M+ students globally, 12.24M+ Humanitarian Care globally, or 8.90M+ Emergency Relief globally. Naman to select.
+Flag 10 — Form dropdown option count mismatch
+Content doc note says “nine roles” but the dropdown lists 11 options. Naman to confirm the final dropdown list before the form is built.
+Layout suggestions requiring Naman’s approval
+Layout suggestion 1 — Section 2: Four-column card grid
+Icon above bold title, two to three sentences of body copy. Four columns on desktop, two-by-two on tablet, single column on mobile. Avada Fusion Builder column element.
+Layout suggestion 2 — Section 3: Numbered step layout
+Oversized step numerals (01, 02, 03) in SRLC USA accent color. Bold step title, body copy below. Three columns on desktop, single column on mobile. Thin vertical dividers between columns optional.
+Layout suggestion 3 — Section 4: Volunteer story card
+Two-column layout on desktop. Left column: volunteer headshot (consent required per Media Bank SOP). Right column: name, city, role, body copy. Pull quote optional. Single column on mobile, photo above text.
+Layout suggestion 4 — Section 5: Three-stat display
+Three-column data bar with oversized numerals, short labels, and “globally” appended to each.
+Document A compliance issues that could not be fully resolved
+Preset override not on record
+The content doc was written to Volunteer / Chapter preset (Document B). Editorial column presets are applied throughout this draft per project direction. Per Document B, this override must be recorded in Document C, section 12, with a reason and Naman’s approval. This tab cannot go to build until that record exists.
+Trust bar: included despite “Not used” Editorial preset
+The content doc explicitly specifies a trust bar. This conflicts with the Editorial preset. The trust bar is included because the content doc is one of the two approved sources. Naman to make the call.
+UN recognition badge phrasing corrected
+Content doc trust bar read “UN ECOSOC Consultative Status.” Corrected to “Parent body: UN ECOSOC Special Consultative Status.” If badge space is too short, correct phrasing must still appear as hover text or adjacent footnote. Cannot appear as “SRLC USA is UN-recognized” in any form.
+Point of view tension
+Editorial preset specifies POV = “We.” Content doc uses “you” addressing the prospective volunteer. How-it-works steps (Section 3) use imperative mood, which is permitted per A2. Some second-person constructions remain in Section 2 cards where removing them would make the copy awkward. Naman to decide if further adaptation is needed.
+
+
+Institutes
+
+
+Vidyapeeth
+Shrimad Rajchandra Vidyapeeth
+/educational-care/shrimad-rajchandra-vidyapeeth/
+[Flag: URL not confirmed. Naman to provide the correct destination path before publishing. Candidate: /educational-care/shrimad-rajchandra-vidyapeeth/.]
+[Flag: Preset override: Shrimad Rajchandra Vidyapeeth is a Program page type per Document B. Cause Column presets have been applied per project direction. This override must be recorded in Document C, section 12, with a reason and Naman’s approval before this tab goes to build.]
+Section 1: Hero
+[H1]
+The First Science College Across 238 Villages
+[Subhead]
+Across 238 villages in South Gujarat, young people who dreamed of a science career had nowhere close to go. Shrimad Rajchandra Vidyapeeth changed that in 2016. Your support keeps the doors open.
+[Trust bar]
+[Flag: Cause preset specifies Trust bar Set B, defined as “89% free care” and “NABH accreditation.” Both are hospital-specific trust signals with no application to an educational institution. Proposed replacement: 501(c)(3) Nonprofit | 3.28M+ Students Reached Globally | Parent body: UN ECOSOC Special Consultative Status. Naman to confirm trust bar content before build.]
+501(c)(3) Nonprofit | 3.28M+ Students Reached Globally | Parent body: UN ECOSOC Special Consultative Status
+[CTA]
+Support Shrimad Rajchandra Vidyapeeth
+[Image: Students working at lab benches in a science laboratory — examining specimens, handling equipment, engaged in an experiment. Warm, energetic light. Wide shot showing multiple students. Avoid posed group photos, spiritual symbols, India-specific religious decor. Search terms: India students science laboratory tribal college microscope experiment chemistry.]
+________________
+
+
+Section 2: The need
+[H2]
+Before 2016, a science degree meant leaving home — or giving up.
+[Flag: Em dash in the H2 above. A4 Standing Rules prohibit em dashes. Rewrite to remove before build. Suggested: “Before 2016, a science degree meant leaving home or giving up.” Naman to confirm preferred phrasing.]
+[Body]
+The 238 villages of Dharampur and Kaprada in South Gujarat are home to tens of thousands of young people. For years, if a student there wanted to study science at the undergraduate level, there was no local college to go to. The closest options required leaving the community entirely. For students from families with limited resources, that meant most of them didn’t go.
+That’s the gap Shrimad Rajchandra Vidyapeeth (SRV) was built to close. Dedicated to the community in October 2016 in Dharampur, India, SRV became the first and only science college to serve this entire region.
+[Image: A wide or aerial landscape shot of the rural area around Dharampur, India — fields, village roads, the terrain that separates communities from the nearest city. The college building can be visible in the frame. Avoid spiritual symbols. Search terms: Dharampur Gujarat rural landscape South Gujarat tribal region Valsad village college campus.]
+________________
+
+
+Section 3: What your support funds
+[H2]
+A full path from enrollment to career.
+[Body]
+SRV offers a range of science degrees and professional programs built around students who are the first in their families to reach higher education.
+[Subhead: Bachelor of Science (B.Sc.)]
+A three-year undergraduate degree in Chemistry, Microbiology, Botany, or Mathematics.
+[Subhead: Master of Science (M.Sc.)]
+A two-year postgraduate degree in Chemistry or Microbiology for students who want to go further in their field.
+[Subhead: B.Voc. in Industrial Management]
+A vocational degree that connects science training directly to employment in the region’s industries.
+[Subhead: Post Graduate Diploma in Medical Laboratory Technology (PGDMLT)]
+A professional credential preparing graduates for careers in diagnostics and clinical laboratory care.
+[Subhead: Certificate Courses]
+Specialized programs that build specific career skills alongside or after a degree.
+[Body]
+Getting into college is only part of the challenge for students who have had limited academic preparation. SRV pairs every program with bridge courses for students who need academic reinforcement, English language coaching, personal counseling, and career placement support through a dedicated Placement Cell. The Placement Cell works directly with regional employers, manages career counseling and professional skills training, and stays connected with graduates through an alumni network after they leave campus. SRV is the first science college in Gujarat to earn both ISO 9001 and ISO 29990 certifications.
+[Layout suggestion: Two-row card grid. Top row: five program type cards (icon, bold program name, one sentence). Bottom row: four support pillar cards (Academic Support, Language Coaching, Career Placement, Alumni Network). On desktop, five columns and four columns respectively. On tablet, three-column wrapping grid. On mobile, single column.]
+[Image: A faculty member or academic advisor working one-on-one with a student at a desk — papers, focused conversation, a working moment. Warm and human. Avoid posed shots, spiritual symbols, India-specific religious decor. Search terms: India college teacher student counseling academic support one-on-one tribal campus.]
+________________
+
+
+Section 4: Impact
+[H2]
+Your gift joins a network that has reached millions.
+[Flag: Cause preset requires 4 to 5 statistics. Only two from the A4 approved global statistics list are directly applicable here. Naman to select two to three additional approved statistics to complete the required count. Approved options: 33M+ lives globally (SRLC overall reach), 12.24M+ Humanitarian Care globally, 8.90M+ Emergency Relief globally. Statistics not on the approved list — including any SRV-specific enrollment counts, graduation rates, or placement rates — may not be published until added to the approved statistics list.]
+[Stat: 1 of 4–5 required]
+3.28M+ students reached globally through Educational Care
+[Stat: 2 of 4–5 required]
+33M+ lives touched globally across all SRLC programs
+[Flag: Two to three additional approved statistics needed. Naman to select from the approved list.]
+[Three-to-five stat display. Oversized numerals. Short label beneath each. “Globally” appended to every global figure per A4.]
+[Image: No image required in this section. Clean stat display on a light background.]
+________________
+
+
+Section 5: A student’s story
+[Flag: The live page references Sonali Dusane, a student who went on to earn a doctoral title. However, the story is attributed to “SRG” (Shrimad Rajchandra Gurukul, the secondary and higher-secondary school), not to SRV (Vidyapeeth, the science college). The story cannot be used on this page as sourced. Two paths forward: (1) Confirm whether Sonali Dusane also studied at SRV; or (2) supply a different named SRV student story. Naman to provide: student’s full name, home village, program of study at SRV, year of enrollment, and one to two sentences about their path and outcome. Story must be from an approved source. Do not invent. Consent and photo consent documentation required per Media Bank SOP.]
+[H2]
+[Flag: No heading copy available. Dependent on student story. Draft once story is supplied.]
+[Two-column card on desktop. Left column: student headshot — consent required per Media Bank SOP. Right column: student name, home village, program, and two to three sentences about their path and what they’ve built. Pull quote optional, set at larger type. Single column on mobile, photo above text.]
+[Image: Approved student headshot, candid preferred over posed. Student in a campus or laboratory context. Mood: warm and engaged. Avoid spiritual symbols, posed group shots. Consent documentation must be on file per Media Bank SOP.]
+________________
+
+
+Section 6: What your gift does
+[H2]
+Every dollar opens a door.
+[Flag: Dollar-to-outcome statement required by Document A Section 7. Formula: Amount, verb, outcome, who, timeframe. Finance sign-off required before any specific dollar amount is published. Placeholder below; replace with approved figures.]
+[Dollar-to-outcome — placeholder, pending finance sign-off]
+$[X] covers one student’s laboratory supply costs for a semester. $[Y] funds bridge course tutoring for a student who needs academic reinforcement. $[Z] supports one full year of education for a student who can’t afford it otherwise.
+[Flag: Gift tier amounts are “cause specific” per Cause preset. No approved tier amounts exist for SRV in the source documents. Naman to confirm three to four tier amounts before the donation module is built.]
+[Gift tier module. Three to four tiers, amounts to be confirmed by Naman. Recurring giving toggle: “Give monthly and provide steady, year-round support.” Matching gift prompt: “Your employer may match your gift. Check if your company participates.”]
+[Flag: Cause preset specifies a “Donor” testimonial alongside this section. No donor testimonial for SRV appears in either source document. Naman to supply: donor’s first name and location (or anonymized), and one to two sentences in their own words about why they give to SRV. Do not invent.]
+[CTA]
+Give to Shrimad Rajchandra Vidyapeeth
+[Image: A student completing a practical exam, receiving a certificate, or walking out of the campus gate. A moment of accomplishment. Candid. Avoid spiritual symbols, posed group shots. Search terms: India graduation science college tribal student diploma practical exam campus.]
+________________
+
+
+Section 7: Footer CTA
+[H2]
+Be the reason a student graduates.
+[Body]
+When a young person in Dharampur, India walks into a science lab for the first time, or earns a degree their family never had access to before, that is the outcome of your gift. SRV has made that possible for students across 238 villages. Your support makes it possible for the next generation.
+[CTA]
+Support Shrimad Rajchandra Vidyapeeth
+[Image: No additional image required.]
+________________
+
+
+Metadata
+[Title tag]
+Shrimad Rajchandra Vidyapeeth | Educational Care | SRLC USA
+[Character count: 59. Compliant (60-character maximum).]
+[Meta description]
+Support the first science college serving 238 villages in South Gujarat. SRLC USA funds education that changes lives. Give today.
+[Character count: 128. Compliant (160-character maximum).]
+[Meta description formula check (A4): Benefit | Credibility signal | CTA | Brand. Compliant.]
+________________
+________________
+
+
+Flags, layout suggestions, and compliance issues
+Flags requiring resolution before build
+Flag 1 — URL not confirmed
+No destination URL was specified for this page. Candidate: /educational-care/shrimad-rajchandra-vidyapeeth/. Naman to confirm the correct path before publishing.
+Flag 2 — Preset override not on record
+Shrimad Rajchandra Vidyapeeth is a Program page type per Document B. Cause Column presets have been applied per project direction. Per Document B, this override must be recorded in Document C, section 12, with a reason and Naman’s approval. This tab cannot go to build until that record exists.
+Flag 3 — Trust bar Set B not applicable to an education page
+Set B is defined as “89% free care” and “NABH accreditation,” both hospital-specific. Neither applies to SRV. Proposed replacement: 501(c)(3) Nonprofit | 3.28M+ Students Reached Globally | Parent body: UN ECOSOC Special Consultative Status. Naman to confirm.
+Flag 4 — Approved statistics count: two of four to five required
+Cause preset requires 4 to 5 statistics. Only two from the A4 approved global list are directly applicable: 3.28M+ students globally and 33M+ lives globally. Two to three additional approved stats are needed. Options: 12.24M+ Humanitarian Care globally, 8.90M+ Emergency Relief globally. Naman to select. SRV-specific figures may not be published until added to the approved statistics list.
+Flag 5 — Named student story needed
+Cause preset and Document A Section 8 require one named beneficiary story. The live page references Sonali Dusane with a “Dr.” title, attributed to SRG (Shrimad Rajchandra Gurukul), not to SRV. Story cannot be used on this page as sourced. Naman to either confirm Sonali Dusane also attended SRV and obtain consent, or supply a different named SRV student with: full name, home village, program of study, year of enrollment, and one to two sentences about their path and outcome. Do not invent.
+Flag 6 — Donor testimonial needed
+Cause preset specifies a “Donor” testimonial. No donor testimonial for SRV appears in either source document. Naman to supply: donor’s first name and location (or anonymized), and one to two sentences about why they give to SRV.
+Flag 7 — Dollar-to-outcome amounts not finance-approved
+Document A Section 7 requires at least one dollar-to-outcome statement. Formula: Amount, verb, outcome, who, timeframe. Placeholder copy is in Section 6. Finance sign-off required before any specific dollar amount is published.
+Flag 8 — Gift tier amounts not confirmed
+Cause preset specifies “cause specific” gift tiers. No approved tier amounts for SRV exist in either source document. Naman to confirm three to four tier amounts before the donation module is built.
+Flag 9 — Em dash in Section 2 H2
+“Before 2016, a science degree meant leaving home — or giving up.” A4 prohibits em dashes. Rewrite before build.
+Layout suggestions requiring Naman’s approval
+Layout suggestion 1 — Section 3: Two-row card grid
+Top row: five program type cards (icon, bold name, one sentence) for B.Sc., M.Sc., B.Voc., PGDMLT, and Certificate Courses. Bottom row: four support pillar cards (Academic Support, Language Coaching, Career Placement, Alumni Network). Desktop: five columns and four columns respectively. Tablet: three-column wrapping grid. Mobile: single column. Avada Fusion Builder column element supports this.
+Document A compliance issues that could not be fully resolved
+Spiritual content removed
+The live page opens with references to “the spiritual luminary, Shrimad Rajchandraji” and “the enlightened master and spiritual visionary Pujya Gurudevshri Rakeshji.” These are locked to the Our Inspiration page per A4 Standing Rules. All such references have been removed. The college is presented as a humanitarian educational initiative serving an underserved community.
+India government officials removed
+The live page names the Chief Minister of Gujarat and the Minister of Tribal Development as attendees at the 2016 dedication ceremony. Removed as India-audience framing with no relevance to a US donor. The dedication is referenced as “dedicated to the community in October 2016 in Dharampur, India.”
+“Holistic” removed per A4 jargon rule
+The live page uses “Holistic Education” as a feature heading. Document A prohibits “holistic” as banned jargon. Replaced throughout with specific descriptions of what the support involves.
+POV shift
+Cause preset specifies POV = “You” (guide to newcomer). Draft uses “you” throughout. This differs from the Program preset (“We”). If the override from Program to Cause is not approved, POV will need to shift back to “We.”
+
+
+Gurukul
+Shrimad Rajchandra Gurukul
+[Flag: URL not confirmed. No destination path was provided in the source document. Candidate: /our-work/india/shrimad-rajchandra-gurukul/ or similar. Naman to confirm the correct path before publishing.]
+________________
+
+
+Section 1: Hero
+Purpose: Introduce Shrimad Rajchandra Gurukul to a US donor audience. Frame it as an education access story for underserved students.
+[Eyebrow label]
+Our Institutes in India
+[H1 — institute name verbatim]
+Shrimad Rajchandra Gurukul
+[Flag: Intro sentence decision pending. Naman to select Option A or Option B before build.]
+[Intro sentence — Naman to select Option A or Option B]
+Option A: A school built on the belief that every child deserves excellent teachers and a safe place to grow.
+Option B: For the children of this region, a world-class start no longer depends on where you were born.
+[Approved description. Verbatim. Do not edit. Source: SRLC India Institute Descriptions.docx.]
+A progressive secondary and higher-secondary school for underserved students.
+[Flag: Em dash in image note below is an A4 violation (A4 bans em dashes everywhere). Corrected to a comma in the image direction line; Naman to confirm.]
+[Image: Exterior or courtyard shot to establish the school, plus one human moment: students in a classroom or activity, active and engaged. Not empty rooms. Source from SRLC media bank.]
+________________
+
+
+Section 2: Call to Action
+Purpose: Convert page engagement into a donation to SRLC USA's Educational Care program.
+[Flag: CTA button decision pending. Naman to select Option A or Option B before build.]
+[CTA button — Naman to select Option A or Option B]
+Option A: Support This Institution
+Option B: Give to This Work
+[CTA links to /donate with Educational Care pre-selected. Confirm routing with Riyan.]
+[Secondary CTA — text link beneath button]
+Explore all SRLC institutes in India
+[Links to /our-work/india]
+________________
+
+
+SEO / Metadata
+Title tag: Shrimad Rajchandra Gurukul | Rural School India | SRLC USA [57 characters. Compliant (60-character maximum).]
+Meta description: A progressive secondary and higher-secondary school for underserved students in South Gujarat. Support through SRLC USA’s Educational Care program. [150 characters. Compliant (160-character maximum).]
+Primary keyword: rural school tribal India charity
+Secondary keywords: SRLC Gurukul, fund education India nonprofit, educational care donation USA, secondary school South Gujarat
+________________
+
+
+Flags Requiring Resolution Before Build
+Flag 1 — URL not confirmed
+No destination path was provided in the source document. Naman to confirm the correct URL before publishing.
+Flag 2 — Intro sentence decision pending
+Naman to select Option A or Option B for the hero intro sentence. Both options are in Section 1 above.
+Flag 3 — CTA button decision pending
+Naman to select Option A ("Support This Institution") or Option B ("Give to This Work") for the primary CTA button.
+Flag 4 — CTA routing requires Riyan confirmation
+The primary CTA links to /donate with Educational Care pre-selected. Riyan to confirm the routing before the button is built.
+Flag 5 — Em dash in source image note
+The source document image note read: "plus one human moment — students in a classroom." Em dashes are banned under A4 Standing Rules. Corrected to a comma in this draft. Naman to confirm the replacement phrasing is acceptable.
+
+
+Skill Development Center
+Shrimad Rajchandra Skill Development Center
+[Flag: URL not confirmed. No destination path was provided in the source document. Candidate: /our-work/india/shrimad-rajchandra-skill-development-center/ or similar. Naman to confirm the correct path before publishing.]
+________________
+
+
+Section 1: Hero
+Purpose: Introduce the Skill Development Center to a US donor audience as a direct employment-access story for tribal youth in South Gujarat.
+[Eyebrow label]
+Our Institutes in India
+[H1 — institute name verbatim]
+Shrimad Rajchandra Skill Development Center
+[Flag: Intro sentence decision pending. Naman to select Option A or Option B before build.]
+[Intro sentence — Naman to select Option A or Option B]
+Option A: Practical training that turns ambition into a livelihood.
+Option B: A trade in hand changes what a young person can ask of the future.
+[Approved description. Verbatim. Do not edit. Source: SRLC India Institute Descriptions.docx.]
+A hub for relevant, technical courses preparing a new generation to enter the workforce.
+[Flag: Em dash in source image note is an A4 violation (A4 bans em dashes everywhere). Corrected to a comma in the image direction line below. Naman to confirm the replacement phrasing is acceptable.]
+[Image: Exterior shot of the center to establish the place, plus one human moment: hands mastering a trade, a student at a workstation or lab, active and engaged. Not empty rooms. Source from SRLC media bank.]
+________________
+
+
+Section 2: Call to Action
+Purpose: Convert page engagement into a donation to SRLC USA's Educational Care program.
+[Flag: CTA button decision pending. Naman to select Option A or Option B before build.]
+[CTA button — Naman to select Option A or Option B]
+Option A: Support This Institution
+Option B: Give to This Work
+[CTA links to /donate with Educational Care pre-selected. Confirm routing with Riyan.]
+[Secondary CTA — text link beneath button]
+Explore all SRLC institutes in India
+[Links to /our-work/india]
+________________
+
+
+SEO / Metadata
+Title tag: Shrimad Rajchandra Skill Development Center | SRLC USA [54 characters. Compliant (60-character maximum).]
+Meta description: A hub for technical vocational training for tribal youth in South Gujarat. Preparing a new generation to enter the workforce. Support through SRLC USA. [153 characters. Compliant (160-character maximum).]
+Primary keyword: vocational training tribal India charity
+Secondary keywords: SRLC skill development, fund vocational training India, educational care donation USA, tribal youth employment India
+________________
+
+
+Flags Requiring Resolution Before Build
+Flag 1 — URL not confirmed
+No destination path was provided in the source document. Naman to confirm the correct URL before publishing.
+Flag 2 — Intro sentence decision pending
+Naman to select Option A or Option B for the hero intro sentence. Both options are in Section 1 above.
+Flag 3 — CTA button decision pending
+Naman to select Option A (“Support This Institution”) or Option B (“Give to This Work”) for the primary CTA button.
+Flag 4 — CTA routing requires Riyan confirmation
+The primary CTA links to /donate with Educational Care pre-selected. Riyan to confirm the routing before the button is built.
+Flag 5 — Em dash in source image note
+The source document image note read: “plus one human moment — hands mastering a trade.” Em dashes are banned under A4 Standing Rules. Corrected to a comma in this draft. Naman to confirm the replacement phrasing is acceptable.
+
+
+Hospital and Research Center
+Shrimad Rajchandra Hospital and Research Center
+https://srlcusa.org/our-work/india/hospital-and-research-center/
+[Flag: URL pattern to be confirmed with Rishi (institute pattern under the India hub). Trailing slash per A5; the other form is redirected.]
+[Source: Document C Page Specification, version 1, August 20, 2026, drafted by Parshva. All values below are the ticked decisions from that sheet. Page type: Program, Tier 2. Funnel stage: Consideration. Conversion goal: one-time gift, completed on the donation page. Primary audience: diaspora donor; secondary: general American philanthropist.]
+________________
+
+
+Section 1: Hero
+[Eyebrow label]
+Our work in India
+[Flag: Eyebrow inconsistency across the institute set. This spec uses “Our work in India.” The Gurukul and SRSDC content docs use “Our Institutes in India.” One must win across all six institute pages. Naman to standardize.]
+[H1 — institute name verbatim]
+Shrimad Rajchandra Hospital and Research Center
+[Override on record: the Program preset H1 style is “outcome promise.” This page uses the institute name verbatim per Pack 2. Override request drafted (Parshva, August 20, 2026), applies identically to all six institute pages and could be approved once as a set. Awaiting Naman’s approval.]
+[Subheadline]
+In a region where quality healthcare was once a long journey away, this hospital brings it next door.
+[Pack 2 intro sentence, Option B, selected in the spec. Option A was rejected: it carries the 250-bed figure, which is not on the approved statistics list, and it defines families by what they cannot afford, which the dignity rule forbids.]
+[Trust bar — Set B]
+89% free care | NABH accreditation
+[Flag: Both Set B items are pending. The 89% free care rate is subject to the approved statistics list and may not render until listed. NABH must be spelled out on first use per A1 (National Accreditation Board for Hospitals and Healthcare Providers) and the accreditation must be verified as currently held before it appears anywhere. Set B is the right set for this page (the only institute page where it fits, since both items describe a hospital), but the bar cannot render complete until both items clear.]
+[CTA Button — Hero]
+Give to This Work
+[Shared institute CTA from Pack 2, Option B, selected in the spec. Title case per A1, clears the A4 banned list. Two CTAs on the page, same label, hero and footer, per the Program preset. The CTA link carries the designation to the donation page so the gift lands against this institute; no designation control on this page.]
+[Image: Place: the establishing shot from Pack 2, with one human element for scale. Not an empty building. Gradient scrim; overlay contrast measured at 4.5 to 1 per A6, not eyeballed. Hero height seventy percent, text left-aligned. Above the fold: place image, eyebrow, H1, intro sentence, hero CTA. Breadcrumbs shown: Home, Our Work, India, then this institute. Archive images only; stock is forbidden on these pages; owned means rights documented, not assumed.]
+________________
+
+
+Section 2: What This Institution Does
+[Flag: BLOCKING. The approved description has not been supplied. Pack 2 requires it dropped in word for word with no stylistic edits. Until it arrives, the 600 to 800 word target cannot be verified and the grade 9 to 10 reading level cannot be measured. On arrival it must be read against Document A before placement: if it contains an em dash, Centre spelling, a restricted word, an unapproved figure, or any spiritual framing, A4 wins and it cannot go on the page as written. That conflict is Naman’s to resolve, better found now than at QC. If the description runs long, the story and proof sections shorten; the description is never cut.]
+[Approved description. Verbatim. Do not edit. PENDING.]
+[Approved description text to be dropped in here, word for word, once supplied.]
+[Image: Human moment beside the approved description, 4:3 or portrait: care being delivered, active and engaged. Pack 2 forbids operating theaters and medical procedures. Any recognizable patient needs written consent on file before build; the spec marks this page as the highest consent risk of the three institute pages.]
+________________
+
+
+Section 3: A Named Story
+[Flag: BLOCKING. Story subject pending. Document C restricts story subjects to the approved Table 11 roster, which holds three names, against roughly eighteen slots across the site (eleven cause pages, the homepage, six institute pages). Naman to confirm which approved subject belongs to this institute, or authorize new sourcing as a program of work rather than page by page. Do not invent.]
+[Specs when the subject is confirmed: one story, 100 to 180 words, placed above the statistics. First name only. Location: region only (a safeguarding decision, not a style one). Direct quote optional; if used, written consent is filed with the photo release before build. Consent record held by the content owner in the institute asset folder.]
+________________
+
+
+Section 4: Proof (Statistics)
+[Flag: BLOCKING. Statistic count is four to five per the Program preset, and not one usable figure exists. A4 locks every published figure to the approved statistics list, which is a global set; none of its entries describes a single institution. Needed: four to five hospital figures added to the approved list, each with a source and a date. Candidates named in the spec: bed count, free care rate, patients treated here per year, specialties offered, catchment radius. The 250-bed figure and the 89% free care rate are both flagged for verification in Pack 2 and neither may appear until listed. The global 8.35M+ patients figure belongs to the parent organization and must never be presented as this hospital’s own count; if used it stays labeled global and attributed to the parent organization. If the figures do not arrive, an override request to reduce the statistic count must be filed before build.]
+[Rating badges: none (default until seals are verified as held). Logo wall: none (partner-label verification pending).]
+________________
+
+
+Section 5: A Partner Voice
+[Flag: Partner testimonial pending. The preset asks for a partner voice while the logo wall row holds partner labels as unverified. If no partner can be named and quoted, this row needs an override before build, and the form offers no “none” option for it. Naman to supply a named partner willing to be quoted, or approve the override.]
+________________
+
+
+Section 6: Ways to Support
+[CTA Button — Footer]
+Give to This Work
+[CTA style: partnership framing. The spec notes dollar, outcome, action is the better style and cannot be used yet because every amount is finance-pending; revisit when finance signs off. Impact statement shape held for that moment: $XX provides {outcome} for {who} at this institute for {timeframe}. A4 requires a dollar-to-outcome statement on cause pages, not Program pages, so this must not block launch.]
+[Not shown on this page, all switched off with intent: gift tiers, recurring giving, matching gift prompt (no gift form to attach it to), donor-advised fund, tribute giving, urgency device, donation form. The gift is completed on the donation page.]
+[Secondary pathway]
+Annual report
+[Flag: No link text or destination is written in the spec for the annual report pathway. Parshva to draft the link line before build. Note this differs from the Gurukul and SRSDC docs, which specify “Explore all SRLC institutes in India” as the secondary link. If the institute pages are meant to be templated identically, one pattern must win.]
+[Exit path]
+Peer institute cards plus the India hub. Every peer appears at equal weight and with the same card treatment, per the locked positioning rule.
+________________
+
+
+SEO / Metadata
+Title tag: Shrimad Rajchandra Hospital and Research Center | SRLC USA [58 characters, counted. Compliant (60-character maximum).]
+[Flag: The source spec’s title tag uses a box-drawing vertical bar (│, U+2502) as the separator, not a standard pipe (|). Corrected to a standard pipe above. If the source character is pasted into the CMS it will look wrong in the browser tab and in search results.]
+Meta description: A multispecialty hospital in Dharampur, India, where quality care is no longer a long journey away. See how it works and how to support it. SRLC USA. [149 characters, counted. Compliant (160-character maximum). Benefit, credibility, CTA, brand. Carries no figure, because no figure for this institute is on the approved list yet.]
+URL slug: hospital-and-research-center
+Primary keyword: Shrimad Rajchandra Hospital and Research Center [The institute name is the keyword, so the title tag and H1 carry it word for word. CONFIRM no other page targets it; the India hub must target the hub term.]
+Secondary keywords: multispecialty hospital Dharampur, hospital in Dharampur India, Shrimad Rajchandra hospital
+Search intent: Informational
+Keyword placement: Title, H1, first 100 words [Not the two-H2s option: forcing a six-to-seven word name into two H2s produces headings nobody would write.]
+Schema: NGO plus CharitableProgram [The spec notes Hospital is a valid and more precise schema type the form offers no box for; not requested since the preset value is not wrong, worth raising if the institute pages are revisited as a set.]
+Internal links out (4): Our Work: India (hub), Shrimad Rajchandra Jivamaitridham, Shrimad Rajchandra Center of Excellence for Women, Donate
+Date display: No date shown
+[Flag: Redirect from old URL: PENDING. Rishi to confirm whether the current site carries a page for this institute.]
+[Flag: Open Graph image: PENDING. The hero place image, cropped to 1200 by 630.]
+[Flag: Asset folder: PENDING. Suggested path /assets/our-work/india/hospital-and-research-center/. Alt text drafted by Parshva, checked against A4 before build: no internal trust name and no spiritual term in alt text, same as body copy.]
+________________
+
+
+Flags Requiring Resolution Before Build
+[The spec’s own count: eight items left undecided, listed so nothing is discovered at build. Status: Draft. Decided-by and Naman’s approval both PENDING.]
+Flag 1 — Four to five hospital statistics (BLOCKING)
+Added to the approved list with source and date. Candidates: bed count, free care rate, patients treated here per year, specialties offered, catchment radius. Until then the page cannot meet its own preset; if figures do not arrive, file an override to reduce the statistic count.
+Flag 2 — The approved description (BLOCKING)
+Not yet supplied. Must be placed verbatim, and read against Document A first; if it contains an em dash, Centre spelling, a restricted word, an unapproved figure, or any spiritual framing, A4 wins and it cannot go on the page as written.
+Flag 3 — Story subject
+Confirm which approved Table 11 subject belongs to this institute, or authorize new sourcing. Roster holds three names against roughly eighteen slots site-wide; this is a sourcing decision above this page.
+Flag 4 — Named partner for the testimonial
+A named partner willing to be quoted, or an override on the testimonial row. The form offers no “none” option.
+Flag 5 — NABH verification
+Verify the accreditation is currently held, and spell out the full name on first use per A1. The 89% free care item in the same trust bar is also subject to the approved statistics list.
+Flag 6 — Photography, rights, and consent
+Hero and human-moment photography from the archive, with rights and patient consent documented. No operating theaters or medical procedures. Highest consent risk of the three institute pages.
+Flag 7 — OG crop, asset folder, redirect
+The Open Graph 1200 by 630 crop, the asset folder path, and whether the current site carries a page for this institute (Rishi).
+Flag 8 — H1 style override approval
+Naman to approve the institute-name-verbatim H1 in place of the Program preset’s outcome promise. Applies identically to all six institute pages; could be approved once as a set.
+________________
+
+
+Structural Notes Above This Page (from Attachment 2)
+Story roster arithmetic
+Three approved subjects against roughly eighteen story slots site-wide. Either new sourcing is authorized as a program of work, or most pages need a story count override. Decision above the page level.
+Mission Africa and the preset matrix pull against each other
+A4 holds Mission Africa level with the institutes, never given more space or a stronger CTA. But Mission Africa is a Cause page (800 to 1,000 words, three CTAs) and the institutes are Program pages (600 to 800 words, two CTAs). By preset, Mission Africa gets more space and a stronger CTA than the pages it is supposed to sit level with. Either accept the difference as a page-type artifact or lift the Program preset. A Document B question affecting all six institute pages.
+________________
+
+
+Cross-Page Consistency Notes (vs. Gurukul and SRSDC docs)
+Eyebrow text differs
+This spec: “Our work in India.” Gurukul and SRSDC docs: “Our Institutes in India.” Standardize across the set.
+Riyan vs. Rishi
+The Gurukul and SRSDC docs say “Confirm routing with Riyan.” This spec names Rishi as build owner and confirmer, and Riyan does not appear in it at all. Confirm whether these are two people or one misspelled name, and correct the institute docs accordingly.
+Secondary link pattern differs
+Gurukul and SRSDC: text link “Explore all SRLC institutes in India” to /our-work/india. This spec: annual report as the secondary pathway, with peer institute cards as the exit path. One pattern should win across the institute set.
+URL slug pattern
+This spec’s slug drops the “shrimad-rajchandra” prefix: /our-work/india/hospital-and-research-center/. If that pattern is confirmed with Rishi, the Gurukul and SRSDC URLs should follow it (for example /our-work/india/gurukul/), not the longer candidates flagged on those tabs.
+
+
+Jivamaitridham
+Shrimad Rajchandra Jivamaitridham
+https://srlcusa.org/our-work/india/jivamaitridham/
+[Flag: URL pattern to be confirmed with Rishi (institute pattern under the India hub). Trailing slash per A5; the other form is redirected.]
+[Source: Document C Page Specification, version 1, August 20, 2026, drafted by Parshva. All values below are the ticked decisions from that sheet. Page type: Program, Tier 2. Funnel stage: Consideration. Conversion goal: one-time gift, completed on the donation page. Primary audience: diaspora donor; secondary: general American philanthropist.]
+________________
+
+
+Section 1: Hero
+[Eyebrow label]
+Our work in India
+[H1 — institute name verbatim]
+Shrimad Rajchandra Jivamaitridham
+[Override 1 on record: the Program preset H1 style is “outcome promise.” This page uses the institute name verbatim per Pack 2; applies identically to all six institute pages and could be approved once as a set. Awaiting Naman’s approval. Departure also recorded: the form asks for a six to ten word H1 and the name is three words. The name is fixed and cannot be padded; padding it would mean inventing a name the institution does not have. Recorded in section 12 with a reason, not an override request, since this is form guidance rather than a Document A rule.]
+[Subheadline]
+A sanctuary where injured and abandoned animals are treated, sheltered, and given a life of dignity.
+[Pack 2 intro sentence, Option A, selected in the spec. Option B was rejected: “care extends to every living being” is philosophical framing, which A4 quarantines to the Our Inspiration page.]
+[Flag: This page cannot explain its own name, and that is deliberate. Jivamaitridham survives as a proper name, and A3 permits “ahimsa” only inside the experience center’s proper name. Anything that would explain what the name means (the principle of compassion toward all living beings) is philosophical framing confined to Our Inspiration. The intro sentence handles this by describing function instead of meaning. Anyone editing later will feel the urge to add a helpful gloss. It cannot be added. If Naman wants the meaning available to readers, the route is a link to Our Inspiration, not a sentence here.]
+[Trust bar — Set A]
+501(c)(3) Nonprofit | 25+ US Cities | Parent body: UN ECOSOC Special Consultative Status | 33M+ lives globally
+[Override 2 on record: the Program preset assigns Set B (89% free care, NABH accreditation). Both are hospital claims; on an animal care campus they would be inaccurate rather than merely irrelevant. Set A is generic to the organization and accurate here. The same request applies to the Center of Excellence for Women. Awaiting Naman’s approval.]
+[Flag: Set A carries its own pending item: the US city footprint figure is marked pending roster reconciliation in both Document A and Document B, so the bar cannot render complete until it clears. The UN item must be phrased per Writing Guidelines Section 6 and attributed to the parent body, never to SRLC USA.]
+[CTA Button — Hero]
+Give to This Work
+[Shared institute CTA from Pack 2, Option B, selected in the spec. Title case per A1, clears the A4 banned list. Two CTAs on the page, same label, hero and footer, per the Program preset. The CTA link carries the designation to the donation page so the gift lands against this institute; no designation control on this page.]
+[Image: Place: the establishing shot from Pack 2, with one human element for scale. Not an empty building. Gradient scrim; overlay contrast measured at 4.5 to 1 per A6, not eyeballed. Hero height seventy percent, text left-aligned. Above the fold: place image, eyebrow, H1, intro sentence, hero CTA. Breadcrumbs shown: Home, Our Work, India, then this institute. Archive images only; stock is forbidden on these pages; owned means rights documented, not assumed.]
+________________
+
+
+Section 2: What This Institution Does
+[Flag: BLOCKING. The approved description has not been supplied. Pack 2 requires it dropped in word for word with no stylistic edits. Until it arrives, the 600 to 800 word target cannot be verified and the grade 9 to 10 reading level cannot be measured. On arrival it must be read against Document A before placement: if it contains an em dash, Centre spelling, a restricted word, an unapproved figure, or any spiritual framing, A4 wins and it cannot go on the page as written. That conflict is Naman’s to resolve, better found now than at QC. If the description runs long, the story and proof sections shorten; the description is never cut.]
+[Approved description. Verbatim. Do not edit. PENDING.]
+[Approved description text to be dropped in here, word for word, once supplied.]
+[Image: Human moment beside the approved description, 4:3 or portrait: care being given, active and engaged. Pack 2 forbids images of animals in visible distress, and the dignity rule applies to the animals in the same spirit it applies to people. No patient imagery on this page, but caretakers and visitors are people and need the same consent.]
+________________
+
+
+Section 3: A Named Story
+[Flag: BLOCKING. Story subject pending. Document C restricts story subjects to the approved Table 11 roster, which holds three names, against roughly eighteen slots across the site. Naman to confirm which approved subject belongs to this institute, or authorize new sourcing. An additional question unique to this page: whether an animal care story can carry a named human subject at all. Do not invent.]
+[Specs when the subject is confirmed: one story, 100 to 180 words, placed above the statistics. First name only. Location: region only (a safeguarding decision, not a style one). Direct quote optional; if used, written consent is filed with the photo release before build. Consent record held by the content owner in the institute asset folder.]
+________________
+
+
+Section 4: Proof (Statistics)
+[Flag: BLOCKING. Statistic count is four to five per the Program preset, and not one usable figure exists. A4 locks every published figure to the approved statistics list, which is a global set; none of its entries describes a single institution. Needed: four to five figures for this campus added to the approved list, each with a source and a date. Candidates named in the spec: animals treated and sheltered here per year, shelter capacity, species range, veterinary staff. The 450K+ animals figure is the global Animal Care total; presenting it as this campus’s count would be a misattribution, and if it appears at all it stays labeled global and attributed to the parent organization. If the figures do not arrive, an override request to reduce the statistic count must be filed before build.]
+[Rating badges: none (default until seals are verified as held). Logo wall: none (partner-label verification pending).]
+________________
+
+
+Section 5: A Partner Voice
+[Flag: Partner testimonial pending. The preset asks for a partner voice while the logo wall row holds partner labels as unverified. If no partner can be named and quoted, this row needs an override before build, and the form offers no “none” option for it. Naman to supply a named partner willing to be quoted, or approve the override.]
+________________
+
+
+Section 6: Ways to Support
+[CTA Button — Footer]
+Give to This Work
+[CTA style: partnership framing. The spec notes dollar, outcome, action is the better style and cannot be used yet because every amount is finance-pending; revisit when finance signs off. Impact statement shape held for that moment: $XX provides {outcome} for {who} at this institute for {timeframe}. A4 requires a dollar-to-outcome statement on cause pages, not Program pages, so this must not block launch.]
+[Not shown on this page, all switched off with intent: gift tiers, recurring giving, matching gift prompt (no gift form to attach it to), donor-advised fund, tribute giving, urgency device, donation form. The gift is completed on the donation page.]
+[Secondary pathway]
+Annual report
+[Flag: No link text or destination is written in the spec for the annual report pathway. Parshva to draft the link line before build.]
+[Exit path]
+Peer institute cards plus the India hub. Every peer appears at equal weight and with the same card treatment, per the locked positioning rule.
+________________
+
+
+SEO / Metadata
+Title tag: Shrimad Rajchandra Jivamaitridham | SRLC USA [44 characters, counted. Compliant (60-character maximum).]
+[Flag: The source spec’s title tag again uses the box-drawing vertical bar (│, U+2502) as the separator instead of a standard pipe (|). Same template artifact as the Hospital sheet, so it is systematic in these Document C sheets. Corrected to a standard pipe above; fix the Document C template so future sheets do not carry it into the CMS.]
+Meta description: An animal care campus in Dharampur, India, where injured and abandoned animals are treated, sheltered, and given a life of dignity. See the work. SRLC USA. [155 characters, counted. Compliant (160-character maximum). Benefit, credibility, CTA, brand. Carries no figure, because no figure for this institute is on the approved list yet.]
+URL slug: jivamaitridham
+Primary keyword: Shrimad Rajchandra Jivamaitridham [The institute name is the keyword, so the title tag and H1 carry it word for word. CONFIRM no other page targets it; the India hub must target the hub term.]
+Secondary keywords: animal sanctuary Dharampur India, animal care center India, injured animal rescue India
+Search intent: Informational
+Keyword placement: Title, H1, first 100 words
+Schema: NGO plus CharitableProgram
+Internal links out (4): Our Work: India (hub), Shrimad Rajchandra Hospital and Research Center, Shrimad Rajchandra Center of Excellence for Women, Donate
+Date display: No date shown
+[Flag: Redirect from old URL: PENDING. Rishi to confirm whether the current site carries a page for this institute.]
+[Flag: Open Graph image: PENDING. The hero place image, cropped to 1200 by 630.]
+[Flag: Asset folder: PENDING. Suggested path /assets/our-work/india/jivamaitridham/. Alt text drafted by Parshva, checked against A4 before build: no internal trust name and no spiritual term in alt text, same as body copy.]
+________________
+
+
+Flags Requiring Resolution Before Build
+[The spec’s own count: eight items left undecided, listed so nothing is discovered at build. Status: Draft. Decided-by and Naman’s approval both PENDING.]
+Flag 1 — Four to five campus statistics (BLOCKING)
+Added to the approved list with source and date. Candidates: animals treated and sheltered here per year, shelter capacity, species range, veterinary staff. If figures do not arrive, file an override to reduce the statistic count.
+Flag 2 — The approved description (BLOCKING)
+Not yet supplied. Must be placed verbatim, and read against Document A first; if it contains an em dash, Centre spelling, a restricted word, an unapproved figure, or any spiritual framing, A4 wins and it cannot go on the page as written.
+Flag 3 — The exact proper name of the experience center
+A3 permits “ahimsa” only inside the experience center’s proper name, so the exact name must be confirmed before it can appear anywhere on the page.
+Flag 4 — Story subject, and a question of kind
+Confirm which approved Table 11 subject belongs to this institute, or authorize new sourcing, and decide whether an animal care story can carry a named human subject at all.
+Flag 5 — Named partner for the testimonial
+A named partner willing to be quoted, or an override on the testimonial row. The form offers no “none” option.
+Flag 6 — Photography, rights, and consent
+Archive photography with rights documented, and consent for any recognizable caretaker. No images of animals in visible distress; the dignity rule applies to the animals in the same spirit it applies to people.
+Flag 7 — OG crop, asset folder, redirect
+The Open Graph 1200 by 630 crop, the asset folder path, and whether the current site carries a page for this institute (Rishi).
+Flag 8 — Naman’s approval of the two overrides
+Override 1: institute-name-verbatim H1 in place of the outcome promise (applies to all six institute pages, could be approved once as a set). Override 2: trust bar Set A in place of Set B, because Set B’s hospital claims would be untrue here (same request applies to the Center of Excellence for Women). Plus the recorded three-word H1 departure from the form’s six to ten word guidance.
+________________
+
+
+Structural Notes Above This Page (from Attachment 2)
+This page only: the name cannot be explained
+An American reader meets a word they cannot parse on a page that is forbidden to translate it. The intro sentence describes function instead of meaning, deliberately. No gloss may be added by later editors. If the meaning should be available, the route is a link to Our Inspiration.
+Story roster arithmetic
+Three approved subjects against roughly eighteen story slots site-wide. Either new sourcing is authorized as a program of work, or most pages need a story count override. Decision above the page level.
+Mission Africa and the preset matrix pull against each other
+By preset, Mission Africa (Cause page: 800 to 1,000 words, three CTAs) gets more space and a stronger CTA than the institute pages (Program: 600 to 800 words, two CTAs) it is supposed to sit level with per A4. Either accept the difference as a page-type artifact or lift the Program preset. A Document B question affecting all six institute pages.
+
+
+Center of Excellence for Women
+Shrimad Rajchandra Center of Excellence for Women
+https://srlcusa.org/our-work/india/center-of-excellence-for-women/
+[Flag: URL pattern to be confirmed with Rishi (institute pattern under the India hub). Trailing slash per A5; the other form is redirected.]
+[Source: Document C Page Specification, version 1, August 20, 2026, drafted by Parshva. All values below are the ticked decisions from that sheet. Page type: Program, Tier 2. Funnel stage: Consideration. Conversion goal: one-time gift, completed on the donation page. Primary audience: diaspora donor; secondary: general American philanthropist.]
+________________
+
+
+Section 1: Hero
+[Eyebrow label]
+Our work in India
+[H1 — institute name verbatim]
+Shrimad Rajchandra Center of Excellence for Women
+[Seven words, inside the form’s six to ten word band. Center, never Centre, per A3. Override 1 on record: the Program preset H1 style is “outcome promise”; this page uses the institute name verbatim per Pack 2. Applies identically to all six institute pages and could be approved once as a set. Awaiting Naman’s approval.]
+[Subheadline]
+Skills, artisanship, and steady income for women building independence.
+[Pack 2 intro sentence, Option A, selected in the spec. Option B was rejected: “when a woman earns, a whole family rises” is an outcome claim with no approved evidence behind it, and it sits close to the upliftment register A3 bans.]
+[Flag: The vocabulary this topic attracts is the vocabulary A3 bans. Women’s livelihood copy reaches for “empower” and “upliftment” by reflex, and both are on the zero tolerance jargon list. The drafted intro sentence uses skills, artisanship, and steady income instead, which are concrete and checkable. Whoever drafts the body copy should expect to fight this instinct in every paragraph, and the approved description needs reading for it too.]
+[Trust bar — Set A]
+501(c)(3) Nonprofit | 25+ US Cities | Parent body: UN ECOSOC Special Consultative Status | 33M+ lives globally
+[Override 2 on record: the Program preset assigns Set B (89% free care, NABH accreditation). Both are hospital claims and neither is true of this center. Set A is generic to the organization and accurate on any page. The same request applies to Jivamaitridham. Awaiting Naman’s approval. Badge labels rendered here per the label style of the earlier institute docs; verify exact Set A labels against Document B before build.]
+[Flag: Set A carries its own pending item: the US city footprint figure is marked pending roster reconciliation in both Document A and Document B, so the bar cannot render complete until it clears. The UN item must be phrased per Writing Guidelines Section 6 and attributed to the parent body, never to SRLC USA.]
+[CTA Button — Hero]
+Give to This Work
+[Shared institute CTA from Pack 2, Option B, selected in the spec. Title case per A1, clears the A4 banned list. Two CTAs on the page, same label, hero and footer, per the Program preset. The CTA link carries the designation to the donation page so the gift lands against this institute; no designation control on this page.]
+[Image: Place: the establishing shot from Pack 2, with one human element for scale. Not an empty building. Gradient scrim; overlay contrast measured at 4.5 to 1 per A6, not eyeballed. Hero height seventy percent, text left-aligned. Above the fold: place image, eyebrow, H1, intro sentence, hero CTA. Breadcrumbs shown: Home, Our Work, India, then this institute. Archive images only; stock is forbidden on these pages; owned means rights documented, not assumed.]
+________________
+
+
+Section 2: What This Institution Does
+[Flag: BLOCKING. The approved description has not been supplied. Pack 2 requires it dropped in word for word with no stylistic edits. Until it arrives, the 600 to 800 word target cannot be verified and the grade 9 to 10 reading level cannot be measured. On arrival it must be read against Document A before placement: if it contains an em dash, Centre spelling, a restricted word (this topic’s reflex words “empower” and “upliftment” especially), an unapproved figure, or any spiritual framing, A4 wins and it cannot go on the page as written. If the description runs long, the story and proof sections shorten; the description is never cut.]
+[Approved description. Verbatim. Do not edit. PENDING.]
+[Approved description text to be dropped in here, word for word, once supplied.]
+[Image: Human moment beside the approved description, 4:3 or portrait: artisans at work, active and engaged. Artisans at work are recognizable people and need written consent on file before build. Person-first language applies to captions and alt text as much as to body copy.]
+________________
+
+
+Section 3: A Named Story
+[Flag: BLOCKING. Story subject pending. Document C restricts story subjects to the approved Table 11 roster, which holds three names, against roughly eighteen slots across the site. Naman to confirm which approved subject belongs to this institute, or authorize new sourcing. Do not invent.]
+[Specs when the subject is confirmed: one story, 100 to 180 words, placed above the statistics. First name only. Location: region only (a safeguarding decision, not a style one). Direct quote optional; if used, written consent is filed with the photo release before build. Consent record held by the content owner in the institute asset folder.]
+________________
+
+
+Section 4: Proof (Statistics)
+[Flag: BLOCKING, and the worst of the three institute pages. Nothing on the current approved list touches women’s livelihoods, so this page starts with zero usable figures rather than with figures that need checking. The spec calls it the furthest of the three from being buildable. Needed: four to five figures for this center added to the approved list, each with a source and a date. Candidates named in the spec: women trained per year, artisans currently earning, trades taught, years running. If the figures do not arrive, an override request to reduce the statistic count must be filed before build.]
+[Rating badges: none (default until seals are verified as held). Logo wall: none (partner-label verification pending).]
+________________
+
+
+Section 5: A Partner Voice
+[Flag: Partner testimonial pending. The preset asks for a partner voice while the logo wall row holds partner labels as unverified. If no partner can be named and quoted, this row needs an override before build, and the form offers no “none” option for it. Naman to supply a named partner willing to be quoted, or approve the override.]
+________________
+
+
+Section 6: Ways to Support
+[CTA Button — Footer]
+Give to This Work
+[CTA style: partnership framing. The spec notes dollar, outcome, action is the better style and cannot be used yet because every amount is finance-pending; revisit when finance signs off. Impact statement shape held for that moment: $XX provides {outcome} for {who} at this institute for {timeframe}. A4 requires a dollar-to-outcome statement on cause pages, not Program pages, so this must not block launch.]
+[Not shown on this page, all switched off with intent: gift tiers, recurring giving, matching gift prompt (no gift form to attach it to), donor-advised fund, tribute giving, urgency device, donation form. The gift is completed on the donation page.]
+[Secondary pathway]
+Annual report
+[Flag: No link text or destination is written in the spec for the annual report pathway. Parshva to draft the link line before build.]
+[Exit path]
+Peer institute cards plus the India hub. Every peer appears at equal weight and with the same card treatment, per the locked positioning rule.
+________________
+
+
+SEO / Metadata
+Title tag: Shrimad Rajchandra Center of Excellence for Women | SRLC USA [60 characters, counted. Exactly at the A4 ceiling with no headroom.]
+[Flag: Title tag decision needed: the count sits at exactly 60, so any change to the brand suffix breaks it. The spec’s fallback, if the ceiling is ever tightened, is “Center of Excellence for Women | SRLC USA” at 41 characters, which costs the exact keyword match. Naman to decide whether the title may sit at exactly 60 or the fallback is preferred (undecided item 7 on the sheet).]
+[Flag: The source spec’s title tag again uses the box-drawing vertical bar (│, U+2502) instead of a standard pipe (|). Confirmed template artifact across all three Document C sheets. Corrected to a standard pipe above; fix the Document C template.]
+Meta description: A center in Dharampur, India, where women build skills, artisanship, and steady income. See how the work runs and how to support it. SRLC USA. [142 characters, counted. Compliant (160-character maximum). Benefit, credibility, CTA, brand. Carries no figure, because no figure for this institute is on the approved list yet.]
+URL slug: center-of-excellence-for-women
+Primary keyword: Shrimad Rajchandra Center of Excellence for Women [The institute name is the keyword, so the title tag and H1 carry it word for word. CONFIRM no other page targets it; the India hub must target the hub term.]
+Secondary keywords: women’s livelihood program India, artisan training Dharampur, women’s skill center India
+Search intent: Informational
+Keyword placement: Title, H1, first 100 words
+Schema: NGO plus CharitableProgram
+Internal links out (4): Our Work: India (hub), Shrimad Rajchandra Hospital and Research Center, Shrimad Rajchandra Jivamaitridham, Donate
+Date display: No date shown
+[Flag: Redirect from old URL: PENDING. Rishi to confirm whether the current site carries a page for this institute.]
+[Flag: Open Graph image: PENDING. The hero place image, cropped to 1200 by 630.]
+[Flag: Asset folder: PENDING. Suggested path /assets/our-work/india/center-of-excellence-for-women/. Alt text drafted by Parshva, checked against A4 before build: no internal trust name and no spiritual term in alt text, same as body copy.]
+________________
+
+
+Flags Requiring Resolution Before Build
+[The spec’s own count: eight items left undecided, listed so nothing is discovered at build. Status: Draft. Decided-by and Naman’s approval both PENDING.]
+Flag 1 — Four to five center statistics (BLOCKING, zero currently usable)
+Added to the approved list with source and date. Nothing on the current list applies to women’s livelihoods. Candidates: women trained per year, artisans currently earning, trades taught, years running.
+Flag 2 — The approved description (BLOCKING)
+Not yet supplied. Must be placed verbatim, and read against Document A first, with special attention to “empower” and “upliftment,” the reflex vocabulary of this topic.
+Flag 3 — Story subject
+Confirm which approved Table 11 subject belongs to this institute, or authorize new sourcing. Roster holds three names against roughly eighteen slots site-wide.
+Flag 4 — Named partner for the testimonial
+A named partner willing to be quoted, or an override on the testimonial row. The form offers no “none” option.
+Flag 5 — Photography, rights, and consent
+Photography of artisans at work, with rights and written consent documented. Person-first language in captions and alt text.
+Flag 6 — OG crop, asset folder, redirect
+The Open Graph 1200 by 630 crop, the asset folder path, and whether the current site carries a page for this institute (Rishi).
+Flag 7 — Title tag at exactly 60 characters
+Decide whether the title may sit at exactly 60, or whether the 41-character fallback is preferred at the cost of the exact keyword match.
+Flag 8 — Naman’s approval of the two overrides
+Override 1: institute-name-verbatim H1 (applies to all six institute pages, could be approved once as a set). Override 2: trust bar Set A in place of Set B, paired with the identical Jivamaitridham request; the two could be approved together.
+________________
+
+
+Structural Notes Above This Page (from Attachment 2)
+This page only: the banned-vocabulary trap
+The natural vocabulary of women’s livelihood copy is exactly what A3 bans. Every drafting and editing pass on this page needs a jargon check for “empower” and “upliftment,” including the approved description when it arrives.
+Story roster arithmetic
+Three approved subjects against roughly eighteen story slots site-wide. Either new sourcing is authorized as a program of work, or most pages need a story count override. Decision above the page level.
+Mission Africa and the preset matrix pull against each other
+By preset, Mission Africa (Cause page: 800 to 1,000 words, three CTAs) gets more space and a stronger CTA than the institute pages (Program: 600 to 800 words, two CTAs) it is supposed to sit level with per A4. Either accept the difference as a page-type artifact or lift the Program preset. A Document B question affecting all six institute pages.
+
+
+Management Team
+Management Team
+https://srlcusa.org/about/management-team/
+[Flag: URL depends on the /about/ parent existing; confirm with Rishi. If no About hub exists, the URL becomes /management-team/ at root (like /financials and /accessibility) and the breadcrumb shortens to Home, Management Team. Trailing slash per A5; the other form is redirected.]
+[Source: Document C Page Specification, version 1, August 17, 2026. All values below are the ticked decisions from that sheet. Page type: institutional; Document B has no preset for it, so the Editorial preset is applied as the closest fit, with two override requests attached. Tier 2. Funnel stage: Consideration. Conversion goal: onward navigation to the financials page or the annual report; no gift is asked for here. Primary audience: high net worth (diligence readers: major gift prospects, grant officers, donor-advised fund advisors); secondary: general American philanthropist, and the reading level is set for them.]
+[Flag: No Content Options pack covers this page. Pack 2 (Where We Serve) holds no Management Team options, so the sheet’s copy deck stands as the decided content. And no live page text was supplied; the sheet itself does not know whether the current site carries a leadership, team, or about-us page (redirect row PENDING with Rishi). If a live page exists, its text is a required input for the frame copy sections below.]
+________________
+
+
+Section 1: Hero Band
+[Eyebrow label]
+About SRLC USA
+[H1 — keyword forward per Editorial preset]
+The management team leading SRLC USA’s work
+[Seven words. Sentence case per A1, exactly one H1 on the page per A4.]
+[Subheadline — role: add the proof]
+We are a 501(c)(3) nonprofit. Every person who sets strategy, approves the budget, and answers for results is named here, with what they oversee.
+[The subhead carries the status and the accountability claim rather than repeating the H1.]
+[No hero CTA on this page; the Editorial preset puts the single CTA in the footer. No trust bar; the three statistics sit in one sentence of frame copy instead. Text-only hero band on a flat brand background, left-aligned type, fixed height. A group photograph was considered and rejected: none is known to exist, and a staged lineup would undercut the plain register this page needs.]
+[Above the fold: breadcrumb, the eyebrow About SRLC USA, the H1, the subheadline, and the top edge of the first row of portraits. No hero photograph and no statistics above the fold. Breadcrumbs: Home, About, Management Team (depends on the /about/ path).]
+________________
+
+
+Section 2: How We Govern
+[Flag: Frame copy to be drafted (part of the 250 to 350 words of frame copy across the page). Its substance must come from real governance facts: the organization’s actual governance labels (board of directors or officers, whichever is accurate), who sets strategy, who approves the budget. None of that exists in the two available sources, and none of it may be invented. Naman to supply the governance facts, or the live page text if one exists.]
+[Frame copy — the statistics sentence (drafted; the three figures and their attribution are specified on the sheet)]
+SRLC USA is the U.S. chapter of Shrimad Rajchandra Love and Care, a global movement that has touched 33M+ lives globally, treated 8.35M+ patients globally, and supported 3.28M+ students globally.
+[All three statistics are on the A4 approved list, all three labeled global, all three attributed to the global movement rather than to SRLC USA alone, in one sentence of frame copy per the sheet. No other figure appears on this page; nothing rounded, recalculated, or restated per person. The parent-body phrasing “the U.S. chapter of Shrimad Rajchandra Love and Care” is the A3 approved phrase used verbatim, with periods in U.S., per the sheet’s style ruling; US without periods everywhere else. That ruling itself awaits Naman (see flags).]
+________________
+
+
+Section 3: The Roster
+[Flag: BLOCKING. The roster is the page, and it does not exist yet. Needed, all approved by Naman: full names, roles, and a 45 to 70 word bio for each person. Every person appears by full name and role; no pseudonyms and no first-name-only entries on a governance page. A signed photo and bio release from every person named, held by the page owner in the leadership assets folder. Do not invent names, roles, or bio details.]
+[Flag: Four A4 rules will bite during bio drafting; every bio needs a read for each. (1) Spiritual content is quarantined to Our Inspiration: no bio may open with Pujya Gurudevshri Rakeshji, trace the SRMD lineage, or use seva; if a leader’s connection to the lineage is part of why they serve, that belongs on Our Inspiration, not here. Expect pushback on this one and hold the line. (2) The internal trust names SRET, SRST, and SRJT never appear in public content, including alt text and metadata; board bios routinely list trustee roles in exactly those entities. (3) Never claim volunteer powered or volunteer driven in any form; a leadership page is where “our all-volunteer board” usually creeps in, and it cannot be used even where it is true. (4) “Charity” is restricted as a self-description; the page says 501(c)(3) nonprofit instead, which is also what a diligence reader is checking for.]
+[Component: a leadership card grid; portrait, full name, role, and a 45 to 70 word bio, one card per person. Confirm with Rishi whether an existing card component covers this before anything new is built. Names marked up as real heading elements per A5; the single H1 stays with the page title per A4. Caption under each portrait: full name and role. If the roster passes 12 people or splits into board and staff groups, revisit jump navigation: anchor links in a sticky bar.]
+[Image: Portrait photography, consistent treatment across every portrait: same crop, same background, same light. One person shot differently reads as more senior or less. Commissioned, or supplied by each person with usage rights in writing; a borrowed LinkedIn headshot is not owned. Word count check once the roster is final: frame copy 250 to 350 words plus 45 to 70 per person; a ten person roster lands near 900, inside the Editorial range.]
+[Roster fill-in format — group headings and one card per person. Placeholders in curly braces, matching the slot convention in Pack 2. Officers first, then the board.]
+[H2 — group heading]
+Officers (confirm the real governance label per the sheet: officers, board of directors, or board of trustees, whichever is legally accurate for SRLC USA)
+[Optional one-sentence group intro — part of the 250 to 350 word frame copy budget]
+{One sentence stating what this group does, drafted from confirmed governance facts only}
+[Card 1 — President]
+Full name
+	{First Last}
+	Role
+	President, SRLC USA (confirm exact legal title)
+	Portrait
+	{filename} — same crop, same background, same light as every other portrait. Source: {commissioned / supplied with written usage rights}
+	Photo and bio release
+	{Signed, date}, filed in the leadership assets folder by the page owner
+	Bio — 45 to 70 words, counted
+	{What they oversee, what they answer for, and the background relevant to that role. Drafted only from facts supplied by Naman or the person named; nothing invented.}
+	Alt text
+	Portrait of {Full name}, {role}, SRLC USA
+	A4 bio check
+	☐ No honorific, lineage, or seva   ☐ No SRET, SRST, or SRJT role cited   ☐ No volunteer-powered phrasing   ☐ No “charity” self-description   ☐ Word count 45 to 70   ☐ Naman approved
+	Schema
+	Person entry: name, jobTitle, image
+	[Duplicate the card above for each additional officer (treasurer, secretary, or whatever roles are legally accurate). One card per person.]
+[H2 — group heading]
+Board of Directors (confirm the real label: directors or trustees. “Trustees” may appear only as the US entity’s real legal label, never as a reference to the India trusts)
+[Optional one-sentence group intro — part of the frame copy budget]
+{One sentence stating what the board answers for, drafted from confirmed governance facts only}
+[Card — one per board member]
+Full name
+	{First Last}
+	Role
+	{Director / Trustee (real label), plus committee or oversight area if any}
+	Portrait
+	{filename} — same crop, same background, same light as every other portrait. Source: {commissioned / supplied with written usage rights}
+	Photo and bio release
+	{Signed, date}, filed in the leadership assets folder by the page owner
+	Bio — 45 to 70 words, counted
+	{What they oversee, what they answer for, and the background relevant to that role. Drafted only from facts supplied by Naman or the person named; nothing invented.}
+	Alt text
+	Portrait of {Full name}, {role}, SRLC USA
+	A4 bio check
+	☐ No honorific, lineage, or seva   ☐ No SRET, SRST, or SRJT role cited   ☐ No volunteer-powered phrasing   ☐ No “charity” self-description   ☐ Word count 45 to 70   ☐ Naman approved
+	Schema
+	Person entry: name, jobTitle, image
+	[Duplicate the card above for each board member. Same fields, same portrait treatment. Anyone whose only role is with the India trusts does not default onto this page; the page names the people who govern SRLC USA, the US entity, and any such case goes to Naman for a ruling. If the combined roster passes 12 people or splits into board and staff groups, add anchor links in a sticky bar per the sheet.]
+________________
+
+
+Section 4: How We Are Held Accountable
+[Flag: Frame copy to be drafted. Substance must come from real accountability facts: financial practices, reporting, the annual report, the financials page. The EIN already sits in the footer sitewide per A7, which is what donor-advised fund advisors need; giving mechanics stay on the donation page. No rating badges (none verified as held), no testimonials, no logo wall. Naman to supply the accountability facts, or the live page text if one exists.]
+________________
+
+
+Section 5: Contact and Next Step
+[Flag: Contact details pending: whatever contact route this page offers (a contact page link, an email) must be confirmed; nothing is specified in the sheet.]
+[CTA Button — Footer (the page’s single CTA)]
+Read Our Annual Report
+[Title case per A1. Clears the A4 banned list: “Read More” is banned, “Read Our Annual Report” names the outcome. Target: the annual report on the financials page. CTA style: identity framing, the closest fit; the CTA speaks to a reader who checks an organization before giving to it. Exit path: next page CTA to the financials page and the annual report.]
+________________
+
+
+SEO / Metadata
+Title tag: Management Team | Leadership at SRLC USA [40 characters, counted. Compliant (60-character maximum).]
+[Flag: The source sheet’s title tag uses the box-drawing vertical bar (│, U+2502) instead of a standard pipe (|), the same template artifact as the three institute Document C sheets. Corrected to a standard pipe above. Fix the Document C template.]
+Meta description: Meet the people who direct the programs, finances, and compliance of SRLC USA, a 501(c)(3) nonprofit. See who is accountable and what they oversee. SRLC USA. [157 characters, counted. Compliant (160-character maximum). Benefit, credibility, CTA, brand per the A4 formula.]
+URL slug: management-team
+Primary keyword: SRLC USA leadership [CONFIRM against the keyword map before Final: no other page in the About cluster may target this term.]
+Secondary keywords: SRLC USA management team, SRLC USA board of directors, who runs SRLC USA [CONFIRM: use the organization’s real governance labels in the copy, board of directors or officers, whichever is accurate.]
+Search intent: Informational
+Keyword placement: Title, H1, first 100 words, two H2s
+Schema: Organization, with a Person entry for each named leader [Override from the Editorial preset value of Article; Article would misdescribe a standing institutional page and lose the Person entities that make a leadership page legible in knowledge panels. Organization is already the Homepage preset value.]
+Internal links out (4): Financials, Our Work: United States, Our Work: India, Donate [CONFIRM the Donate URL and the annual report location with Rishi before build.]
+Internal links in: The About cluster in the sitewide footer, the About section of the homepage, the financials page, the annual report page [CONFIRM with Rishi that the footer About cluster includes this page. A governance page nobody links to does not get read.]
+Date display: No date shown [A published date would read like a news post; currency is handled by the review date, February 17, 2027, and immediately on any roster change.]
+[Flag: Redirect from old URL: PENDING. Rishi to confirm whether the current site has a leadership, team, or about-us URL to redirect from.]
+[Flag: Open Graph image: PENDING. Either a real group photograph of the team or a brand card carrying the page title. No stock, no beneficiary imagery on an institutional page. The OG file needs JPG or PNG for platform compatibility (AVIF and WebP per A5 govern on-page images only).]
+[Flag: Asset folder: PENDING. Suggested path /assets/about/management-team/. Alt text drafter PENDING (the content owner, once assigned); alt text checked against A4 like any other copy: no internal trust names, no honorifics.]
+________________
+
+
+Flags Requiring Resolution Before Build
+[The sheet’s own count: nine items left undecided. Status: Draft. Page owner unassigned; decided-by and Naman’s approval both PENDING.]
+Flag 1 — Page owner
+Content and build owners unassigned, and the review date follows from the assignment. Rishi is the build owner on the other institutional pages.
+Flag 2 — The roster (BLOCKING)
+Full names, roles, and a 45 to 70 word bio each, approved by Naman. The page cannot exist without it. The fill-in card format with placeholders is in Section 3: one card per person, officers first, then the board.
+Flag 3 — Releases
+A signed photo and bio release from every person named, held by the page owner in the leadership assets folder.
+Flag 4 — Portrait photography
+Commissioned or supplied, with usage rights in writing, consistent treatment across all portraits.
+Flag 5 — Open Graph image
+A real group photograph or a brand card with the page title. JPG or PNG.
+Flag 6 — Redirect question
+Whether an existing leadership, team, or about-us URL needs a redirect (Rishi).
+Flag 7 — The /about/ parent path and the Donate URL
+Confirm both with Rishi; the page URL, breadcrumb trail, and internal links row all depend on them.
+Flag 8 — Naman’s approval of the two preset overrides
+Override 1: story count none in place of the Editorial preset’s one (a beneficiary story would borrow emotional weight the page is not asking for; the A4 named story rule is a cause page minimum, not sitewide). Override 2: schema Organization plus Person entries in place of Article.
+Flag 9 — Keyword map check
+Confirm no other page targets “SRLC USA leadership.”
+Additional — frame copy inputs (this tab’s own flags)
+Sections 2 and 4 need real governance and accountability facts before their frame copy can be drafted, and Section 5 needs the contact route. If a live leadership page exists on the current site, its text is the natural source; otherwise Naman supplies the facts. Nothing may be invented.
+________________
+
+
+Structural Notes Above This Page (from Attachment 2)
+There is no page type for an institutional page
+Document B covers seven page types and Management Team is none of them. The same gap will reappear across the About cluster: Our Inspiration, Contact, Financials, Accessibility, plus any careers or annual report landing page. Half a dozen pages filing the same overrides. The sheet proposes adding an Institutional column to Document B, with starting values taken from what this sheet decided (tone credible, restrained, neutral, plain professional, we, institution to public, trustworthy, no ask, claim then evidence then next, four to five sections, 600 to 900 words, grade 9 to 10, keyword-forward H1, no hero media, no trust bar, no story, three statistics, no badges, no testimonials, one footer CTA, no giving mechanics, informational intent, Organization schema, no spiritual content, footer-only compliance). A Document A change log item for Naman, not a page decision.
+Eight rows in the Document C form have no box that fits this page
+Page arc, H1 style, hero media, hero CTA verb, testimonial mix, CTA count, CTA placement, and schema type. The first six follow the Editorial preset exactly and are recorded as write-ins; the last two do not fit an institutional page at all. Worth fixing in the form itself, because the next person filling this sheet will otherwise tick the nearest wrong box.
+A small house style conflict worth a ruling
+A1 sets the country abbreviation as US with no periods. A3 gives the approved parent phrasing as “the U.S. chapter of Shrimad Rajchandra Love and Care,” with periods. This page uses the A3 phrasing verbatim where it names the parent and US everywhere else, on the reading that the approved phrase outranks the abbreviation rule. If that is wrong, it is a one word fix here and a change log entry in Document A, since the same phrase appears on every page that names the parent body.
+
+
+Who We Are
+Who We Are
+/about/who-we-are/ · Newly written copy; facts sourced from the live Mission and Values page, the content master, and the approved statistics list
+Section 1: Hero
+[H1]
+Love and care, in action
+[Subhead]
+SRLC USA is what happens when physicians, engineers, teachers, and students decide their weekends belong to their neighbors. We are the US chapter of Shrimad Rajchandra Love and Care, a global nonprofit holding Special Consultative Status with the United Nations Economic and Social Council (ECOSOC), and a 501(c)(3) organization. But before we are any of that, we are people who believe care is not a profession. It is a practice.
+[Image: SRLC USA volunteers in genuine action at a community event, mid-task, engaged with the work rather than the camera. Warm natural daylight. Wide 16:9 with headline space. Avoid staged group lineups, stock-style smiles, pity framing. Search terms: chapter volunteers serving, community event candid, meal service warmth. Media bank file: ___]
+Section 2: What we do
+[H2]
+Care you can point to
+[Body]
+We focus on immediate needs and the systems behind them. In the United States, volunteers prepare and share meals, equip students for the school year, and organize community care events with local partners. Globally, the movement builds and sustains hospitals, schools, and development programs designed to serve for generations. The programs differ; the standard does not: high-quality, sustainable work that outlasts the day we arrive.
+[METRIC PLACEHOLDER: US meals served annually · students equipped per year · active local partners. Pending approved statistics; do not publish until verified and added to the approved list.]
+
+
+[Image: a quiet human moment of care, one volunteer and one person served, equal visual weight. Window light or golden hour. 4:3 beside the body copy. Avoid clinical fluorescent scenes, downcast suffering shots. Search terms: volunteer care moment, meal handoff warmth, community visit candid. Media bank file: ___]
+Section 3: Our philosophy
+[H2]
+Why we serve
+[Body]
+Our approach begins with a conviction our volunteers state simply.
+[Pull-quote block (existing copy, live Mission and Values page)]
+When there is love within, it flows naturally in the form of care.
+[Body (existing copy, live Mission and Values page)]
+We serve and bring joy, not because we have to, or because it is our duty, but because we love to.
+[Body]
+That conviction shapes every program we run, from hospital corridors to classrooms to meal lines.
+[Image: no photograph required. Typographic pull-quote treatment on a light background, generous whitespace.]
+Section 4: Ten ways we care
+[H2]
+Ten ways we care
+[Body]
+Every initiative we run belongs to one of ten focus areas, together the 10 Care Program: Health Care, Educational Care, Child Care, Woman Care, Tribal Care, Community Care, Humanitarian Care, Animal Care, Environmental Care, and Emergency Relief Care. In the United States, that vision looks like service in your own city, on your own street. Globally, it stands as permanent institutions in India and Mission Africa.
+[Statistic row, three stats, labeled global per A4]
+33M+ lives touched globally · 3.28M+ students reached globally · 12.24M+ reached through Humanitarian Care globally
+[Recognition row (existing standard module, same assets and attribution labels as the homepage recognition cluster)]
+SRLC (Global): UN ECOSOC Special Consultative Status, 2020 · SRLC USA: Top-Rated on GreatNonprofits · SRLC USA: Candid Gold Transparency Seal, 2025
+[Link row]
+10 Care Program · United States · India · Mission Africa
+[Image: none behind the stats; clean display on a light background. Recognition badges use approved assets, pending reuse confirmation.]
+Section 5: How we work
+[H2]
+Built to be trusted
+[Card 1: Volunteer led]
+Programs are carried by volunteers who know their communities. Because they give their time, administration costs stay low and more of every dollar reaches the programs it was given to support.
+[METRIC PLACEHOLDER: number of active US volunteers. Pending approved statistics.]
+[Card 2: Designed to scale]
+We invest in models that can be replicated, so a program that works in one community can be extended to the next.
+[Card 3: Measured against evidence]
+Every initiative operates within professional frameworks and defined performance indicators. Results, not intentions, decide what continues.
+[Card 4: Building the next generation of leaders]
+Volunteers of every generation carry this work, from students to retirees, and young people lead most of the initiatives under the 10 Care Program.
+
+
+[Image: close crops of hands at work across the four cards: packing line, supply detail, planning table, young volunteers leading. 4:3 or square, graded together as a set. Avoid text baked into images. Search terms: volunteer hands packing, youth volunteers leading, supply drive detail. Media bank file: ___]
+
+
+Section 6: Three promises we keep
+[H2]
+Our commitments
+[Promise 1: Dignity, always]
+Every living being deserves compassion, dignity and respect. 
+[Promise 2: Every figure verified]
+Our commitment to transparency is unwavering. 
+
+
+[Promise 3: Built to last]
+Long standing impact, for generations to come
+[Layout suggestion: three tall cards with generous whitespace, or a single quiet full-width band with the three promises in sequence.]
+[Image: none required; typographic treatment. If an image is used, one quiet detail shot behind the band at low opacity. Media bank file: ___]
+Section 7: In their words (NEW SECTION, for Naman’s approval)
+[H2]
+In their words
+[Component]
+Three-quote band: one volunteer, one supporter, one community partner, each with first name, city, and role.
+[Flag: no testimonials exist in the source documents. Naman to supply three real quotes with names, cities, and consent on file. Do not invent. The section ships only when real quotes exist.]
+[Image: small candid headshot beside each quote, consent per Media Bank SOP; or no photos and a typographic treatment. Media bank file: ___]
+
+
+Section 8: Footer CTA
+[H2]
+Come see for yourself
+[Body]
+An about page can only introduce us; it cannot let you feel the work. The programs, the numbers, and the financials are all published for anyone to read, and the volunteers are probably closer than you think. Come find out what care looks like when it is organized.
+[CTA]
+Explore the 10 Care Program
+[Image: no additional image required.]
+Metadata
+[Title tag]
+Who We Are | SRLC USA | 501(c)(3) Nonprofit
+[Character count: 43. Compliant (60-character maximum).]
+[Meta description]
+Meet the volunteers bringing care and joy to communities across the US and worldwide. A 501(c)(3) nonprofit. See who we are. SRLC USA.
+
+
+Mission Africa
+Mission Africa
+/our-work/mission-africa/ · Newly written copy; facts sourced from the live launch coverage, the Growth page, and the content master.
+Section 1: Hero
+[H1]
+Distance never decides who receives care
+[Subhead]
+Mission Africa brings doctors, medicine, and follow-up care to communities where the nearest clinic can be hours away, at no cost to patients. We work with local health workers and community partners across 16 countries in Africa.
+[Trust bar (proposed replacement for Set B)]
+501(c)(3) Nonprofit · 33M+ Lives Touched Globally · Parent body: UN ECOSOC Special Consultative Status
+[CTA]
+Stand With Mission Africa
+[Image: one patient or clinician, close and dignified, at a camp. The person is the promise: care arrives here. Golden morning light if available. 16:9, subject right third, headline space left, dark scrim compatible. Avoid suffering-forward imagery of any kind; the dignity rule is most at risk on exactly this page. Search terms: pending Mission Africa team delivery with consent records. Do not fill from stock while waiting; hold the page instead. Media bank file: ___]
+
+
+Section 2: The need
+[H2]
+Distance should not decide who gets care
+[Body]
+In much of the region Mission Africa serves, the barrier to health is not the treatment. It is the miles between a family and anyone who can provide it, the distance where a curable illness quietly becomes a permanent one. Launched in 2024 by Shrimad Rajchandra Love and Care (SRLC), Mission Africa now works across 16 countries in Africa to close that distance.
+[Statistic row]
+16 countries reached · 7,500+ patients treated at a free eye and ear, nose, and throat (ENT) medical camp in Nairobi, Kenya
+[Flag: Cause preset requires four to five statistics; three are drafted. Per the Content Options doc, camp cadence, patient counts, and country-level details are STATS PENDING: reconfirm with the Mission Africa team and check against the approved statistics list before any number publishes. An Australia dental figure cited in earlier planning has no source in the project documents and was not used.]
+[Component (new, for Naman’s approval)]
+Interactive Africa map, the 16 program countries carrying the accent color. Hovering a country shows its name; countries with active camp programs can hold one candid photo thumbnail once the team’s photos arrive.
+[Flag: the confirmed list of 16 countries is pending the Mission Africa team; build the map only from their verified list.]
+[Image: a patient queue that reads as order and hope rather than desperation, morning light. 4:3 mid-distance. Avoid the poverty-image playbook: flies, distended bellies, white-savior framings with a foreign volunteer centered above local patients. Local staff and patients carry these images. Search terms: patient queue morning, camp registration table. Pending team delivery with consent records. Media bank file: ___]
+Section 3: The work
+[H2]
+A clinic that comes to you
+[Body]
+Mission Africa brings the full spectrum of care to the community. Full medical camps staged inside the community, with doctors, diagnostics, and medicine in one place, free to every patient who walks in. And when the camp packs up, the care does not leave. Community programs carry it between visits.
+[Card 1: Healthcare access]
+Medical camps, medicine placed directly into waiting hands, and training for community health workers, so care remains long after the visiting doctors have gone.
+[Card 2: Community development]
+Education, nutrition, and livelihood programs built with local communities rather than for them, so the change outlasts the camp.
+[Flag: program detail pending from the Mission Africa team: current camp locations, cadence, and what a camp day looks like (outreach checklist item in the Content Options doc).]
+[Image: care in motion at a camp: a clinician listening to a patient, medicine dispensed into a waiting hand. Competence and warmth together. 4:3 mid-distance action, clinician and patient at equal visual weight, a peer-to-peer frame. Avoid orange filters and desaturated misery grades. Search terms: camp consultation, pharmacy table dispensing. Pending team delivery with consent records. Media bank file: ___]
+Section 4: A volunteer day, hour by hour (NEW SECTION, for Naman’s approval)
+[New section: makes the model tangible by walking the visitor through one camp day. The structure is ready now; the specific moments are placeholders until the Mission Africa team describes a real camp day (outreach checklist item). Placeholders are drafts to be confirmed, not published.]
+[H2]
+A camp day, hour by hour
+[Component]
+Horizontal hour-by-hour strip, five moments, each with a short caption and one photo: the early queue, registration, the consultation, the pharmacy table, the follow-up list.
+[Draft captions, pending team confirmation]
+First light: the queue forms before the tents do. Morning: names taken, files opened, no one turned away. Midday: a doctor listens longer than anyone expected. Afternoon: medicine crosses the table into waiting hands. Evening: the follow-up list is written, because the camp ends and the care does not.
+[Flag: every caption above must be verified against the team’s actual camp-day description before build. If reality differs, reality wins.]
+[Image: five frames from one real camp day, chronological, consistent grade. Local staff and patients carry the images; peer-to-peer framing throughout. Avoid any suffering-forward moment. Pending team delivery with consent records. Media bank file: ___]
+Section 5: One family, one camp
+[H2]
+One family, one camp
+[Flag: named patient story to be sourced by the Mission Africa team, written to the five-part structure (name and context, the situation before, what SRLC did, the outcome, a direct quote), with written photo consent on file before publish. Do not invent. Fallback: a named volunteer clinician story, which carries lower consent complexity.]
+[Image: the named storyteller, dignified portrait in their own setting. Life after, not need before. Portrait or 4:3 beside the story. Avoid anonymized faces standing in for the named person. Pending team delivery with signed consent. Media bank file: ___]
+Section 6: Proven far from here
+[H2]
+Proven far from here
+[Body]
+Mission Africa did not start from zero and your gift does not land on an experiment. It extends a healthcare model refined over decades in Dharampur, India, where a 250-bed hospital accredited by the National Accreditation Board for Hospitals and Healthcare Providers (NABH) treats patients regardless of their ability to pay. The movement behind it has touched 33M+ lives globally, and volunteers across the United States help fund and power the work.
+[Link row]
+Our Causes · India · United States
+[Image: a 50/50 photo pairing, a US chapter moment beside a camp moment, equal weight. One movement, many hands. Avoid maps that dwarf the human images. Search terms: US chapter candid, camp candid, graded as a pair. Media bank file: ___]
+Section 7: What your gift does
+[H2]
+Send care the last mile
+[Flag: FINANCE-PENDING per the Content Options doc. Tier amounts and outcome lines await finance sign-off. The two highlighted lines below are drafted in the master copy and are placeholders only; required shape is amount, verb, outcome, who, timeframe.]
+[Gift tier placeholders (existing master-copy draft lines, finance-pending)]
+$75 funds a full day of medical care at a free health camp serving 100+ patients.
+$50 provides a month of nutrition support for a child.
+[Recurring giving toggle]
+Give monthly, and the care keeps arriving long after the first camp.
+[Matching gift prompt (existing standard module)]
+Your employer may match your gift. Check if your company participates.
+[Flag: Cause preset specifies a donor testimonial alongside this section. None exists in the source documents. Naman to supply: donor’s first name and location (or anonymized), and one to two sentences in their own words. Do not invent.]
+[Tax line, before the giving module’s submit action (existing legal boilerplate)]
+Shrimad Rajchandra Love and Care USA is a registered 501(c)(3) nonprofit organization. EIN 81-5162502. Contributions are tax deductible to the extent permitted by law.
+[CTA]
+Give to Mission Africa
+[Image: medicine or care changing hands, the outcome the tiers describe. Tangible result. 4:3 close detail. Avoid money imagery and donation-box cliches. Search terms: medicine dispensing hand, camp pharmacy detail. Pending team delivery. Media bank file: ___]
+Section 8: Stay close to the work (NEW SECTION, for Naman’s approval)
+[New section: gives visitors who are not ready to give a real next step, and feeds the email_signup conversion event defined in A8.]
+[H2]
+Stay close to the work
+[Body]
+Camps are episodic; your connection to them does not have to be. Leave your email and we will send you what your support built: photos with consent, numbers with verification, and the occasional story worth your inbox.
+[Component]
+Single email field with button: Get Camp Updates. Tracked as email_signup per A8.
+[Image: none required; quiet band between the giving section and the final CTA. Media bank file: ___]
+Section 9: Footer CTA
+[H2]
+Help the next camp happen
+[Body]
+Somewhere right now, a mother is measuring the distance between her child and a doctor. Your gift shortens it. Put medicine on the road, and hope alongside it.
+[CTA]
+Stand With Mission Africa
+[Image: wide golden-hour camp scene as the day ends, work completed, warmth without romanticizing. 16:9 full-width, dark scrim for CTA text. Avoid emptiness that reads as abandonment. Search terms: camp golden hour wide, team end of day. Pending team delivery. Media bank file: ___]
+Metadata
+[Title tag]
+Mission Africa | Free Medical Camps | SRLC USA
+[Character count: 46. Compliant (60-character maximum).]
+[Meta description]
+Doctors, medicine, and follow-up care reach 16 African nations through Mission Africa. Send care the last mile. SRLC USA, a 501(c)(3) nonprofit.
+
+
+Our Impact
+Our Impact
+/about/our-impact/ · Newly written copy; milestone facts sourced from the live Growth page, figures from the A4 v2 approved list
+Section 1: Hero
+[H1]
+Our impact
+[Subhead]
+The work of Shrimad Rajchandra Love and Care began with volunteers bringing medicine to families in rural villages. Over two decades, it has grown into a global movement that has touched 33M+ lives globally. 
+[Image: a wide field photograph with visible, honest scale: a medical camp, a school courtyard, a packed community hall. Real people in real service. 16:9 with a dark overlay for headline legibility. Avoid abstract graphics and empty venues. Search terms: medical camp wide shot, school assembly courtyard, community hall service. Media bank file: ___]
+Section 2: A global movement, by the numbers
+[H2]
+Global results
+[Body]
+SRLC USA is one chapter of a global movement carried largely by volunteers. The figures below reflect the movement’s worldwide reach and behind them are individual people whose circumstances changed because someone was in a position to help.
+[Statistic display, oversized numerals, short label beneath each, “globally” appended to every figure per A4]
+33M+ lives touched globally · 8.35M+ patients treated globally · 3.28M+ students reached globally · 12.24M+ reached through Humanitarian Care globally · 450K+ animals saved, treated, or rehabilitated globally · 8.90M+ supported through Emergency Relief Care globally
+[Note: all six figures are the approved global set locked in Document A v2 (A4). The outdated live homepage set (20M+, 2.38M+, 0.34M+) was not used.]
+[Image: single field photo behind the stat band with a dark overlay; the numbers carry the section. Avoid six competing photos. Search terms: field program wide establishing. Media bank file: ___]
+Section 3: Quality you can verify
+[H2]
+Independent recognition and accreditation
+[Body]
+The movement received Special Consultative Status from the United Nations Economic and Social Council in 2020, and GuideStar awarded its Platinum Seal for transparency and accountability in 2019. Independent recognition matters because it does not depend on our own account of the work. The 250-bed Shrimad Rajchandra Hospital and Research Center earned accreditation from the National Accreditation Board for Hospitals and Healthcare Providers (NABH) within its first year of operation. 
+[Recognition row (existing standard module, same assets and attribution labels as the homepage recognition cluster)]
+SRLC (Global): UN ECOSOC Special Consultative Status, 2020 · SRLC USA: Top-Rated on GreatNonprofits · SRLC USA: Candid Gold Transparency Seal, 2025
+[Image: the hospital in use, a corridor consultation or a recovery smile, competence and warmth together. 4:3 beside the body copy. Avoid operating theaters and procedures. Search terms: hospital corridor consultation, patient recovery smile, campus exterior dawn. Media bank file: ___]
+Section 4: Why a dollar goes further here (NEW SECTION, for Naman’s approval)
+[New section: answers the question every research-phase supporter is silently asking between the numbers and the map. No percentage claims; facts from the live Mission and Values copy.]
+[H2]
+An operating model built for efficiency
+[Body]
+Because the programs are carried by experienced professionals and volunteers, administration costs remain low, and each initiative is managed against defined performance indicators. In practical terms, this means a greater share of every contribution reaches the programs it was intended to support.
+[Component]
+Three-icon band: Volunteer delivery model · Low administration costs · Defined performance indicators
+[Flag: no specific administration-cost percentage is published here; any figure would require finance sign-off and the approved statistics list. The banned 100-percent-volunteer claim is not used in any form.]
+[Image: none required; icon band on a light background. Media bank file: ___]
+Section 5: Close to home
+[H2]
+Results in the United States
+[Body]
+In the United States, volunteers organize recurring service programs in cities from Los Angeles to New York, preparing and sharing meals, assembling school supplies, and holding community care events with established local partners. In 2024, US centers distributed 90,000+ educational items, reaching 18,000+ students.
+[METRIC PLACEHOLDER: US meals served annually · US volunteer hours · active US cities and partners. Pending approved statistics; do not publish until verified and added to the approved list.]
+[Flag: the 90,000+ and 18,000+ figures come from the live Growth page (2024) and must be checked against the approved statistics list before build. Other US figures in the master copy ($110,000+ in critical aid, 1,000+ students equipped, 400+ community partners) are not on the approved list and were not used.]
+[Component]
+Interactive US map. Operating states highlighted; clicking a highlighted state opens that state’s landing page.
+[Image: US chapter volunteers mid-task in an unmistakably local setting: gym floor, folding tables, autumn street. 16:9. Avoid flag cliches and staged lineups. Search terms: chapter meal packing, school supply drive gym, community event table. Media bank file: ___]
+Section 6: Two decades of documented growth
+[H2]
+Two decades of documented growth
+[Timeline lead-in]
+The milestones below are drawn from the movement’s published record. They trace twenty years of steady growth, from volunteers delivering medicine to rural doorsteps to permanent institutions that now serve millions.
+[Timeline. Newly written entries; every fact is drawn from the movement’s published Growth record]
+2006 to 2008: A mobile dispensary begins carrying medical care to rural doorsteps, and a mid-day meal program gives families one more reason to send their children to school.
+2009 to 2011: Shrimad Rajchandra Gurukul opens in Karanjveri, Gujarat, and a new neonatal intensive care unit begins providing critical care for premature newborns.
+2015: New York City hosts SRLC’s first Love and Care Walk, with more than 550 participants.
+2016: Shrimad Rajchandra Vidyapeeth opens as the first science college serving 238 villages of South Gujarat, and the Skill Development Center begins providing vocational training for tribal youth.
+2019: GuideStar awards SRLC its Platinum Seal for the highest level of transparency and accountability.
+2020: The United Nations grants SRLC Special Consultative Status. Vidyapeeth and Gurukul become the first science college and first secondary school under the State Board of Gujarat certified to ISO 9001 and ISO 29990.
+2021: COVID-19 relief reaches 50 cities on five continents, supporting 8.85M+ lives.
+2022: The 250-bed Shrimad Rajchandra Hospital and Research Center opens, and its surgeons perform the region’s first open-heart cardiothoracic surgery.
+2023: The hospital earns NABH accreditation within its first year. In Nairobi, Kenya, a free eye and ear, nose, and throat (ENT) medical camp treats 7,500+ patients.
+2024: Mission Africa launches across 16 African nations. A mega-medical camp in Dharampur serves 25,000+ people, and US centers deliver 90,000+ educational items to 18,000+ students.
+[Flag: all timeline figures come from the live Growth page and must be checked against the approved statistics list before build. Naman to confirm which milestones make the final cut.]
+[Layout suggestion: scroll-triggered horizontal timeline, one node per era with year marker, two lines of text, one square photo. Replaces the static infographic on /our-growth/.]
+[Image: one representative photo per era for the timeline nodes, small square crops. Avoid document scans and flyer graphics. Search terms by year: first camp, hospital inauguration, first US walk, Mission Africa launch. Media bank file: ___]
+Section 7: What these figures mean in practice
+[H2]
+What these figures mean in practice
+[Body]
+Laxmibhai, a 52-year-old farmer, had been living with triple-vessel heart disease, and the surgery he needed was beyond his family’s means. He received the region’s first cardiothoracic bypass at Shrimad Rajchandra Hospital at no cost, and he has since returned home to his fields. His recovery is one outcome among millions, and it is the kind of outcome every figure on this page represents.
+[Flag: named story. Consent and photo consent documentation required per Media Bank SOP before publish, and the story’s approved source should be confirmed. The surgery itself is corroborated by the live Growth page.]
+[Image: dignified portrait of Laxmibhai in his own setting, life after, not need before. 4:3 beside the story. Avoid hospital gowns and before-and-after pity framing. Consent documentation on file per Media Bank SOP. Media bank file: ___]
+Section 8: Read the full record (NEW SECTION, for Naman’s approval)
+[New section: closes the verification loop this page opens. A supporter who reads this far is one click from the primary documents.]
+[H2]
+Primary documents
+[Body]
+Our annual reports and Forms 990 are published in full, so that supporters, grantmakers, and researchers can review the record directly rather than rely on summaries.
+[Component]
+Two document cards linking to the Financials page: Annual Report 2024 to 2025 (featured, cover image, download) and 2024 Form 990.
+[Flag: same dependency as the Financials tab: self-hosted PDFs from finance, Schedule B redacted.]
+[Image: annual report cover thumbnail on the featured card; no other photography. Media bank file: ___]
+Section 9: Footer CTA
+[H2]
+Support work you can verify
+[Body]
+Each result presented here belongs to a program that can be examined, visited, and audited, and each of those programs welcomes new support. We invite you to explore the work, or to read the record for yourself.
+[CTA]
+Explore the 10 Care Program
+[Image: no additional image required.]
+Metadata
+[Title tag]
+Our Impact | Verified Global Results | SRLC USA
+[Character count: 47. Compliant (60-character maximum).]
+[Meta description]
+33M+ lives touched globally. Two decades of documented growth, independently accredited and published in full. Explore the results. SRLC USA.
+[Character count: 141. Compliant (160-character maximum).]
+[Meta description formula check (A4): Benefit | Credibility signal | CTA | Brand. Compliant.]

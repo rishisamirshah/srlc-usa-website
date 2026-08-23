@@ -1,82 +1,91 @@
-"""India hub + institute pages. Approved descriptions verbatim, Center spelling.
-Option A/B choices from the doc are resolved to Option A (recorded for Naman's review).
-Institute URLs standardized under /our-work/india/ (doc candidates varied; flagged)."""
+"""India hub + institute pages. Hub descriptions are the approved verbatim set
+from the India hub tab. Detail-page intros/metas come from the Document C specs
+(Aug 20, Parshva) for Hospital/Jivamaitridham/COEW and the Riyan tabs for
+Gurukul/SRSDC. Long approved descriptions for Hospital/Jivamaitridham/COEW are
+PENDING; their pages carry an empty slot per the build rules."""
 
 INSTITUTES = [
     {
         "slug": "hospital-and-research-center",
         "name": "Shrimad Rajchandra Hospital and Research Center",
-        "abbr": "SRHRC", "tag": "Hospital &amp; Research Center", "care": "Health Care",
+        "tag": "Hospital &amp; Research Center", "care": "Health Care",
         "care_url": "/our-work/10-care-program/health-care/",
         "desc": "A NABH-accredited, 250-bed, multi-specialty charitable hospital in Dharampur, with 20+ departments and specialties, including a Neonatal Intensive Care Unit and District Early Intervention Center. The hospital was virtually inaugurated by Shri Narendra Modi, Hon&rsquo;ble Prime Minister of India, in 2022.",
-        "intro": "Care of the highest standard, for the families least able to reach it.",
-        "extra": "The hospital anchors SRLC&rsquo;s Health Care work in South Gujarat: primary, secondary, and tertiary treatment at no cost or highly subsidized rates, extended by medical camps and outreach programs that carry care into the surrounding villages. It earned accreditation from the National Accreditation Board for Hospitals and Healthcare Providers (NABH) within its first year of operation, and its surgeons performed the region&rsquo;s first open-heart cardiothoracic surgery.",
-        "img": "Hospital campus &middot; Media Bank",
+        "intro": "In a region where quality healthcare was once a long journey away, this hospital brings it next door.",
+        "desc_full": False,
+        "cta": "Give to This Work",
+        "img": "Establishing shot with one human element for scale. Not an empty building. Media Bank.",
+        "meta_title": "Shrimad Rajchandra Hospital and Research Center | SRLC USA",
+        "meta_desc": "A multispecialty hospital in Dharampur, India, where quality care is no longer a long journey away. See how it works and how to support it. SRLC USA.",
     },
     {
         "slug": "vidyapeeth",
         "name": "Shrimad Rajchandra Vidyapeeth",
-        "abbr": "SRV", "tag": "Science College", "care": "Educational Care",
+        "tag": "Science College", "care": "Educational Care",
         "care_url": "/our-work/10-care-program/educational-care/",
         "desc": "The first science college across 238 villages of South Gujarat, offering B.Sc., B.Voc., M.Sc., PGDMLT, and certificate courses, paired with holistic learning and career support.",
         "full_page": True,
-        "img": "Students in the science laboratory &middot; Media Bank",
+        "img": "Students working at lab benches in a science laboratory. Warm, energetic light. Media Bank.",
     },
     {
         "slug": "gurukul",
         "name": "Shrimad Rajchandra Gurukul",
-        "abbr": "SRG", "tag": "High School", "care": "Educational Care",
+        "tag": "High School", "care": "Educational Care",
         "care_url": "/our-work/10-care-program/educational-care/",
         "desc": "A progressive secondary and higher-secondary school for underserved students.",
         "intro": "A school built on the belief that every child deserves excellent teachers and a safe place to grow.",
-        "extra": None,
-        "img": "School courtyard and classroom &middot; Media Bank",
+        "desc_full": True,
+        "cta": "Support This Institution",
+        "img": "Exterior or courtyard shot plus one human moment: students in a classroom or activity, active and engaged. Media Bank.",
         "meta_title": "Shrimad Rajchandra Gurukul | Rural School India | SRLC USA",
         "meta_desc": "A progressive secondary and higher-secondary school for underserved students in South Gujarat. Support through SRLC USA&rsquo;s Educational Care program.",
     },
     {
         "slug": "skill-development-center",
         "name": "Shrimad Rajchandra Skill Development Center",
-        "abbr": "SRSDC", "tag": "Skill Development Center", "care": "Educational Care",
+        "tag": "Skill Development Center", "care": "Educational Care",
         "care_url": "/our-work/10-care-program/educational-care/",
         "desc": "A hub for relevant, technical courses preparing a new generation to enter the workforce.",
         "intro": "Practical training that turns ambition into a livelihood.",
-        "extra": None,
-        "img": "Hands mastering a trade &middot; Media Bank",
+        "desc_full": True,
+        "cta": "Support This Institution",
+        "img": "Exterior shot of the center plus one human moment: hands mastering a trade, a student at a workstation. Media Bank.",
         "meta_title": "Shrimad Rajchandra Skill Development Center | SRLC USA",
         "meta_desc": "A hub for technical vocational training for tribal youth in South Gujarat. Preparing a new generation to enter the workforce. Support through SRLC USA.",
     },
     {
         "slug": "jivamaitridham",
         "name": "Shrimad Rajchandra Jivamaitridham",
-        "abbr": "SRJMD", "tag": "Animal Sanctuary", "care": "Animal Care",
+        "tag": "Animal Sanctuary", "care": "Animal Care",
         "care_url": "/our-work/10-care-program/animal-care/",
         "desc": "An upcoming animal sanctuary comprising a 150-ward animal hospital, veterinary college, ahimsa experience center, and animal shelters.",
-        "intro": "Compassion extended to every life, beginning with the ones who cannot ask.",
-        "extra": "Satellite clinics and animal outreach programs extend rescue and treatment into the surrounding region, alongside the sanctuary&rsquo;s hospital wards and shelters.",
-        "img": "An animal receiving care &middot; Media Bank",
+        "intro": "A sanctuary where injured and abandoned animals are treated, sheltered, and given a life of dignity.",
+        "desc_full": False,
+        "cta": "Give to This Work",
+        "img": "Establishing shot with one human element for scale. No animals in visible distress. Media Bank.",
+        "meta_title": "Shrimad Rajchandra Jivamaitridham | SRLC USA",
+        "meta_desc": "An animal care campus in Dharampur, India, where injured and abandoned animals are treated, sheltered, and given a life of dignity. See the work. SRLC USA.",
     },
     {
         "slug": "center-of-excellence-for-women",
-        "name": "Shrimad Rajchandra Sarvamangal Center of Excellence for Women",
-        "abbr": "SRCOEW", "tag": "Women&rsquo;s Empowerment", "care": "Woman Care",
+        "name": "Shrimad Rajchandra Center of Excellence for Women",
+        "tag": "Women&rsquo;s Empowerment", "care": "Woman Care",
         "care_url": "/our-work/10-care-program/woman-care/",
         "desc": "A state-of-the-art facility dedicated to the holistic development and empowerment of tribal women, reaching 10,000&ndash;12,000 women annually through an integrated program spanning awareness, social security, skilling, and leadership.",
-        "intro": "Independence built skill by skill, leader by leader.",
-        "extra": None,
-        "img": "Women in training &middot; Media Bank",
+        "intro": "Skills, artisanship, and steady income for women building independence.",
+        "desc_full": False,
+        "cta": "Give to This Work",
+        "img": "Establishing shot with one human element for scale. Artisans at work need written consent. Media Bank.",
+        "meta_title": "Shrimad Rajchandra Center of Excellence for Women | SRLC USA",
+        "meta_desc": "A center in Dharampur, India, where women build skills, artisanship, and steady income. See how the work runs and how to support it. SRLC USA.",
     },
 ]
 
-INDIA_INTRO = ("Permanent institutions in Dharampur, South Gujarat, each built to serve the "
-               "underserved for generations: a charitable hospital, schools and colleges, "
-               "vocational training, an animal sanctuary, and a center for the empowerment of women.")
+INDIA_INTRO = "Six permanent institutes in India, each built around a specific need."
 
-# Vidyapeeth full page content (em dash removed per A4; finance/story sections held)
 SRV = {
     "h1": "The First Science College Across 238 Villages",
     "sub": "Across 238 villages in South Gujarat, young people who dreamed of a science career had nowhere close to go. Shrimad Rajchandra Vidyapeeth changed that in 2016. Your support keeps the doors open.",
-    "trust": ["501(c)(3) Nonprofit", "3.28M+ Students Reached Globally", "Parent body: UN ECOSOC Special Consultative Status"],
     "need_h2": "Before 2016, a science degree meant leaving home or giving up.",
     "need": [
         "The 238 villages of Dharampur and Kaprada in South Gujarat are home to tens of thousands of young people. For years, if a student there wanted to study science at the undergraduate level, there was no local college to go to. The closest options required leaving the community entirely. For students from families with limited resources, that meant most of them didn&rsquo;t go.",

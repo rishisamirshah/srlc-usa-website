@@ -1,9 +1,12 @@
-"""Renderers: homepage (approved-base port), donate, volunteer, about cluster, 404."""
+"""Renderers: homepage (approved v2 base), donate, about cluster, 404 — flat pass."""
 import os
-from shell import (page, ph, hero_purple, actionbar, impact_stats, recognition_chips, EMAIL, PHONE, EIN_LINE, IG, FB)
+from shell import (page, ph, page_header, flat_cta, trust_bar, impact_stats,
+                   recognition_chips, EMAIL, PHONE, EIN_LINE, IG, FB)
 from data_states import STATES, CAMPAIGNS
 from data_cares import CARES
 from pages_work import cf_map, state_chips
+
+US_FOOTPRINT = "chapters in 11 states and Washington, D.C."
 
 GLOBAL_STATS = [
     ("33M+", "Lives", "touched globally"),
@@ -14,52 +17,57 @@ GLOBAL_STATS = [
     ("8.90M+", "Lives", "reached through Emergency Relief Care"),
 ]
 
+MATCH_QUALIFIER = ("These are examples of companies with employee matching-gift programs. "
+                   "Logos are the property of their respective owners and do not imply "
+                   "partnership with or endorsement of SRLC USA.")
+
 
 def partner_marquee():
     pdir = os.path.join(os.path.dirname(__file__), "..", "assets", "img", "partners")
     logos = sorted(f for f in os.listdir(pdir) if not f.startswith("."))
-    group = "".join(
-        f'<div class="marquee-logo"><img src="/assets/img/partners/{f}" alt="{f.rsplit(".", 1)[0].replace("-", " ").title()}" loading="lazy"></div>'
-        for f in logos)
-    group_dup = group.replace('alt="', 'alt="" data-a="', 1) if False else "".join(
-        f'<div class="marquee-logo"><img src="/assets/img/partners/{f}" alt="" loading="lazy"></div>'
-        for f in logos)
-    return f"""<div class="partner-marquee" aria-label="Corporate matching gift partners">
+    def group(hidden):
+        alt = (lambda f: "") if hidden else (lambda f: f.rsplit(".", 1)[0].replace("-", " ").replace("_", " ").title())
+        return "".join(
+            f'<div class="marquee-logo"><img src="/assets/img/partners/{f}" alt="{alt(f)}" width="150" height="56" loading="lazy"></div>'
+            for f in logos)
+    return f"""<div class="partner-marquee" aria-label="Employers with matching gift programs">
   <div class="partner-marquee__track">
-    <div class="partner-marquee__group">{group}</div>
-    <div class="partner-marquee__group partner-marquee__group--dup" aria-hidden="true">{group_dup}</div>
+    <div class="partner-marquee__group">{group(False)}</div>
+    <div class="partner-marquee__group partner-marquee__group--dup" aria-hidden="true">{group(True)}</div>
   </div>
 </div>"""
 
 
-def care_card_media(icon):
-    return (f'<div class="care-card__img" style="display:grid;place-items:center;'
-            f'background:linear-gradient(135deg,#F1EAF7 0%,#E2D2F0 100%)">'
-            f'<img src="/assets/img/care-icons/{icon}" alt="" style="width:46%;max-width:120px;opacity:.85"></div>')
+def care_card_media(icon, name):
+    return (f'<div class="care-card__img" style="display:grid;place-items:center;background:#E7E3EC">'
+            f'<img src="/assets/img/care-icons/{icon}" alt="" width="110" height="110" style="width:44%;max-width:110px;opacity:.85"></div>')
 
 
 def render_home(svg_inner):
     slides = [
         {
             "img": "/assets/img/photos/school-children-hero.jpg",
+            "alt_note": "Students at a school supported through Educational Care",
             "eyebrow": "Educational Care &middot; Classroom of Change",
             "title": "The classroom comes to every child.",
-            "sub": "A year-round educational care campaign that brings learning to underserved children, from Title I schools across the United States to 238 villages in South Gujarat. Every learner gets a real shot, no matter where they&rsquo;re born.",
-            "cta1": ("Fund a classroom", "/donate/"), "cta2": ("See the program", "/our-work/10-care-program/educational-care/"),
+            "sub": "A year-round educational care campaign that brings learning to underserved children, from Title I schools across the United States to 238 villages in South Gujarat.",
+            "cta1": ("Fund a Classroom", "/donate/"), "cta2": ("See the Program", "/our-work/10-care-program/educational-care/"),
         },
         {
             "img": "/assets/img/photos/event-recent.jpg",
+            "alt_note": "SRLC USA volunteers at a community event",
             "eyebrow": "Our Impact",
             "title": "33M+ lives. Care for those who need it most.",
-            "sub": "Our impact spans the hospital, the schools, the animal sanctuary, Mission Africa, and the community work happening right where you live. Every program carries a story, built around the people it serves.",
-            "cta1": ("See the impact", "/about/our-impact/"), "cta2": ("Who we are", "/about/who-we-are/"),
+            "sub": "Our impact spans the hospital, the schools, the animal sanctuary, Mission Africa, and the community work happening right where you live.",
+            "cta1": ("See the Impact", "/about/our-impact/"), "cta2": ("Who We Are", "/about/who-we-are/"),
         },
         {
             "img": "/assets/img/photos/love-care-walk.jpg",
+            "alt_note": "Participants at an SRLC Love and Care Walk",
             "eyebrow": "Get Involved",
             "title": "Your nearest chapter is closer than you think.",
-            "sub": "25+ U.S. cities from Boston to Seattle, Atlanta to Phoenix. Monthly meetings, local volunteer drives, and university partnerships. Meet like-minded people who want to bring joy and impact through global initiatives.",
-            "cta1": ("Find your chapter", "/our-work/united-states/"), "cta2": ("How to volunteer", "/volunteer/"),
+            "sub": f"SRLC USA has {US_FOOTPRINT} Monthly meetings, local volunteer drives, and university partnerships. Meet like-minded people who want to bring joy and impact through global initiatives.".replace("D.C. Monthly", "D.C. Monthly"),
+            "cta1": ("Find Your Chapter", "/our-work/united-states/"), "cta2": ("How to Volunteer", "/get-involved/volunteer/"),
         },
     ]
     slides_html = "".join(f"""<article class="hero-carousel__slide{' is-active' if i == 0 else ''}" data-slide="{i}" style="--bg:url('{s["img"]}')">
@@ -83,30 +91,26 @@ def render_home(svg_inner):
       </div>""" for n, l, d in GLOBAL_STATS)
 
     care_cards = "".join(f"""<a class="care-card reveal" data-stagger="{i % 5 + 1}" href="/our-work/10-care-program/{c["slug"]}/">
-        {care_card_media(c["icon"])}
+        {care_card_media(c["icon"], c["name"])}
         <div class="care-card__label">
           <span class="care-card__num">{c["num"]}</span>
           <h3>{c["name"]}</h3>
         </div>
       </a>""" for i, c in enumerate(CARES))
 
-    institutes_cards = ""
     from data_india import INSTITUTES
-    for inst in INSTITUTES:
-        institutes_cards += f"""<a class="institute-card reveal" href="/our-work/india/{inst["slug"]}/">
-        <div class="institute-card__media">{ph(inst["tag"], cls="ph-media--tint", style="min-height:0;height:100%")}</div>
-        <div class="institute-card__body"><h3 class="institute-card__h">{inst["name"]}</h3><p class="institute-card__d">{inst["desc"]}</p><span class="institute-card__more" aria-label="Learn more"></span></div>
-      </a>"""
+    institutes_cards = "".join(f"""<a class="institute-card reveal" href="/our-work/india/{inst["slug"]}/">
+        <div class="institute-card__media">{ph(inst["img"], style="min-height:0;height:100%")}</div>
+        <div class="institute-card__body"><h3 class="institute-card__h">{inst["name"]}</h3><p class="institute-card__d">{inst["desc"]}</p><span class="institute-card__more" aria-label="{inst["name"]}"></span></div>
+      </a>""" for inst in INSTITUTES)
 
-    campaigns_cards = "".join(f"""<a class="news-card reveal" data-stagger="{i + 1}" href="/our-work/united-states/#campaigns">
-        <div class="news-card__media">{ph(c["img_label"], cls="ph-media--tint", style="min-height:0;height:100%")}</div>
-        <div class="news-card__meta"><span class="news-card__tag">National Campaign</span></div>
-        <h3 class="news-card__h">{c["name"]}</h3>
-        <p class="news-card__d">{c["body"][:170]}&hellip;</p>
-        <span class="news-card__cta">{c["cta"]}</span>
-      </a>""" for i, c in enumerate(CAMPAIGNS))
+    articles = "".join(f"""<div class="news-card reveal" data-stagger="{i + 1}">
+        <div class="news-card__media">{ph("Article image, Media Bank", style="min-height:0;height:100%")}</div>
+        <div class="news-card__meta"><span class="news-card__tag">Article slot</span></div>
+        <h3 class="news-card__h" style="color:var(--color-ink-muted)">Article pending from the content team</h3>
+      </div>""" for i in range(3))
 
-    activity = """<aside class="chapter-activity reveal" aria-label="Recent chapter activity">
+    activity = """<div class="chapter-activity reveal" aria-label="Recent chapter activity">
         <header class="chapter-activity__head">
           <p class="chapter-activity__title">From the chapters</p>
           <span class="chapter-activity__count">22 centers</span>
@@ -125,7 +129,7 @@ def render_home(svg_inner):
             <span class="chapter-activity__body">Hot meals and breakfast packs with TCAA and Andre House<span class="chapter-activity__time">Year-round</span></span>
           </li>
         </ul>
-      </aside>"""
+      </div>"""
 
     body = f"""
 <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
@@ -133,7 +137,7 @@ def render_home(svg_inner):
   <div class="container sticky-donate__inner">
     <p class="sticky-donate__msg"><strong>33M+</strong> lives touched globally. Your gift adds to that.</p>
     <div class="sticky-donate__actions">
-      <a class="btn btn--primary" href="/donate/">Donate now</a>
+      <a class="btn btn--primary" href="/donate/">Donate Now</a>
       <button type="button" class="sticky-donate__close" id="stickyDonateClose" aria-label="Dismiss">&times;</button>
     </div>
   </div>
@@ -163,15 +167,17 @@ def render_home(svg_inner):
   <div class="hero-carousel__controls"><div class="hero-carousel__dots" role="tablist" aria-label="Choose slide">{dots}</div></div>
 </section>
 
+{trust_bar()}
+
 <section class="mission-split">
   <div class="mission-split__grid">
     <div class="mission-split__copy">
       <p class="mission-split__eyebrow">Our Mission</p>
-      <h2 class="mission-split__h">Love and Care. <em>Compassion in action.</em></h2>
-      <p class="mission-split__body">Shrimad Rajchandra Love and Care USA is the United States chapter of Shrimad Rajchandra Love and Care, a global humanitarian organization holding Special Consultative Status with the United Nations Economic and Social Council. SRLC USA is a 501(c)(3) public charity raising funds across 25+ U.S. cities for global health, education, and humanitarian work.</p>
+      <h2 class="mission-split__h">Love and Care. Compassion in action.</h2>
+      <p class="mission-split__body">Shrimad Rajchandra Love and Care USA is the United States chapter of Shrimad Rajchandra Love and Care, holder of UN ECOSOC Special Consultative Status. SRLC USA is a 501(c)(3) public charity with {US_FOOTPRINT}, raising funds for global health, education, and humanitarian work.</p>
       <div class="mission-split__actions">
         <a class="btn btn--primary btn--lg" href="/donate/">Donate</a>
-        <a class="btn btn--secondary" href="/about/who-we-are/">See what your gift funds</a>
+        <a class="btn btn--secondary" href="/about/who-we-are/">See What Your Gift Funds</a>
       </div>
       <p class="mission-split__micro">Registered 501(c)(3) &middot; EIN 81-5162502</p>
     </div>
@@ -187,20 +193,22 @@ def render_home(svg_inner):
       <p class="care-section__sub">From rural hospitals to U.S. chapter food drives, every initiative comes back to the same idea: love and care, delivered in person, with measured outcomes.</p>
     </div>
     <div class="care-grid">{care_cards}</div>
-    <div class="care-section__cta reveal"><a class="btn btn--secondary" href="/our-work/10-care-program/">Explore all 10 programs</a></div>
+    <div class="care-section__cta reveal"><a class="btn btn--secondary" href="/our-work/10-care-program/">Explore All 10 Programs</a></div>
   </div>
 </section>
 
 <section class="named-story" aria-label="Impact story">
   <div class="named-story__grid">
-    <div class="named-story__media"><div class="named-story__placeholder">Laxmibhai&rsquo;s portrait &middot; Media Bank photo pending consent</div></div>
+    <div class="named-story__media named-story__media--parallax" role="img" aria-label="Portrait slot: Laxmibhai, Media Bank photo pending consent" style="background-color:#E7E3EC">
+      <div class="named-story__placeholder">Laxmibhai&rsquo;s portrait, Media Bank photo pending consent</div>
+    </div>
     <div class="named-story__copy-wrap">
       <div class="named-story__copy reveal" data-stagger="1">
         <p class="named-story__eyebrow">Impact story &middot; Laxmibhai</p>
         <p class="named-story__quote">A 52-year-old farmer received the region&rsquo;s first-ever cardiothoracic bypass surgery, performed entirely free of charge. Today he is back on his feet.</p>
         <p class="named-story__attribution">Laxmibhai&rsquo;s second chance</p>
         <p class="named-story__attribution-meta">Health Care &middot; Shrimad Rajchandra Hospital and Research Center</p>
-        <a class="named-story__link" href="/our-work/10-care-program/health-care/">Read about Health Care</a>
+        <a class="named-story__link" href="/our-work/10-care-program/health-care/">Explore Health Care</a>
       </div>
     </div>
   </div>
@@ -210,8 +218,8 @@ def render_home(svg_inner):
   <div class="container">
     <div class="institutes-section__head">
       <p class="institutes-section__eyebrow">Where the work happens</p>
-      <h2 class="institutes-section__h">The institutes you fund</h2>
-      <p class="institutes-section__sub">American donations flow into a global network of institutions, each one built around a specific need. Your gift funds their day-to-day work.</p>
+      <h2 class="institutes-section__h">Institutes in India</h2>
+      <p class="institutes-section__sub">Six permanent institutes in India, each built around a specific need.</p>
     </div>
     <div class="institutes-grid">{institutes_cards}</div>
   </div>
@@ -219,27 +227,37 @@ def render_home(svg_inner):
 
 <section class="chapter-finder chapter-finder--v3">
   <div class="container chapter-finder__inner">
-    <div class="chapter-finder__widget">
+    <div class="chapter-finder__intro">
       <h2 class="chapter-finder__h">Find your nearest chapter.</h2>
       <p class="chapter-finder__sub">Drop in a ZIP code or click any highlighted state on the map.</p>
-      <form class="chapter-finder__form" onsubmit="event.preventDefault(); window.__cfZipLookup &amp;&amp; window.__cfZipLookup();">
-        <input type="text" id="zipInput" inputmode="numeric" maxlength="5" placeholder="ZIP code (e.g. 08820)" aria-label="ZIP code" pattern="\\d{{5}}">
-        <button type="submit" class="btn btn--primary" id="zipBtn">Find chapter</button>
-      </form>
-      <div class="chapter-finder__result" id="zipResult" hidden>
-        <p class="chapter-finder__city" id="zipCity"></p>
-        <p class="chapter-finder__meta" id="zipMeta"></p>
-        <div class="chapter-finder__actions">
-          <a id="zipJoinBtn" class="btn btn--primary" href="/volunteer/">Join this chapter</a>
-          <a class="btn btn--ghost" href="mailto:{EMAIL}">Email us</a>
+    </div>
+    <div class="chapter-finder__cols">
+      <div class="chapter-finder__search">
+        <p class="chapter-finder__search-title">Search by ZIP</p>
+        <form class="chapter-finder__form" onsubmit="event.preventDefault(); window.__cfZipLookup &amp;&amp; window.__cfZipLookup();">
+          <input type="text" id="zipInput" inputmode="numeric" maxlength="5" placeholder="ZIP code (e.g. 08820)" aria-label="ZIP code" pattern="\\d{{5}}">
+          <button type="submit" class="btn btn--primary" id="zipBtn">Find Chapter</button>
+        </form>
+        <div class="chapter-finder__result" id="zipResult" hidden>
+          <p class="chapter-finder__city" id="zipCity"></p>
+          <p class="chapter-finder__meta" id="zipMeta"></p>
+          <div class="chapter-finder__actions">
+            <a id="zipJoinBtn" class="btn btn--primary" href="/get-involved/volunteer/">Join This Chapter</a>
+            <a class="btn btn--ghost-dark" href="mailto:{EMAIL}">Email Us</a>
+          </div>
+          <div class="chapter-finder__chips" id="zipChips" hidden>
+            <p class="chapter-finder__chips-label">Centers in this chapter</p>
+            <div class="chapter-finder__chips-list" id="zipChipsList"></div>
+          </div>
         </div>
+        <p class="chapter-finder__search-hint">We&rsquo;ll point you to your nearest SRLC USA chapter.</p>
       </div>
-      <p class="chapter-finder__link-row"><a href="/our-work/united-states/">Browse all U.S. chapters &rarr;</a></p>
       {activity}
     </div>
-    <div>
+    <div class="chapter-finder__map-wrap">
       {cf_map(svg_inner)}
     </div>
+    <p class="chapter-finder__link-row"><a href="/our-work/united-states/">Browse all U.S. chapters &rarr;</a></p>
   </div>
 </section>
 
@@ -247,12 +265,11 @@ def render_home(svg_inner):
   <div class="container">
     <div class="news-section__head">
       <div class="news-section__headcopy">
-        <p class="news-section__eyebrow">Our Campaigns</p>
-        <h2 class="news-section__h">Three moments the whole country shows up for</h2>
+        <p class="news-section__eyebrow">Latest Articles</p>
+        <h2 class="news-section__h">From our chapters and programs</h2>
       </div>
-      <a class="news-section__all" href="/our-work/united-states/#campaigns">See the campaigns</a>
     </div>
-    <div class="news-grid">{campaigns_cards}</div>
+    <div class="news-grid">{articles}</div>
   </div>
 </section>
 
@@ -263,15 +280,12 @@ def render_home(svg_inner):
       <p class="recognition-band__sub">Shrimad Rajchandra Love and Care holds Special Consultative Status with the United Nations Economic and Social Council, granting our humanitarian work a seat at the global table on sustainable development, health, education, and human rights.</p>
     </div>
     <div class="recognition-cluster reveal" data-stagger="1">
-      <p class="recognition-cluster__label">Recognized by</p>
       {recognition_chips()}
     </div>
     <div class="recognition-cluster reveal" data-stagger="2">
-      <p class="recognition-cluster__label">Corporate matching gift partners</p>
+      <p class="recognition-cluster__label">Corporate matching gift eligibility</p>
+      <p style="text-align:center;font-size:.8rem;color:var(--color-ink-muted);max-width:60ch;margin:0 auto 1rem">{MATCH_QUALIFIER}</p>
       {partner_marquee()}
-    </div>
-    <div class="recognition-band__cta reveal">
-      <a class="btn btn--secondary" href="https://www.loveandcare.srmd.org/awards-and-accolades/" target="_blank" rel="noopener">See all awards and accolades</a>
     </div>
   </div>
 </section>
@@ -280,7 +294,7 @@ def render_home(svg_inner):
   <div class="container">
     <div class="final-cta__hero">
       <span class="final-cta__eyebrow">Be part of the work</span>
-      <h2 class="final-cta__h">One small step from <em>where you are</em> right now.</h2>
+      <h2 class="final-cta__h">One small step from where you are right now.</h2>
       <p class="final-cta__sub">Whether you have five minutes, five dollars, or five hours a month, there is a way for you to join. Pick what fits, and we will meet you there.</p>
     </div>
     <div class="fc-newsletter" id="final-newsletter">
@@ -302,39 +316,48 @@ def render_home(svg_inner):
 """
     return page(
         "SRLC USA | Shrimad Rajchandra Love and Care",
-        "Volunteers across 25+ US cities serving neighbors through the 10 Care Program, institutes in India, and Mission Africa. A 501(c)(3) nonprofit. SRLC USA.",
-        "/", body)
+        f"Volunteers across {US_FOOTPRINT} serving neighbors through the 10 Care Program, institutes in India, and Mission Africa. A 501(c)(3) nonprofit. SRLC USA.",
+        "/", body, overlay=True)
 
 
 def render_donate():
     tiles = "".join(f"""<button type="button" class="donate-tile{' is-active' if amt == '100' else ''}" data-amount="{amt}">
         <span class="donate-tile__amount">${amt}</span>
-      </button>""" for amt in ["25", "50", "100", "250", "500"])
+        <span class="donate-tile__outcome">{outcome}</span>
+      </button>""" for amt, outcome in [
+        ("25", "Outcome line pending finance sign-off"),
+        ("50", "Provides a month of nutrition support for a child"),
+        ("100", "Outcome line pending finance sign-off"),
+        ("250", "Outcome line pending finance sign-off"),
+        ("500", "Outcome line pending finance sign-off"),
+    ])
     ways = [
-        ("Give by ACH or check", "Bank transfer and mailed checks are our most efficient ways to receive your gift: more of every dollar reaches the programs. Write to us and we will send the details the same week.", f"mailto:{EMAIL}?subject=Donation%20to%20SRLC%20USA", "Email us to give"),
-        ("Donor-advised funds and trusts", "Recommend a grant to Shrimad Rajchandra Love and Care USA through your donor-advised fund or charitable trust. EIN 81-5162502.", f"mailto:{EMAIL}?subject=DAF%20grant%20to%20SRLC%20USA", "Start a DAF grant"),
-        ("Corporate matching", "Your employer may match your gift. Check if your company participates, and your impact can double before it leaves your paycheck.", f"mailto:{EMAIL}?subject=Matching%20gift%20question", "Ask about matching"),
-        ("Give your time", "Volunteers carry every program we run. If this season your gift is hours instead of dollars, we will put them to work.", "/volunteer/", "Volunteer instead"),
+        ("Give by ACH, check, or wire", "Bank transfer and mailed checks are our most efficient ways to receive your gift: more of every dollar reaches the programs. Write to us and we will send the details the same week.", f"mailto:{EMAIL}?subject=Donation%20to%20SRLC%20USA", "Email Us to Give"),
+        ("Donor-advised funds and charitable trusts", "Recommend a grant to Shrimad Rajchandra Love and Care USA through your donor-advised fund or charitable trust. EIN 81-5162502.", f"mailto:{EMAIL}?subject=DAF%20grant%20to%20SRLC%20USA", "Start a DAF Grant"),
+        ("Appreciated stock", "Giving appreciated stock can be one of the most tax-efficient ways to support the work. Write to us and we will coordinate the transfer with your broker.", f"mailto:{EMAIL}?subject=Stock%20gift%20to%20SRLC%20USA", "Give Stock"),
+        ("Cryptocurrency", "Ask us about giving crypto. We will confirm what we can currently accept and walk you through it.", f"mailto:{EMAIL}?subject=Crypto%20gift%20to%20SRLC%20USA", "Ask About Crypto"),
+        ("Corporate matching", "Your employer may match your gift. Check if your company participates, and your impact can double before it leaves your paycheck.", f"mailto:{EMAIL}?subject=Matching%20gift%20question", "Ask About Matching"),
     ]
-    ways_html = "".join(f"""<div class="vu-card reveal" data-stagger="{i % 4 + 1}" style="grid-template-columns:1fr">
-      <h3 class="vu-card__h">{t}</h3>
-      <div class="vu-card__body"><p>{b}</p><p><a href="{h}">{cta}</a></p></div>
-    </div>""" for i, (t, b, h, cta) in enumerate(ways))
+    ways_html = "".join(f"""<details{' open' if i == 0 else ''}>
+      <summary>{t}</summary>
+      <p style="margin:0.4rem 0 0.6rem;color:var(--color-ink-muted)">{b}</p>
+      <p style="margin:0"><a href="{h}">{cta}</a></p>
+    </details>""" for i, (t, b, h, cta) in enumerate(ways))
 
-    body = hero_purple(
-        '<a href="/">Home</a> &middot; Get Involved',
-        "Every gift becomes <em>someone&rsquo;s morning</em>.",
+    body = page_header(
+        "Get Involved",
+        "Every gift becomes someone&rsquo;s morning.",
         "A meal delivered, a backpack filled, a surgery that costs a family nothing. Choose an amount and the way of giving that fits you.",
     ) + f"""
-<section class="vu-shell vu-shell--lav" id="donate-tiles">
+<section class="vu-shell vu-shell--lav vu-shell--first" id="donate-tiles">
   <div class="container" style="max-width:56rem">
     <div class="donate-tiles__head">
       <h2 class="donate-tiles__h">Choose your gift</h2>
-      <p class="donate-tiles__sub">Online card giving is being set up. Until it launches, our team personally handles every gift by email or phone, usually the same day.</p>
+      <p class="donate-tiles__sub">Amounts are illustrative pending finance review. Online card giving is being set up; until it launches, our team personally handles every gift by email or phone, usually the same day.</p>
     </div>
     <div class="donate-tiles__toggle-wrap">
       <div class="donate-tiles__toggle" role="tablist" aria-label="Giving frequency">
-        <button type="button" class="is-active" data-freq="once" aria-selected="true">One time</button>
+        <button type="button" class="is-active" data-freq="once" aria-selected="true">One Time</button>
         <button type="button" data-freq="monthly" aria-selected="false">Monthly</button>
       </div>
     </div>
@@ -342,33 +365,36 @@ def render_donate():
       {tiles}
     </div>
     <div class="donate-tiles__cta">
-      <a class="btn btn--primary btn--lg" id="donate-tiles-cta" href="mailto:{EMAIL}?subject=Donation%20to%20SRLC%20USA%20(%24100)">Donate $100 now</a>
+      <a class="btn btn--primary btn--lg" id="donate-tiles-cta" href="mailto:{EMAIL}?subject=Donation%20to%20SRLC%20USA%20(%24100)">Email Us to Give</a>
       <p class="donate-tiles__monthly-note" id="donate-tiles-monthly-note" hidden>Give monthly and provide steady, year-round support.</p>
     </div>
-    <div class="donate-embed__taxline" style="margin-top:1.6rem">{EIN_LINE}</div>
   </div>
 </section>
 
+{trust_bar()}
+
 <section class="vu-shell vu-shell--cream">
-  <div class="container">
+  <div class="container" style="max-width:820px">
     <h2 class="vu-h reveal">Ways to give</h2>
-    <p class="vu-lead">Choose what fits your season.</p>
-    <div class="vu-pair-grid mt-6">{ways_html}</div>
+    <div class="accordion mt-6">{ways_html}</div>
   </div>
 </section>
 
 <section class="vu-shell vu-shell--lav" id="matching">
   <div class="container">
-    <h2 class="vu-h reveal text-center" style="text-align:center">Double the love before it leaves your paycheck</h2>
-    <p class="vu-lead" style="margin-inline:auto;text-align:center">Thousands of employers match charitable gifts dollar for dollar. If you see your company below, your gift can go twice as far.</p>
-    <div class="mt-8">{partner_marquee()}</div>
-    <p class="text-center mt-6"><a class="btn btn--secondary" href="mailto:{EMAIL}?subject=Matching%20gift%20question">Check your employer</a></p>
+    <h2 class="vu-h reveal" style="text-align:center">Does your employer match gifts?</h2>
+    <p style="text-align:center;font-size:.82rem;color:var(--color-ink-muted);max-width:62ch;margin:0.6rem auto 1.2rem">{MATCH_QUALIFIER}</p>
+    <div>{partner_marquee()}</div>
+    <p class="text-center mt-6" style="text-align:center"><a class="btn btn--secondary" href="mailto:{EMAIL}?subject=Matching%20gift%20question">Check Your Employer</a></p>
   </div>
 </section>
 
 <section class="vu-shell vu-shell--cream vu-shell--narrow">
-  <div class="container text-center">
-    <p style="font-size:.9rem;color:var(--color-ink-muted)">Looking to donate via ACH, check, corporate matching or charitable trust? Please reach out to us at <a href="mailto:{EMAIL}">{EMAIL}</a> or {PHONE}.</p>
+  <div class="container" style="max-width:820px;text-align:center">
+    <h2 class="vu-h reveal">Questions about giving</h2>
+    {ph("Donation FAQ accordion pending: the seven questions port from the cowork donate.html once Naman shares the file.", style="min-height:120px")}
+    <p style="font-size:.9rem;color:var(--color-ink-muted);margin-top:1.2rem">{EIN_LINE}</p>
+    <p style="font-size:.9rem;color:var(--color-ink-muted)">Reach us at <a href="mailto:{EMAIL}">{EMAIL}</a> or {PHONE}.</p>
   </div>
 </section>
 <script>
@@ -397,103 +423,8 @@ def render_donate():
 """
     return page(
         "Donate | SRLC USA | 501(c)(3) Nonprofit",
-        "Give to SRLC USA by ACH, check, donor-advised fund, or corporate matching. A 501(c)(3) nonprofit, EIN 81-5162502. Every gift reaches real programs.",
+        "Give to SRLC USA by ACH, check, stock, DAF, or corporate matching. A 501(c)(3) nonprofit, EIN 81-5162502. Every gift reaches real programs.",
         "/donate/", body)
-
-
-def render_volunteer():
-    cards = [
-        ("Community", "SRLC USA&rsquo;s 25+ chapters are built by people who show up for each other. At every event, volunteers meet neighbors, professionals, and students who share a commitment to service. Many join for the cause and stay for the community."),
-        ("Purpose", "Every event organized, every food distribution completed, every campaign supported reaches real people across the United States, India, and Africa. The effort on the ground connects directly to lives changed."),
-        ("Growth", "Leadership, event management, fundraising, communications, and logistics are all part of active chapter work. The skills built through SRLC USA are practical and lasting. Many of our chapter leaders developed those skills here."),
-        ("Belonging", "Service is not something SRLC USA volunteers do occasionally. For many, it becomes part of how they identify. That is why so many volunteers who start with a single event stay involved for years."),
-    ]
-    cards_html = "".join(
-        f'<div class="cause-card reveal" data-stagger="{i + 1}"><h3>{t}</h3><p>{b}</p></div>'
-        for i, (t, b) in enumerate(cards))
-    steps = [
-        ("01", "Sign up", "Fill out the form at the bottom of this page. Share where you are, what skills or interests you can offer, and how much time you have each month. It takes under two minutes."),
-        ("02", "Meet your chapter", "A coordinator from the SRLC chapter in your area will reach out within a few days. They will introduce themselves and walk you through what the chapter is currently working on."),
-        ("03", "Show up", "Attend your first event. Meet the people who make the chapter run. Most volunteers return for the next one within a month."),
-    ]
-    steps_html = "".join(f"""<div class="prong reveal" data-stagger="{i + 1}">
-      <div class="prong__icon">{n}</div>
-      <h3>{t}</h3><p>{b}</p>
-    </div>""" for i, (n, t, b) in enumerate(steps))
-    roles = ["Events and Logistics", "Food and Distribution", "Community Outreach", "Fundraising and Campaigns",
-             "Communications and Social Media", "Healthcare Outreach", "University and Youth Programs",
-             "Operations and Administration", "Chapter Leadership", "Internship", "Other"]
-    role_opts = "".join(f"<option>{r}</option>" for r in roles)
-    time_opts = "".join(f"<option>{t}</option>" for t in ["2 to 4 hours", "4 to 8 hours", "8+ hours", "Flexible"])
-
-    body = hero_purple(
-        '<a href="/">Home</a> &middot; Get Involved',
-        "Volunteer with <em>SRLC USA</em>",
-        "Thousands of people across 25+ US cities give their time, their skills, and their energy to SRLC USA. Not because they have to. Because service is who they are.",
-        chips=["501(c)(3) Nonprofit", "25+ US Cities", "Parent body: UN ECOSOC Special Consultative Status"],
-        ctas='<a class="btn btn--primary" href="#signup">Volunteer With Us</a> <a class="btn btn--ghost" href="/our-work/united-states/">Find My State&rsquo;s Chapter</a>',
-    ) + f"""
-<section class="vu-shell vu-shell--lav">
-  <div class="container">
-    <h2 class="vu-h reveal">More than volunteering. A community.</h2>
-    <div class="card-grid mt-6">{cards_html}</div>
-  </div>
-</section>
-
-<section class="three-prongs" style="padding:3.4rem 0">
-  <div class="container">
-    <h2 class="three-prongs__h reveal">Getting started is simple</h2>
-    <div class="prongs-grid">{steps_html}</div>
-  </div>
-</section>
-
-<section class="vu-shell vu-shell--purple vu-shell--narrow">
-  <div class="container">
-    <p style="color:#E8DDF2;max-width:70ch;margin-bottom:1.6rem">SRLC USA is the U.S. chapter of Shrimad Rajchandra Love and Care, a global humanitarian organization. Collectively, the initiatives that SRLC USA volunteers help fund and organize are part of a network that has reached 33M+ lives globally. Across medical programs alone, the parent organization has served 8.35M+ patients globally.</p>
-    <div style="display:flex;gap:clamp(1.8rem,6vw,4.5rem);flex-wrap:wrap">
-      {"".join(f'<div><p class="count-up" style="font-family:var(--font-display);font-weight:300;font-size:clamp(2rem,4vw,2.8rem);color:var(--color-warm-orange);margin:0 0 .3rem;line-height:1">{n}</p><p style="color:#E8DDF2;margin:0;font-size:.9rem">{l}</p></div>' for n, l in [("33M+", "lives reached globally"), ("8.35M+", "patients served globally"), ("3.28M+", "students reached globally")])}
-    </div>
-  </div>
-</section>
-
-<section class="vu-shell vu-shell--cream" id="signup">
-  <div class="container" style="max-width:820px">
-    <h2 class="vu-h reveal">Join the mission. Sign up to volunteer.</h2>
-    <p class="vu-lead">Under two minutes. A chapter coordinator from your area will follow up personally.</p>
-    <form class="form mt-6" name="volunteer" method="POST" data-netlify="true" data-netlify-inline netlify-honeypot="bot-field">
-      <input type="hidden" name="form-name" value="volunteer">
-      <p class="hp-field"><input name="bot-field" tabindex="-1"></p>
-      <div class="form-hidewrap">
-        <div class="form__row form__row--two">
-          <div><label for="v-fn">First Name</label><input type="text" id="v-fn" name="first_name" required autocomplete="given-name"></div>
-          <div><label for="v-ln">Last Name</label><input type="text" id="v-ln" name="last_name" required autocomplete="family-name"></div>
-        </div>
-        <div class="form__row form__row--two" style="margin-top:1rem">
-          <div><label for="v-em">Email Address</label><input type="email" id="v-em" name="email" required autocomplete="email"></div>
-          <div><label for="v-zip">City / ZIP Code</label><input type="text" id="v-zip" name="city_zip" required autocomplete="postal-code"></div>
-        </div>
-        <div class="form__row form__row--two" style="margin-top:1rem">
-          <div><label for="v-sk">What skills or interests do you bring?</label><select id="v-sk" name="skills" required>{role_opts}</select></div>
-          <div><label for="v-tm">How much time can you offer per month?</label><select id="v-tm" name="time" required>{time_opts}</select></div>
-        </div>
-        <div class="form__row" style="margin-top:1rem">
-          <label for="v-ph">Phone Number (Optional. So your chapter coordinator can reach you directly.)</label>
-          <input type="tel" id="v-ph" name="phone" autocomplete="tel">
-        </div>
-        <div style="margin-top:1.4rem"><button class="btn btn--primary btn--lg" type="submit">I Want to Volunteer</button></div>
-      </div>
-      <div class="form-success">
-        <p class="vu-lead--xl">Thank you. A chapter coordinator from your area will be in touch within a few days.</p>
-      </div>
-    </form>
-    <p style="font-size:.9rem;color:var(--color-ink-muted);margin-top:1.4rem">Not ready to sign up yet? Follow us on <a href="{IG}" rel="noopener" target="_blank">Instagram</a> and <a href="{FB}" rel="noopener" target="_blank">Facebook</a> to see what SRLC USA chapters are doing in your city.</p>
-  </div>
-</section>
-"""
-    return page(
-        "Volunteer with SRLC USA | Give Your Time, Build Community",
-        "Serve communities across the US with SRLC USA. A 501(c)(3) nonprofit whose work has reached 33M+ lives globally. Sign up to volunteer in two minutes.",
-        "/volunteer/", body)
 
 
 def render_who_we_are():
@@ -511,24 +442,23 @@ def render_who_we_are():
         ("Every figure verified", "Our commitment to transparency is unwavering."),
         ("Built to last", "Long standing impact, for generations to come."),
     ]
-    promises_html = "".join(f"""<div class="prong reveal" data-stagger="{i + 1}">
-      <div class="prong__icon"><svg width="20" height="20"><use href="#vu-i-check"/></svg></div>
-      <h3>{t}</h3><p>{b}</p>
-    </div>""" for i, (t, b) in enumerate(promises))
+    promises_html = "".join(
+        f'<div class="cause-card reveal" data-stagger="{i + 1}"><h3>{t}</h3><p>{b}</p></div>'
+        for i, (t, b) in enumerate(promises))
 
-    body = hero_purple(
-        '<a href="/">Home</a> &middot; About Us',
-        "Love and care, <em>in action</em>.",
+    body = page_header(
+        "About Us",
+        "Love and care, in action",
         "SRLC USA is what happens when physicians, engineers, teachers, and students decide their weekends belong to their neighbors. We are the US chapter of Shrimad Rajchandra Love and Care, a global nonprofit holding Special Consultative Status with the United Nations Economic and Social Council (ECOSOC), and a 501(c)(3) organization. But before we are any of that, we are people who believe care is not a profession. It is a practice.",
     ) + f"""
-<section class="vu-shell vu-shell--lav">
+<section class="vu-shell vu-shell--lav vu-shell--first">
   <div class="container">
     <div class="vu-split">
       <div class="vu-split__copy">
         <h3>Care you can point to</h3>
         <p>We focus on immediate needs and the systems behind them. In the United States, volunteers prepare and share meals, equip students for the school year, and organize community care events with local partners. Globally, the movement builds and sustains hospitals, schools, and development programs designed to serve for generations. The programs differ; the standard does not: high-quality, sustainable work that outlasts the day we arrive.</p>
       </div>
-      <div class="vu-split__photo"><img src="/assets/img/photos/event-recent.jpg" alt="SRLC USA volunteers at a community event" loading="lazy"></div>
+      <div class="vu-split__photo"><img src="/assets/img/photos/event-recent.jpg" alt="SRLC USA volunteers in action at a community event" width="1024" height="683" loading="lazy"></div>
     </div>
   </div>
 </section>
@@ -563,14 +493,14 @@ def render_who_we_are():
   </div>
 </section>
 
-<section class="three-prongs" style="padding:3.4rem 0">
+<section class="vu-shell vu-shell--cream">
   <div class="container">
-    <h2 class="three-prongs__h reveal">Three promises we keep</h2>
-    <div class="prongs-grid">{promises_html}</div>
+    <h2 class="vu-h reveal">Our commitments</h2>
+    <div class="card-grid mt-6">{promises_html}</div>
   </div>
 </section>
 
-{actionbar("Come see for yourself.", "An about page can only introduce us; it cannot let you feel the work. The programs, the numbers, and the financials are all published for anyone to read, and the volunteers are probably closer than you think.", "Explore the 10 Care Program", "/our-work/10-care-program/")}
+{flat_cta("Come see for yourself", "An about page can only introduce us; it cannot let you feel the work. The programs, the numbers, and the financials are all published for anyone to read, and the volunteers are probably closer than you think. Come find out what care looks like when it is organized.", "Explore the 10 Care Program", "/our-work/10-care-program/")}
 """
     return page(
         "Who We Are | SRLC USA | 501(c)(3) Nonprofit",
@@ -600,16 +530,16 @@ def render_our_impact(svg_inner):
     </li>""" for i, (y, t, b) in enumerate(TIMELINE))
     six = [(n, f"{l} {d}") for n, l, d in GLOBAL_STATS]
 
-    body = hero_purple(
-        '<a href="/">Home</a> &middot; About Us',
-        "Our <em>impact</em>",
+    body = page_header(
+        "About Us",
+        "Our impact",
         "The work of Shrimad Rajchandra Love and Care began with volunteers bringing medicine to families in rural villages. Over two decades, it has grown into a global movement that has touched 33M+ lives globally.",
     ) + f"""
-<section class="vu-shell vu-shell--lav">
+<section class="vu-shell vu-shell--lav vu-shell--first">
   <div class="container">
     <h2 class="vu-h reveal">Global results</h2>
     <p class="vu-lead">SRLC USA is one chapter of a global movement carried largely by volunteers. The figures below reflect the movement&rsquo;s worldwide reach and behind them are individual people whose circumstances changed because someone was in a position to help.</p>
-    <div class="mt-6">{impact_stats([(n, l) for n, l in six])}</div>
+    <div class="mt-6">{impact_stats(six)}</div>
   </div>
 </section>
 
@@ -620,7 +550,7 @@ def render_our_impact(svg_inner):
         <h3>Independent recognition and accreditation</h3>
         <p>The movement received Special Consultative Status from the United Nations Economic and Social Council in 2020, and GuideStar awarded its Platinum Seal for transparency and accountability in 2019. Independent recognition matters because it does not depend on our own account of the work. The 250-bed Shrimad Rajchandra Hospital and Research Center earned accreditation from the National Accreditation Board for Hospitals and Healthcare Providers (NABH) within its first year of operation.</p>
       </div>
-      <div class="vu-split__photo"><img src="/assets/img/photos/awards.jpg" alt="SRLC recognition and accolades" loading="lazy"></div>
+      <div class="vu-split__photo"><img src="/assets/img/photos/awards.jpg" alt="SRLC recognition and accolades on display" width="1024" height="768" loading="lazy"></div>
     </div>
     <div class="recognition-cluster mt-8">{recognition_chips()}</div>
   </div>
@@ -636,14 +566,10 @@ def render_our_impact(svg_inner):
 
 <section class="vu-shell vu-shell--cream">
   <div class="container">
-    <div class="vu-split vu-split--reverse">
-      <div class="vu-split__copy">
-        <h3>Results in the United States</h3>
-        <p>In the United States, volunteers organize recurring service programs in cities from Los Angeles to New York, preparing and sharing meals, assembling school supplies, and holding community care events with established local partners. In 2024, US centers distributed 90,000+ educational items, reaching 18,000+ students.</p>
-        <p><a href="/our-work/united-states/">Explore the US chapters</a></p>
-      </div>
-      <div>{cf_map(svg_inner)}</div>
-    </div>
+    <h2 class="vu-h reveal">Results in the United States</h2>
+    <p class="maxw-70">In the United States, volunteers organize recurring service programs in cities from Los Angeles to New York, preparing and sharing meals, assembling school supplies, and holding community care events with established local partners. In 2024, US centers distributed 90,000+ educational items, reaching 18,000+ students.</p>
+    <div class="mt-6">{cf_map(svg_inner)}</div>
+    <p class="mt-6"><a href="/our-work/united-states/">Explore the US chapters</a></p>
   </div>
 </section>
 
@@ -656,7 +582,7 @@ def render_our_impact(svg_inner):
 </section>
 
 <section class="vu-shell vu-shell--cream vu-shell--narrow">
-  <div class="container">
+  <div class="container" style="max-width:820px">
     <div class="vu-card vu-card--accent reveal" style="grid-template-columns:1fr">
       <h3 class="vu-card__h">What these figures mean in practice</h3>
       <div class="vu-card__body"><p>Laxmibhai, a 52-year-old farmer, had been living with triple-vessel heart disease, and the surgery he needed was beyond his family&rsquo;s means. He received the region&rsquo;s first cardiothoracic bypass at Shrimad Rajchandra Hospital at no cost, and he has since returned home to his fields. His recovery is one outcome among millions, and it is the kind of outcome every figure on this page represents.</p>
@@ -665,7 +591,7 @@ def render_our_impact(svg_inner):
   </div>
 </section>
 
-{actionbar("Support work you can verify.", "Each result presented here belongs to a program that can be examined, visited, and audited, and each of those programs welcomes new support.", "Explore the 10 Care Program", "/our-work/10-care-program/")}
+{flat_cta("Support work you can verify", "Each result presented here belongs to a program that can be examined, visited, and audited, and each of those programs welcomes new support.", "Explore the 10 Care Program", "/our-work/10-care-program/")}
 """
     return page(
         "Our Impact | Verified Global Results | SRLC USA",
@@ -691,11 +617,11 @@ def render_inspiration():
     </figure>""" for i, (q, n, r) in enumerate(VOICES))
     qdots = "".join(f'<button class="qd{" is-active" if i == 0 else ""}" data-go="{i}" aria-label="Quote {i + 1}"></button>' for i in range(len(VOICES)))
 
-    body = hero_purple(
-        '<a href="/">Home</a> &middot; About Us &middot; A timeless legacy flowing through a present-day visionary',
-        "Our <em>Inspiration</em>",
+    body = page_header(
+        "About Us &middot; A timeless legacy flowing through a present-day visionary",
+        "Our Inspiration",
     ) + f"""
-<section class="vu-shell vu-shell--lav">
+<section class="vu-shell vu-shell--lav vu-shell--first">
   <div class="container prose">
     <h2 class="vu-h">Jainism and Lord Mahavir</h2>
     <p>Jainism, one of the world&rsquo;s oldest spiritual philosophies, teaches enduring, universal principles of love and kindness.</p>
@@ -746,7 +672,7 @@ def render_inspiration():
   </div>
 </section>
 
-{actionbar("That is the inspiration.", "The rest of this site is what it looks like in practice: ten Care programs, institutions in India, medical camps in Africa, and volunteers across the United States.", "Explore the 10 Care Program", "/our-work/10-care-program/")}
+{flat_cta("That is the inspiration.", "The rest of this site is what it looks like in practice: ten Care programs, institutions in India, medical camps in Africa, and volunteers across the United States.", "Explore the 10 Care Program", "/our-work/10-care-program/")}
 """
     return page(
         "Our Inspiration | Shrimad Rajchandraji | SRLC USA",
@@ -754,73 +680,65 @@ def render_inspiration():
         "/about/our-inspiration/", body)
 
 
-MANAGEMENT = [
-    ("Snehal Shah", "Trustee, President", "President of a small electronic distribution firm, with BSEE, MSEE, and MBA degrees. Leading the organization since 2017."),
-    ("Dr. Chintan Mehta", "Trustee, Secretary", "Internal medicine specialist in Phoenix, AZ, leading the operations team of SRLC USA. Engaged for over 10 years."),
-    ("Kirti Desai", "Trustee, Treasurer", "Certified Public Accountant, serving as Chief Financial Officer at Tevogen Bio Holdings Inc and SRLC USA Treasurer since 2024."),
-    ("Kamini Shah", "Trustee", "Dedicated Special Education teacher with over 20 years of experience and former president of the Jain Sangh of Austin."),
-    ("Payal Kamdar", "Trustee", "CEO of VSolvit LLC, an award-winning technology solutions provider, involved across SRLC activities and strategic direction."),
-    ("Mitesh Lakhani", "Trustee", "Managing Partner at Raisol Capital, focusing on private aviation, digital marketing, and healthcare. Active for nearly 10 years."),
-    ("Biren Mehta", "Trustee", "Vice President of Venture Investments at Johnson &amp; Johnson, with degrees from UCLA and USC. Engaged for over a decade."),
-    ("Chirag Shah", "Trustee", "Global Marketing Manager at Microchip Technology, active in the Phoenix community for over 10 years."),
-    ("Ravi Shah", "Grants and Partnerships Lead", "Product leader at Google, with previous roles at Global Traffic Technologies and IBM."),
-    ("Devang Jhaveri", "Programs and Partnerships Lead", "Associate Director at Cognizant Technology with 26 years of experience. Volunteer for over 10 years."),
-    ("Parima Shah", "Youth Lead", "Engineering Manager at the ed tech startup Outschool, with 10+ years in technology including Google and Disney."),
-    ("Krish Kamdar", "Social Media Lead", "Kelley School of Business graduate in Finance and Supply Chain Management. 12+ years with SRLC."),
-    ("Sujay Shah", "National Planning Functions", "Senior IT Manager at Kaiser Permanente with 20+ years of leadership experience. Seven years of SRLC service."),
-]
-
-
 def render_management():
-    people = "".join(f"""<div class="bio reveal" data-stagger="{i % 4 + 1}">
-      <div class="bio__photo" style="display:grid;place-items:center;background:linear-gradient(135deg,var(--color-srlc-purple),var(--color-purple-deep))"><span style="font-family:var(--font-display);font-size:2.4rem;color:var(--color-warm-orange)">{n[0]}</span></div>
-      <p class="bio__name">{n}</p>
-      <p class="bio__role">{r}</p>
-      <p style="font-size:.88rem;color:var(--color-ink-muted);line-height:1.55;margin-top:.5rem">{b}</p>
-    </div>""" for i, (n, r, b) in enumerate(MANAGEMENT))
-    body = hero_purple(
-        '<a href="/">Home</a> &middot; About Us',
-        "Management <em>Team</em>",
-        "Physicians, engineers, educators, and finance professionals who give their leadership the way every volunteer gives their weekend: freely.",
+    """Document C spec build. The roster is BLOCKING (Naman-approved names,
+    roles, and 45 to 70 word bios do not exist yet); the grid ships as labeled
+    placeholder slots, per the build rules."""
+    slots = "".join(f"""<div class="bio reveal" data-stagger="{i % 4 + 1}">
+      <div class="bio__photo" style="display:grid;place-items:center;background:#E7E3EC"><span style="font-family:var(--font-body);font-size:.72rem;color:#6B6472;text-align:center;padding:.6rem">Portrait pending</span></div>
+      <p class="bio__name" style="color:var(--color-ink-muted)">Roster pending approval</p>
+    </div>""" for i in range(4))
+    body = page_header(
+        "About SRLC USA",
+        "The management team leading SRLC USA&rsquo;s work",
+        "We are a 501(c)(3) nonprofit. Every person who sets strategy, approves the budget, and answers for results is named here, with what they oversee.",
     ) + f"""
-<section class="vu-shell vu-shell--lav">
-  <div class="container"><div class="bio-grid">{people}</div></div>
+<section class="vu-shell vu-shell--lav vu-shell--first">
+  <div class="container" style="max-width:820px">
+    <h2 class="vu-h reveal">How we govern</h2>
+    <p>SRLC USA is the U.S. chapter of Shrimad Rajchandra Love and Care, a global movement that has touched 33M+ lives globally, treated 8.35M+ patients globally, and supported 3.28M+ students globally.</p>
+  </div>
 </section>
-{actionbar("Serve alongside them.", "Chapter leadership grows from volunteering. Start where you are.", "Volunteer With Us", "/volunteer/")}
+
+<section class="vu-shell vu-shell--cream">
+  <div class="container">
+    <h2 class="vu-h reveal">The roster</h2>
+    <p class="vu-lead">Leadership names, roles, and bios publish here once approved. Each person appears with a consistent portrait and a short account of what they oversee.</p>
+    <div class="bio-grid mt-6">{slots}</div>
+  </div>
+</section>
+
+{flat_cta("The record behind the roster", "Annual filings and financial statements are published in full on the Financials page.", "Read Our Annual Report", "/about/financials/")}
 """
     return page(
-        "Management Team | SRLC USA",
-        "The trustees and program leads guiding SRLC USA, a 501(c)(3) nonprofit serving communities across the United States and worldwide.",
-        "/about/management/", body)
+        "Management Team | Leadership at SRLC USA",
+        "Meet the people who direct the programs, finances, and compliance of SRLC USA, a 501(c)(3) nonprofit. See who is accountable and what they oversee. SRLC USA.",
+        "/about/management-team/", body)
 
 
 F990_YEARS = ["2024", "2023", "2022", "2021", "2020", "2019", "2018", "2017"]
 
 
 def render_financials():
-    cards = "".join(f"""<div class="vu-card reveal" data-stagger="{i % 4 + 1}" style="grid-template-columns:44px 1fr">
-      <div class="vu-card__ic"><svg width="22" height="22"><use href="#vu-i-doc"/></svg></div>
+    cards = "".join(f"""<div class="vu-card reveal" data-stagger="{i % 4 + 1}" style="grid-template-columns:1fr">
       <h3 class="vu-card__h">{y} Form 990</h3>
       <div class="vu-card__body"><p>Annual IRS filing. <a href="mailto:{EMAIL}?subject=Request%3A%20{y}%20Form%20990">Request a copy</a></p></div>
     </div>""" for i, y in enumerate(F990_YEARS))
-    body = hero_purple(
-        '<a href="/">Home</a> &middot; About Us',
-        "<em>Financials</em>",
+    body = page_header(
+        "About Us",
+        "Financials",
         "We know how much it matters to you that your gift reaches the people it&rsquo;s meant for. It matters just as much to us. That&rsquo;s why every filing, report, and financial record we produce is published here in full, for anyone to read.",
     ) + f"""
-<section class="vu-shell vu-shell--lav vu-shell--narrow">
+<section class="vu-shell vu-shell--lav vu-shell--first vu-shell--narrow">
   <div class="container"><div class="recognition-cluster">{recognition_chips()}</div></div>
 </section>
 
 <section class="vu-shell vu-shell--cream">
   <div class="container">
     <h2 class="vu-h reveal">Documents by year</h2>
-    <div class="vu-actionbar reveal" style="margin-bottom:1.4rem">
-      <div class="vu-actionbar__copy">
-        <h3>Annual Report 2024&ndash;2025</h3>
-        <p>The year in programs, numbers, and people. Featured report, available the same day by email.</p>
-      </div>
-      <div class="vu-actionbar__ctas"><a class="btn btn--primary" href="mailto:{EMAIL}?subject=Request%3A%20Annual%20Report%202024-2025">Request a copy</a></div>
+    <div class="vu-card reveal" style="grid-template-columns:1fr;margin-bottom:1.2rem">
+      <h3 class="vu-card__h">Annual Report 2024&ndash;2025</h3>
+      <div class="vu-card__body"><p>The year in programs, numbers, and people. <a href="mailto:{EMAIL}?subject=Request%3A%20Annual%20Report%202024-2025">Request a copy</a></p></div>
     </div>
     <div class="vu-doc-grid">{cards}</div>
     <p style="font-size:.88rem;color:var(--color-ink-muted);margin-top:1.2rem">Self-hosted PDF downloads are being prepared. Until they are live, every document is available the same day by email.</p>
@@ -841,10 +759,10 @@ def render_financials():
 
 
 def render_404():
-    body = hero_purple(
+    body = page_header(
         "Page not found",
-        "This page has <em>moved on</em>.",
+        "This page has moved on.",
         "The care continues elsewhere. Start from the beginning, or head straight to the work.",
-        ctas='<a class="btn btn--primary" href="/">Go home</a> <a class="btn btn--ghost" href="/our-work/10-care-program/">Explore Our Work</a>',
+        cta='<a class="btn btn--primary" href="/">Go Home</a> <a class="btn btn--ghost" href="/our-work/10-care-program/">Explore Our Work</a>',
     )
     return page("Page Not Found | SRLC USA", "The page you were looking for has moved.", "/404.html", body)

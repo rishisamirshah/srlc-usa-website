@@ -1,7 +1,16 @@
-/* Site supplement JS — interior behaviors + ZIP chapter finder (confirmed 12-state roster). */
+/* Site supplement JS (flat pass) — header state, rails, tabs, panels, map,
+   forms, ZIP finder on the confirmed 12-jurisdiction / 22-center roster. */
 (function () {
   "use strict";
   var doc = document;
+
+  /* Header: solid + shadow on scroll (transparent over hero until then) */
+  var header = doc.querySelector(".site-header");
+  function onScroll() {
+    if (header) header.classList.toggle("is-scrolled", window.scrollY > 24);
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
 
   /* Rails: drag-to-scroll + arrows */
   doc.querySelectorAll(".rail").forEach(function (rail) {
@@ -31,7 +40,7 @@
       var rail = doc.querySelector(sel);
       if (!rail) return;
       var card = rail.firstElementChild;
-      var w = card ? card.getBoundingClientRect().width + 18 : 340;
+      var w = card ? card.getBoundingClientRect().width + 16 : 340;
       rail.scrollBy({ left: btn.hasAttribute("data-rail-prev") ? -w : w, behavior: "smooth" });
     });
   });
@@ -50,7 +59,7 @@
     });
   });
 
-  /* Progress rail for care panels */
+  /* Progress rail for scroll panels */
   var dots = doc.querySelectorAll(".progressrail a");
   if (dots.length && "IntersectionObserver" in window) {
     var pio = new IntersectionObserver(function (entries) {
@@ -63,7 +72,7 @@
     doc.querySelectorAll(".carepanel").forEach(function (p) { pio.observe(p); });
   }
 
-  /* Interactive US map: active states carry data-href */
+  /* Interactive US map */
   doc.querySelectorAll(".cf-map .cf-state--active").forEach(function (p) {
     var href = p.getAttribute("data-href");
     if (!href) return;
@@ -84,7 +93,7 @@
     });
   });
 
-  /* Netlify forms with inline success */
+  /* Netlify forms with inline success (only after a real submit) */
   doc.querySelectorAll("form[data-netlify-inline]").forEach(function (form) {
     form.addEventListener("submit", function (e) {
       e.preventDefault();
@@ -103,27 +112,41 @@
     });
   });
 
-  /* ZIP finder — confirmed roster: 12 jurisdictions, 22 centers */
+  /* ZIP finder — confirmed roster: 11 states + D.C., 22 centers */
   var Z = {};
-  function reg(prefixes, city, href, meta) {
-    prefixes.forEach(function (p) { Z[p] = { city: city, href: href, meta: meta }; });
+  function reg(prefixes, state, city, href, meta, others) {
+    prefixes.forEach(function (p) { Z[p] = { state: state, city: city, href: href, meta: meta, others: others || [] }; });
   }
   var U = "/our-work/united-states/";
-  reg(["85", "86"], "Phoenix, AZ", U + "arizona/", "Arizona chapter: Phoenix. Hot meals, PB&J kits, and Classroom of Change support for Title I schools.");
-  reg(["90", "91", "92", "93", "94", "95", "96"], "California", U + "california/", "California centers: San Francisco, Los Angeles, San Diego. Beach cleanups, STEM kits, meals, and family support.");
-  reg(["30", "31", "39"], "Atlanta, GA", U + "georgia/", "Georgia chapter: Atlanta. Large-scale hunger relief, school supply kits, and clothing drives.");
-  reg(["60", "61", "62"], "Chicago, IL", U + "illinois/", "Illinois chapter: Chicago. Classroom of Change kits and food donations across the city.");
-  reg(["46", "47"], "Indianapolis, IN", U + "indiana/", "Indiana chapter: Indianapolis. Meals, mentoring, and Adopt-a-Street stewardship.");
-  reg(["01", "02"], "Boston, MA", U + "massachusetts/", "Massachusetts chapter: Boston. Meal kits through Open Table and lunch-bag drives with We Care Charity.");
-  reg(["07", "08"], "New Jersey", U + "new-jersey/", "New Jersey centers: Edison, Cherry Hill, Princeton, Parsippany. Food drives, school support, and essentials year-round.");
-  reg(["10", "11", "12", "13", "14"], "New York", U + "new-york/", "New York centers: Long Island, Queens, Manhattan. Meals, school supplies, and support for newly arrived families.");
-  reg(["15", "16", "17", "18", "19"], "Pennsylvania", U + "pennsylvania/", "Pennsylvania centers: East Stroudsburg, Philadelphia. Pantry support, hygiene kits, and student supplies.");
-  reg(["75", "76", "77", "78", "79"], "Texas", U + "texas/", "Texas centers: Dallas, Austin, Houston. Community kitchens, food drives, and youth service.");
-  reg(["98", "99"], "Seattle, WA", U + "washington/", "Washington chapter: Seattle. Snack boxes and essentials for Eastside shelters.");
-  reg(["20"], "Washington, D.C.", U + "washington-dc/", "D.C. chapter. Monthly sandwich service, school supply kits, and hygiene drives.");
+  reg(["85", "86"], "AZ", "Phoenix, AZ", U + "arizona/", "Arizona chapter: Phoenix. Meal services, school supply drives, and community care.");
+  reg(["90", "91", "92", "93", "94", "95", "96"], "CA", "California", U + "california/", "California centers: San Francisco, Los Angeles, San Diego.", ["San Francisco", "Los Angeles", "San Diego"]);
+  reg(["30", "31", "39"], "GA", "Atlanta, GA", U + "georgia/", "Georgia chapter: Atlanta. Hunger relief, school supply kits, and clothing drives.");
+  reg(["60", "61", "62"], "IL", "Chicago, IL", U + "illinois/", "Illinois chapter: Chicago. Classroom of Change kits and food donations.");
+  reg(["46", "47"], "IN", "Indianapolis, IN", U + "indiana/", "Indiana chapter: Indianapolis. Meals, mentoring, and Adopt-a-Street stewardship.");
+  reg(["01", "02"], "MA", "Boston, MA", U + "massachusetts/", "Massachusetts chapter: Boston. Meal kits through Open Table and community support.");
+  reg(["07", "08"], "NJ", "New Jersey", U + "new-jersey/", "New Jersey centers: Edison, Cherry Hill, Princeton, Parsippany.", ["Edison", "Cherry Hill", "Princeton", "Parsippany"]);
+  reg(["10", "11", "12", "13", "14"], "NY", "New York", U + "new-york/", "New York centers: Long Island, Manhattan, Queens.", ["Long Island", "Manhattan", "Queens"]);
+  reg(["15", "16", "17", "18", "19"], "PA", "Pennsylvania", U + "pennsylvania/", "Pennsylvania centers: East Stroudsburg, Philadelphia.", ["East Stroudsburg", "Philadelphia"]);
+  reg(["75", "76", "77", "78", "79"], "TX", "Texas", U + "texas/", "Texas centers: Dallas, Austin, Houston.", ["Dallas", "Austin", "Houston"]);
+  reg(["98", "99"], "WA", "Seattle, WA", U + "washington/", "Washington chapter: Seattle. Snack boxes and essentials for Eastside shelters.");
+  reg(["20"], "DC", "Washington, D.C.", U + "washington-dc/", "D.C. chapter. Monthly meal service, school supply kits, and hygiene drives.");
 
   var input = doc.getElementById("zipInput");
   var result = doc.getElementById("zipResult");
+  function hideChips() {
+    var chips = doc.getElementById("zipChips");
+    if (chips) chips.setAttribute("hidden", "");
+  }
+  function renderChips(others, href) {
+    var chips = doc.getElementById("zipChips");
+    var list = doc.getElementById("zipChipsList");
+    if (!chips || !list) return;
+    if (!others || !others.length) { hideChips(); return; }
+    list.innerHTML = others.map(function (c) {
+      return '<a class="cf-chip" href="' + href + '">' + c + "</a>";
+    }).join("");
+    chips.removeAttribute("hidden");
+  }
   window.__cfZipLookup = function () {
     if (!input || !result) return;
     var z = (input.value || "").trim();
@@ -135,6 +158,7 @@
       city.textContent = "Enter a 5-digit ZIP";
       meta.textContent = "We'll match you to the closest SRLC USA chapter.";
       result.classList.remove("is-missing");
+      hideChips();
       return;
     }
     var match = Z[z.substring(0, 2)];
@@ -143,11 +167,13 @@
       meta.textContent = match.meta;
       if (join) { join.href = match.href; join.textContent = "Visit this chapter"; }
       result.classList.remove("is-missing");
+      renderChips(match.others, match.href);
     } else {
       city.textContent = "We don't have a chapter in your area yet";
-      meta.textContent = "We're growing. Email info@srlc-usa.org to help start one, or volunteer with the nearest chapter remotely.";
-      if (join) { join.href = "/volunteer/"; join.textContent = "Volunteer anyway"; }
+      meta.textContent = "Email " + "info@srlc-usa.org" + " to help start one, or volunteer with the nearest chapter remotely.";
+      if (join) { join.href = "/get-involved/volunteer/"; join.textContent = "Volunteer anyway"; }
       result.classList.add("is-missing");
+      hideChips();
     }
   };
   if (input) {

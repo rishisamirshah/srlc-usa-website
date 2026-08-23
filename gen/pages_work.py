@@ -1,5 +1,7 @@
-"""Renderers: Our Work section — purple system port. Content unchanged from the doc."""
-from shell import (page, ph, hero_purple, vu_section, actionbar, impact_stats, trust_bar)
+"""Renderers: Our Work — flat pass. Copy verbatim from the master doc tabs.
+Per-state stat bands are omitted (CLAUDE.md banned list) and flagged in the
+build log. End-of-page CTAs render as flat sections, never banners."""
+from shell import page, ph, page_header, flat_cta, trust_bar
 from data_states import STATES, CAMPAIGNS, US_HERO_BODY
 from data_cares import CARES, TEN_CARE_INTRO
 from data_india import INSTITUTES, INDIA_INTRO, SRV
@@ -21,26 +23,23 @@ def state_chips():
 def render_us_hub(svg_inner):
     campaigns = ""
     for i, c in enumerate(CAMPAIGNS):
-        photo = ph(c["img_label"], cls="" if i % 2 == 0 else "")
         split_cls = "vu-split" if i % 2 == 0 else "vu-split vu-split--reverse"
-        campaigns += f"""<div class="{split_cls} reveal" style="margin-bottom:2.6rem">
+        campaigns += f"""<div class="{split_cls} reveal" style="margin-bottom:2.4rem">
       <div class="vu-split__copy">
         <h3>{c["name"]}</h3>
         <p>{c["body"]}</p>
         <a class="btn btn--primary" href="/donate/">{c["cta"]}</a>
       </div>
-      <div class="vu-split__photo">{photo}</div>
+      <div class="vu-split__photo">{ph(c["img_label"])}</div>
     </div>"""
 
-    body = hero_purple(
-        '<a href="/">Home</a> &middot; Our Work &middot; Where We Serve',
-        "SRLC&rsquo;s Nationwide <em>Presence</em>",
+    body = page_header(
+        "Our Work &middot; Where We Serve",
+        "SRLC&rsquo;s Nationwide Presence",
         US_HERO_BODY,
     ) + f"""
-<section class="vu-shell vu-shell--lav">
+<section class="vu-shell vu-shell--lav vu-shell--first">
   <div class="container">
-    <h2 class="vu-h reveal">Twelve states. Twenty-two centers. One movement.</h2>
-    <p class="vu-lead">Every highlighted state is an active SRLC USA chapter. Select one to meet its centers, its people, and its work.</p>
     {cf_map(svg_inner)}
     <div class="mt-6">{state_chips()}</div>
   </div>
@@ -49,27 +48,26 @@ def render_us_hub(svg_inner):
 <section class="vu-shell vu-shell--cream" id="campaigns">
   <div class="container">
     <h2 class="vu-h reveal">Our Campaigns</h2>
-    <p class="vu-lead">Three national campaigns, powered by every chapter: Classroom of Change, Giving Tuesday, and Meals of Love and Care.</p>
-    <div class="mt-8">{campaigns}</div>
+    <div class="mt-6">{campaigns}</div>
   </div>
 </section>
 
-{actionbar("Your state is closer than you think.", "Find your chapter above, or raise your hand to volunteer wherever you are.", "Volunteer With Us", "/volunteer/", ("Ways to Give", "/donate/"))}
+{flat_cta("Find your chapter, or start where you are.", "Every highlighted state is an active SRLC USA chapter.", "Volunteer With Us", "/get-involved/volunteer/", ("Ways to Give", "/donate/"))}
 """
     return page(
-        "United States | Where We Serve | SRLC USA",
-        "SRLC operates across 25+ US cities. Explore chapters state by state, meet the centers, and get involved near you. SRLC USA.",
+        "SRLC in the United States | Local Programs and Chapters",
+        "SRLC volunteers serve communities in eleven states and D.C. Find your state, see local programs, and join a chapter near you. SRLC USA.",
         "/our-work/united-states/", body)
 
 
 def render_state(s, idx):
     gallery_slots = "".join(
-        ph(f'{s["name"]} chapter photo {i + 1} &middot; Media Bank', cls="ph-media--tint")
+        ph(s.get("gallery_note", f'{s["name"]} chapter photography, Media Bank'))
         for i in range(min(s["gallery"], 6)))
-    gallery = f"""<section class="vu-shell vu-shell--cream">
+    gallery = f"""<section class="vu-shell vu-shell--cream vu-shell--narrow">
   <div class="container">
     <div class="sechead">
-      <h2 class="vu-h reveal" style="margin:0">Chapter life, on the ground</h2>
+      <h2 class="vu-h reveal" style="margin:0">Photo gallery</h2>
       <div class="railnav"><button data-rail-prev="#gal" aria-label="Previous">&larr;</button><button data-rail-next="#gal" aria-label="Next">&rarr;</button></div>
     </div>
     <div class="rail" id="gal">{gallery_slots}</div>
@@ -86,7 +84,7 @@ def render_state(s, idx):
             name, addr, kind = c["contact"]
             link = (f'<a href="mailto:{addr}">{addr}</a>' if kind == "email"
                     else f'<a href="tel:{addr.replace("(", "").replace(")", "").replace(" ", "").replace("-", "")}">{addr}</a>')
-            contact = f'<div class="lead-card"><div class="dot">{name[0]}</div><div><b>{name}</b>{link}</div></div>'
+            contact = f'<div class="lead-card"><div><b>{name}</b>{link}</div></div>'
         partners = f'<p class="partnerline"><b>Serving alongside:</b> {c["partners"]}</p>' if c["partners"] else ""
         active = " active" if i == 0 else ""
         tab_panels += f'<div class="tabs__panel{active}" role="tabpanel">{secs}{contact}{partners}</div>'
@@ -94,21 +92,16 @@ def render_state(s, idx):
     prev_s = STATES[(idx - 1) % len(STATES)]
     next_s = STATES[(idx + 1) % len(STATES)]
 
-    body = hero_purple(
+    body = page_header(
         '<a href="/our-work/united-states/">Where We Serve</a> &middot; United States',
-        f'<em>{s["name"]}</em>',
+        s["name"],
         s["hero"],
     ) + f"""
-<section class="vu-shell vu-shell--lav vu-shell--narrow">
-  <div class="container">{impact_stats(s["stats"], cols=3 if len(s["stats"]) == 3 else 4)}</div>
-</section>
-
 {gallery}
 
 <section class="vu-shell vu-shell--lav">
   <div class="container">
-    <h2 class="vu-h reveal">Inside the {s["name"]} centers</h2>
-    <p class="vu-lead">Constantly serving communities, one center at a time.</p>
+    <h2 class="vu-h reveal">Constantly Serving Communities</h2>
     <div data-tabs class="mt-6 reveal">
       <div class="tabs__list" role="tablist">{tab_btns}</div>
       {tab_panels}
@@ -116,7 +109,7 @@ def render_state(s, idx):
   </div>
 </section>
 
-{actionbar(f'Serve with us in {s["name"]}.', "Reach out to your local SRLC leaders, or sign up and your chapter coordinator will be in touch.", "Volunteer With Us", "/volunteer/", ("Ways to Give", "/donate/"))}
+{flat_cta(f'Serve with us in {s["name"]}.', "Reach out to your local SRLC leaders, or sign up and your chapter coordinator will be in touch.", "Volunteer With Us", "/get-involved/volunteer/", ("Ways to Give", "/donate/"))}
 
 <section class="pagenav-strip">
   <div class="container">
@@ -126,15 +119,12 @@ def render_state(s, idx):
   </div>
 </section>
 """
-    return page(
-        f'{s["name"]} | SRLC USA Chapters',
-        f'SRLC {s["name"]}: volunteers in {s["cities"]} serving neighbors through hunger relief, education support, and community care. Get involved near you.',
-        f'/our-work/united-states/{s["slug"]}/', body)
+    return page(s["meta_title"], s["meta_desc"], f'/our-work/united-states/{s["slug"]}/', body)
 
 
 def render_tencare_hub():
     chips = '<div class="chip-row reveal">' + "".join(
-        f'<a href="#{c["slug"]}"><img src="/assets/img/care-icons/{c["icon"]}" alt="" style="height:20px;width:auto;vertical-align:-4px;margin-right:5px">{c["num"]} {c["name"]}</a>'
+        f'<a href="#{c["slug"]}"><img src="/assets/img/care-icons/{c["icon"]}" alt="" width="20" height="20" style="height:20px;width:auto;vertical-align:-4px;margin-right:5px">{c["num"]} {c["name"]}</a>'
         for c in CARES) + "</div>"
     rail_dots = "".join(f'<a href="#{c["slug"]}" aria-label="{c["name"]}"></a>' for c in CARES)
     panels = ""
@@ -146,7 +136,7 @@ def render_tencare_hub():
   <div class="carepanel__num" aria-hidden="true">{c["num"]}</div>
   <div class="container">
     <div class="carepanel__body">
-      <img class="care-icon reveal" src="/assets/img/care-icons/{c["icon"]}" alt="">
+      <img class="care-icon reveal" src="/assets/img/care-icons/{c["icon"]}" alt="" width="52" height="52">
       <h2 class="reveal">{c["name"]}</h2>
       <p class="vu-lead reveal" data-stagger="1" style="max-width:none">{c["one"]}</p>
       {stat}
@@ -155,9 +145,9 @@ def render_tencare_hub():
   </div>
 </section>"""
 
-    body = hero_purple(
-        '<a href="/">Home</a> &middot; Our Work',
-        "Ten ways to <em>care</em>.",
+    body = page_header(
+        "Our Work",
+        "10 Care Program",
         TEN_CARE_INTRO,
     ) + f"""
 <section class="vu-shell vu-shell--lav vu-shell--narrow">
@@ -165,7 +155,7 @@ def render_tencare_hub():
 </section>
 <nav class="progressrail" aria-label="Care programs">{rail_dots}</nav>
 {panels}
-{actionbar("Every Care needs carriers.", "Choose the work that moves you. Your gift and your hours both count.", "Support the 10 Care Program", "/donate/", ("Volunteer", "/volunteer/"))}
+{flat_cta("Every Care welcomes support.", "Your gift and your hours both count.", "Support the 10 Care Program", "/donate/", ("Volunteer", "/get-involved/volunteer/"))}
 """
     return page(
         "The 10 Care Program | Ten Ways to Care | SRLC USA",
@@ -178,7 +168,7 @@ def render_care(c):
     if c["cards"]:
         cells = ""
         for name, desc, href in c["cards"]:
-            inner = f'<h3>{name}</h3><p>{desc}</p>'
+            inner = f"<h3>{name}</h3><p>{desc}</p>"
             if href:
                 cells += f'<a class="cause-card reveal" href="{href}" style="display:block;text-decoration:none;color:inherit">{inner}<span class="card__cta">Visit the institute</span></a>'
             else:
@@ -194,7 +184,7 @@ def render_care(c):
         <h3>In the United States</h3>
         <p>{c["us"]}</p>
       </div>
-      <div class="vu-split__photo">{ph("US chapter volunteers &middot; Media Bank", cls="ph-media--tint")}</div>
+      <div class="vu-split__photo">{ph(c["us_img"])}</div>
     </div>
   </div>
 </section>"""
@@ -215,21 +205,21 @@ def render_care(c):
     if c["stat"]:
         impact = f"""<section class="vu-shell vu-shell--purple vu-shell--narrow">
   <div class="container text-center">
-    <p class="impact-stat__n count-up" style="color:var(--color-warm-orange);font-size:clamp(2.6rem,6vw,4rem);margin:0 0 .3rem">{c["stat"][0]}</p>
+    <p class="impact-stat__n count-up" style="color:var(--color-warm-orange);font-size:clamp(2.4rem,5.5vw,3.6rem);margin:0 0 .3rem">{c["stat"][0]}</p>
     <p style="color:#E8DDF2;margin:0">{c["stat"][1]}</p>
   </div>
 </section>"""
 
-    body = hero_purple(
+    body = page_header(
         f'<a href="/our-work/10-care-program/">10 Care Program</a> &middot; {c["num"]}',
-        f'<em>{c["name"]}</em>',
+        c["name"],
         c["opening"],
     ) + f"""
 <section class="vu-shell vu-shell--lav">
   <div class="container">
     <div class="vu-split">
       <div class="vu-split__copy">
-        <h3>The work in India</h3>
+        <h3>The Work in India</h3>
         <p>{c["india"]}</p>
       </div>
       <div class="vu-split__photo">{ph(c["hero_img"])}</div>
@@ -240,65 +230,105 @@ def render_care(c):
 {us}
 {story}
 {impact}
-{actionbar(f'Carry {c["name"]} further.', "Your employer may match your gift. Check if your company participates.", c["cta"], "/donate/")}
+{flat_cta(f'{c["name"]} continues with you.', "Your employer may match your gift. Check if your company participates.", c["cta"], "/donate/")}
 """
     return page(c["title"], c["desc"], f'/our-work/10-care-program/{c["slug"]}/', body)
 
 
 def render_india_hub():
-    cards = "".join(f"""<a class="institute-card reveal" data-stagger="{i % 3 + 1}" href="/our-work/india/{inst["slug"]}/">
-  <div class="institute-card__media">{ph(inst["tag"], cls="ph-media--tint", style="min-height:0;height:100%")}</div>
-  <div class="institute-card__body">
-    <h3 class="institute-card__h">{inst["name"]}</h3>
-    <p class="institute-card__d">{inst["desc"]}</p>
-    <span class="institute-card__more" aria-label="Learn more"></span>
+    """Rebuilt like the 10 Care concept: small header, intro, jump grid of six
+    institutes, one full-screen scroll panel per institute. Reduced motion
+    collapses to a stacked list via the shared .carepanel media queries."""
+    chips = '<div class="chip-row reveal">' + "".join(
+        f'<a href="#{inst["slug"]}">{inst["name"]}</a>' for inst in INSTITUTES) + "</div>"
+    rail_dots = "".join(f'<a href="#{inst["slug"]}" aria-label="{inst["name"]}"></a>' for inst in INSTITUTES)
+    panels = ""
+    for i, inst in enumerate(INSTITUTES, start=1):
+        panels += f"""<section class="carepanel" id="{inst["slug"]}">
+  <div class="carepanel__num" aria-hidden="true">{i:02d}</div>
+  <div class="container">
+    <div class="carepanel__body">
+      <p class="vu-eyebrow" style="display:inline-flex">{inst["tag"]}</p>
+      <h2 class="reveal">{inst["name"]}</h2>
+      <p class="vu-lead reveal" data-stagger="1" style="max-width:none">{inst["desc"]}</p>
+      <div class="mt-6 reveal" data-stagger="2"><a class="btn btn--secondary" href="/our-work/india/{inst["slug"]}/">Visit the institute</a></div>
+    </div>
   </div>
-</a>""" for i, inst in enumerate(INSTITUTES))
-    body = hero_purple(
-        '<a href="/">Home</a> &middot; Our Work &middot; Where We Serve',
-        "Our Institutes in <em>India</em>",
+</section>"""
+
+    body = page_header(
+        "Our Work &middot; Where We Serve",
+        "Our Institutes in India",
         INDIA_INTRO,
     ) + f"""
-<section class="institutes-section">
-  <div class="container">
-    <div class="institutes-grid">{cards}</div>
-  </div>
+<section class="vu-shell vu-shell--lav vu-shell--narrow">
+  <div class="container">{chips}</div>
 </section>
-{actionbar("Institutions built to outlast us all.", "Every institute welcomes support from across the world.", "Support Our Institutes", "/donate/")}
+<nav class="progressrail" aria-label="Institutes">{rail_dots}</nav>
+{panels}
+{flat_cta("Institutes built to serve for generations.", "Every institute welcomes support from across the world.", "Support Our Institutes", "/donate/")}
 """
     return page(
-        "India | Our Institutes | SRLC USA",
-        "Permanent institutions in South Gujarat: a charitable hospital, schools and colleges, vocational training, an animal sanctuary, and a center for women. SRLC USA.",
+        "Our Institutes in India | SRLC USA",
+        "Six permanent institutes in India: a hospital, schools, skill training, women's livelihoods, and animal care. See the work. SRLC USA.",
         "/our-work/india/", body)
 
 
+def peer_cards(current_slug):
+    cells = "".join(
+        f'<a class="cause-card reveal" href="/our-work/india/{i["slug"]}/" style="display:block;text-decoration:none;color:inherit"><h3 style="font-size:1.05rem">{i["name"]}</h3><p style="margin:0;font-size:.9rem;color:var(--color-ink-muted)">{i["tag"]}</p></a>'
+        for i in INSTITUTES if i["slug"] != current_slug)
+    return f"""<section class="vu-shell vu-shell--cream">
+  <div class="container">
+    <h2 class="vu-h reveal">More Institutes in India</h2>
+    <div class="card-grid mt-6">{cells}</div>
+    <p class="mt-6"><a href="/our-work/india/">Our Institutes in India</a></p>
+  </div>
+</section>"""
+
+
 def render_institute(inst):
-    extra = f'<p>{inst["extra"]}</p>' if inst.get("extra") else ""
-    title = inst.get("meta_title", f'{inst["name"].replace("&rsquo;", chr(8217))} | SRLC USA')
-    desc = inst.get("meta_desc", inst["desc"][:150])
-    body = hero_purple(
-        f'<a href="/our-work/india/">Our Institutes in India</a> &middot; {inst["tag"]}',
-        inst["name"],
-        inst["intro"],
-    ) + f"""
-<section class="vu-shell vu-shell--lav">
+    """Spec-pattern institute page (Document C): hero with the selected intro
+    sentence, description slot (empty where the approved description is
+    pending), peer-institute exit path. Blocking sections stay out."""
+    desc_section = ""
+    if inst.get("desc_full"):
+        desc_section = f"""<section class="vu-shell vu-shell--lav">
   <div class="container">
     <div class="vu-split">
       <div class="vu-split__copy">
-        <p class="vu-lead--xl">{inst["desc"]}</p>
-        {extra}
-        <div class="mt-6">
-          <a class="btn btn--primary" href="/donate/">Support This Institution</a>
-          <div class="mt-6"><a href="/our-work/india/">Explore all SRLC institutes in India</a></div>
-        </div>
+        <h3>What This Institution Does</h3>
+        <p class="vu-lead--xl" style="margin-top:0">{inst["desc"]}</p>
+        {"<p>" + inst["extra"] + "</p>" if inst.get("extra") else ""}
       </div>
       <div class="vu-split__photo">{ph(inst["img"])}</div>
     </div>
   </div>
-</section>
-{actionbar(f'Part of {inst["care"]}.', "This institute anchors one of the ten Care programs.", "Explore " + inst["care"], inst["care_url"])}
+</section>"""
+    else:
+        desc_section = f"""<section class="vu-shell vu-shell--lav">
+  <div class="container">
+    <div class="vu-split">
+      <div class="vu-split__copy">
+        <h3>What This Institution Does</h3>
+        {ph("Approved description pending. Placed verbatim once supplied.", style="min-height:140px")}
+      </div>
+      <div class="vu-split__photo">{ph(inst["img"])}</div>
+    </div>
+  </div>
+</section>"""
+
+    body = page_header(
+        '<a href="/our-work/india/">Our Institutes in India</a>',
+        inst["name"],
+        inst["intro"],
+        cta=f'<a class="btn btn--primary" href="/donate/">{inst.get("cta", "Give to This Work")}</a>',
+    ) + f"""
+{desc_section}
+{peer_cards(inst["slug"])}
+{flat_cta("Ways to Support", "", inst.get("cta", "Give to This Work"), "/donate/")}
 """
-    return page(title, desc, f'/our-work/india/{inst["slug"]}/', body)
+    return page(inst["meta_title"], inst["meta_desc"], f'/our-work/india/{inst["slug"]}/', body)
 
 
 def render_vidyapeeth():
@@ -309,13 +339,12 @@ def render_vidyapeeth():
         f'<div class="cause-card reveal" data-stagger="{i + 1}"><h3>{n}</h3><p>{d}</p></div>'
         for i, (n, d) in enumerate(SRV["pillars"]))
     need = "".join(f"<p>{p}</p>" for p in SRV["need"])
-    body = hero_purple(
+    body = page_header(
         '<a href="/our-work/india/">Our Institutes in India</a> &middot; Science College',
-        "The First Science College Across <em>238 Villages</em>",
+        SRV["h1"],
         SRV["sub"],
-        chips=SRV["trust"],
-        ctas=f'<a class="btn btn--primary" href="/donate/">{SRV["cta"]}</a>',
-    ) + f"""
+        cta=f'<a class="btn btn--primary" href="/donate/">{SRV["cta"]}</a>',
+    ) + trust_bar() + f"""
 <section class="vu-shell vu-shell--lav">
   <div class="container">
     <div class="vu-split">
@@ -323,7 +352,7 @@ def render_vidyapeeth():
         <h3>{SRV["need_h2"]}</h3>
         {need}
       </div>
-      <div class="vu-split__photo">{ph("The Dharampur region &middot; Media Bank")}</div>
+      <div class="vu-split__photo">{ph("The Dharampur region: fields, village roads, the terrain between communities and the nearest city. Media Bank.")}</div>
     </div>
   </div>
 </section>
@@ -341,25 +370,24 @@ def render_vidyapeeth():
 <section class="vu-shell vu-shell--purple vu-shell--narrow">
   <div class="container text-center">
     <h2 class="vu-h reveal" style="color:#fff">{SRV["impact_h2"]}</h2>
-    <div style="display:flex;justify-content:center;gap:clamp(2rem,8vw,6rem);flex-wrap:wrap;margin-top:1.6rem">
+    <div style="display:flex;justify-content:center;gap:clamp(2rem,8vw,6rem);flex-wrap:wrap;margin-top:1.4rem">
       {"".join(f'<div class="reveal" data-stagger="{i + 1}"><p class="impact-stat__n count-up" style="color:var(--color-warm-orange);margin:0 0 .3rem">{n}</p><p style="color:#E8DDF2;margin:0;max-width:24ch">{l}</p></div>' for i, (n, l) in enumerate(SRV["impact"]))}
     </div>
   </div>
 </section>
-
-{actionbar(SRV["close_h2"], SRV["close"], SRV["cta"])}
+{peer_cards("vidyapeeth")}
+{flat_cta(SRV["close_h2"], SRV["close"], SRV["cta"])}
 """
     return page(SRV["title"], SRV["desc"], "/our-work/india/vidyapeeth/", body)
 
 
 def render_africa():
-    body = hero_purple(
-        '<a href="/">Home</a> &middot; Our Work &middot; Where We Serve',
-        "Distance never decides who receives <em>care</em>.",
+    body = page_header(
+        "Our Work &middot; Where We Serve",
+        "Mission Africa",
         "Mission Africa brings doctors, medicine, and follow-up care to communities where the nearest clinic can be hours away, at no cost to patients. We work with local health workers and community partners across 16 countries in Africa.",
-        chips=["501(c)(3) Nonprofit", "33M+ Lives Touched Globally", "Parent body: UN ECOSOC Special Consultative Status"],
-        ctas='<a class="btn btn--primary" href="/donate/">Stand With Mission Africa</a>',
-    ) + f"""
+        cta='<a class="btn btn--primary" href="/donate/">Stand With Mission Africa</a>',
+    ) + trust_bar() + f"""
 <section class="vu-shell vu-shell--lav">
   <div class="container">
     <div class="vu-split">
@@ -371,7 +399,7 @@ def render_africa():
           <div><p class="impact-stat__n count-up" style="margin:0 0 .3rem">7,500+</p><p style="margin:0;font-size:.92rem;color:var(--color-ink-muted);max-width:26ch">patients treated at a free eye and ENT medical camp in Nairobi, Kenya</p></div>
         </div>
       </div>
-      <div class="vu-split__photo">{ph("Camp registration, morning light &middot; Mission Africa team photos pending")}</div>
+      <div class="vu-split__photo">{ph("A patient queue that reads as order and hope, morning light. Mission Africa team photos pending with consent records.")}</div>
     </div>
   </div>
 </section>
@@ -388,9 +416,9 @@ def render_africa():
 </section>
 
 <section class="vu-shell vu-shell--lav">
-  <div class="container">
+  <div class="container container--narrow" style="max-width:820px">
     <h2 class="vu-h reveal">Proven far from here</h2>
-    <p class="maxw-70">Mission Africa did not start from zero and your gift does not land on an experiment. It extends a healthcare model refined over decades in Dharampur, India, where a 250-bed hospital accredited by the National Accreditation Board for Hospitals and Healthcare Providers (NABH) treats patients regardless of their ability to pay. The movement behind it has touched 33M+ lives globally, and volunteers across the United States help fund and power the work.</p>
+    <p>Mission Africa did not start from zero and your gift does not land on an experiment. It extends a healthcare model refined over decades in Dharampur, India, where a 250-bed hospital accredited by the National Accreditation Board for Hospitals and Healthcare Providers (NABH) treats patients regardless of their ability to pay. The movement behind it has touched 33M+ lives globally, and volunteers across the United States help fund and power the work.</p>
     <div class="vu-toc--inline">
       <a href="/our-work/10-care-program/">Our Causes</a>
       <a href="/our-work/india/">India</a>
@@ -418,7 +446,7 @@ def render_africa():
   </div>
 </section>
 
-{actionbar("Help the next camp happen.", "Somewhere right now, a mother is measuring the distance between her child and a doctor. Your gift shortens it. Put medicine on the road, and hope alongside it.", "Stand With Mission Africa")}
+{flat_cta("Help the next camp happen", "Somewhere right now, a mother is measuring the distance between her child and a doctor. Your gift shortens it. Put medicine on the road, and hope alongside it.", "Stand With Mission Africa")}
 """
     return page(
         "Mission Africa | Free Medical Camps | SRLC USA",

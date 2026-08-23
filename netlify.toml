@@ -1,26 +1,66 @@
 [[redirects]]
+  from = "/volunteer/*"
+  to = "/get-involved/volunteer/"
+  status = 301
+
+[[redirects]]
+  from = "/events/*"
+  to = "/get-involved/events/"
+  status = 301
+
+[[redirects]]
+  from = "/fundraise/*"
+  to = "/get-involved/fundraise/"
+  status = 301
+
+[[redirects]]
+  from = "/partner-with-us/*"
+  to = "/get-involved/partner-with-us/"
+  status = 301
+
+[[redirects]]
+  from = "/corporate-giving/*"
+  to = "/donate/"
+  status = 301
+
+[[redirects]]
+  from = "/about/faqs/*"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/about/management/*"
+  to = "/about/management-team/"
+  status = 301
+
+[[redirects]]
   from = "/inspiration/*"
   to = "/about/our-inspiration/"
   status = 301
 
 [[redirects]]
   from = "/faqs/*"
-  to = "/about/faqs/"
+  to = "/"
   status = 301
 
 [[redirects]]
   from = "/event/*"
-  to = "/events/"
+  to = "/get-involved/events/"
   status = 301
 
 [[redirects]]
   from = "/grants/*"
-  to = "/corporate-giving/"
+  to = "/donate/"
   status = 301
 
 [[redirects]]
   from = "/management/*"
-  to = "/about/management/"
+  to = "/about/management-team/"
+  status = 301
+
+[[redirects]]
+  from = "/management-team/*"
+  to = "/about/management-team/"
   status = 301
 
 [[redirects]]
@@ -135,7 +175,7 @@
 
 [[redirects]]
   from = "/intern-with-us/*"
-  to = "/volunteer/"
+  to = "/get-involved/volunteer/"
   status = 301
 
 [[redirects]]
@@ -143,7 +183,22 @@
   to = "/our-work/united-states/"
   status = 301
 
+[[redirects]]
+  from = "/map/*"
+  to = "/our-work/united-states/"
+  status = 301
+
+[[redirects]]
+  from = "/locations/*"
+  to = "/our-work/united-states/"
+  status = 301
+
 [[headers]]
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex"

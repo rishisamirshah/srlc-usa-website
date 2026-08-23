@@ -5,7 +5,7 @@ Approved stories that exist in the doc (text-level) are included without photos.
 
 CARES = [
     {
-        "slug": "health-care", "num": "01", "name": "Health Care", "icon": "icon-Health_Care.png",
+        "slug": "health-care", "us_img": 'US volunteers assembling hygiene kits or delivering to a hospital. Neighborly. Media Bank.', "num": "01", "name": "Health Care", "icon": "icon-Health_Care.png",
         "one": "Delivering a charitable hospital and rural medical camps to provide life-changing medical solutions for those lacking access or resources.",
         "stat": ("8.35M+", "patients treated globally"),
         "opening": "Health Care delivers comprehensive medical services of high quality, free or deeply subsidized, for those who cannot access or afford them. From a charitable hospital to medical camps deep in rural India, the full spectrum of care reaches the people other systems overlook.",
@@ -25,7 +25,7 @@ CARES = [
         "desc": "Hospitals, camps, and clinics bringing treatment to families who need it most. 8.35M+ patients treated globally. Support Health Care. SRLC USA.",
     },
     {
-        "slug": "educational-care", "num": "02", "name": "Educational Care", "icon": "icon-Education_Care.png",
+        "slug": "educational-care", "us_img": 'Backpack or supply distribution at a US school. Bright, forward-looking. Media Bank.', "num": "02", "name": "Educational Care", "icon": "icon-Education_Care.png",
         "one": "Equipping underserved children with quality education, unlocking their potential to learn, grow, and lead.",
         "stat": ("3.28M+", "students supported globally"),
         "opening": "Educational Care provides children in need with education, value-based learning, and programs designed for their overall development, from schools and scholarships to the supplies a student needs to start the year ready.",
@@ -44,7 +44,7 @@ CARES = [
         "desc": "Schools, scholarships, and supplies for students with potential and no resources. 3.28M+ students supported globally. SRLC USA.",
     },
     {
-        "slug": "child-care", "num": "03", "name": "Child Care", "icon": "icon-Child_Care.png",
+        "slug": "child-care", "us_img": "Volunteers packing children's care packages. Warm. Media Bank.", "num": "03", "name": "Child Care", "icon": "icon-Child_Care.png",
         "one": "Nurturing children&rsquo;s lives through holistic care that nourishes their well-being, development, and happiness.",
         "stat": None,
         "opening": "Child Care nurtures children&rsquo;s lives through care that supports their well-being, development, and happiness, beginning with the most fragile: newborns and infants who need specialized medical attention.",
@@ -61,7 +61,7 @@ CARES = [
         "desc": "Nutrition, health, and early support for children in need. Give a child a strong start with SRLC USA, a 501(c)(3) nonprofit.",
     },
     {
-        "slug": "woman-care", "num": "04", "name": "Woman Care", "icon": "icon-Woman_Care.png",
+        "slug": "woman-care", "us_img": "Volunteers preparing donations for a women's shelter. Respectful, warm. Media Bank.", "num": "04", "name": "Woman Care", "icon": "icon-Woman_Care.png",
         "one": "Transforming women&rsquo;s lives with vocational training, education, and healthcare that fuel independence and opportunity.",
         "stat": None,
         "opening": "Woman Care transforms women&rsquo;s lives with vocational training, education, and healthcare that fuel independence and opportunity.",
@@ -95,7 +95,7 @@ CARES = [
         "desc": "Health, education, and opportunity carried to remote communities. Support Tribal Care with SRLC USA, a 501(c)(3) nonprofit.",
     },
     {
-        "slug": "community-care", "num": "06", "name": "Community Care", "icon": "icon-Community_Care.png",
+        "slug": "community-care", "us_img": 'Volunteers with first responders or a community lunch. Neighborly gratitude. Media Bank.', "num": "06", "name": "Community Care", "icon": "icon-Community_Care.png",
         "one": "Strengthening local communities through projects such as organ donation campaigns, educational classes, and programs supporting incarcerated individuals.",
         "stat": None,
         "opening": "Community Care undertakes initiatives that strengthen community bonding, from organ donation campaigns and educational classes to programs supporting incarcerated individuals.",
@@ -113,7 +113,7 @@ CARES = [
         "desc": "Local programs that make neighborhoods stronger, run by the neighbors they serve. Support Community Care. SRLC USA.",
     },
     {
-        "slug": "humanitarian-care", "num": "07", "name": "Humanitarian Care", "icon": "icon-Humanitarian_Care.png",
+        "slug": "humanitarian-care", "us_img": 'US volunteers serving meals at a shelter. Warm, hands-on. Media Bank.', "num": "07", "name": "Humanitarian Care", "icon": "icon-Humanitarian_Care.png",
         "one": "Bringing hope to those in crisis by distributing essential resources, whenever and wherever they are needed most.",
         "stat": ("12.24M+", "people reached globally"),
         "opening": "Humanitarian Care brings hope to those in crisis by distributing essential resources, whenever and wherever they are needed most.",
@@ -143,7 +143,7 @@ CARES = [
         "desc": "Rescue, veterinary treatment, and sanctuary for animals in need. 450K+ animals served globally. Support Animal Care. SRLC USA.",
     },
     {
-        "slug": "environmental-care", "num": "09", "name": "Environmental Care", "icon": "icon-Environmental_Care.png",
+        "slug": "environmental-care", "us_img": 'US volunteers at a beach or street cleanup. Energetic. Media Bank.', "num": "09", "name": "Environmental Care", "icon": "icon-Environmental_Care.png",
         "one": "Safeguarding the planet through bold conservation and sustainability efforts, such as tree planting, water conservation, and alternative energy resources.",
         "stat": None,
         "opening": "Environmental Care safeguards the planet through conservation and sustainability efforts, such as tree planting, water conservation, and alternative energy resources.",
