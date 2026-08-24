@@ -3236,5 +3236,32 @@ img { max-width: 100%; }
 .founder-timeline .ph-media { border: 0; background: #EFEBF3; min-height: 64px; }
 .founder-timeline .ph-media span { font-size: 0.68rem; padding: 0.4rem; }
 
+/* ---------- Editorial chapter map (US page) — Naman's Aug 23 spec ----------
+   An illustration that happens to be interactive: no card, no border, no
+   shadow, no orange. Landmass sits on the page background. */
+.edmap-section { background: var(--color-lavender-white); }
+.edmap-head { margin-bottom: 0.4rem; }
+.edmap-kicker { font-family: var(--font-body); font-size: 0.7rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--color-srlc-purple); font-weight: 600; margin: 0 0 0.5rem; }
+.edmap-title { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.7rem, 3.2vw, 2.4rem); color: var(--color-srlc-purple); margin: 0 0 0.3rem; }
+.edmap-meta { font-family: var(--font-body); font-size: 0.85rem; color: var(--color-ink-muted); margin: 0; }
+.edmap svg { width: 100%; height: auto; display: block; }
+.edmap .cf-state { fill: #F3EDFA; stroke: #D9CCEA; stroke-width: 1; transition: fill 0.25s ease; }
+.edmap .cf-state--active { fill: #E4D9F2; cursor: pointer; }
+.edmap .cf-state--active:hover, .edmap .cf-state--active:focus,
+.edmap .cf-state.is-hot { fill: #D6C7EA; outline: none; }
+.edmap .edmap-dot { fill: #693D84; cursor: pointer; }
+.edmap .edmap-dot:hover { fill: #41214E; }
+.edmap .edmap-ring { fill: none; stroke: #693D84; stroke-width: 1; opacity: 0.35; }
+.edmap .edmap-label { font-family: 'Jost', sans-serif; font-size: 13px; fill: #3D2F47; }
+.edmap .edmap-leader { stroke: #C9B8DC; stroke-width: 1; fill: none; }
+.edmap-foot { display: flex; justify-content: space-between; gap: 1rem; border-top: 1px solid var(--color-rule); margin-top: 0.8rem; padding-top: 0.7rem; font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-ink-muted); }
+.edmap-foot em { font-family: var(--font-display); font-style: italic; text-transform: none; letter-spacing: 0.02em; font-size: 0.9rem; }
+/* slim ZIP row beneath the illustration */
+.zipline { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin-top: 1.6rem; }
+.zipline label { font-family: var(--font-body); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-srlc-purple); }
+.zipline input { padding: 0.6rem 0.9rem; border: 1px solid var(--color-rule); border-radius: 4px; font-family: var(--font-body); font-size: 0.95rem; width: 180px; max-width: 100%; }
+.zipline input:focus { outline: none; border-color: var(--color-srlc-purple); }
+.edmap .ak, .edmap .hi, .edmap .dccircle, .cf-map .dccircle { display: none; }
+
 .scroll-progress { position: fixed; top: 0; left: 0; height: 3px; width: 0;
   background: var(--color-warm-orange); z-index: 300; pointer-events: none; }

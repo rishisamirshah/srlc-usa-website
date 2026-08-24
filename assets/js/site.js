@@ -411,7 +411,7 @@
   }
 
   /* Interactive US map */
-  doc.querySelectorAll(".cf-map .cf-state--active").forEach(function (p) {
+  doc.querySelectorAll(".cf-map .cf-state--active, .edmap .cf-state--active, .edmap .edmap-dot").forEach(function (p) {
     var href = p.getAttribute("data-href");
     if (!href) return;
     p.setAttribute("tabindex", "0");

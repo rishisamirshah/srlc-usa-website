@@ -7,6 +7,48 @@ from data_cares import CARES, TEN_CARE_INTRO
 from data_india import INSTITUTES, INDIA_INTRO, SRV
 
 
+
+# One marker per state (Naman's reference). Coordinates in the 959x593 viewBox,
+# labels for the NE cluster stack right of the map via leader lines.
+ED_MARKERS = [
+    ("Washington", "washington", 105, 48, "right"),
+    ("California", "california", 68, 300, "right"),
+    ("Arizona", "arizona", 192, 362, "right"),
+    ("Texas", "texas", 400, 440, "right"),
+    ("Illinois", "illinois", 610, 215, "right"),
+    ("Indiana", "indiana", 644, 255, "right"),
+    ("Georgia", "georgia", 700, 385, "right"),
+    ("Massachusetts", "massachusetts", 886, 158, "stack"),
+    ("New York", "new-york", 852, 185, "stack"),
+    ("Pennsylvania", "pennsylvania", 790, 208, "stack"),
+    ("New Jersey", "new-jersey", 836, 215, "stack"),
+    ("Washington, D.C.", "washington-dc", 802, 252, "stack"),
+]
+
+
+def editorial_map(svg_inner):
+    stack = [m for m in ED_MARKERS if m[4] == "stack"]
+    stack_x = 1005
+    stack_y0, stack_dy = 150, 27
+    marks = []
+    for name, slug, x, y, mode in ED_MARKERS:
+        href = f"/our-work/united-states/{slug}/"
+        marks.append(f'<circle class="edmap-ring" cx="{x}" cy="{y}" r="8"></circle>')
+        marks.append(f'<circle class="edmap-dot" cx="{x}" cy="{y}" r="4.5" data-href="{href}" tabindex="0" role="link" aria-label="{name}"><title>{name}</title></circle>')
+        if mode == "right":
+            marks.append(f'<text class="edmap-label" x="{x + 14}" y="{y + 4}">{name}</text>')
+    for i, (name, slug, x, y, mode) in enumerate(stack):
+        ly = stack_y0 + i * stack_dy
+        marks.append(f'<path class="edmap-leader" d="M {x + 6} {y} L {stack_x - 12} {ly - 4}"></path>')
+        marks.append(f'<text class="edmap-label" x="{stack_x}" y="{ly}">{name}</text>')
+    return f"""<div class="edmap reveal">
+  <svg viewBox="0 0 1180 593" xmlns="http://www.w3.org/2000/svg" aria-label="Editorial map of SRLC USA chapters" preserveAspectRatio="xMidYMid meet">
+    <g>{svg_inner}</g>
+    <g>{"".join(marks)}</g>
+  </svg>
+</div>"""
+
+
 def cf_map(svg_inner, aria="Map of the United States highlighting SRLC chapter states"):
     return f"""<div class="cf-map reveal">
   <svg viewBox="0 0 959 593" xmlns="http://www.w3.org/2000/svg" class="cf-map__svg" aria-label="{aria}" preserveAspectRatio="xMidYMid meet">{svg_inner}</svg>
@@ -38,34 +80,34 @@ def render_us_hub(svg_inner):
         "SRLC&rsquo;s Nationwide Presence",
         US_HERO_BODY,
     ) + f"""
-<section class="chapter-finder chapter-finder--v3 vu-shell--first" style="padding-top:1.5rem">
-  <div class="container chapter-finder__inner">
-    <div class="chapter-finder__cols">
-      <div class="chapter-finder__search">
-        <p class="chapter-finder__search-title">Search by ZIP</p>
-        <form class="chapter-finder__form" onsubmit="event.preventDefault(); window.__cfZipLookup &amp;&amp; window.__cfZipLookup();">
-          <input type="text" id="zipInput" inputmode="numeric" maxlength="5" placeholder="ZIP code (e.g. 08820)" aria-label="ZIP code" pattern="\\d{{5}}">
-          <button type="submit" class="btn btn--primary" id="zipBtn">Find Chapter</button>
-        </form>
-        <div class="chapter-finder__result" id="zipResult" hidden>
-          <p class="chapter-finder__city" id="zipCity"></p>
-          <p class="chapter-finder__meta" id="zipMeta"></p>
-          <div class="chapter-finder__actions">
-            <a id="zipJoinBtn" class="btn btn--primary" href="/get-involved/volunteer/">Join This Chapter</a>
-          </div>
-          <div class="chapter-finder__chips" id="zipChips" hidden>
-            <p class="chapter-finder__chips-label">Centers in this chapter</p>
-            <div class="chapter-finder__chips-list" id="zipChipsList"></div>
-          </div>
-        </div>
-        <p class="chapter-finder__search-hint">We&rsquo;ll point you to your nearest SRLC USA chapter.</p>
+<section class="edmap-section vu-shell vu-shell--first">
+  <div class="container">
+    <div class="edmap-head">
+      <p class="edmap-kicker">Chapter Network</p>
+      <h2 class="edmap-title">SRLC USA Chapters</h2>
+      <p class="edmap-meta">Chapters in 11 states and Washington, D.C. &middot; One mission</p>
+    </div>
+    {editorial_map(svg_inner)}
+    <div class="edmap-foot"><span>SRLC USA</span><em>Love and Care. Compassion in action.</em></div>
+    <div class="zipline">
+      <label for="zipInput">Find your chapter</label>
+      <form class="chapter-finder__form" style="display:flex;gap:.6rem" onsubmit="event.preventDefault(); window.__cfZipLookup &amp;&amp; window.__cfZipLookup();">
+        <input type="text" id="zipInput" inputmode="numeric" maxlength="5" placeholder="ZIP code" aria-label="ZIP code" pattern="\\d{{5}}">
+        <button type="submit" class="btn btn--secondary" id="zipBtn" style="padding:.55rem 1.1rem">Find Chapter</button>
+      </form>
+    </div>
+    <div class="chapter-finder__result" id="zipResult" hidden style="max-width:34rem;margin-top:1rem;background:#fff;border:1px solid #E2D9EF;border-radius:4px;padding:1rem 1.2rem">
+      <p class="chapter-finder__city" id="zipCity" style="font-family:var(--font-display);font-weight:600;font-size:1.2rem;margin:0 0 .3rem;color:#693D84"></p>
+      <p class="chapter-finder__meta" id="zipMeta" style="margin:0 0 .8rem;font-size:.92rem;color:#3D2F47"></p>
+      <div class="chapter-finder__actions" style="display:flex;gap:.5rem;flex-wrap:wrap">
+        <a id="zipJoinBtn" class="btn btn--primary" href="/get-involved/volunteer/">Join This Chapter</a>
+      </div>
+      <div class="chapter-finder__chips" id="zipChips" hidden style="margin-top:.8rem">
+        <p class="chapter-finder__chips-label" style="font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:#693D84;margin:0 0 .4rem">Centers in this chapter</p>
+        <div class="chapter-finder__chips-list" id="zipChipsList" style="display:flex;flex-wrap:wrap;gap:.45rem"></div>
       </div>
     </div>
-    <div class="chapter-finder__map-wrap">
-      {cf_map(svg_inner)}
-    </div>
   </div>
-  <div class="container mt-6">{state_chips()}</div>
 </section>
 
 <section class="vu-shell vu-shell--cream" id="campaigns">
