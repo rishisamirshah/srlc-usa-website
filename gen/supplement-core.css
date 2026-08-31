@@ -1,0 +1,23 @@
+/* ---------- supplement-core.css: prose + one photo sections (Aug 24 edits) ----------
+   Pattern from the SRA site (inspiration-and-founder two-col): flowing prose
+   beside a single photo. No equal-box card grids. Owned by pages_core / pages_involve. */
+.prosephoto { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(280px, 1fr);
+  gap: clamp(1.6rem, 4vw, 3.2rem); align-items: center; }
+.prosephoto--reverse .prosephoto__photo { order: -1; }
+@media (max-width: 900px) {
+  .prosephoto { grid-template-columns: 1fr; gap: 1.4rem; }
+  .prosephoto--reverse .prosephoto__photo { order: 0; }
+}
+.prosephoto__photo { border-radius: 10px; overflow: hidden; aspect-ratio: 4 / 3; background: #F1EAF7; min-width: 0; }
+.prosephoto__photo img, .prosephoto__photo .ph-media { width: 100%; height: 100%; min-height: 0; object-fit: cover; display: block; border-radius: 0; }
+.prosephoto__copy { min-width: 0; }
+.prosephoto__copy h3 { font-family: var(--font-display); font-weight: 500; color: var(--color-srlc-purple);
+  font-size: clamp(1.15rem, 1.8vw, 1.35rem); line-height: 1.25; margin: 1.3rem 0 0.35rem; }
+.prosephoto__copy h3:first-child { margin-top: 0; }
+.prosephoto__copy p { color: #3A2A48; line-height: 1.7; font-size: 1rem; margin: 0 0 0.85rem; max-width: 62ch; }
+.prosephoto__copy p:last-child { margin-bottom: 0; }
+.prosephoto__num { font-family: var(--font-display); font-weight: 300; font-size: 1.5rem; line-height: 1;
+  color: var(--color-warm-orange); margin-right: 0.55rem; }
+
+/* Homepage recognition band: flat badge row, no cards */
+.recognition-badges-band { margin: 0 auto var(--space-6); }

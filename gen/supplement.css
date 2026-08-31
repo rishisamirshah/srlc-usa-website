@@ -1,13 +1,15 @@
 /* ==========================================================================
    Flat-pass supplement (Aug 23) — loads after the extracted approved-homepage
    CSS. Implements the Aug 22 edits list: one radius value site-wide (4px max),
-   no glow shadows, no gradients/blobs, Cormorant Garamond + Jost, SRA-pattern
-   page headers, flat CTA endings, grey placeholder slots.
+   no glow shadows, no gradients/blobs, SRA-pattern page headers, flat CTA
+   endings. Aug 24 list: typography back to the approved homepage pairing
+   (Newsreader + DM Sans), official logo, no trust bar, real filler photos in
+   every slot, badge images in the recognition band.
    ========================================================================== */
 
 :root {
-  --font-display: 'Cormorant Garamond', Georgia, serif;
-  --font-body: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  --font-display: "Newsreader", "Times New Roman", Georgia, serif;
+  --font-body: "DM Sans", "Helvetica Neue", Arial, sans-serif;
   --radius-sm: 4px;
   --radius-md: 4px;
   --radius-lg: 4px;
@@ -21,6 +23,8 @@
 }
 
 html { scroll-padding-top: 96px; }
+/* base sets html{scroll-behavior:smooth}; CLAUDE.md requires a reduced-motion fallback */
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 body { padding-top: 72px; }
 main { display: block; }
 
@@ -37,8 +41,12 @@ main { display: block; }
   transition: background 240ms ease, box-shadow 240ms ease, border-color 240ms ease;
 }
 .site-header.is-scrolled { box-shadow: 0 1px 8px rgba(31, 19, 38, 0.08); }
-.brand__logo--dark { height: 52px; width: auto; display: block; }
-.brand__logo--light { height: 36px; width: auto; }
+/* Official logo (horizontal H02 lockup, cropped viewBox 1511x249 = 6.07:1).
+   Bar is 72px; the logo fills 54px (75%) with 9px above and below. One image
+   per state: maroon artwork on the solid bar, cream artwork over the hero. */
+.site-header__inner { min-height: 72px; padding: 0; }
+.brand { flex: none; min-width: 0; }
+.brand__logo { height: 54px; width: auto; max-width: none; display: block; flex: none; white-space: nowrap; }
 .brand__logo--light { display: none; }
 body.has-overlay-nav { padding-top: 0; }
 body.has-overlay-nav .site-header--overlay:not(.is-scrolled) {
@@ -66,8 +74,13 @@ body.has-overlay-nav .hero-carousel__content { padding-top: 8rem; }
   body.has-overlay-nav .hero-carousel__content { padding-top: 4rem; }
 }
 
-/* Wordmark never wraps: the logo is a single image, sized to fit */
-@media (max-width: 480px) { .brand__logo--dark { height: 44px; } .brand__logo--light { height: 30px; } }
+/* Wordmark never wraps: the logo is a single image, sized to fit.
+   Mobile bar is 60px; the logo fills 44px (73%) and clears the menu button at 390. */
+@media (max-width: 640px) {
+  .site-header__inner { min-height: 60px; }
+  .brand__logo { height: 44px; }
+}
+@media (max-width: 360px) { .brand__logo { height: 40px; } }
 
 /* Bridge the trigger-to-panel hover gap */
 @media (hover: hover) and (min-width: 901px) {
@@ -76,9 +89,17 @@ body.has-overlay-nav .hero-carousel__content { padding-top: 8rem; }
   }
 }
 
-/* ---------- SRA-pattern page header ---------- */
-.pagehead { background: var(--color-srlc-purple); color: #FFFFFF; }
-.pagehead .container { padding-top: clamp(2.6rem, 5vw, 3.8rem); padding-bottom: clamp(2.2rem, 4vw, 3.2rem); }
+/* ---------- SRA-pattern page header over a real photo ----------
+   Modest band (not half-screen). Flat dark-purple scrim, no gradient: white
+   text over the scrimmed photo measures above 4.5:1 on ordinary photo tones. */
+.pagehead { background: var(--color-srlc-purple); color: #FFFFFF; position: relative; overflow: hidden; isolation: isolate; }
+.pagehead__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 40%; display: block; z-index: 0; }
+.pagehead__scrim { position: absolute; inset: 0; background: rgba(51, 26, 68, 0.80); z-index: 1; }
+.pagehead__inner { position: relative; z-index: 2; }
+.pagehead .container { padding-top: clamp(2.6rem, 5vw, 3.8rem); padding-bottom: clamp(2.2rem, 4vw, 3.2rem); min-height: clamp(220px, 28vw, 320px); display: flex; flex-direction: column; justify-content: flex-end; }
+/* transparent nav sits over the photo on desktop: keep the copy clear of it */
+body.has-overlay-nav .pagehead .container { padding-top: calc(72px + clamp(2.2rem, 4vw, 3.2rem)); }
+@media (max-width: 900px) { body.has-overlay-nav .pagehead .container { padding-top: clamp(2.6rem, 5vw, 3.8rem); } }
 .pagehead__eyebrow {
   font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.22em;
   text-transform: uppercase; font-weight: 500; color: #E8DDF2; margin: 0 0 0.7rem;
@@ -99,28 +120,13 @@ body.has-overlay-nav .hero-carousel__content { padding-top: 8rem; }
 .flatcta__body { color: var(--color-ink-muted); max-width: 62ch; margin: 0 0 1.1rem; }
 .flatcta__actions { margin: 0; display: flex; gap: 0.7rem; flex-wrap: wrap; }
 
-/* ---------- Trust bar (Brand Guide: exactly 4 signals) ---------- */
-.trust-bar { background: var(--color-lavender-white); border-top: 1px solid var(--color-rule); border-bottom: 1px solid var(--color-rule); }
-.trust-bar__inner { display: grid; grid-template-columns: repeat(4, 1fr); padding: 1.1rem 0; }
-.trust-bar__item { text-align: center; padding: 0.5rem 1rem; border-right: 1px solid var(--color-rule); display: flex; align-items: center; justify-content: center; }
-.trust-bar__item:last-child { border-right: none; }
-.trust-bar__value { font-family: var(--font-display); font-weight: 600; font-size: clamp(0.98rem, 1.6vw, 1.15rem); color: var(--color-srlc-purple); line-height: 1.25; }
-@media (max-width: 720px) {
-  .trust-bar__inner { grid-template-columns: 1fr 1fr; }
-  .trust-bar__item:nth-child(2n) { border-right: none; }
-  .trust-bar__item:nth-child(-n+2) { border-bottom: 1px solid var(--color-rule); }
+/* ---------- Image slots: real filler photos (shell.ph) ---------- */
+img.ph-media {
+  display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover;
+  border-radius: 4px; background: #E7E3EC; min-height: 0;
 }
-
-/* ---------- Grey placeholder slots ---------- */
-.ph-media {
-  position: relative; overflow: hidden; border-radius: 4px;
-  background: #E7E3EC; border: 1px solid var(--color-rule);
-  display: grid; place-items: center; min-height: 240px;
-}
-.ph-media span {
-  color: #6B6472; font-family: var(--font-body); font-size: 0.78rem;
-  letter-spacing: 0.06em; text-align: center; padding: 1rem; line-height: 1.5; max-width: 40ch;
-}
+.vu-split__photo img.ph-media, .institute-card__media img.ph-media, .news-card__media img.ph-media,
+.card--photo img.ph-media { aspect-ratio: auto; height: 100%; border-radius: 0; }
 
 /* ---------- No gradients / blobs / circles ---------- */
 .named-story__placeholder { background: #E7E3EC; color: #6B6472; }
@@ -138,7 +144,7 @@ body.has-overlay-nav .hero-carousel__content { padding-top: 8rem; }
 .rail > * { scroll-snap-align: start; }
 .rail.dragging { cursor: grabbing; scroll-snap-type: none; }
 .rail.dragging > * { pointer-events: none; }
-.rail .ph-media { aspect-ratio: 16 / 11; min-height: 0; }
+.rail img.ph-media { aspect-ratio: 16 / 11; }
 .railnav { display: flex; gap: 0.5rem; }
 .railnav button {
   appearance: none; cursor: pointer; width: 40px; height: 40px; border-radius: 4px;
@@ -208,15 +214,25 @@ body.has-overlay-nav .hero-carousel__content { padding-top: 8rem; }
 @media (max-width: 900px) { .impact-grid--3 { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 540px) { .impact-grid--3 { grid-template-columns: 1fr; } }
 
-/* ---------- Recognition: flat band, one row, thin dividers, no cards ---------- */
-.recognition-cluster__items { display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch; gap: 0; border-top: 1px solid var(--color-rule); border-bottom: 1px solid var(--color-rule); }
-.recognition-chip {
-  background: transparent; border: none; border-right: 1px solid var(--color-rule);
-  padding: 0.9rem 1.6rem; border-radius: 0; font-size: 0.88rem;
-  display: flex; align-items: center; text-align: center;
+/* ---------- Recognition: official badge images, one flat row, thin dividers, no cards ---------- */
+.recognition-cluster__items.recognition-badges {
+  display: flex; flex-wrap: nowrap; justify-content: center; align-items: stretch; gap: 0;
+  border-top: 1px solid var(--color-rule); border-bottom: 1px solid var(--color-rule);
 }
-.recognition-chip:last-child { border-right: none; }
-@media (max-width: 760px) { .recognition-chip { border-right: none; border-bottom: 1px solid var(--color-rule); width: 100%; justify-content: center; } .recognition-chip:last-child { border-bottom: none; } }
+.recognition-badge {
+  flex: 1 1 0; min-width: 0; margin: 0; padding: 1.4rem 1.2rem 1.2rem;
+  border-right: 1px solid var(--color-rule); background: transparent; border-radius: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 0.8rem; text-align: center;
+}
+.recognition-badge:last-child { border-right: none; }
+.recognition-badge__img { height: 72px; width: auto; max-width: 100%; object-fit: contain; display: block; border-radius: 0; }
+.recognition-badge__cap { font-family: var(--font-body); font-size: 0.82rem; line-height: 1.4; color: var(--color-ink-muted); margin: 0; }
+.recognition-badge__cap strong { color: var(--color-ink); font-weight: 600; }
+@media (max-width: 760px) {
+  .recognition-cluster__items.recognition-badges { flex-wrap: wrap; }
+  .recognition-badge { flex: 1 1 100%; border-right: none; border-bottom: 1px solid var(--color-rule); }
+  .recognition-badge:last-child { border-bottom: none; }
+}
 
 /* ---------- Chapter map: flat, full width ---------- */
 .cf-map { border-radius: 0; border: 1px solid var(--color-rule); box-shadow: none; }
@@ -242,7 +258,7 @@ body.has-overlay-nav .hero-carousel__content { padding-top: 8rem; }
 }
 .site-footer .social a:hover { border-color: var(--color-warm-orange); color: var(--color-warm-orange); }
 .site-footer .social svg { width: 15px; height: 15px; fill: currentColor; }
-.site-footer__brand .brand__logo-img { width: 200px; height: auto; background: transparent; padding: 0; border-radius: 0; box-shadow: none; filter: none; }
+.site-footer__brand .brand__logo-img { width: 260px !important; max-width: 100%; height: auto !important; background: transparent !important; padding: 0 !important; border-radius: 0 !important; box-shadow: none !important; filter: none !important; display: block; }
 
 /* ---------- Reveals: earlier + faster; no-JS leaves everything visible ---------- */
 html.no-js .reveal, html.no-js [data-vu-reveal] { opacity: 1 !important; transform: none !important; }
@@ -259,8 +275,8 @@ html.js .reveal[data-stagger="5"] { transition-delay: 250ms; }
 .maxw-70 { max-width: 70ch; }
 img { max-width: 100%; }
 @media (max-width: 640px) {
-  body { padding-top: 64px; }
-  .site-header__inner { padding: 0.55rem 0; }
+  body { padding-top: 60px; }
+  body.has-overlay-nav { padding-top: 60px; }
 }
 
 /* v2 Layout A chapter finder: mobile collapse the base file lacks */
@@ -299,13 +315,8 @@ img { max-width: 100%; }
 .vu-card--stack { grid-template-columns: 1fr; }
 .vu-card--stack .vu-card__h { grid-column: 1; grid-row: auto; }
 .vu-card--stack .vu-card__body { grid-column: 1; }
-@media (min-width: 900px) {
-  .recognition-cluster__items { flex-wrap: nowrap; }
-  .recognition-chip { flex: 1 1 0; justify-content: center; padding: 0.8rem 1rem; font-size: 0.84rem; }
-}
 .quote-wall blockquote { background: transparent; border-left: 0; border-radius: 0; padding: 0; color: #fff; }
-.founder-timeline .ph-media { border: 0; background: #EFEBF3; min-height: 64px; }
-.founder-timeline .ph-media span { font-size: 0.68rem; padding: 0.4rem; }
+.founder-timeline img.ph-media { aspect-ratio: 4 / 3; }
 
 /* ---------- Editorial chapter map (US page) — Naman's Aug 23 spec ----------
    An illustration that happens to be interactive: no card, no border, no
@@ -323,7 +334,7 @@ img { max-width: 100%; }
 .edmap .edmap-dot { fill: #693D84; cursor: pointer; }
 .edmap .edmap-dot:hover { fill: #41214E; }
 .edmap .edmap-ring { fill: none; stroke: #693D84; stroke-width: 1; opacity: 0.35; }
-.edmap .edmap-label { font-family: 'Jost', sans-serif; font-size: 13px; fill: #3D2F47; }
+.edmap .edmap-label { font-family: var(--font-body); font-size: 13px; fill: #3D2F47; }
 .edmap .edmap-leader { stroke: #C9B8DC; stroke-width: 1; fill: none; }
 .edmap-foot { display: flex; justify-content: space-between; gap: 1rem; border-top: 1px solid var(--color-rule); margin-top: 0.8rem; padding-top: 0.7rem; font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-ink-muted); }
 .edmap-foot em { font-family: var(--font-display); font-style: italic; text-transform: none; letter-spacing: 0.02em; font-size: 0.9rem; }
@@ -333,3 +344,9 @@ img { max-width: 100%; }
 .zipline input { padding: 0.6rem 0.9rem; border: 1px solid var(--color-rule); border-radius: 4px; font-family: var(--font-body); font-size: 0.95rem; width: 180px; max-width: 100%; }
 .zipline input:focus { outline: none; border-color: var(--color-srlc-purple); }
 .edmap .ak, .edmap .hi, .edmap .dccircle, .cf-map .dccircle { display: none; }
+
+/* 8/30: the homepage hero copy sat flush against the left edge on phones
+   (.container padding is zeroed inside the carousel by the base CSS). */
+@media (max-width: 900px) {
+  .hero-carousel__content { padding-left: 1.25rem; padding-right: 1.25rem; }
+}

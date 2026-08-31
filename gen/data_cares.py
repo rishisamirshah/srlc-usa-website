@@ -1,6 +1,11 @@
 """10 Care Program: hub panel data + detail pages. Copy verbatim from the content doc.
 FINANCE-PENDING dollar lines and unapproved STORY SLOTs are omitted until approved.
 Approved stories that exist in the doc (text-level) are included without photos.
+
+"stat" holds the Care's figure from the approved global table. It is NOT
+rendered anywhere under /our-work/ (Naman, Aug 24: global statistics appear on
+the homepage and Our Impact only; a Care page may carry one Care-specific
+figure, and none is approved yet). Kept for reference only.
 """
 
 CARES = [

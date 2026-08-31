@@ -1,8 +1,12 @@
-"""Shared page shell + components — SRLC USA purple system, flat pass (Aug 23).
+"""Shared page shell + components — SRLC USA purple system, flat pass (Aug 23),
+Aug 24 change list applied (Aug 30): Newsreader + DM Sans, official logo,
+no trust bar, real filler photography in every image slot, badge images.
 Sources: Naman's CLAUDE.md v2 (gen/naman-claude.md), SRLC_USA_Brand_Guide.pdf,
-approved homepage HTML v2, and the Aug 22 edits list. No em dashes, approved
-stats only, spiritual content only on /about/our-inspiration/.
+approved homepage HTML v2, the Aug 22 edits list and the Aug 24 change list.
+No em dashes, approved stats only, spiritual content only on /about/our-inspiration/.
 """
+import hashlib
+import re
 
 SITE = "https://srlcusa.netlify.app"  # staging; production per Aug decision is AWS Amplify
 EMAIL = "info@srlc-usa.org"           # domain ruling pending Naman; do not mass-change
@@ -16,9 +20,17 @@ FB = "https://www.facebook.com/SRLCUSA/"
 CSS_FILE = "/assets/css/site.css"
 JS_FILE = "/assets/js/site.js"
 
+# Exactly the pairing the approved homepage HTML loads (gen/base-homepage-v2.html):
+# Newsreader for headings, DM Sans for body. Both carry the opsz axis.
 FONTS = ("https://fonts.googleapis.com/css2?"
-         "family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&"
-         "family=Jost:ital,wght@0,300..700;1,300..700&display=swap")
+         "family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&"
+         "family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&display=swap")
+
+LOGO_DARK = "/assets/img/logo/srlc-logo-dark.svg"    # maroon artwork, light backgrounds
+LOGO_LIGHT = "/assets/img/logo/srlc-logo-light.svg"  # cream artwork, dark / photo backgrounds
+LOGO_ALT = "Shrimad Rajchandra Love and Care"
+# Cropped viewBox is 1511 x 249; width/height attributes carry that ratio.
+LOGO_W, LOGO_H = 340, 56
 
 SOCIAL_SVG = {
     "ig": '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2m0 4.8a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 1.8a3.2 3.2 0 1 0 0 6.4 3.2 3.2 0 0 0 0-6.4m5.2-3a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4"/></svg>',
@@ -29,6 +41,8 @@ SOCIAL_SVG = {
 def head(title, desc, path, overlay=False):
     canonical = SITE + path
     body_cls = ' class="has-overlay-nav"' if overlay else ""
+    preload = ('<link rel="preload" as="image" href="/assets/img/photos/school-children-hero.jpg">\n'
+               if path == "/" else "")
     return f"""<!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
@@ -44,9 +58,9 @@ def head(title, desc, path, overlay=False):
 <meta property="og:type" content="website">
 <meta property="og:url" content="{canonical}">
 <meta property="og:image" content="{SITE}/assets/img/photos/school-children-hero.jpg">
-<link rel="icon" type="image/png" href="/assets/img/srlc-logo.png">
-<link rel="preload" as="image" href="/assets/img/photos/school-children-hero.jpg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="icon" type="image/png" href="/assets/img/favicon.png">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+{preload}<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="{FONTS}">
 <link rel="stylesheet" href="{CSS_FILE}">
@@ -69,8 +83,8 @@ def nav(overlay=False):
     return f"""<header class="{cls}">
   <div class="container site-header__inner">
     <a class="brand" href="/" aria-label="Shrimad Rajchandra Love and Care USA home">
-      <img class="brand__logo brand__logo--dark" src="/assets/img/srlc-logo.png" alt="Shrimad Rajchandra Love and Care" width="98" height="52" loading="eager">
-      <img class="brand__logo brand__logo--light" src="/assets/img/srlc-logo-white.png" alt="Shrimad Rajchandra Love and Care" width="225" height="36" loading="eager">
+      <img class="brand__logo brand__logo--dark" src="{LOGO_DARK}" alt="{LOGO_ALT}" width="{LOGO_W}" height="{LOGO_H}" loading="eager" decoding="async">
+      <img class="brand__logo brand__logo--light" src="{LOGO_LIGHT}" alt="{LOGO_ALT}" width="{LOGO_W}" height="{LOGO_H}" loading="eager" decoding="async">
     </a>
     <nav class="primary-nav" aria-label="Primary">
       <ul class="primary-nav__list">
@@ -119,7 +133,7 @@ def footer():
   <div class="container">
     <div class="site-footer__cols">
       <div>
-        <p class="site-footer__brand"><img class="brand__logo-img" src="/assets/img/srlc-logo-white.png" alt="Shrimad Rajchandra Love and Care" width="263" height="42" loading="lazy"></p>
+        <p class="site-footer__brand"><img class="brand__logo-img" src="{LOGO_LIGHT}" alt="{LOGO_ALT}" width="260" height="43" loading="lazy"></p>
         <p class="site-footer__legal">SRLC USA is a registered 501(c)(3).</p>
         <p class="site-footer__legal">EIN: 81-5162502</p>
         <p class="site-footer__legal"><a href="mailto:{EMAIL}" style="color:inherit;text-decoration:none;border-bottom:1px solid currentColor">{EMAIL}</a></p>
@@ -177,29 +191,112 @@ def footer():
 
 
 def page(title, desc, path, body, overlay=False):
+    # Pages that open with a photo header get the transparent overlay nav with
+    # the light logo automatically; callers can still pass overlay=True themselves.
+    if not overlay and body.lstrip().startswith('<section class="pagehead'):
+        overlay = True
     return head(title, desc, path, overlay) + nav(overlay) + body + footer()
 
 
-# ---------- Components ----------
+# ---------- Filler photography ----------
+# The "existing image set": the Unsplash photos the approved homepage HTML and
+# Naman's donate HTML use (downloaded once into assets/img/fillers/) plus the
+# four photos in assets/img/photos/. Placeholder-then-swap on staging is fine per
+# CLAUDE.md; final photography replaces these slot by slot from the Media Bank.
+# (path, tag, width, height) — tags judged from the actual pictures.
+FILLERS = [
+    ("/assets/img/fillers/children-smiling.jpg", "children", 2400, 1600),
+    ("/assets/img/fillers/children-india.jpg", "children", 1600, 1142),
+    ("/assets/img/fillers/child-paint.jpg", "children", 1600, 2409),
+    ("/assets/img/photos/school-children-hero.jpg", "children", 1600, 1067),
+    ("/assets/img/fillers/classroom-desk.jpg", "classroom", 2400, 1695),
+    ("/assets/img/photos/love-care-walk.jpg", "awards", 1600, 1067),
+    ("/assets/img/fillers/skills-coding.jpg", "skills", 1600, 2399),
+    ("/assets/img/fillers/hospital-theatre.jpg", "hospital", 2400, 1350),
+    ("/assets/img/fillers/surgeons.jpg", "hospital", 1600, 1697),
+    ("/assets/img/fillers/hospital-building.jpg", "hospital", 1600, 1064),
+    ("/assets/img/fillers/health-laptop.jpg", "health", 1600, 1067),
+    ("/assets/img/fillers/community-gathering.jpg", "community", 2400, 1602),
+    ("/assets/img/photos/event-recent.jpg", "awards", 1600, 1067),
+    ("/assets/img/photos/awards.jpg", "awards", 1600, 1067),
+    ("/assets/img/fillers/hands-heart.jpg", "hands", 1600, 1067),
+    ("/assets/img/fillers/hands-seedling.jpg", "nature", 1600, 916),
+    ("/assets/img/fillers/runner-road.jpg", "nature", 1600, 1065),
+    ("/assets/img/fillers/woman-portrait.jpg", "women", 1600, 2400),
+    ("/assets/img/fillers/animals-dog-cat.jpg", "animals", 1600, 941),
+]
 
-def ph(label, cls="", style=""):
-    """Grey placeholder block. Short one-line label on the block; the tab's full
-    image-direction line rides in the title attribute for the team."""
+# Subject hints for ph(): first matching keyword in the slot label picks the tag.
+_TAG_HINTS = [
+    ("animals", ("animal", "dog", "cat", "cattle", "shelter", "veterinar", "jivamaitri")),
+    ("hospital", ("hospital", "patient", "surgery", "surgical", "medical", "doctor", "camp", "clinic", "cardio", "health")),
+    ("classroom", ("classroom", "school", "student", "computer", "lab", "gurukul", "vidyapeeth", "college", "kit")),
+    ("skills", ("skill", "training", "vocational", "coding", "software")),
+    ("women", ("woman", "women", "mother", "girl")),
+    ("children", ("child", "children", "kid", "youth", "young")),
+    ("awards", ("award", "plaque", "recogni", "ceremony", "felicitat")),
+    ("hands", ("hands", "packing", "supply", "supplies", "kits", "meal", "food")),
+    ("nature", ("field", "farm", "village", "road", "terrain", "tree", "plant", "environment", "region", "walk", "run")),
+    ("community", ("volunteer", "event", "community", "chapter", "gathering", "team", "crowd", "hall", "people")),
+]
+
+
+def _tag_for(label):
+    low = (label or "").lower()
+    for tag, words in _TAG_HINTS:
+        if any(w in low for w in words):
+            return tag
+    return None
+
+
+def filler(key, tag=None):
+    """Deterministic filler pick for a slot: same key always yields the same
+    photo. `tag` restricts the pool to one subject; an unknown tag falls back to
+    the whole set. Returns the /assets path (use filler_entry for dimensions)."""
+    return filler_entry(key, tag)[0]
+
+
+def filler_entry(key, tag=None):
+    pool = [f for f in FILLERS if tag and f[1] == tag] or FILLERS
+    h = int(hashlib.md5((key or "").encode("utf-8")).hexdigest(), 16)
+    return pool[h % len(pool)]
+
+
+def _attr(text):
+    return (text or "").replace("&", "&amp;").replace('"', "&quot;").replace("&amp;rsquo;", "&rsquo;").replace("&amp;amp;", "&amp;")
+
+
+def ph(label, cls="", style="", tag=None):
+    """Image slot. Renders a real photo (a deterministic filler from the existing
+    image set) with the slot's direction line as alt text; the same line rides in
+    the title attribute so the team can see what final photography each slot
+    wants. Keeps the ph-media class plus cls/style so every existing call site
+    on every page keeps its layout."""
+    path, ftag, w, h = filler_entry(label, tag or _tag_for(label))
     s = f' style="{style}"' if style else ""
-    short = label.split(".")[0].split(",")[0].strip()
-    if len(short) > 44:
-        short = short[:44].rsplit(" ", 1)[0]
-    while short.split() and short.split()[-1].lower() in ("at", "in", "of", "a", "the", "with", "for", "to", "and", "or"):
-        short = short.rsplit(" ", 1)[0]
-    return f'<div class="ph-media {cls}"{s} title="{label}"><span>{short}</span></div>'
+    c = f"ph-media {cls}".strip()
+    alt = _attr(re.sub(r"\s+", " ", label or "").strip())
+    return (f'<img class="{c}" src="{path}" alt="{alt}" title="{alt}" width="{w}" height="{h}" '
+            f'loading="lazy" decoding="async"{s}>')
 
 
-def page_header(eyebrow, h1, sub=None, cta=None):
-    """SRA-pattern page header: one small eyebrow line, short single-color H1."""
+def page_header(eyebrow, h1, sub=None, cta=None, image=None):
+    """SRA-pattern page header over a real photo: one small eyebrow line, short
+    single-color H1, flat dark-purple scrim for contrast. `image` is an /assets
+    path; otherwise a filler chosen from the H1."""
+    if image:
+        src, w, h = image, 2400, 1600
+        for f in FILLERS:
+            if f[0] == image:
+                w, h = f[2], f[3]
+    else:
+        src, _, w, h = filler_entry(h1, _tag_for(f"{eyebrow} {h1} {sub or ''}"))
     sub_html = f'<p class="pagehead__sub">{sub}</p>' if sub else ""
     cta_html = f'<div class="pagehead__cta">{cta}</div>' if cta else ""
-    return f"""<section class="pagehead">
-  <div class="container">
+    return f"""<section class="pagehead pagehead--photo">
+  <img class="pagehead__img" src="{src}" alt="" width="{w}" height="{h}" loading="eager" fetchpriority="high" decoding="async">
+  <div class="pagehead__scrim"></div>
+  <div class="container pagehead__inner">
     <p class="pagehead__eyebrow">{eyebrow}</p>
     <h1 class="pagehead__h1">{h1}</h1>
     {sub_html}
@@ -209,15 +306,9 @@ def page_header(eyebrow, h1, sub=None, cta=None):
 
 
 def trust_bar():
-    """Brand Guide trust bar: exactly these 4 signals, no more."""
-    items = [
-        "U.S. Chapter of a UN-Recognized Nonprofit",
-        "501(c)(3) Tax-Deductible",
-        "Chapters in 11 States + D.C.",
-        "33M+ Lives Touched Globally",
-    ]
-    cells = "".join(f'<div class="trust-bar__item"><span class="trust-bar__value">{t}</span></div>' for t in items)
-    return f'<section class="trust-bar"><div class="container trust-bar__inner">{cells}</div></section>'
+    """Retired on Naman's Aug 24 list. Kept so existing imports and call sites
+    keep working; renders nothing."""
+    return ""
 
 
 def flat_cta(h2, body, label, href="/donate/", second=None):
@@ -240,11 +331,28 @@ def impact_stats(stats, cols=None):
     return f'<div class="impact-grid{" impact-grid--3" if (cols or len(stats)) == 3 else ""}">{cells}</div>'
 
 
+# Recognition marks. Candid seal is the live official widget SVG for EIN
+# 81-5162502 saved locally; GreatNonprofits is the official hi-res Top-Rated
+# badge from cdn.greatnonprofits.org; the UN ECOSOC lockup is built in-house
+# (the UN does not license its emblem to NGOs). See the build report.
+BADGES = [
+    ("/assets/img/badges/un-ecosoc-consultative-status-2020.svg", 320, 108,
+     "UN ECOSOC Special Consultative Status", "SRLC Global", "UN ECOSOC Special Consultative Status, 2020"),
+    ("/assets/img/badges/greatnonprofits-top-rated-2025.png", 534, 400,
+     "GreatNonprofits Top-Rated Nonprofit badge", "SRLC USA", "GreatNonprofits Top-Rated"),
+    ("/assets/img/badges/candid-gold-seal-2025.svg", 108, 108,
+     "Candid Gold Seal of Transparency 2025", "SRLC USA", "Candid Gold Transparency Seal, 2025"),
+]
+
+
 def recognition_chips():
-    chips = [
-        ("SRLC Global", "UN ECOSOC Special Consultative Status, 2020"),
-        ("SRLC USA", "GreatNonprofits Top-Rated"),
-        ("SRLC USA", "Candid Gold Transparency Seal, 2025"),
-    ]
-    items = "".join(f'<span class="recognition-chip"><strong>{a}</strong> &middot; {b}</span>' for a, b in chips)
-    return f'<div class="recognition-cluster__items">{items}</div>'
+    """Flat one-row band of the three official badge images with captions,
+    thin dividers, no cards. Keeps the recognition-cluster__items class so
+    existing wrappers keep working."""
+    items = "".join(
+        f'<figure class="recognition-badge">'
+        f'<img class="recognition-badge__img" src="{src}" alt="{alt}" width="{w}" height="{h}" loading="lazy" decoding="async">'
+        f'<figcaption class="recognition-badge__cap"><strong>{a}</strong> &middot; {b}</figcaption>'
+        f'</figure>'
+        for src, w, h, alt, a, b in BADGES)
+    return f'<div class="recognition-cluster__items recognition-badges">{items}</div>'

@@ -1,6 +1,8 @@
 """12 state landing pages. Copy verbatim from the content doc (United States tabs).
 Rebrand rule applied per the doc: Back-to-School references become Classroom of Change.
 NY and PA hero intros are newly written per the doc's instruction (flagged for Naman).
+"stats" per state are NOT rendered (per-state stat bands are banned in naman-claude.md);
+kept only so the doc's figures are traceable.
 """
 
 STATES = [

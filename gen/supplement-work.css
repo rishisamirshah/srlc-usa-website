@@ -1,0 +1,68 @@
+/* ==========================================================================
+   Our Work supplement (Aug 30) — Naman's Aug 24 list.
+   1. Jump strip: names only, no boxes, small type, thin rule, sticky under
+      the site header. Replaces the chip cloud on the 10 Care + India hubs.
+   2. Photo panels: every Care / institute panel carries a real filler photo
+      with a flat dark scrim; copy is unchanged.
+   Loaded after supplement.css via the build's supplement*.css concatenation.
+   ========================================================================== */
+
+/* ---------- Jump strip ---------- */
+.jumpstrip {
+  position: sticky;
+  top: var(--jumpstrip-top, 72px);
+  z-index: 60;
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--color-rule);
+}
+.jumpstrip__list {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; align-items: stretch;
+  gap: clamp(1.1rem, 2.4vw, 2.2rem);
+  overflow-x: auto; overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; -ms-overflow-style: none;
+  white-space: nowrap;
+}
+.jumpstrip__list::-webkit-scrollbar { display: none; }
+.jumpstrip__list li { flex: none; }
+.jumpstrip__list a {
+  display: block; padding: 0.68rem 0 0.56rem;
+  font-family: var(--font-body);
+  font-size: 13px; line-height: 1.2; letter-spacing: 0.01em;
+  font-weight: 500; color: var(--color-ink-muted);
+  text-decoration: none; border-bottom: 2px solid transparent;
+  transition: color 160ms ease, border-color 160ms ease;
+}
+.jumpstrip__list a:hover { color: var(--color-srlc-purple); }
+.jumpstrip__list a.on { color: var(--color-srlc-purple); border-bottom-color: var(--color-srlc-purple); }
+.jumpstrip__list a:focus-visible { outline: 2px solid var(--color-srlc-purple); outline-offset: -2px; }
+@media (min-width: 1100px) {
+  .jumpstrip__list { justify-content: space-between; gap: 1rem; }
+}
+@media (max-width: 640px) {
+  .jumpstrip .container { padding-left: 0; padding-right: 0; }
+  .jumpstrip__list { padding: 0 1.1rem; gap: 1.25rem; }
+  .jumpstrip__list::after { content: ""; flex: none; width: 0.4rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .jumpstrip__list a { transition: none; }
+}
+
+/* ---------- Photo panels ---------- */
+.carepanel--photo { background: #1F1326; color: #FFFFFF; border-top: 0; min-height: 68vh; }
+.carepanel--photo:nth-child(even of .carepanel) { background: #1F1326; }
+.carepanel__bg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; display: block; z-index: 0;
+}
+.carepanel__scrim { position: absolute; inset: 0; background: rgba(31, 19, 38, 0.66); z-index: 1; }
+.carepanel--photo .container { position: relative; z-index: 2; }
+.carepanel--photo .carepanel__body { max-width: 680px; }
+.carepanel--photo .carepanel__body h2 { color: #FFFFFF; }
+.carepanel--photo .vu-lead { color: #F3EEF9; }
+.carepanel--photo .vu-eyebrow { color: var(--color-warm-orange); }
+.carepanel--photo .btn--secondary { color: #FFFFFF; border-color: rgba(255, 255, 255, 0.72); background: transparent; }
+.carepanel--photo .btn--secondary:hover { background: #FFFFFF; color: var(--color-srlc-purple); border-color: #FFFFFF; }
+@media (max-width: 880px) { .carepanel--photo { min-height: 0; padding: 3rem 0; } }
+@media (prefers-reduced-motion: reduce) { .carepanel--photo { min-height: 0; padding: 3rem 0; } }

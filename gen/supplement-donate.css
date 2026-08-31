@@ -1,0 +1,115 @@
+/* ---------- Donate page (ported from Naman's donate.html, Aug 30) ----------
+   Every rule is scoped to .donate-page so nothing leaks into other pages.
+   Flat-pass adaptations of his style block: 4px radius, no glow shadows,
+   flat scrim instead of a gradient. Fonts/colors come from site tokens. */
+
+.donate-page .section-pad { padding: clamp(3rem, 7vw, 5rem) 0; }
+.donate-page .section--white { background: #FFFFFF; }
+.donate-page .section--lavender { background: var(--color-lavender-white); }
+.donate-page .section-head { text-align: center; margin-bottom: clamp(2rem, 4vw, 3.5rem); }
+.donate-page .section-eyebrow { font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-srlc-purple); font-weight: 600; margin: 0 0 0.75rem; }
+.donate-page .section-h { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.8rem, 3.5vw, 2.6rem); color: var(--color-srlc-purple); margin: 0 0 0.75rem; line-height: 1.15; font-variation-settings: "opsz" 48; }
+.donate-page .section-h em { font-style: normal; }
+.donate-page .section-sub { font-size: 1rem; color: var(--color-ink-muted); max-width: 42rem; margin: 0 auto; line-height: 1.7; }
+
+/* Hero with widget */
+.donate-page .donate-hero { position: relative; background: var(--color-srlc-purple); color: #FFFFFF; padding: clamp(4.5rem, 9vw, 7rem) 0 clamp(3.5rem, 7vw, 5.5rem); overflow: hidden; }
+.donate-page .donate-hero__media { position: absolute; inset: 0; z-index: 0; }
+.donate-page .donate-hero__media img { width: 100%; height: 100%; object-fit: cover; display: block; transform: translate3d(0, var(--hero-par, 0px), 0) scale(1.12); will-change: transform; }
+.donate-page .donate-hero__media::after { content: ""; position: absolute; inset: 0; background: rgba(31, 19, 38, 0.62); }
+.donate-page .donate-hero__grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(2rem, 4vw, 4rem); align-items: center; }
+.donate-page .donate-hero__eyebrow { font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-warm-orange); font-weight: 600; margin: 0 0 1rem; }
+.donate-page .donate-hero__h { font-family: var(--font-display); font-weight: 500; font-size: clamp(2rem, 4.6vw, 3.4rem); color: #FFFFFF; line-height: 1.1; margin: 0 0 1.2rem; font-variation-settings: "opsz" 60; }
+.donate-page .donate-hero__sub { font-family: var(--font-body); font-weight: 400; font-size: clamp(1rem, 1.4vw, 1.125rem); color: rgba(255,255,255,0.92); line-height: 1.6; margin: 0 0 1.6rem; max-width: 32rem; }
+.donate-page .donate-hero__meta { display: flex; gap: 1.5rem; flex-wrap: wrap; font-size: 0.8125rem; color: rgba(255,255,255,0.85); letter-spacing: 0.04em; }
+.donate-page .donate-hero__meta span::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--color-warm-orange); margin-right: 0.5rem; vertical-align: middle; }
+@media (max-width: 900px) { .donate-page .donate-hero__grid { grid-template-columns: 1fr; } }
+
+/* Widget */
+.donate-page .donate-widget { background: #FFFFFF; color: var(--color-ink); border-radius: 4px; padding: clamp(1.5rem, 2.5vw, 2rem); border: 1px solid var(--color-rule); }
+.donate-page .donate-widget__head { font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-srlc-purple); font-weight: 600; margin: 0 0 0.5rem; }
+.donate-page .donate-widget__h { font-family: var(--font-display); font-size: 1.4rem; font-weight: 500; color: var(--color-srlc-purple); margin: 0 0 1.2rem; line-height: 1.25; }
+.donate-page .donate-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 0.3rem; background: var(--color-lavender-white); border: 1px solid var(--color-rule); border-radius: 4px; padding: 0.25rem; margin: 0 0 1.3rem; }
+.donate-page .donate-toggle__btn { background: transparent; border: none; padding: 0.6rem 0.5rem; border-radius: 4px; font-family: var(--font-body); font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink-muted); cursor: pointer; transition: background 0.2s ease, color 0.2s ease; }
+.donate-page .donate-toggle__btn[aria-pressed="true"] { background: var(--color-srlc-purple); color: #FFFFFF; }
+.donate-page .donate-amounts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin: 0 0 1rem; }
+.donate-page .donate-amount { background: #FFFFFF; border: 1.5px solid var(--color-rule); border-radius: 4px; padding: 0.85rem 0.3rem; font-family: var(--font-display); font-size: 1.15rem; font-weight: 500; color: var(--color-srlc-purple); cursor: pointer; transition: background 0.15s ease, border-color 0.15s ease; }
+.donate-page .donate-amount:hover { border-color: var(--color-srlc-purple); background: var(--color-lavender-white); }
+.donate-page .donate-amount[aria-pressed="true"] { background: #EDE7F6; border-color: var(--color-srlc-purple); color: var(--color-srlc-purple); }
+.donate-page .donate-custom { display: flex; align-items: center; gap: 0.6rem; margin: 0 0 1.2rem; padding: 0.7rem 1rem; background: var(--color-lavender-white); border-radius: 4px; border: 1.5px solid var(--color-rule); }
+.donate-page .donate-custom:focus-within { border-color: var(--color-srlc-purple); }
+.donate-page .donate-custom__symbol { font-family: var(--font-display); font-size: 1.15rem; color: var(--color-srlc-purple); font-weight: 500; }
+.donate-page .donate-custom__input { flex: 1; min-width: 0; background: transparent; border: none; outline: none; font-family: var(--font-body); font-size: 1rem; color: var(--color-ink); padding: 0.2rem 0; }
+.donate-page .donate-widget__outcome { font-size: 0.85rem; color: var(--color-ink-muted); line-height: 1.5; margin: 0 0 1.2rem; padding: 0.7rem 0.9rem; background: var(--color-lavender-white); border-left: 3px solid var(--color-srlc-purple); border-radius: 0 4px 4px 0; }
+.donate-page .donate-widget__cta { width: 100%; }
+.donate-page .donate-widget__legal { text-align: center; font-size: 0.7rem; color: var(--color-ink-muted); margin: 1rem 0 0; letter-spacing: 0.04em; }
+
+/* Corporate matching (Double the Donation) */
+.donate-page .dd-placeholder { max-width: 34rem; margin: 0 auto; }
+.donate-page .dd-mock { display: flex; gap: 0.6rem; }
+.donate-page .dd-mock__input { flex: 1; min-width: 0; padding: 0.95rem 1.1rem; border: 1.5px solid var(--color-rule); border-radius: 4px; background: var(--color-lavender-white); color: var(--color-ink-muted); font-family: var(--font-body); font-size: 1rem; }
+.donate-page .dd-mock__input:disabled { cursor: not-allowed; }
+.donate-page .dd-mock__btn { flex: none; padding: 0.95rem 1.5rem; border: none; border-radius: 4px; background: var(--color-rule); color: var(--color-ink-muted); font-family: var(--font-body); font-weight: 600; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; cursor: not-allowed; }
+.donate-page .dd-mock__caption { text-align: center; font-size: 0.8rem; color: var(--color-ink-muted); margin: 0.7rem 0 0; }
+.donate-page .dd-attribution { text-align: center; font-size: 0.78rem; color: var(--color-ink-muted); margin: 1.6rem auto 0; }
+.donate-page .dd-cta { text-align: center; margin: 0.6rem auto 0; font-size: 0.95rem; }
+.donate-page .dd-cta a { color: var(--color-srlc-purple); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.donate-page .dd-logos { margin-top: clamp(2rem, 4vw, 3rem); padding-top: clamp(1.5rem, 3vw, 2.2rem); border-top: 1px solid var(--color-rule); }
+.donate-page .dd-logos__h { font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-srlc-purple); font-weight: 600; margin: 0 0 0.5rem; text-align: center; }
+.donate-page .dd-logos__qualifier { text-align: center; font-size: 0.8rem; color: var(--color-ink-muted); max-width: 60ch; margin: 0 auto 1.2rem; line-height: 1.55; }
+@media (max-width: 560px) { .donate-page .dd-mock { flex-direction: column; } .donate-page .dd-mock__btn { width: 100%; } }
+
+/* Monthly strip */
+.donate-page .donate-strip { background: var(--color-srlc-purple); padding: clamp(3rem, 7vw, 5rem) 0; text-align: center; }
+.donate-page .donate-strip__eyebrow { font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-warm-orange); font-weight: 600; margin: 0 0 1rem; }
+.donate-page .donate-strip__h { font-family: var(--font-display); font-size: clamp(1.7rem, 3.5vw, 2.4rem); color: #FFFFFF; font-weight: 500; margin: 0 0 2rem; line-height: 1.2; font-variation-settings: "opsz" 48; }
+.donate-page .donate-strip__h em { font-style: normal; font-weight: 400; color: #FFFFFF; }
+.donate-page .donate-strip__body { color: rgba(255,255,255,0.85); max-width: 42rem; margin: 0 auto 1.8rem; line-height: 1.7; font-size: 1rem; }
+.donate-page .donate-strip__ctas { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+/* Other ways to give + FAQ accordion (button + aria-expanded, no-JS shows everything) */
+.donate-page .faq-list { max-width: 780px; margin: 0 auto; }
+.donate-page .faq-item { border-bottom: 1px solid var(--color-rule); }
+.donate-page .faq-item:first-child { border-top: 1px solid var(--color-rule); }
+.donate-page .faq-item__h { margin: 0; font-size: inherit; }
+.donate-page .faq-item__btn { width: 100%; background: transparent; border: none; padding: 1.5rem 0; text-align: left; cursor: pointer; display: flex; align-items: flex-start; justify-content: space-between; gap: 1.5rem; font-family: var(--font-display); font-size: 1.25rem; font-weight: 500; color: var(--color-srlc-purple); line-height: 1.35; }
+.donate-page .faq-item__btn:hover { color: var(--color-purple-deep, #41214E); }
+.donate-page .faq-item__btn:focus-visible { outline: 2px solid var(--color-srlc-purple); outline-offset: 2px; }
+.donate-page .faq-item__icon { flex-shrink: 0; width: 24px; height: 24px; position: relative; margin-top: 0.25rem; }
+.donate-page .faq-item__icon::before, .donate-page .faq-item__icon::after { content: ""; position: absolute; background: var(--color-srlc-purple); top: 50%; left: 50%; transform: translate(-50%, -50%); transition: transform 0.25s ease, opacity 0.25s ease; }
+.donate-page .faq-item__icon::before { width: 14px; height: 2px; }
+.donate-page .faq-item__icon::after { width: 2px; height: 14px; }
+.donate-page .faq-item__btn[aria-expanded="true"] .faq-item__icon::after { transform: translate(-50%, -50%) rotate(90deg); opacity: 0; }
+.donate-page .faq-item__body { padding: 0 0 1.5rem; color: var(--color-ink-muted); line-height: 1.7; font-size: 0.98rem; max-width: 90%; }
+.donate-page .faq-item__body[hidden] { display: none; }
+html.no-js .donate-page .faq-item__body[hidden] { display: block; }
+.donate-page .faq-item__body p { margin: 0 0 0.8rem; }
+.donate-page .faq-item__body p:last-child { margin: 0; }
+.donate-page .faq-item__body a { color: var(--color-srlc-purple); }
+.donate-page .ways-accordion .faq-item__btn { font-size: 1.15rem; align-items: center; }
+.donate-page .way-summary { display: flex; flex-direction: column; gap: 0.2rem; }
+.donate-page .way-card__eyebrow { font-family: var(--font-body); font-size: 0.6875rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-srlc-purple); font-weight: 600; margin: 0; }
+.donate-page .way-summary__h { font-family: var(--font-display); font-weight: 500; line-height: 1.3; font-variation-settings: "opsz" 24; }
+.donate-page .way-card__cta { display: inline-block; margin-top: 0.4rem; font-family: var(--font-body); font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-srlc-purple); text-decoration: none; border-bottom: 1.5px solid var(--color-srlc-purple); padding-bottom: 0.15em; transition: color 0.15s ease; }
+.donate-page .way-card__cta:hover { color: var(--color-purple-deep, #41214E); }
+.donate-page .check-wire { margin-top: 2rem; padding: 1.5rem 1.75rem; background: #FFFFFF; border-radius: 4px; border: 1px solid var(--color-rule); text-align: center; }
+.donate-page .check-wire__h { font-weight: 600; margin: 0 0 0.5rem; color: var(--color-srlc-purple); }
+.donate-page .check-wire__body { color: var(--color-ink-muted); margin: 0; font-size: 0.92rem; }
+.donate-page .check-wire__body a { color: var(--color-srlc-purple); }
+
+/* Trust signals */
+.donate-page .trust-signals { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; }
+.donate-page .trust-sig { background: transparent; border: none; border-top: 1px solid var(--color-rule); border-radius: 0; padding: 1.1rem 0 0; text-align: left; }
+.donate-page .trust-sig__svg { width: 28px; height: 28px; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; fill: none; stroke: var(--color-srlc-purple); margin-bottom: 0.7rem; }
+.donate-page .trust-sig__h { font-family: var(--font-display); font-size: 1.05rem; color: var(--color-srlc-purple); font-weight: 500; margin: 0 0 0.5rem; line-height: 1.3; }
+.donate-page .trust-sig__body { font-size: 0.85rem; color: var(--color-ink-muted); line-height: 1.55; margin: 0; }
+.donate-page .trust-sig__body--after-ein { margin-top: 0.5rem; }
+.donate-page .trust-sig__body a { color: var(--color-srlc-purple); text-decoration: underline; }
+.donate-page .trust-sig__ein { font-family: var(--font-display); font-size: 1.2rem; color: var(--color-srlc-purple); font-weight: 500; letter-spacing: 0.04em; margin: 0; }
+@media (max-width: 860px) { .donate-page .trust-signals { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .donate-page .trust-signals { grid-template-columns: 1fr; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .donate-page .donate-hero__media img { transform: none; }
+  .donate-page .faq-item__icon::before, .donate-page .faq-item__icon::after, .donate-page .donate-amount, .donate-page .donate-toggle__btn { transition: none; }
+}

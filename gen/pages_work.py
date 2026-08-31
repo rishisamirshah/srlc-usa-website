@@ -1,10 +1,47 @@
 """Renderers: Our Work — flat pass. Copy verbatim from the master doc tabs.
 Per-state stat bands are omitted (CLAUDE.md banned list) and flagged in the
 build log. End-of-page CTAs render as flat sections, never banners."""
-from shell import page, ph, page_header, flat_cta, trust_bar
+from shell import page, ph, page_header, flat_cta, filler, filler_entry
 from data_states import STATES, CAMPAIGNS, US_HERO_BODY
 from data_cares import CARES, TEN_CARE_INTRO
 from data_india import INSTITUTES, INDIA_INTRO, SRV
+
+
+# Filler photo subject per page (shell.filler picks a local /assets/img/fillers
+# photo deterministically for a key + tag). Header bands and hub panels only.
+CARE_TAGS = {
+    "health-care": "hospital", "educational-care": "classroom", "child-care": "children",
+    "woman-care": "women", "tribal-care": "nature", "community-care": "community",
+    "humanitarian-care": "hands", "animal-care": "animals", "environmental-care": "nature",
+    "emergency-relief-care": "hands",
+}
+INSTITUTE_TAGS = {
+    "hospital-and-research-center": "hospital", "vidyapeeth": "classroom", "gurukul": "children",
+    "skill-development-center": "skills", "jivamaitridham": "animals",
+    "center-of-excellence-for-women": "women",
+}
+
+
+def jump_strip(items, aria):
+    """Slim sticky strip of section names: no boxes, numbers, or icons.
+    Sticks beneath the site header (offset measured in supplement-work.js)."""
+    lis = "".join(f'<li><a href="#{slug}">{name}</a></li>' for slug, name in items)
+    return f"""<nav class="jumpstrip" aria-label="{aria}">
+  <div class="container"><ul class="jumpstrip__list">{lis}</ul></div>
+</nav>"""
+
+
+def photo_panel(slug, key, tag, inner, eager=False):
+    """Full-bleed scroll panel with a real filler photo and a flat dark scrim."""
+    src, _, w, h = filler_entry(key, tag)
+    loading = "eager" if eager else "lazy"
+    return f"""<section class="carepanel carepanel--photo" id="{slug}">
+  <img class="carepanel__bg" src="{src}" alt="" width="{w}" height="{h}" loading="{loading}" decoding="async">
+  <div class="carepanel__scrim" aria-hidden="true"></div>
+  <div class="container">
+    <div class="carepanel__body">{inner}</div>
+  </div>
+</section>"""
 
 
 
@@ -79,6 +116,7 @@ def render_us_hub(svg_inner):
         "Our Work &middot; Where We Serve",
         "SRLC&rsquo;s Nationwide Presence",
         US_HERO_BODY,
+        image=filler("United States", "community"),
     ) + f"""
 <section class="edmap-section vu-shell vu-shell--first">
   <div class="container">
@@ -161,6 +199,7 @@ def render_state(s, idx):
         '<a href="/our-work/united-states/">Where We Serve</a> &middot; United States',
         s["name"],
         s["hero"],
+        image=filler(s["name"], "community"),
     ) + f"""
 {gallery}
 
@@ -188,37 +227,27 @@ def render_state(s, idx):
 
 
 def render_tencare_hub():
-    chips = '<div class="chip-row reveal">' + "".join(
-        f'<a href="#{c["slug"]}"><img src="/assets/img/care-icons/{c["icon"]}" alt="" width="20" height="20" style="height:20px;width:auto;vertical-align:-4px;margin-right:5px">{c["num"]} {c["name"]}</a>'
-        for c in CARES) + "</div>"
-    rail_dots = "".join(f'<a href="#{c["slug"]}" aria-label="{c["name"]}"></a>' for c in CARES)
+    """Header band, sticky name-only jump strip, then one photo panel per Care.
+    No statistics on this hub (Naman, Aug 24). Reduced motion collapses the
+    panels to a stacked list via the shared .carepanel media queries."""
+    strip = jump_strip([(c["slug"], c["name"]) for c in CARES], "Care programs")
     panels = ""
-    for c in CARES:
-        stat = ""
-        if c["stat"]:
-            stat = f'<div class="carepanel__stat"><div class="n count-up">{c["stat"][0]}</div><div class="l">{c["stat"][1]}</div></div>'
-        panels += f"""<section class="carepanel" id="{c["slug"]}">
-  <div class="carepanel__num" aria-hidden="true">{c["num"]}</div>
-  <div class="container">
-    <div class="carepanel__body">
+    for i, c in enumerate(CARES):
+        inner = f"""
       <img class="care-icon reveal" src="/assets/img/care-icons/{c["icon"]}" alt="" width="52" height="52">
       <h2 class="reveal">{c["name"]}</h2>
       <p class="vu-lead reveal" data-stagger="1" style="max-width:none">{c["one"]}</p>
-      {stat}
       <div class="mt-6 reveal" data-stagger="2"><a class="btn btn--secondary" href="/our-work/10-care-program/{c["slug"]}/">Explore {c["name"]}</a></div>
-    </div>
-  </div>
-</section>"""
+    """
+        panels += photo_panel(c["slug"], c["name"] + " panel", CARE_TAGS[c["slug"]], inner, eager=(i == 0))
 
     body = page_header(
         "Our Work",
         "10 Care Program",
         TEN_CARE_INTRO,
+        image=filler("10 Care Program", "hands"),
     ) + f"""
-<section class="vu-shell vu-shell--lav vu-shell--narrow">
-  <div class="container">{chips}</div>
-</section>
-<nav class="progressrail" aria-label="Care programs">{rail_dots}</nav>
+{strip}
 {panels}
 {flat_cta("Every Care welcomes support.", "Your gift and your hours both count.", "Support the 10 Care Program", "/donate/", ("Volunteer", "/get-involved/volunteer/"))}
 """
@@ -266,19 +295,16 @@ def render_care(c):
   </div>
 </section>"""
 
+    # Global statistics live on the homepage and Our Impact only (Naman, Aug 24).
+    # A Care page may carry one Care-specific figure; none is approved yet, so
+    # the slot stays empty rather than falling back to the global set.
     impact = ""
-    if c["stat"]:
-        impact = f"""<section class="vu-shell vu-shell--purple vu-shell--narrow">
-  <div class="container text-center">
-    <p class="impact-stat__n count-up" style="color:var(--color-warm-orange);font-size:clamp(2.4rem,5.5vw,3.6rem);margin:0 0 .3rem">{c["stat"][0]}</p>
-    <p style="color:#E8DDF2;margin:0">{c["stat"][1]}</p>
-  </div>
-</section>"""
 
     body = page_header(
         f'<a href="/our-work/10-care-program/">10 Care Program</a> &middot; {c["num"]}',
         c["name"],
         c["opening"],
+        image=filler(c["name"], CARE_TAGS[c["slug"]]),
     ) + f"""
 <section class="vu-shell vu-shell--lav">
   <div class="container">
@@ -301,35 +327,29 @@ def render_care(c):
 
 
 def render_india_hub():
-    """Rebuilt like the 10 Care concept: small header, intro, jump grid of six
-    institutes, one full-screen scroll panel per institute. Reduced motion
-    collapses to a stacked list via the shared .carepanel media queries."""
-    chips = '<div class="chip-row reveal">' + "".join(
-        f'<a href="#{inst["slug"]}">{inst["name"]}</a>' for inst in INSTITUTES) + "</div>"
-    rail_dots = "".join(f'<a href="#{inst["slug"]}" aria-label="{inst["name"]}"></a>' for inst in INSTITUTES)
+    """Same pattern as the 10 Care hub: header band, sticky name-only jump
+    strip, one photo panel per institute. No statistics. Reduced motion
+    collapses the panels to a stacked list via the shared .carepanel media queries."""
+    # Strip labels drop the shared "Shrimad Rajchandra" prefix so six names fit
+    # one slim row; the full name stays on the panel and the detail page.
+    strip = jump_strip([(inst["slug"], inst["name"].replace("Shrimad Rajchandra ", "", 1)) for inst in INSTITUTES], "Institutes")
     panels = ""
-    for i, inst in enumerate(INSTITUTES, start=1):
-        panels += f"""<section class="carepanel" id="{inst["slug"]}">
-  <div class="carepanel__num" aria-hidden="true">{i:02d}</div>
-  <div class="container">
-    <div class="carepanel__body">
+    for i, inst in enumerate(INSTITUTES):
+        inner = f"""
       <p class="vu-eyebrow" style="display:inline-flex">{inst["tag"]}</p>
       <h2 class="reveal">{inst["name"]}</h2>
       <p class="vu-lead reveal" data-stagger="1" style="max-width:none">{inst["desc"]}</p>
       <div class="mt-6 reveal" data-stagger="2"><a class="btn btn--secondary" href="/our-work/india/{inst["slug"]}/">Visit the institute</a></div>
-    </div>
-  </div>
-</section>"""
+    """
+        panels += photo_panel(inst["slug"], inst["name"] + " panel", INSTITUTE_TAGS[inst["slug"]], inner, eager=(i == 0))
 
     body = page_header(
         "Our Work &middot; Where We Serve",
         "Our Institutes in India",
         INDIA_INTRO,
+        image=filler("India", "children"),
     ) + f"""
-<section class="vu-shell vu-shell--lav vu-shell--narrow">
-  <div class="container">{chips}</div>
-</section>
-<nav class="progressrail" aria-label="Institutes">{rail_dots}</nav>
+{strip}
 {panels}
 {flat_cta("Institutes built to serve for generations.", "Every institute welcomes support from across the world.", "Support Our Institutes", "/donate/")}
 """
@@ -376,7 +396,8 @@ def render_institute(inst):
     <div class="vu-split">
       <div class="vu-split__copy">
         <h3>What This Institute Does</h3>
-        {ph("Approved description pending. Placed verbatim once supplied.", style="min-height:140px")}
+        <!-- Approved description pending; placed verbatim once supplied. The slot stays empty per the build rules. -->
+        <div class="desc-pending" style="min-height:140px"></div>
       </div>
       <div class="vu-split__photo">{ph(inst["img"])}</div>
     </div>
@@ -388,6 +409,7 @@ def render_institute(inst):
         inst["name"],
         inst["intro"],
         cta=f'<a class="btn btn--primary" href="/donate/">{inst.get("cta", "Give to This Work")}</a>',
+        image=filler(inst["name"], INSTITUTE_TAGS[inst["slug"]]),
     ) + f"""
 {desc_section}
 {peer_cards(inst["slug"])}
@@ -409,7 +431,8 @@ def render_vidyapeeth():
         SRV["h1"],
         SRV["sub"],
         cta=f'<a class="btn btn--primary" href="/donate/">{SRV["cta"]}</a>',
-    ) + trust_bar() + f"""
+        image=filler("Shrimad Rajchandra Vidyapeeth", "classroom"),
+    ) + f"""
 <section class="vu-shell vu-shell--lav">
   <div class="container">
     <div class="vu-split">
@@ -432,14 +455,6 @@ def render_vidyapeeth():
   </div>
 </section>
 
-<section class="vu-shell vu-shell--purple vu-shell--narrow">
-  <div class="container text-center">
-    <h2 class="vu-h reveal" style="color:#fff">{SRV["impact_h2"]}</h2>
-    <div style="display:flex;justify-content:center;gap:clamp(2rem,8vw,6rem);flex-wrap:wrap;margin-top:1.4rem">
-      {"".join(f'<div class="reveal" data-stagger="{i + 1}"><p class="impact-stat__n count-up" style="color:var(--color-warm-orange);margin:0 0 .3rem">{n}</p><p style="color:#E8DDF2;margin:0;max-width:24ch">{l}</p></div>' for i, (n, l) in enumerate(SRV["impact"]))}
-    </div>
-  </div>
-</section>
 {peer_cards("vidyapeeth")}
 {flat_cta(SRV["close_h2"], SRV["close"], SRV["cta"])}
 """
@@ -451,18 +466,14 @@ def render_africa():
         "Our Work &middot; Where We Serve",
         "Mission Africa",
         "Mission Africa brings doctors, medicine, and follow-up care to communities where the nearest clinic can be hours away, at no cost to patients. We work with local health workers and community partners across 16 countries in Africa.",
-        cta='<a class="btn btn--primary" href="/donate/">Stand With Mission Africa</a>',
-    ) + trust_bar() + f"""
+        image=filler("Mission Africa", "hospital"),
+    ) + f"""
 <section class="vu-shell vu-shell--lav">
   <div class="container">
     <div class="vu-split">
       <div class="vu-split__copy">
         <h3>Distance should not decide who gets care</h3>
         <p>In much of the region Mission Africa serves, the barrier to health is not the treatment. It is the miles between a family and anyone who can provide it, the distance where a curable illness quietly becomes a permanent one. Launched in 2024 by Shrimad Rajchandra Love and Care (SRLC), Mission Africa now works across 16 countries in Africa to close that distance.</p>
-        <div style="display:flex;gap:clamp(1.6rem,5vw,3.4rem);flex-wrap:wrap;margin-top:1.2rem">
-          <div><p class="impact-stat__n count-up" style="margin:0 0 .3rem">16</p><p style="margin:0;font-size:.92rem;color:var(--color-ink-muted)">countries reached</p></div>
-          <div><p class="impact-stat__n count-up" style="margin:0 0 .3rem">7,500+</p><p style="margin:0;font-size:.92rem;color:var(--color-ink-muted);max-width:26ch">patients treated at a free eye and ENT medical camp in Nairobi, Kenya</p></div>
-        </div>
       </div>
       <div class="vu-split__photo">{ph("A patient queue that reads as order and hope, morning light. Mission Africa team photos pending with consent records.")}</div>
     </div>
@@ -490,25 +501,6 @@ def render_africa():
       <a href="/our-work/united-states/">United States</a>
     </div>
     <div class="mt-6">{ph("50/50 photo pairing: a US chapter moment beside a camp moment, equal weight. Media Bank.", style="min-height:180px")}</div>
-  </div>
-</section>
-
-<section class="vu-shell vu-shell--cream vu-shell--narrow">
-  <div class="container">
-    <div class="fc-newsletter reveal">
-      <div class="fc-newsletter__copy">
-        <h3>Stay close to the work</h3>
-        <p>Camps are episodic; your connection to them does not have to be. Leave your email and we will send you what your support built: photos with consent, numbers with verification, and the occasional story worth your inbox.</p>
-      </div>
-      <form class="fc-newsletter__form" name="updates" method="POST" data-netlify="true" data-netlify-inline netlify-honeypot="bot-field">
-        <input type="hidden" name="form-name" value="updates">
-        <input type="hidden" name="source" value="mission-africa">
-        <p class="hp-field"><input name="bot-field" tabindex="-1"></p>
-        <input type="email" name="email" required placeholder="you@example.com" aria-label="Email address" class="form-hidewrap">
-        <button type="submit" class="btn btn--primary form-hidewrap">Get Camp Updates</button>
-        <span class="form-success" style="color:var(--color-srlc-purple);font-weight:600">Thank you. You are on the list.</span>
-      </form>
-    </div>
   </div>
 </section>
 

@@ -1,7 +1,7 @@
 """Renderers: homepage (approved v2 base), donate, about cluster, 404 — flat pass."""
 import os
 from shell import (page, ph, page_header, flat_cta, trust_bar, impact_stats,
-                   recognition_chips, EMAIL, PHONE, EIN_LINE, IG, FB)
+                   recognition_chips, filler, EMAIL, PHONE, EIN_LINE, IG, FB)
 from data_states import STATES, CAMPAIGNS
 from data_cares import CARES
 from pages_work import cf_map, state_chips
@@ -36,6 +36,19 @@ def partner_marquee():
     <div class="partner-marquee__group partner-marquee__group--dup" aria-hidden="true">{group(True)}</div>
   </div>
 </div>"""
+
+
+def prose_photo(items, photo_key, tag=None, alt="", numbered=False, reverse=False):
+    """Prose block beside one photo (SRA two-col pattern). items = [(title, body)].
+    Copy is passed through unchanged; no cards, no grid of equal boxes."""
+    blocks = []
+    for i, (t, b) in enumerate(items):
+        num = f'<span class="prosephoto__num" aria-hidden="true">{i + 1:02d}</span>' if numbered else ""
+        blocks.append(f"<h3>{num}{t}</h3><p>{b}</p>")
+    src = photo_key if photo_key.startswith("/assets/") else filler(photo_key, tag=tag)
+    cls = "prosephoto prosephoto--reverse" if reverse else "prosephoto"
+    return (f'<div class="{cls}"><div class="prosephoto__copy">{"".join(blocks)}</div>'
+            f'<div class="prosephoto__photo"><img src="{src}" alt="{alt}" width="1200" height="900" loading="lazy"></div></div>')
 
 
 def care_card_media(icon, name):
@@ -167,8 +180,6 @@ def render_home(svg_inner):
   <div class="hero-carousel__controls"><div class="hero-carousel__dots" role="tablist" aria-label="Choose slide">{dots}</div></div>
 </section>
 
-{trust_bar()}
-
 <section class="mission-split">
   <div class="mission-split__grid">
     <div class="mission-split__copy">
@@ -279,7 +290,7 @@ def render_home(svg_inner):
       <h2 class="recognition-band__h">Globally recognized. Locally rooted.</h2>
       <p class="recognition-band__sub">Shrimad Rajchandra Love and Care holds Special Consultative Status with the United Nations Economic and Social Council, granting our humanitarian work a seat at the global table on sustainable development, health, education, and human rights.</p>
     </div>
-    <div class="recognition-cluster reveal" data-stagger="1">
+    <div class="recognition-badges-band reveal" data-stagger="1">
       {recognition_chips()}
     </div>
     <div class="recognition-cluster reveal" data-stagger="2">
@@ -440,18 +451,17 @@ def render_who_we_are():
         ("Every figure verified", "Our commitment to transparency is unwavering."),
         ("Built to last", "Long standing impact, for generations to come."),
     ]
-    promises_html = "".join(
-        f'<div class="cause-card reveal" data-stagger="{i + 1}"><h3>{t}</h3><p>{b}</p></div>'
-        for i, (t, b) in enumerate(promises))
+    promises_html = prose_photo(promises, "/assets/img/fillers/hands-heart.jpg",
+                                alt="SRLC USA volunteers at a community event")
 
     body = page_header(
         "About Us",
         "Love and care, in action",
         "SRLC USA is what happens when physicians, engineers, teachers, and students decide their weekends belong to their neighbors. We are the US chapter of Shrimad Rajchandra Love and Care, a global nonprofit holding Special Consultative Status with the United Nations Economic and Social Council (ECOSOC), and a 501(c)(3) organization. But before we are any of that, we are people who believe care is not a profession. It is a practice.",
+        image="/assets/img/fillers/community-gathering.jpg",
     ) + f"""
 <section class="vu-shell vu-shell--lav vu-shell--first">
   <div class="container">
-    {ph("SRLC USA volunteers in genuine action at a community event, mid-task. Warm natural daylight, wide 16:9. Media Bank.", style="min-height:280px;margin-bottom:2rem")}
     <div class="vu-split">
       <div class="vu-split__copy">
         <h3>Care you can point to</h3>
@@ -474,7 +484,6 @@ def render_who_we_are():
   <div class="container">
     <h2 class="vu-h reveal">Ten ways we care</h2>
     <p class="maxw-70">Every initiative we run belongs to one of ten focus areas, together the 10 Care Program: Health Care, Educational Care, Child Care, Woman Care, Tribal Care, Community Care, Humanitarian Care, Animal Care, Environmental Care, and Emergency Relief Care. In the United States, that vision looks like service in your own city, on your own street. Globally, it stands as permanent institutes in India and Mission Africa.</p>
-    <div class="mt-8">{impact_stats([("33M+", "lives touched globally"), ("3.28M+", "students reached globally"), ("12.24M+", "reached through Humanitarian Care globally")], cols=3)}</div>
     <div class="recognition-cluster mt-8">{recognition_chips()}</div>
     <div class="vu-toc--inline">
       <a href="/our-work/10-care-program/">10 Care Program</a>
@@ -496,7 +505,7 @@ def render_who_we_are():
 <section class="vu-shell vu-shell--cream">
   <div class="container">
     <h2 class="vu-h reveal">Our commitments</h2>
-    <div class="card-grid mt-6">{promises_html}</div>
+    <div class="mt-6 reveal">{promises_html}</div>
   </div>
 </section>
 
@@ -524,7 +533,6 @@ TIMELINE = [
 
 def render_our_impact(svg_inner):
     nodes = "".join(f"""<li class="reveal" data-stagger="{i % 4 + 1}">
-      <div class="ph-media" style="min-height:90px;margin-bottom:.6rem"><span>Era photo</span></div>
       <span class="ft-year">{y}</span>
       <h4 class="ft-name">{t}</h4>
       <p class="ft-body">{b}</p>
@@ -535,10 +543,10 @@ def render_our_impact(svg_inner):
         "About Us",
         "Our impact",
         "The work of Shrimad Rajchandra Love and Care began with volunteers bringing medicine to families in rural villages. Over two decades, it has grown into a global movement that has touched 33M+ lives globally.",
+        image="/assets/img/photos/awards.jpg",
     ) + f"""
 <section class="vu-shell vu-shell--lav vu-shell--first">
   <div class="container">
-    {ph("Wide field photograph with honest scale: a medical camp, a school courtyard, a packed community hall. Media Bank.", style="min-height:280px;margin-bottom:2rem")}
     <h2 class="vu-h reveal">Global results</h2>
     <p class="vu-lead">SRLC USA is one chapter of a global movement carried largely by volunteers. The figures below reflect the movement&rsquo;s worldwide reach and behind them are individual people whose circumstances changed because someone was in a position to help.</p>
     <div class="mt-6">{impact_stats(six)}</div>
@@ -587,7 +595,7 @@ def render_our_impact(svg_inner):
   <div class="container" style="max-width:820px">
     <div class="vu-card vu-card--accent vu-card--stack reveal">
       <h3 class="vu-card__h">What these figures mean in practice</h3>
-      <div class="vu-card__body">{ph("Dignified portrait of Laxmibhai in his own setting. Consent per Media Bank SOP.", style="min-height:150px;margin-bottom:1rem")}<p>Laxmibhai, a 52-year-old farmer, had been living with triple-vessel heart disease, and the surgery he needed was beyond his family&rsquo;s means. He received the region&rsquo;s first cardiothoracic bypass at Shrimad Rajchandra Hospital at no cost, and he has since returned home to his fields. His recovery is one outcome among millions, and it is the kind of outcome every figure on this page represents.</p>
+      <div class="vu-card__body"><p>Laxmibhai, a 52-year-old farmer, had been living with triple-vessel heart disease, and the surgery he needed was beyond his family&rsquo;s means. He received the region&rsquo;s first cardiothoracic bypass at Shrimad Rajchandra Hospital at no cost, and he has since returned home to his fields. His recovery is one outcome among millions, and it is the kind of outcome every figure on this page represents.</p>
       <p><a href="/about/financials/">Read the full record on the Financials page</a></p></div>
     </div>
   </div>
@@ -622,6 +630,7 @@ def render_inspiration():
     body = page_header(
         "About Us &middot; A timeless legacy flowing through a present-day visionary",
         "Our Inspiration",
+        image=filler("our inspiration"),
     ) + f"""
 <section class="vu-shell vu-shell--lav vu-shell--first">
   <div class="container prose">
@@ -701,11 +710,12 @@ def render_management():
         "About SRLC USA",
         "The management team leading SRLC USA&rsquo;s work",
         "We are a 501(c)(3) nonprofit. Every person who sets strategy, approves the budget, and answers for results is named here, with what they oversee.",
+        image="/assets/img/fillers/community-gathering.jpg",
     ) + f"""
 <section class="vu-shell vu-shell--lav vu-shell--first">
   <div class="container" style="max-width:820px">
     <h2 class="vu-h reveal">How we govern</h2>
-    <p>SRLC USA is the U.S. chapter of Shrimad Rajchandra Love and Care, a global movement that has touched 33M+ lives globally, treated 8.35M+ patients globally, and supported 3.28M+ students globally.</p>
+    <p>SRLC USA is the United States chapter of Shrimad Rajchandra Love and Care, holder of UN ECOSOC Special Consultative Status.</p>
   </div>
 </section>
 
@@ -737,6 +747,7 @@ def render_financials():
         "About Us",
         "Financials",
         "We know how much it matters to you that your gift reaches the people it&rsquo;s meant for. It matters just as much to us. That&rsquo;s why every filing, report, and financial record we produce is published here in full, for anyone to read.",
+        image="/assets/img/photos/event-recent.jpg",
     ) + f"""
 <section class="vu-shell vu-shell--lav vu-shell--first vu-shell--narrow">
   <div class="container"><div class="recognition-cluster">{recognition_chips()}</div></div>

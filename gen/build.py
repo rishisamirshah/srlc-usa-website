@@ -12,6 +12,11 @@ from data_india import INSTITUTES
 import pages_work as W
 import pages_core as C
 import pages_involve as I
+try:
+    from pages_donate import render_donate
+except Exception as _e:  # pages_donate lands separately; never let the build break on it
+    print(f"  ! pages_donate unavailable ({_e.__class__.__name__}: {_e}); using pages_core.render_donate")
+    render_donate = C.render_donate
 
 OP_STATES = {
     s["svg"].lower(): (s["name"], f'/our-work/united-states/{s["slug"]}/', f'{s["name"]}: {s["cities"]}')
@@ -38,6 +43,41 @@ EXTRA_JS = """
 """
 
 
+# Unsplash photo id (digits before the first hyphen) -> local filler downloaded once.
+UNSPLASH_LOCAL = {
+    "1450778869180": "/assets/img/fillers/animals-dog-cat.jpg",
+    "1469571486292": "/assets/img/fillers/hands-heart.jpg",
+    "1486218119243": "/assets/img/fillers/runner-road.jpg",
+    "1488521787991": "/assets/img/fillers/children-smiling.jpg",
+    "1497486751825": "/assets/img/fillers/children-india.jpg",
+    "1503454537195": "/assets/img/fillers/child-paint.jpg",
+    "1503676260728": "/assets/img/fillers/classroom-desk.jpg",
+    "1517457373958": "/assets/img/fillers/community-gathering.jpg",
+    "1542601906990": "/assets/img/fillers/hands-seedling.jpg",
+    "1551076805": "/assets/img/fillers/hospital-theatre.jpg",
+    "1551601651": "/assets/img/fillers/surgeons.jpg",
+    "1573497019418": "/assets/img/fillers/woman-portrait.jpg",
+    "1576091160550": "/assets/img/fillers/health-laptop.jpg",
+    "1581094794329": "/assets/img/fillers/skills-coding.jpg",
+    "1586773860418": "/assets/img/fillers/hospital-building.jpg",
+    # 1488554378835 (abstract light streaks) is not a usable filler;
+    # 1523050854058 and 1604335398980 are gone from Unsplash (404).
+}
+
+
+def _supplements(ext):
+    """All gen/supplement*.{ext} files: supplement.{ext} first, then the rest by
+    name (supplement-core, supplement-donate, supplement-work, ...)."""
+    import glob
+    gen = os.path.join(ROOT, "gen")
+    base = os.path.join(gen, f"supplement.{ext}")
+    others = sorted(p for p in glob.glob(os.path.join(gen, f"supplement-*.{ext}")))
+    out = []
+    for p in ([base] if os.path.exists(base) else []) + others:
+        out.append(f"/* ---- {os.path.basename(p)} ---- */\n" + open(p).read())
+    return out
+
+
 def assemble_assets():
     html = open(os.path.join(ROOT, "gen", "base-homepage-v2.html")).read()
 
@@ -45,8 +85,8 @@ def assemble_assets():
     css = "\n\n".join(b.strip() for b in blocks)
     out_rules = []
     for chunk in css.split("}"):
-        sel = chunk.split("{")[0]
-        if re.search(r"\.preview-|\.nav-cat|\.nav-pages|\.nav-tag|\.page-divider|body\.preview-shell", sel):
+        sel = chunk.rsplit("{", 1)[0]  # selector incl. any @media opener ahead of it
+        if re.search(r"\.preview-|\.nav-cat|\.nav-pages|\.nav-tag|\.page-divider|body\.preview-shell|\.trust-bar", sel):
             m = re.match(r"^(\s*@media[^{]*\{)", chunk)
             if m:
                 out_rules.append(m.group(1).rstrip("{").rstrip() + "{")
@@ -55,13 +95,8 @@ def assemble_assets():
     css = "}".join(out_rules)
 
     # Flat-pass overrides applied at assembly:
-    # 1. Brand fonts (edits list + Brand Guide): Cormorant Garamond + Jost.
-    css = css.replace("'Newsreader', Georgia, serif", "'Cormorant Garamond', Georgia, serif")
-    css = css.replace('"Newsreader", "Times New Roman", Georgia, serif', "'Cormorant Garamond', Georgia, serif")
-    css = css.replace("'Newsreader', serif", "'Cormorant Garamond', serif")
-    css = css.replace("'DM Sans', sans-serif", "'Jost', sans-serif")
-    css = css.replace('"DM Sans", "Helvetica Neue", Arial, sans-serif', "'Jost', 'Helvetica Neue', Arial, sans-serif")
-    css = re.sub(r"font-variation-settings:[^;]+;", "", css)  # Newsreader opsz axes do not exist in Cormorant
+    # 1. Typography stays exactly the approved homepage pairing (Newsreader
+    #    headings, DM Sans body, opsz axes intact). Aug 24: Cormorant/Jost reverted.
     # 2. One radius value site-wide, 4px max (no pills, no 16px cards).
     css = re.sub(r"border-radius:\s*(\d+)px", lambda m: "border-radius: 4px" if int(m.group(1)) > 4 else m.group(0), css)
     # 3. Drop the purple glow shadows; borders stay.
@@ -69,9 +104,12 @@ def assemble_assets():
     css = css.replace(
         "url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=2400&q=85&auto=format&fit=crop')",
         "url('/assets/img/photos/event-recent.jpg')")
+    # 4. Every remaining Unsplash hotlink in the base CSS points at the same photo
+    #    downloaded once into assets/img/fillers/ (see shell.FILLERS).
+    css = re.sub(r"url\(['\"]?https://images\.unsplash\.com/photo-(\d+)-[^'\")]*['\"]?\)",
+                 lambda m: f"url('{UNSPLASH_LOCAL.get(m.group(1), '/assets/img/fillers/children-smiling.jpg')}')", css)
 
-    supplement = open(os.path.join(ROOT, "gen", "supplement.css")).read()
-    css_out = css + "\n\n" + supplement + EXTRA_CSS
+    css_out = css + "\n\n" + "\n\n".join(_supplements("css")) + EXTRA_CSS
 
     scripts = re.findall(r"<script(?:\s+id=\"[^\"]*\")?>(.*?)</script>", html, re.S)
     keep = []
@@ -86,8 +124,7 @@ def assemble_assets():
             "if (sp && !reducedMotion) {",
             "var _rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;\n  if (sp && !_rm) {")
         keep.append(s.strip())
-    supplement_js = open(os.path.join(ROOT, "gen", "supplement.js")).read()
-    js_out = "\n\n".join(keep) + "\n\n" + supplement_js + EXTRA_JS
+    js_out = "\n\n".join(keep) + "\n\n" + "\n\n".join(_supplements("js")) + EXTRA_JS
 
     # Content-hashed filenames: no cache layer can serve a stale bundle.
     import hashlib, glob
@@ -171,7 +208,7 @@ def main():
     svg = process_map()
 
     emit("/", C.render_home(svg), "1.0")
-    emit("/donate/", C.render_donate(), "0.9")
+    emit("/donate/", render_donate(), "0.9")
     emit("/get-involved/volunteer/", I.render_volunteer(), "0.9")
     emit("/get-involved/events/", I.render_events())
     emit("/get-involved/fundraise/", I.render_fundraise())

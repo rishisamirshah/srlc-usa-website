@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 108" width="320" height="108" role="img" aria-label="UN ECOSOC Special Consultative Status, 2020">
+  <!-- Built lockup, not an official UN asset. The UN does not license its emblem to NGOs; swap for an approved mark if the parent body supplies one. -->
+  <rect x="1.5" y="1.5" width="317" height="105" fill="#FFFFFF" stroke="#693D84" stroke-width="3"/>
+  <rect x="12" y="12" width="84" height="84" fill="#693D84"/>
+  <text x="54" y="46" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="22" font-weight="700" fill="#FFFFFF" letter-spacing="1">UN</text>
+  <text x="54" y="74" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#FFFFFF" letter-spacing="1.5">ECOSOC</text>
+  <text x="112" y="40" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#693D84" letter-spacing="2.2">SPECIAL</text>
+  <text x="112" y="58" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#693D84" letter-spacing="2.2">CONSULTATIVE STATUS</text>
+  <line x1="112" y1="68" x2="306" y2="68" stroke="#693D84" stroke-width="1.5"/>
+  <text x="112" y="88" font-family="Georgia, 'Times New Roman', serif" font-size="16" font-weight="700" fill="#693D84" letter-spacing="1">Since 2020</text>
+</svg>

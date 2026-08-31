@@ -107,6 +107,8 @@ SRV = {
         ("Career Placement", "A dedicated Placement Cell working directly with regional employers."),
         ("Alumni Network", "Staying connected with graduates after they leave campus."),
     ],
+    # Not rendered (Naman, Aug 24): global statistics appear on the homepage and
+    # Our Impact only. Kept for reference; the tab's stat flag is still open.
     "impact_h2": "Your gift joins a network that has reached millions.",
     "impact": [("3.28M+", "students reached globally through Educational Care"), ("33M+", "lives touched globally across all SRLC programs")],
     "close_h2": "Be the reason a student graduates.",

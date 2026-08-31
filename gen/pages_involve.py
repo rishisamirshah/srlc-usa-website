@@ -3,7 +3,8 @@ FAQs and Corporate Giving are Phase 2 (removed). Events / Fundraise / Partner
 have no content tabs yet: structure plus functional elements only, no invented
 copy. Banned figure "25+ cities" replaced with the approved footprint phrasing
 (conflict with tab copy flagged in the build log)."""
-from shell import page, ph, page_header, flat_cta, trust_bar, EMAIL, PHONE, IG, FB
+from shell import page, ph, page_header, flat_cta, filler, EMAIL, PHONE, IG, FB
+from pages_core import prose_photo
 
 US_FOOTPRINT = "chapters in 11 states and Washington, D.C."
 
@@ -15,18 +16,15 @@ def render_volunteer():
         ("Growth", "Leadership, event management, fundraising, communications, and logistics are all part of active chapter work. The skills built through SRLC USA are practical and lasting. Many of our chapter leaders developed those skills here."),
         ("Belonging", "Service is not something SRLC USA volunteers do occasionally. For many, it becomes part of how they identify. That is why so many volunteers who start with a single event stay involved for years."),
     ]
-    cards_html = "".join(
-        f'<div class="cause-card reveal" data-stagger="{i + 1}"><h3>{t}</h3><p>{b}</p></div>'
-        for i, (t, b) in enumerate(cards))
+    cards_html = prose_photo(cards, "/assets/img/fillers/hands-heart.jpg",
+                             alt="Volunteers in conversation at an SRLC USA chapter event")
     steps = [
         ("01", "Sign up", "Fill out the form at the bottom of this page. Share where you are, what skills or interests you can offer, and how much time you have each month. It takes under two minutes."),
         ("02", "Meet your chapter", "A coordinator from the SRLC chapter in your area will reach out within a few days. They will introduce themselves and walk you through what the chapter is currently working on."),
         ("03", "Show up", "Attend your first event. Meet the people who make the chapter run. Most volunteers return for the next one within a month."),
     ]
-    steps_html = "".join(f"""<div class="cause-card reveal" data-stagger="{i + 1}">
-      <p style="font-family:var(--font-display);font-weight:300;font-size:2rem;color:var(--color-warm-orange);margin:0 0 .3rem">{n}</p>
-      <h3>{t}</h3><p>{b}</p>
-    </div>""" for i, (n, t, b) in enumerate(steps))
+    steps_html = prose_photo([(t, b) for _, t, b in steps], "/assets/img/photos/event-recent.jpg",
+                             alt="An SRLC USA chapter event in progress", numbered=True, reverse=True)
     roles = ["Events and Logistics", "Food and Distribution", "Community Outreach", "Fundraising and Campaigns",
              "Communications and Social Media", "Healthcare Outreach", "University and Youth Programs",
              "Operations and Administration", "Chapter Leadership", "Internship", "Other"]
@@ -38,30 +36,19 @@ def render_volunteer():
         "Volunteer with SRLC USA",
         "Thousands of people across 11 states and Washington, D.C. give their time, their skills, and their energy to SRLC USA. Not because they have to. Because service is who they are.",
         cta='<a class="btn btn--primary" href="#signup">Volunteer With Us</a> <a class="btn btn--ghost" href="/our-work/united-states/">Find My State&rsquo;s Chapter</a>',
-    ) + trust_bar() + f"""
-<section class="vu-shell vu-shell--lav">
+        image="/assets/img/fillers/community-gathering.jpg",
+    ) + f"""
+<section class="vu-shell vu-shell--lav vu-shell--first">
   <div class="container">
-    {ph("Eight to ten SRLC USA volunteers at an active community event, working rather than posed. Warm natural light, landscape crop. Media Bank.", style="min-height:280px;margin-bottom:2rem")}
     <h2 class="vu-h reveal">More than volunteering. A community.</h2>
-    <div class="card-grid card-grid--2x2 mt-6">{cards_html}</div>
-    <div class="mt-6">{ph("Two to three volunteers in conversation at a chapter event. Candid, shoulders-up crop. Media Bank.", style="min-height:160px")}</div>
+    <div class="mt-6 reveal">{cards_html}</div>
   </div>
 </section>
 
 <section class="vu-shell vu-shell--cream">
   <div class="container">
     <h2 class="vu-h reveal">Getting started is simple</h2>
-    <div class="card-grid mt-6">{steps_html}</div>
-    <div class="mt-6">{ph("Horizontal banner: a chapter event in progress, volunteers engaged in a visible task. Media Bank.", style="min-height:140px")}</div>
-  </div>
-</section>
-
-<section class="vu-shell vu-shell--purple vu-shell--narrow">
-  <div class="container">
-    <p style="color:#E8DDF2;max-width:70ch;margin-bottom:1.4rem">SRLC USA is the U.S. chapter of Shrimad Rajchandra Love and Care, a global humanitarian organization. Collectively, the initiatives that SRLC USA volunteers help fund and organize are part of a network that has reached 33M+ lives globally. Across medical programs alone, the parent organization has served 8.35M+ patients globally.</p>
-    <div style="display:flex;gap:clamp(1.8rem,6vw,4.5rem);flex-wrap:wrap">
-      {"".join(f'<div><p class="count-up" style="font-family:var(--font-display);font-weight:300;font-size:clamp(1.9rem,3.6vw,2.6rem);color:var(--color-warm-orange);margin:0 0 .3rem;line-height:1">{n}</p><p style="color:#E8DDF2;margin:0;font-size:.9rem">{l}</p></div>' for n, l in [("33M+", "lives reached globally"), ("8.35M+", "patients served globally"), ("3.28M+", "students reached globally")])}
-    </div>
+    <div class="mt-6 reveal">{steps_html}</div>
   </div>
 </section>
 
@@ -101,7 +88,7 @@ def render_volunteer():
 """
     return page(
         "Volunteer with SRLC USA | Give Your Time, Build Community",
-        "Serve communities across the US with SRLC USA. A 501(c)(3) nonprofit whose work has reached 33M+ lives globally. Sign up to volunteer in two minutes.",
+        "Serve communities across the US with SRLC USA, a 501(c)(3) nonprofit. Sign up to volunteer in two minutes.",
         "/get-involved/volunteer/", body)
 
 
@@ -110,10 +97,11 @@ def render_events():
         "Get Involved",
         "Events",
         "Chapter events, galas, and community gatherings.",
+        image="/assets/img/photos/event-recent.jpg",
     ) + f"""
 <section class="vu-shell vu-shell--lav vu-shell--first">
   <div class="container" style="max-width:820px">
-    {ph("Events calendar pending from the content team. Chapter coordinators share upcoming dates directly with volunteers.", style="min-height:180px")}
+    <p class="vu-lead" style="color:var(--color-ink-muted)">Events calendar pending from the content team. Chapter coordinators share upcoming dates directly with volunteers.</p>
     <p class="mt-6" style="display:flex;gap:.7rem;flex-wrap:wrap">
       <a class="btn btn--primary" href="/get-involved/volunteer/">Get Event Invites</a>
       <a class="btn btn--secondary" href="/our-work/united-states/">Find Your Chapter</a>
@@ -140,6 +128,7 @@ def render_fundraise():
         "Get Involved",
         "Start a Fundraiser for SRLC USA",
         "Please choose what fund you would like to start a fundraiser for.",
+        image="/assets/img/fillers/community-gathering.jpg",
     ) + f"""
 <section class="vu-shell vu-shell--lav vu-shell--first">
   <div class="container" style="max-width:820px">
@@ -159,10 +148,11 @@ def render_partner():
         "Get Involved",
         "Partner With Us",
         "Strategic partnerships for organizations and NGOs.",
+        image="/assets/img/fillers/hands-heart.jpg",
     ) + f"""
 <section class="vu-shell vu-shell--lav vu-shell--first">
   <div class="container" style="max-width:820px">
-    {ph("Partnership program details pending from the content team.", style="min-height:140px")}
+    <p class="vu-lead" style="color:var(--color-ink-muted)">Partnership program details pending from the content team.</p>
     <p class="mt-6"><a class="btn btn--primary" href="mailto:{EMAIL}?subject=Partnership%20inquiry">Start the Conversation</a></p>
   </div>
 </section>
