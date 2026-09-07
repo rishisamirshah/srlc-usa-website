@@ -9,13 +9,33 @@ from pages_work import cf_map, state_chips
 US_FOOTPRINT = "chapters in 11 states and Washington, D.C."
 
 GLOBAL_STATS = [
-    ("33M+", "Lives", "touched globally"),
-    ("8.35M+", "Patients", "treated through health initiatives"),
-    ("3.28M+", "Students", "supported through educational activities"),
-    ("12.24M+", "People", "reached through Humanitarian Care"),
-    ("450K+", "Animals", "cared for through Animal Care"),
-    ("8.90M+", "Lives", "reached through Emergency Relief Care"),
+    ("33M+", "Lives", "touched globally through various initiatives"),
+    ("8.90M+", "Lives", "benefitted globally through Emergency Relief initiatives"),
+    ("12.24M+", "People", "benefitted globally through humanitarian initiatives"),
+    ("3.28M+", "Students", "supported globally by educational activities"),
+    ("8.35M+", "Patients", "treated at Shrimad Rajchandra Hospital"),
+    ("450K+", "Animals", "saved, treated, and rehabilitated globally"),
 ]
+
+# Homepage 10 Care tiles: one photo per Care (placeholders from the filler set
+# until Naman points to Media Bank candidates per Care).
+CARE_PHOTOS = {
+    "health-care": "/assets/img/fillers/hospital-theatre.jpg",
+    "educational-care": "/assets/img/fillers/classroom-desk.jpg",
+    "child-care": "/assets/img/fillers/children-smiling.jpg",
+    "woman-care": "/assets/img/fillers/woman-portrait.jpg",
+    "tribal-care": "/assets/img/fillers/children-india.jpg",
+    "community-care": "/assets/img/fillers/community-gathering.jpg",
+    "humanitarian-care": "/assets/img/fillers/hands-heart.jpg",
+    "animal-care": "/assets/img/fillers/animals-dog-cat.jpg",
+    "environmental-care": "/assets/img/fillers/hands-seedling.jpg",
+    "emergency-relief-care": "/assets/img/fillers/hospital-building.jpg",
+}
+
+INSTITUTE_HOME_TAGS = {
+    "hospital-and-research-center": "hospital", "vidyapeeth": "classroom", "gurukul": "children",
+    "skill-development-center": "skills", "jivamaitridham": "animals", "center-of-excellence-for-women": "women",
+}
 
 MATCH_QUALIFIER = ("These are examples of companies with employee matching-gift programs. "
                    "Logos are the property of their respective owners and do not imply "
@@ -57,30 +77,27 @@ def care_card_media(icon, name):
 
 
 def render_home(svg_inner):
+    # Homepage tab of the content wireframe (Naman, Sept 3): eyebrow, headline,
+    # one CTA per slide, no body copy. Slide photos are placeholders until the
+    # Media Bank pictures arrive (slide 2 wants a Caracas relief-site photo).
     slides = [
         {
             "img": "/assets/img/photos/school-children-hero.jpg",
-            "alt_note": "Students at a school supported through Educational Care",
-            "eyebrow": "Educational Care &middot; Classroom of Change",
-            "title": "The classroom comes to every child.",
-            "sub": "A year-round educational care campaign that brings learning to underserved children, from Title I schools across the United States to 238 villages in South Gujarat.",
-            "cta1": ("Fund a Classroom", "/donate/"), "cta2": ("See the Program", "/our-work/10-care-program/educational-care/"),
+            "eyebrow": "Classroom of Change",
+            "title": "Turning the key to brighter futures.",
+            "cta": ("See the Initiative", "/our-work/united-states/"),
         },
         {
-            "img": "/assets/img/photos/event-recent.jpg",
-            "alt_note": "SRLC USA volunteers at a community event",
-            "eyebrow": "Our Impact",
-            "title": "33M+ lives. Care for those who need it most.",
-            "sub": "Our impact spans the hospital, the schools, the animal sanctuary, Mission Africa, and the community work happening right where you live.",
-            "cta1": ("See the Impact", "/about/our-impact/"), "cta2": ("Who We Are", "/about/who-we-are/"),
+            "img": "/assets/img/fillers/community-gathering.jpg",
+            "eyebrow": "Venezuela Earthquake Relief",
+            "title": "Shelter, food, and care for families rebuilding in Caracas.",
+            "cta": ("Support the Cause", "/donate/"),
         },
         {
-            "img": "/assets/img/photos/love-care-walk.jpg",
-            "alt_note": "Participants at an SRLC Love and Care Walk",
-            "eyebrow": "Get Involved",
-            "title": "Your nearest chapter is closer than you think.",
-            "sub": f"SRLC USA has {US_FOOTPRINT} Monthly meetings, local volunteer drives, and university partnerships. Meet like-minded people who want to bring joy and impact through global initiatives.".replace("D.C. Monthly", "D.C. Monthly"),
-            "cta1": ("Find Your Chapter", "/our-work/united-states/"), "cta2": ("How to Volunteer", "/get-involved/volunteer/"),
+            "img": "/assets/img/fillers/children-india.jpg",
+            "eyebrow": "Compassion in Action",
+            "title": "One gift. Ten ways to care.",
+            "cta": ("Donate Now", "/donate/"),
         },
     ]
     slides_html = "".join(f"""<article class="hero-carousel__slide{' is-active' if i == 0 else ''}" data-slide="{i}" style="--bg:url('{s["img"]}')">
@@ -88,10 +105,8 @@ def render_home(svg_inner):
       <div class="container hero-carousel__content">
         <p class="hero-carousel__eyebrow">{s["eyebrow"]}</p>
         {"<h1" if i == 0 else "<p"} class="hero-carousel__title">{s["title"]}{"</h1>" if i == 0 else "</p>"}
-        <p class="hero-carousel__sub">{s["sub"]}</p>
         <div class="hero-carousel__ctas">
-          <a class="btn btn--primary" href="{s["cta1"][1]}">{s["cta1"][0]}</a>
-          <a class="btn btn--ghost" href="{s["cta2"][1]}">{s["cta2"][0]}</a>
+          <a class="btn btn--primary" href="{s["cta"][1]}">{s["cta"][0]}</a>
         </div>
       </div>
     </article>""" for i, s in enumerate(slides))
@@ -103,20 +118,29 @@ def render_home(svg_inner):
         <p class="mstat__desc">{d}</p>
       </div>""" for n, l, d in GLOBAL_STATS)
 
-    care_cards = "".join(f"""<a class="care-card reveal" data-stagger="{i % 5 + 1}" href="/our-work/10-care-program/{c["slug"]}/">
-        {care_card_media(c["icon"], c["name"])}
-        <div class="care-card__label">
-          <span class="care-card__num">{c["num"]}</span>
-          <h3>{c["name"]}</h3>
-        </div>
-      </a>""" for i, c in enumerate(CARES))
+    # SRA "Our Unique Approach" tile: photo, flat veil, chip (number + name),
+    # hover layer with the one-liner. Below 1024 the same markup collapses to
+    # the SRA accordion rows (tap reveals the one-liner, tap again to open).
+    care_tiles = "".join(f"""<a class="caretile" href="/our-work/10-care-program/{c["slug"]}/" style="background-image:url('{CARE_PHOTOS[c["slug"]]}')">
+        <span class="caretile__overlay" aria-hidden="true"></span>
+        <span class="caretile__chip"><span class="caretile__num">{c["num"]}</span><span class="caretile__name">{c["name"]}</span></span>
+        <span class="caretile__hover"><span class="caretile__hover-h">{c["num"]}<br>{c["name"]}</span><span class="caretile__hover-p">{c["one"]}</span></span>
+      </a>""" for c in CARES)
 
     from data_india import INSTITUTES
-    institutes_cards = "".join(f"""<a class="institute-card reveal" href="/our-work/india/{inst["slug"]}/">
-        <div class="institute-card__media">{ph(inst["img"], style="min-height:0;height:100%")}</div>
-        <div class="institute-card__body"><h3 class="institute-card__h">{inst["name"]}</h3><p class="institute-card__d">{inst["desc"]}</p><span class="institute-card__more" aria-label="{inst["name"]}"></span></div>
-      </a>""" for inst in INSTITUTES)
+    # SRA "Initiatives Across the Globe" card: photo on top, name and one-liner
+    # stacked below, plus the tertiary Learn More link (SRA cards carry none).
+    institutes_cards = "".join(f"""<article class="instcard reveal" data-stagger="{i % 3 + 1}">
+        <a class="instcard__photo" href="/our-work/india/#{inst["slug"]}" tabindex="-1" aria-hidden="true" style="background-image:url('{filler(inst["img"], tag=INSTITUTE_HOME_TAGS[inst["slug"]])}')"></a>
+        <div class="instcard__body">
+          <h3 class="instcard__h">{inst["home_name"]}</h3>
+          <p class="instcard__d">{inst["home_desc"]}</p>
+          <a class="textlink" href="/our-work/india/#{inst["slug"]}">Learn More<span aria-hidden="true"> &rarr;</span></a>
+        </div>
+      </article>""" for i, inst in enumerate(INSTITUTES))
 
+    # Section 7, Latest Articles: hidden until three articles are published
+    # (Naman 7.0). Markup kept verbatim inside the comment so it returns as is.
     articles = "".join(f"""<div class="news-card reveal" data-stagger="{i + 1}">
         <div class="news-card__media">{ph("Article image, Media Bank", style="min-height:0;height:100%")}</div>
         <div class="news-card__meta"><span class="news-card__tag">Article slot</span></div>
@@ -146,27 +170,18 @@ def render_home(svg_inner):
 
     body = f"""
 <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
-<div class="sticky-donate" id="stickyDonate" aria-hidden="true">
-  <div class="container sticky-donate__inner">
-    <p class="sticky-donate__msg"><strong>33M+</strong> lives touched globally. Your gift adds to that.</p>
-    <div class="sticky-donate__actions">
-      <a class="btn btn--primary" href="/donate/">Donate Now</a>
-      <button type="button" class="sticky-donate__close" id="stickyDonateClose" aria-label="Dismiss">&times;</button>
-    </div>
-  </div>
-</div>
 
 <div class="newsletter-modal" id="newsletterModal" role="dialog" aria-modal="true" aria-labelledby="newsletterTitle" hidden>
   <div class="newsletter-modal__backdrop" data-newsletter-close></div>
   <div class="newsletter-modal__panel">
     <button class="newsletter-modal__close" data-newsletter-close aria-label="Close">&times;</button>
     <h3 id="newsletterTitle">Stay informed. Be inspired.</h3>
-    <p>Get updates on the impact of our programs and the initiatives we&rsquo;re running across the U.S. and abroad.</p>
+    <p>Updates on the people we serve, the programs we run, and what your support makes possible.</p>
     <form class="newsletter-modal__form" name="updates" method="POST" data-netlify="true" data-netlify-inline netlify-honeypot="bot-field">
       <input type="hidden" name="form-name" value="updates">
       <input type="hidden" name="source" value="modal">
       <p class="hp-field"><input name="bot-field" tabindex="-1"></p>
-      <input type="email" name="email" required placeholder="you@example.com" aria-label="Email address" class="form-hidewrap">
+      <input type="email" name="email" required placeholder="Email address" aria-label="Email address" class="form-hidewrap">
       <button type="submit" class="btn btn--primary form-hidewrap">Subscribe</button>
       <span class="form-success" style="color:var(--color-srlc-purple);font-weight:600">Thank you. Check your inbox to confirm.</span>
     </form>
@@ -184,11 +199,10 @@ def render_home(svg_inner):
   <div class="mission-split__grid">
     <div class="mission-split__copy">
       <p class="mission-split__eyebrow">Our Mission</p>
-      <h2 class="mission-split__h">Love and Care. Compassion in action.</h2>
-      <p class="mission-split__body">Shrimad Rajchandra Love and Care USA is the United States chapter of Shrimad Rajchandra Love and Care, holder of UN ECOSOC Special Consultative Status. SRLC USA is a 501(c)(3) public charity with {US_FOOTPRINT}, raising funds for global health, education, and humanitarian work.</p>
+      <h2 class="mission-split__h">A global initiative to offer service and bring joy to the lives of underserved sections of society.</h2>
+      <p class="mission-split__body">Shrimad Rajchandra Love and Care (SRLC) USA is the US chapter of a global nonprofit organization that has been recognized by the United Nations for its humanitarian efforts. A 501(c)(3) organization, SRLC USA supports community development projects across India and Africa, and brings holistic care and joy to local communities throughout the US. With a presence in 25+ cities, SRLC USA focuses on raising funds and awareness in high-impact areas, while putting compassion in action.</p>
       <div class="mission-split__actions">
-        <a class="btn btn--primary btn--lg" href="/donate/">Donate</a>
-        <a class="btn btn--secondary" href="/about/who-we-are/">See What Your Gift Funds</a>
+        <a class="btn btn--primary btn--lg" href="/about/our-impact/">See Our Impact</a>
       </div>
       <p class="mission-split__micro">Registered 501(c)(3) &middot; EIN 81-5162502</p>
     </div>
@@ -199,12 +213,11 @@ def render_home(svg_inner):
 <section class="care-section" id="ten-care">
   <div class="container">
     <div class="care-section__head reveal">
-      <p class="care-section__eyebrow">The 10 Care Program</p>
-      <h2 class="care-section__h">Our Unique Global Approach</h2>
-      <p class="care-section__sub">From rural hospitals to U.S. chapter food drives, every initiative comes back to the same idea: love and care, delivered in person, with measured outcomes.</p>
+      <p class="care-section__eyebrow">Our Work</p>
+      <h2 class="care-section__h">The 10 Care Program</h2>
     </div>
-    <div class="care-grid">{care_cards}</div>
-    <div class="care-section__cta reveal"><a class="btn btn--secondary" href="/our-work/10-care-program/">Explore All 10 Programs</a></div>
+    <div class="caregrid">{care_tiles}</div>
+    <div class="care-section__cta reveal"><a class="btn btn--secondary" href="/our-work/10-care-program/">Explore the 10 Care Program</a></div>
   </div>
 </section>
 
@@ -215,11 +228,11 @@ def render_home(svg_inner):
     </div>
     <div class="named-story__copy-wrap">
       <div class="named-story__copy reveal" data-stagger="1">
-        <p class="named-story__eyebrow">Impact story &middot; Laxmibhai</p>
+        <p class="named-story__eyebrow">Impact Story &middot; Laxmibhai</p>
         <p class="named-story__quote">A 52-year-old farmer received the region&rsquo;s first-ever cardiothoracic bypass surgery, performed entirely free of charge. Today he is back on his feet.</p>
         <p class="named-story__attribution">Laxmibhai&rsquo;s second chance</p>
         <p class="named-story__attribution-meta">Health Care &middot; Shrimad Rajchandra Hospital and Research Center</p>
-        <a class="named-story__link" href="/our-work/10-care-program/health-care/">Explore Health Care</a>
+        <a class="btn btn--primary named-story__btn" href="/our-work/10-care-program/health-care/">Explore Health Care</a>
       </div>
     </div>
   </div>
@@ -229,10 +242,10 @@ def render_home(svg_inner):
   <div class="container">
     <div class="institutes-section__head">
       <p class="institutes-section__eyebrow">Where the work happens</p>
-      <h2 class="institutes-section__h">Institutes in India</h2>
-      <p class="institutes-section__sub">Six permanent institutes in India, each built around a specific need.</p>
+      <h2 class="institutes-section__h">Our Institutes</h2>
+      <p class="institutes-section__sub">Six institutes in South Gujarat, India, each built around a specific need. Your gift supports their day-to-day work.</p>
     </div>
-    <div class="institutes-grid">{institutes_cards}</div>
+    <div class="instgrid">{institutes_cards}</div>
   </div>
 </section>
 
@@ -240,7 +253,7 @@ def render_home(svg_inner):
   <div class="container chapter-finder__inner">
     <div class="chapter-finder__intro">
       <h2 class="chapter-finder__h">Find your nearest chapter.</h2>
-      <p class="chapter-finder__sub">Drop in a ZIP code or click any highlighted state on the map.</p>
+      <p class="chapter-finder__sub">Enter a ZIP code or click any pin on the map.</p>
     </div>
     <div class="chapter-finder__cols">
       <div class="chapter-finder__search">
@@ -254,10 +267,10 @@ def render_home(svg_inner):
           <p class="chapter-finder__meta" id="zipMeta"></p>
           <div class="chapter-finder__actions">
             <a id="zipJoinBtn" class="btn btn--primary" href="/get-involved/volunteer/">Join This Chapter</a>
-            <a class="btn btn--ghost-dark" href="mailto:{EMAIL}">Email Us</a>
+            <a class="btn btn--secondary" href="mailto:{EMAIL}">Email the Lead</a>
           </div>
           <div class="chapter-finder__chips" id="zipChips" hidden>
-            <p class="chapter-finder__chips-label">Centers in this chapter</p>
+            <p class="chapter-finder__chips-label">Other chapters in this area</p>
             <div class="chapter-finder__chips-list" id="zipChipsList"></div>
           </div>
         </div>
@@ -268,36 +281,54 @@ def render_home(svg_inner):
     <div class="chapter-finder__map-wrap">
       {cf_map(svg_inner)}
     </div>
-    <p class="chapter-finder__link-row"><a href="/our-work/united-states/">Browse all U.S. chapters &rarr;</a></p>
+    <p class="chapter-finder__link-row"><a class="btn btn--secondary" href="/our-work/united-states/">Browse All US Chapters</a></p>
   </div>
 </section>
 
+<!-- Section 7, Latest Articles: hidden until at least three articles are published (Naman, Sept 3).
 <section class="news-section">
   <div class="container">
     <div class="news-section__head">
       <div class="news-section__headcopy">
-        <p class="news-section__eyebrow">Latest Articles</p>
-        <h2 class="news-section__h">From our chapters and programs</h2>
+        <p class="news-section__eyebrow">News and Updates</p>
+        <h2 class="news-section__h">Latest Articles</h2>
+        <p class="news-section__sub">From our chapters and programs</p>
       </div>
+      <a class="btn btn--secondary" href="/news/">View All Articles</a>
     </div>
     <div class="news-grid">{articles}</div>
   </div>
 </section>
+-->
 
 <section class="recognition-band" id="recognition" aria-label="Trust and recognition">
   <div class="container">
     <div class="recognition-band__head reveal">
+      <p class="recognition-band__eyebrow">Trust and Credibility</p>
       <h2 class="recognition-band__h">Globally recognized. Locally rooted.</h2>
-      <p class="recognition-band__sub">Shrimad Rajchandra Love and Care holds Special Consultative Status with the United Nations Economic and Social Council, granting our humanitarian work a seat at the global table on sustainable development, health, education, and human rights.</p>
+      <p class="recognition-band__sub">Shrimad Rajchandra Love and Care, the global organization SRLC USA is part of, holds Special Consultative Status with the United Nations Economic and Social Council. SRLC USA is a registered 501(c)(3) nonprofit in the United States.</p>
     </div>
     <div class="recognition-badges-band reveal" data-stagger="1">
       {recognition_chips()}
     </div>
-    <div class="recognition-cluster reveal" data-stagger="2">
-      <p class="recognition-cluster__label">Corporate matching gift eligibility</p>
-      <p style="text-align:center;font-size:.8rem;color:var(--color-ink-muted);max-width:60ch;margin:0 auto 1rem">{MATCH_QUALIFIER}</p>
+    <ul class="trustrow reveal" data-stagger="2" aria-label="Recognition">
+      <li>UN ECOSOC &middot; Special Consultative Status</li>
+      <li>US IRS &middot; 501(c)(3) &middot; EIN 81-5162502</li>
+      <li>Candid &middot; Gold Seal of Transparency</li>
+      <li>NABH &middot; Hospital Accreditation</li>
+    </ul>
+    <div class="recognition-cluster reveal" data-stagger="3">
+      <p class="recognition-cluster__label">Partners and Supporters</p>
       {partner_marquee()}
     </div>
+    <div class="recognition-band__cta reveal"><a class="btn btn--secondary" href="/about/our-impact/">See Our Impact</a></div>
+  </div>
+</section>
+
+<section class="quoteband" aria-label="Quote">
+  <div class="container quoteband__inner">
+    <blockquote class="quoteband__quote">&ldquo;Selfless service is love made visible.&rdquo;</blockquote>
+    <p class="quoteband__attr">Pujya Gurudevshri Rakeshji</p>
   </div>
 </section>
 
@@ -305,19 +336,30 @@ def render_home(svg_inner):
   <div class="container">
     <div class="final-cta__hero">
       <span class="final-cta__eyebrow">Be part of the work</span>
-      <h2 class="final-cta__h">One small step from where you are right now.</h2>
-      <p class="final-cta__sub">Whether you have five minutes, five dollars, or five hours a month, there is a way for you to join. Pick what fits, and we will meet you there.</p>
+      <h2 class="final-cta__h">Two ways to make a difference.</h2>
+    </div>
+    <div class="fc-cards">
+      <div class="fc-card reveal" data-stagger="1">
+        <h3 class="fc-card__h">Donate</h3>
+        <p class="fc-card__p">To give without expecting anything in return is love in action.</p>
+        <a class="btn btn--primary" href="/donate/">Donate Now</a>
+      </div>
+      <div class="fc-card reveal" data-stagger="2">
+        <h3 class="fc-card__h">Volunteer</h3>
+        <p class="fc-card__p">Give someone your heart to understand and a hand to hold.</p>
+        <a class="btn btn--primary" href="/get-involved/volunteer/">Volunteer Near You</a>
+      </div>
     </div>
     <div class="fc-newsletter" id="final-newsletter">
       <div class="fc-newsletter__copy">
         <h3>Stay informed. Be inspired.</h3>
-        <p>Real updates on the people we serve, the programs we run, and what your support is making possible.</p>
+        <p>Updates on the people we serve, the programs we run, and what your support makes possible.</p>
       </div>
       <form class="fc-newsletter__form" name="updates" method="POST" data-netlify="true" data-netlify-inline netlify-honeypot="bot-field">
         <input type="hidden" name="form-name" value="updates">
         <input type="hidden" name="source" value="homepage">
         <p class="hp-field"><input name="bot-field" tabindex="-1"></p>
-        <input type="email" name="email" required placeholder="you@example.com" aria-label="Your email address" class="form-hidewrap">
+        <input type="email" name="email" required placeholder="Email address" aria-label="Email address" class="form-hidewrap">
         <button type="submit" class="btn btn--primary form-hidewrap">Subscribe</button>
         <span class="form-success" style="color:var(--color-srlc-purple);font-weight:600">Thank you. Check your inbox to confirm.</span>
       </form>
@@ -326,10 +368,9 @@ def render_home(svg_inner):
 </section>
 """
     return page(
-        "SRLC USA | Shrimad Rajchandra Love and Care",
-        f"Volunteers across {US_FOOTPRINT} serving neighbors through the 10 Care Program, institutes in India, and Mission Africa. A 501(c)(3) nonprofit. SRLC USA.",
+        "Shrimad Rajchandra Love and Care USA | 501(c)(3) Nonprofit",
+        "Health, education, and humanitarian care for underserved communities across India, Africa, and the US. A 501(c)(3) nonprofit. Donate today. SRLC USA.",
         "/", body, overlay=True)
-
 
 def render_donate():
     tiles = "".join(f"""<button type="button" class="donate-tile{' is-active' if amt == '100' else ''}" data-amount="{amt}">
@@ -627,18 +668,24 @@ def render_inspiration():
     </figure>""" for i, (q, n, r) in enumerate(VOICES))
     qdots = "".join(f'<button class="qd{" is-active" if i == 0 else ""}" data-go="{i}" aria-label="Quote {i + 1}"></button>' for i in range(len(VOICES)))
 
-    body = page_header(
-        "About Us &middot; A timeless legacy flowing through a present-day visionary",
-        "Our Inspiration",
-        image=filler("our inspiration"),
-    ) + f"""
+    # SRA inspiration-and-founder.html 177-183: full-height hero band with the
+    # Lord Mahavir / Shrimad Rajchandraji / Pujya Gurudevshri lineage artwork
+    # (the SRA asset, reused per the wireframe), kicker + title bottom-left.
+    body = f"""<section class="ifhero" aria-labelledby="ifHeroTitle">
+  <div class="ifhero__inner">
+    <p class="ifhero__kicker">A timeless legacy flowing through a present-day visionary</p>
+    <h1 class="ifhero__title" id="ifHeroTitle">Inspiration and Founder</h1>
+  </div>
+  <img class="ifhero__figures" src="/assets/img/inspiration/if-hero-figures.png" alt="Lord Mahavir, Shrimad Rajchandraji, and Pujya Gurudevshri Rakeshji" width="833" height="903" loading="eager" fetchpriority="high" decoding="async">
+</section>
+
 <section class="vu-shell vu-shell--lav vu-shell--first">
   <div class="container prose">
-    {ph("The Lord Mahavir and Pujya Gurudevshri figures artwork, pending asset reuse confirmation.", style="min-height:240px;margin-bottom:2rem")}
     <h2 class="vu-h">Jainism and Lord Mahavir</h2>
     <p>Jainism, one of the world&rsquo;s oldest spiritual philosophies, teaches enduring, universal principles of love and kindness.</p>
     <p>Lord Mahavir, a revered spiritual leader who graced the Indian subcontinent over 2,500 years ago, illuminated a path to inner peace through understanding and kindness toward all, a message that continues to guide the modern world.</p>
   </div>
+  <div class="if-band"><img class="if-band__img" src="/assets/img/inspiration/if-mahavir-web.jpg" alt="Shrimad Rajchandra Jin Mandir, Dharampur" width="2400" height="1353" loading="lazy" decoding="async"></div>
 </section>
 
 <section class="vu-shell vu-shell--cream">
@@ -647,7 +694,6 @@ def render_inspiration():
     <p>In the late 19th century, the self-realized saint and poet-philosopher Shrimad Rajchandraji illuminated the wisdom of Lord Mahavir with remarkable clarity, shaping a spiritual path for a new era.</p>
     <p>Grounded in direct inner experience, He articulated the subtle truths of spirituality through His own life, valuable teachings, and influential writings, including Shri Atmasiddhi Shastra, blending deep philosophical insights with practical steps for inner transformation.</p>
     <p>Shrimad Rajchandraji&rsquo;s formative influence on Mahatma Gandhi&rsquo;s philosophy of truth and non-violence stands as a testament to the enduring impact of His message, which continues to resonate today.</p>
-    <blockquote>Standing at the foot of a hill, all that is visible are your immediate surroundings. Upon ascending the peak, you can see all of existence.<br><br>Shrimad Rajchandraji was at that vantage point. Every word emerged from inner experience, every expression from universal vision, and every message from limitless compassion.</blockquote>
   </div>
 </section>
 
@@ -660,7 +706,6 @@ def render_inspiration():
     <p>Through Shrimad Rajchandra Love and Care (SRLC), Pujya Gurudevshri translates compassion into action. Guided by His philosophy of empathy and universal harmony, SRLC is a comprehensive program that addresses critical needs in healthcare, education, environmental sustainability, and social welfare, earning Special Consultative Status with the United Nations Economic and Social Council (ECOSOC) for its far-reaching impact.</p>
     <h3>A Movement Reaching America</h3>
     <p>That vision now lives across the United States. Through SRLC USA, volunteers in communities nationwide carry this spirit of seva, selfless service, into action: serving their neighborhoods through the 10 Care Program and supporting institutes in India and initiatives around the world.</p>
-    <blockquote>Spearheading a global movement, while remaining steady in universal peace and untethered compassion.<br><br>Pujya Gurudevshri is the unmoved mover.</blockquote>
   </div>
 </section>
 
@@ -690,10 +735,18 @@ def render_inspiration():
   </div>
 </section>
 
-{flat_cta("That is the inspiration.", "The rest of this site is what it looks like in practice: ten Care programs, institutes in India, medical camps in Africa, and volunteers across the United States.", "Explore the 10 Care Program", "/our-work/10-care-program/")}
+<section class="pagenext">
+  <div class="container pagenext__inner">
+    <p class="pagenext__line">Continue learning about the wider movement and the work it supports.</p>
+    <div class="pagenext__links">
+      <a class="btn btn--secondary" href="/our-work/10-care-program/">The 10 Care Program</a>
+      <a class="btn btn--secondary" href="/about/who-we-are/">Who We Are</a>
+    </div>
+  </div>
+</section>
 """
     return page(
-        "Our Inspiration | Shrimad Rajchandraji | SRLC USA",
+        "Inspiration and Founder | Shrimad Rajchandraji | SRLC USA",
         "The story and philosophy behind SRLC&rsquo;s work: Shrimad Rajchandraji, Pujya Gurudevshri Rakeshji, and the movement of selfless service they inspire. SRLC USA.",
         "/about/our-inspiration/", body)
 

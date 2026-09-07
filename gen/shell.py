@@ -90,7 +90,7 @@ def nav(overlay=False):
       <ul class="primary-nav__list">
         <li class="primary-nav__item"><button class="primary-nav__trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="navpanel-about">About Us</button>
           <div class="primary-nav__panel" id="navpanel-about" role="menu" aria-label="About Us submenu">
-            {nav_panel_link("/about/our-inspiration/", "Our Inspiration", "The spiritual lineage that inspires SRLC&rsquo;s mission.")}
+            {nav_panel_link("/about/our-inspiration/", "Inspiration and Founder", "The spiritual lineage that inspires SRLC&rsquo;s mission.")}
             {nav_panel_link("/about/who-we-are/", "Who We Are", "A modern overview of SRLC USA. Who, what, and how.")}
             {nav_panel_link("/about/our-impact/", "Our Impact", "Program outcomes, impact stories, aggregate numbers.")}
             {nav_panel_link("/about/management-team/", "Management Team", "Board, leadership, and team profiles.")}
@@ -111,7 +111,7 @@ def nav(overlay=False):
         <li class="primary-nav__item"><button class="primary-nav__trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="navpanel-involved">Get Involved</button>
           <div class="primary-nav__panel" id="navpanel-involved" role="menu" aria-label="Get Involved submenu">
             {nav_panel_link("/donate/", "Donate", "One-time or recurring giving with dollar-to-outcome options.")}
-            {nav_panel_link("/get-involved/volunteer/", "Volunteer", "Sign up for SRLC volunteer opportunities across U.S. cities.")}
+            {nav_panel_link("/get-involved/volunteer/", "Volunteer", "Sign up for SRLC volunteer opportunities across US cities.")}
             {nav_panel_link("/get-involved/events/", "Events", "Chapter events, galas, and community gatherings.")}
             {nav_panel_link("/get-involved/fundraise/", "Start a Fundraiser", "Birthday, memorial, wedding, run. Any moment.")}
             {nav_panel_link("/get-involved/partner-with-us/", "Partner With Us", "Strategic partnerships for organizations and NGOs.")}
@@ -145,7 +145,7 @@ def footer():
       <div>
         <h4>About Us</h4>
         <ul>
-          <li><a href="/about/our-inspiration/">Our Inspiration</a></li>
+          <li><a href="/about/our-inspiration/">Inspiration and Founder</a></li>
           <li><a href="/about/who-we-are/">Who We Are</a></li>
           <li><a href="/about/our-impact/">Our Impact</a></li>
           <li><a href="/about/management-team/">Management Team</a></li>
@@ -280,21 +280,24 @@ def ph(label, cls="", style="", tag=None):
             f'loading="lazy" decoding="async"{s}>')
 
 
-def page_header(eyebrow, h1, sub=None, cta=None, image=None):
+def page_header(eyebrow, h1, sub=None, cta=None, image=None, full=False, alt="", size=None):
     """SRA-pattern page header over a real photo: one small eyebrow line, short
     single-color H1, flat dark-purple scrim for contrast. `image` is an /assets
-    path; otherwise a filler chosen from the H1."""
+    path; otherwise a filler chosen from the H1. `full` renders the full-bleed,
+    full-height SRA hero (light gradient instead of the purple wash)."""
     if image:
         src, w, h = image, 2400, 1600
         for f in FILLERS:
             if f[0] == image:
                 w, h = f[2], f[3]
+        if size:
+            w, h = size
     else:
         src, _, w, h = filler_entry(h1, _tag_for(f"{eyebrow} {h1} {sub or ''}"))
     sub_html = f'<p class="pagehead__sub">{sub}</p>' if sub else ""
     cta_html = f'<div class="pagehead__cta">{cta}</div>' if cta else ""
-    return f"""<section class="pagehead pagehead--photo">
-  <img class="pagehead__img" src="{src}" alt="" width="{w}" height="{h}" loading="eager" fetchpriority="high" decoding="async">
+    return f"""<section class="pagehead pagehead--photo{' pagehead--full' if full else ''}">
+  <img class="pagehead__img" src="{src}" alt="{alt}" width="{w}" height="{h}" loading="eager" fetchpriority="high" decoding="async">
   <div class="pagehead__scrim"></div>
   <div class="container pagehead__inner">
     <p class="pagehead__eyebrow">{eyebrow}</p>

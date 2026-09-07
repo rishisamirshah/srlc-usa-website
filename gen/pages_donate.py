@@ -75,7 +75,7 @@ WAYS = [
      "We accept Bitcoin, Ethereum, and most major tokens through a compliant processor. You receive a fair-market-value tax receipt within 48 hours.",
      f"mailto:{EMAIL}?subject=Crypto%20gift%20inquiry", "Start a crypto gift"),
     ("Corporate matching", "Double your impact at work.",
-     "Thousands of U.S. employers match nonprofit gifts at 1:1 or 2:1. Submit our EIN to your HR or matching platform; we will confirm the match.",
+     "Thousands of US employers match nonprofit gifts at 1:1 or 2:1. Submit our EIN to your HR or matching platform; we will confirm the match.",
      "#corporate-matching", "Explore matching gifts"),
 ]
 
@@ -99,11 +99,11 @@ FAQ = [
     ("Can I cancel or change my monthly gift?",
      f'Anytime. There is no minimum commitment, no cancellation fee, and no phone tree. Email <a href="mailto:{EMAIL}">{EMAIL}</a> or log in to your donor portal to update the amount, change the program, pause, or cancel. Changes take effect on your next billing date.'),
     ("How is my gift used?",
-     'Every gift goes to the program you designate. If you do not designate, gifts are directed to the Care with the most urgent unmet need that month. Overhead and fundraising costs are benchmarked against the most efficient U.S. nonprofits in our category. See the current ratio on the <a href="/about/financials/">Financials page</a>.'),
+     'Every gift goes to the program you designate. If you do not designate, gifts are directed to the Care with the most urgent unmet need that month. Overhead and fundraising costs are benchmarked against the most efficient US nonprofits in our category. See the current ratio on the <a href="/about/financials/">Financials page</a>.'),
     ("Can I donate by check, wire, or ACH?",
      f'Yes. Checks payable to <strong>SRLC USA</strong> can be mailed to 500 Paterson Plank Rd #33685, Union City, NJ 07087. For wire or ACH instructions, or to set up a recurring bank transfer, email <a href="mailto:{EMAIL}">{EMAIL}</a> and our team will respond within one business day.'),
     ("Can international donors give to SRLC USA?",
-     "Yes. Anyone with an internationally accepted credit card or DAF can give through srlcusa.org. Please note that tax-deductibility applies under U.S. law; donors outside the U.S. should consult a local tax adviser about deductibility in their country. For SRLC programs based in India, our parent organization offers separate India-domiciled giving options."),
+     "Yes. Anyone with an internationally accepted credit card or DAF can give through srlcusa.org. Please note that tax-deductibility applies under US law; donors outside the US should consult a local tax adviser about deductibility in their country. For SRLC programs based in India, our parent organization offers separate India-domiciled giving options."),
     ("Will my contact information be shared?",
      "No. SRLC USA does not sell, rent, or trade donor data. Our full privacy policy outlines exactly what we store, how long we store it, and how to request deletion."),
 ]
@@ -199,7 +199,7 @@ def render_donate():
         </div>
         <div class="donate-custom">
           <span class="donate-custom__symbol" aria-hidden="true">$</span>
-          <input class="donate-custom__input" type="number" min="1" inputmode="decimal" aria-label="Custom amount in U.S. dollars" placeholder="Enter amount">
+          <input class="donate-custom__input" type="number" min="1" inputmode="decimal" aria-label="Custom amount in US dollars" placeholder="Enter amount">
         </div>
         <p class="donate-widget__outcome" id="donate-outcome" aria-live="polite">Your $50 gift funds school supplies for one student for a term.</p>
         <a class="btn btn--primary btn--lg donate-widget__cta" id="donate-cta" href="{MAIL_GIVE}%20(%2450)" data-mail="{MAIL_GIVE}">Email us to give</a>

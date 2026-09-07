@@ -182,6 +182,42 @@
     if (zb) zb.addEventListener("click", function (e) { e.preventDefault(); window.__cfZipLookup(); });
   }
 
+  /* Desktop nav: a clicked (aria-expanded) panel must not stay open while the
+     pointer hovers a sibling item, or two panels overlap (Riyan, Sept 3). */
+  var navItems = doc.querySelectorAll(".primary-nav__item");
+  var canHover = window.matchMedia && window.matchMedia("(hover: hover)").matches;
+  if (canHover && navItems.length) {
+    function closeExpanded() {
+      doc.querySelectorAll('.primary-nav__trigger[aria-expanded="true"]').forEach(function (b) {
+        b.setAttribute("aria-expanded", "false");
+      });
+      /* the clicked trigger keeps focus, and :focus-within holds its panel open */
+      var a = doc.activeElement;
+      if (a && a.classList && a.classList.contains("primary-nav__trigger")) a.blur();
+    }
+    navItems.forEach(function (item) {
+      item.addEventListener("mouseenter", closeExpanded);
+      item.addEventListener("mouseleave", closeExpanded);
+    });
+  }
+
+  /* 10 Care accordion below 1024 (SRA SI-r19 pattern, exclusive): a tap opens
+     the row and reveals its one-liner; a second tap on the open row follows
+     the link. Desktop hover is untouched. */
+  var careGrid = doc.querySelector(".caregrid");
+  if (careGrid && window.matchMedia) {
+    var careMq = window.matchMedia("(max-width: 1023px)");
+    careGrid.addEventListener("click", function (e) {
+      if (!careMq.matches) return;
+      var tile = e.target.closest(".caretile");
+      if (!tile || !careGrid.contains(tile)) return;
+      if (tile.classList.contains("is-open")) return;
+      e.preventDefault();
+      careGrid.querySelectorAll(".caretile.is-open").forEach(function (t) { t.classList.remove("is-open"); });
+      tile.classList.add("is-open");
+    });
+  }
+
   /* Footer year */
   doc.querySelectorAll("[data-year]").forEach(function (el) { el.textContent = new Date().getFullYear(); });
 })();

@@ -1,0 +1,410 @@
+/* ==========================================================================
+   Naman's Sept 3 visual pass (feedback doc "Homepage visual fixes"), loads
+   last. Pattern library: the SRA site (social-impact.html + its stylesheet),
+   reskinned to the SRLC tokens. Governing direction: nothing that reads as
+   template design. Square corners everywhere except pill buttons and dots,
+   no bordered tiles, no glow shadows, sections larger and fuller.
+   ========================================================================== */
+
+:root {
+  --radius-sm: 0; --radius-md: 0; --radius-lg: 0; --radius-pill: 0; --vu-radius: 0;
+  --sec-pad: clamp(4rem, 7vw, 6.5rem);        /* one vertical rhythm for every section */
+  --sec-lav: #F4EEF9;                          /* lavender wash */
+  --sec-lav-deep: #E7DDF0;
+}
+
+/* ---------- 0.1 Border radius: zero, site-wide. Pills and dots excepted. ---------- */
+*:not(.btn):not(.dot):not(.qd):not(.cf-pin__dot):not(.swatch):not(.hero-carousel__arrow):not(.progressrail a) {
+  border-radius: 0 !important;
+}
+img.ph-media, .bio__photo, .donate-tile, .fc-newsletter, .lead-card, .chip-row a, .chip-row span,
+.tabs__list button, .railnav button, .zipline input, .site-footer .social a,
+.site-footer__brand .brand__logo-img, .primary-nav__panel, .primary-nav__sublink,
+.primary-nav__sublink--nested, .primary-nav__trigger, .cf-pin__tip, .final-cta__eyebrow,
+.chapter-finder__form input, .fc-newsletter__form input, .newsletter-modal__panel,
+.care-card, .care-card__label, .care-card__icon, .institute-card, .news-card, .cf-map,
+.chapter-finder__result, .chapter-activity, .marquee-logo, .recognition-logo, .recognition-badge,
+.quote-wall__btn, .vu-coming, .vu-coming__ic, .event-card, .muted-note, .btn--ghost-dark {
+  border-radius: 0 !important;
+}
+
+/* ---------- 0.2 Buttons: two tiers, SRA pills ----------
+   SRA styles.css 323-360: 60px pill, padding 0 28px, Inter 500 14/20, no
+   tracking, no uppercase, 1px border, filled on hover. Reskinned to DM Sans
+   and purple; primary is the solid tier Naman asked for. */
+.btn, .btn--ghost-dark, .primary-nav__cta {
+  border-radius: 999px !important;
+  height: 52px; padding: 0 28px;
+  font-family: var(--font-body);
+  font-size: 14px; font-weight: 500; letter-spacing: 0; text-transform: none;
+  line-height: 20px; border: 1px solid transparent; white-space: nowrap;
+  transition: background 300ms cubic-bezier(0.16, 1, 0.3, 1), color 300ms cubic-bezier(0.16, 1, 0.3, 1), border-color 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: none !important; transform: none !important;
+}
+.btn--lg { height: 56px; padding: 0 34px; font-size: 15px; }
+.primary-nav__cta { height: 44px; padding: 0 22px; }
+.btn--primary { background: #693D84; color: #FFFFFF; border-color: #693D84; }
+.btn--primary:hover, .btn--primary:focus-visible { background: #41214E; border-color: #41214E; color: #FFFFFF; }
+.btn--secondary, .btn--ghost-dark { background: transparent; color: #693D84; border-color: #693D84; }
+.btn--secondary:hover, .btn--ghost-dark:hover { background: #693D84; color: #FFFFFF; }
+.btn--ghost { background: transparent; color: #FFFFFF; border-color: rgba(255,255,255,0.85); }
+.btn--ghost:hover { background: #FFFFFF; color: #693D84; border-color: #FFFFFF; }
+.hero--purple .btn--ghost { color: #fff; border-color: #fff; }
+@media (max-width: 640px) { .btn { height: 46px; padding: 0 24px; font-size: 14px; } .btn--lg { height: 48px; padding: 0 28px; font-size: 14px; } }
+
+/* Tertiary: plain purple text link with a trailing arrow, no chrome */
+.textlink, .institute-card__more, .named-story__link, .chapter-finder__link-row a:not(.btn) {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  font-family: var(--font-body); font-size: 0.86rem; font-weight: 600; letter-spacing: 0.04em;
+  color: #693D84; text-decoration: none; border: 0 !important; padding: 0;
+  transition: color 160ms ease;
+}
+.textlink:hover, .institute-card__more:hover, .named-story__link:hover { color: #41214E; }
+.textlink span { transition: transform 200ms ease; display: inline-block; }
+.textlink:hover span { transform: translateX(4px); }
+
+/* ---------- 0.3 Card borders and hover shadows ---------- */
+.marquee-logo, .recognition-logo, .institute-card, .news-card, .cf-map, .chapter-finder__result,
+.chapter-activity, .recognition-badge, .recognition-cluster__items.recognition-badges,
+.institute-card__media, .news-card__media, .care-card {
+  border: 0 !important; box-shadow: none !important;
+}
+.institute-card:hover, .news-card:hover, .care-card:hover, .marquee-logo:hover,
+.recognition-logo:hover, .chapter-activity:hover { box-shadow: none !important; transform: none !important; border-color: transparent !important; }
+
+/* ---------- 0.4 Section spacing: one token, sections butt cleanly ---------- */
+.care-section, .institutes-section, .news-section, .chapter-finder--v3, .recognition-band,
+.final-cta, .quoteband, .vu-shell, .flatcta, .pagenext, .quote-wall, .impact-section {
+  padding-top: var(--sec-pad) !important; padding-bottom: var(--sec-pad) !important;
+  margin-top: 0 !important; margin-bottom: 0 !important;
+  border-top: 0 !important; border-bottom: 0 !important;
+}
+.flatcta .container, .vu-shell .container { padding-top: 0; padding-bottom: 0; }
+.mission-split__copy { padding-top: var(--sec-pad); padding-bottom: var(--sec-pad); }
+.mission-split__stats { padding-top: var(--sec-pad); padding-bottom: var(--sec-pad); border-left: 0; }
+.care-section { background: var(--sec-lav); }
+.institutes-section { background: #FFFFFF; }
+.chapter-finder--v3 { background: var(--sec-lav); }
+.recognition-band { background: #FFFFFF; }
+.reveal-wrapper, .spacer { display: none; }
+main > section + section { margin-top: 0; }
+
+/* ---------- 1. Header ----------
+   SRA styles.css 496-504: header logo height min(62px, 62/1920*100vw)
+   (46.5px at 1440), 38px on phones (mobile.css 143). Bar stays 72 / 60. */
+.brand__logo { height: clamp(36px, calc(62 / 1920 * 100vw), 48px); }
+@media (max-width: 640px) { .brand__logo { height: 38px; } }
+@media (max-width: 360px) { .brand__logo { height: 34px; } }
+.site-header__inner { min-height: 72px; }
+.sticky-donate { display: none !important; }
+/* 1.3 dropdown typography: SRA styles.css 3779-3826 (.nav-dropdown): white
+   panel, padding 12px 8px, links Inter 500 16/22 in ink with a light-gray
+   hover, no tracking. Nav triggers 16px 500 (styles.css 525-537). */
+.primary-nav__panel { padding: 12px 8px; min-width: 300px; max-width: 380px; border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 18px 40px rgba(0,0,0,0.10), 0 4px 10px rgba(0,0,0,0.04); }
+.primary-nav__sublink { padding: 10px 16px; }
+.primary-nav__sublink:hover, .primary-nav__sublink:focus-visible { background: rgba(0,0,0,0.05); color: #1F1326; }
+.primary-nav__sublabel {
+  font-family: var(--font-body); font-size: 16px; line-height: 22px; font-weight: 500; letter-spacing: 0;
+  color: #1F1326; margin-bottom: 2px;
+}
+.primary-nav__subdesc { font-size: 12.5px; line-height: 1.4; color: #6B6472; }
+.primary-nav__subnest { margin-left: 1.9rem; }
+.primary-nav__sublink--nested { padding: 8px 16px; font-size: 15px; line-height: 20px; font-weight: 500; color: #1F1326; }
+.primary-nav__sublink--nested:hover, .primary-nav__sublink--nested:focus-visible { background: rgba(0,0,0,0.05); color: #1F1326; }
+.primary-nav__trigger { font-size: 16px; font-weight: 500; letter-spacing: 0; line-height: 19.4px; }
+/* a clicked panel and a hovered sibling must not overlap */
+@media (hover: hover) and (min-width: 901px) {
+  .primary-nav__item:not(:hover) .primary-nav__trigger[aria-expanded="true"] + .primary-nav__panel { display: none; }
+}
+
+/* ---------- Hero: eyebrow, headline, one CTA ---------- */
+.hero-carousel__eyebrow { display: block !important; color: #FFFFFF; opacity: 0.92; font-family: var(--font-body); font-size: 0.74rem; letter-spacing: 0.24em; font-weight: 600; }
+.hero-carousel__title { font-weight: 500; max-width: 16ch; }
+.hero-carousel__ctas { margin-top: 1.8rem; }
+
+/* ---------- Mission ---------- */
+.mission-split__h { font-size: clamp(1.6rem, 2.9vw, 2.15rem); line-height: 1.2; }
+.mission-split__body { font-size: 1.02rem; }
+
+/* ---------- 2. 10 Care Program: SRA "Our Unique Approach" grid, 1:1 ----------
+   SRA social-impact-figma.css 768-909: five fixed columns of 325x500 tiles
+   (1920 artboard, scales linearly below), 5px gaps, flat 15% black veil,
+   cream chip (number 34px + name 20px) at 56/342, hover layer at 85% brand
+   with "NN / Name" (32px light) and the one-liner (14/22). Below 1024 the
+   SRA page turns the grid into accordion rows (no photos). Reskinned:
+   maroon -> purple, cream -> lavender, Inter -> DM Sans. */
+.care-section__eyebrow { display: block !important; }
+.care-section .container { max-width: 1280px; }
+.care-section__head { margin-bottom: min(60px, calc(60 / 1920 * 100vw)); }
+.caregrid {
+  display: grid; justify-content: center;
+  grid-template-columns: repeat(5, min(325px, calc(325 / 1920 * 100vw)));
+  gap: min(5px, calc(5 / 1920 * 100vw));
+}
+.caretile {
+  position: relative; display: block; overflow: hidden;
+  height: min(500px, calc(500 / 1920 * 100vw));
+  background-color: #693D84; background-size: cover; background-position: center;
+  color: #693D84; text-decoration: none;
+}
+.caretile__overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.15); }
+.caretile__chip {
+  position: absolute; left: min(56px, calc(56 / 1920 * 100vw)); top: min(342px, calc(342 / 1920 * 100vw));
+  background: #F4EEF9; padding: min(12px, calc(12 / 1920 * 100vw)) min(14px, calc(14 / 1920 * 100vw));
+  display: flex; flex-direction: column; gap: min(4px, calc(4 / 1920 * 100vw));
+  min-width: min(183px, calc(183 / 1920 * 100vw)); transition: opacity 0.25s ease;
+}
+.caretile__num { font-family: var(--font-body); font-weight: 400; font-size: min(34px, calc(34 / 1920 * 100vw)); line-height: calc(57 / 34); color: #693D84; }
+.caretile__name { font-family: var(--font-body); font-weight: 400; font-size: min(20px, calc(20 / 1920 * 100vw)); line-height: calc(27 / 20); color: #693D84; }
+.caretile__hover {
+  position: absolute; inset: 0; background: rgba(105, 61, 132, 0.85); opacity: 0; transition: opacity 0.25s ease;
+  display: flex; flex-direction: column; justify-content: flex-end; box-sizing: border-box;
+  padding: 0 min(54px, calc(54 / 1920 * 100vw)) min(48px, calc(48 / 1920 * 100vw)) min(20px, calc(20 / 1920 * 100vw));
+  gap: min(16px, calc(16 / 1920 * 100vw));
+}
+.caretile__hover-h { font-family: var(--font-body); font-weight: 300; font-size: min(32px, calc(32 / 1920 * 100vw)); line-height: calc(36 / 32); color: #FDFBF3; }
+.caretile__hover-p { font-family: var(--font-body); font-weight: 300; font-size: min(14px, calc(14 / 1920 * 100vw)); line-height: calc(22 / 14); color: #FDFBF3; }
+@media (min-width: 1024px) {
+  .caretile:hover .caretile__hover, .caretile:focus-visible .caretile__hover { opacity: 1; }
+  .caretile:hover .caretile__chip, .caretile:focus-visible .caretile__chip { opacity: 0; }
+}
+.care-section__cta { margin: min(80px, calc(80 / 1920 * 100vw)) auto 0; text-align: center; }
+@media (max-width: 1023px) {
+  .care-section__head { margin-bottom: 36px; }
+  .caregrid { display: flex; flex-direction: column; gap: 6px; }
+  .caretile {
+    height: auto; min-height: 0; background-image: none !important; background-color: #EFE8F5;
+    display: flex; flex-wrap: wrap; align-items: center; align-content: flex-start; justify-content: space-between;
+    padding: 19px 16px; cursor: pointer;
+  }
+  .caretile__overlay { display: none; }
+  .caretile__chip { position: static; min-width: 0; background: transparent; padding: 0; flex-direction: row; align-items: baseline; gap: 0; opacity: 1 !important; }
+  .caretile__num { font-size: 20px; line-height: 29px; }
+  .caretile__num::after { content: '.\00a0'; }
+  .caretile__name { font-size: 20px; line-height: 29px; }
+  .caretile::after {
+    content: ''; flex-shrink: 0; margin-left: auto; width: 9px; height: 9px;
+    border-right: 2px solid #693D84; border-bottom: 2px solid #693D84;
+    transform: translateY(-3px) rotate(45deg); transition: transform 0.2s ease;
+  }
+  .caretile.is-open::after { transform: translateY(3px) rotate(225deg); }
+  .caretile__hover { display: none; position: static; inset: auto; flex: 0 0 100%; width: 100%; opacity: 1; background: transparent; padding: 0; gap: 0; order: 10; }
+  .caretile.is-open .caretile__hover { display: block; padding: 12px 0 2px; }
+  .caretile__hover-h { display: none; }
+  .caretile__hover-p { display: block; font-weight: 400; font-size: 14px; line-height: 22px; color: #693D84; }
+  .care-section__cta { margin: 36px auto 0; }
+}
+
+/* ---------- Impact story ---------- */
+.named-story__btn { margin-top: 1.2rem; }
+.named-story .btn--primary { background: #FFFFFF; color: #693D84; border-color: #FFFFFF; }
+.named-story .btn--primary:hover { background: #F4EEF9; border-color: #F4EEF9; color: #41214E; }
+
+/* ---------- 3. Institutes: SRA "Initiatives Across the Globe" cards, 1:1 ----------
+   SRA social-impact-figma.css 687-766: three fixed 504x535 cards (1920
+   artboard), 10px gaps, 267px photo on top, body padding 25/30 with a 35px
+   gap, centered 24/32 title held to two lines, 18/32 description. Square
+   corners; the 1px #EFEFEF card border is dropped per 0.3. Below 1024 the
+   SRA page stacks the cards with a 13px inset and a 170px photo. */
+.institutes-section__eyebrow, .institutes-section__head { display: block; }
+.institutes-section__head { max-width: 60rem; margin-bottom: min(24px, calc(24 / 1920 * 100vw)); }
+.instgrid {
+  display: grid; justify-content: center;
+  grid-template-columns: repeat(3, min(504px, calc(504 / 1920 * 100vw)));
+  gap: min(10px, calc(10 / 1920 * 100vw));
+}
+.instcard { background: #FFFFFF; height: min(535px, calc(535 / 1920 * 100vw)); display: flex; flex-direction: column; box-sizing: border-box; }
+.instcard__photo { display: block; position: relative; height: min(267px, calc(267 / 1920 * 100vw)); background-size: cover; background-position: center; background-color: #E7E3EC; flex-shrink: 0; }
+.instcard__body { padding: min(25px, calc(25 / 1920 * 100vw)) min(30px, calc(30 / 1920 * 100vw)); display: flex; flex-direction: column; gap: min(22px, calc(22 / 1920 * 100vw)); flex: 1; }
+.instcard__h {
+  font-family: var(--font-display); font-weight: 500; font-size: min(24px, calc(24 / 1920 * 100vw)); line-height: calc(32 / 24);
+  color: #693D84; margin: 0; text-align: center; min-height: calc(2 * min(32px, calc(32 / 1920 * 100vw)));
+  display: flex; align-items: center; justify-content: center;
+}
+.instcard__d { font-family: var(--font-body); font-weight: 400; font-size: min(18px, calc(18 / 1920 * 100vw)); line-height: calc(30 / 18); color: #282828; margin: 0; }
+.instcard .textlink { margin-top: auto; }
+@media (max-width: 1023px) {
+  .institutes-section__head { margin-bottom: 24px; }
+  .instgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+  .instcard { height: auto; padding: 13px; }
+  .instcard__photo { height: min(170px, calc(170 / 390 * 100vw)); background-position: center 30%; }
+  .instcard__body { padding: 14px 2px 4px; gap: 8px; }
+  .instcard__h { font-size: 16px; line-height: 24px; min-height: 0; display: block; }
+  .instcard__d { font-size: 12px; line-height: 22px; }
+  .instcard .textlink { margin-top: 0.4rem; font-size: 0.78rem; }
+}
+@media (max-width: 767px) { .instgrid { display: flex; flex-direction: column; gap: 32px; } }
+
+/* ---------- 4. Find your nearest chapter: fuller, square, equal heights ---------- */
+.chapter-finder--v3 .chapter-finder__inner {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+  grid-template-areas: "intro intro" "cols map" "link link";
+  gap: clamp(1.4rem, 2.6vw, 2.4rem) clamp(1.6rem, 3vw, 3rem); align-items: stretch;
+}
+.chapter-finder--v3 .chapter-finder__intro { grid-area: intro; max-width: 48rem; }
+.chapter-finder--v3 .chapter-finder__cols { grid-area: cols; display: flex; flex-direction: column; gap: 1.4rem; min-width: 0; }
+.chapter-finder--v3 .chapter-finder__map-wrap { grid-area: map; display: flex; min-width: 0; }
+.chapter-finder--v3 .chapter-finder__link-row { grid-area: link; margin: 0.4rem 0 0; }
+.chapter-finder--v3 .chapter-finder__sub { margin-bottom: 0; }
+.chapter-finder--v3 .chapter-finder__search { background: #FFFFFF; padding: 1.6rem 1.6rem 1.4rem; }
+.chapter-finder--v3 .chapter-finder__search-title { font-family: var(--font-body); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; color: #693D84; margin: 0 0 0.8rem; }
+.chapter-finder--v3 .chapter-finder__form { max-width: none; }
+.chapter-finder--v3 .chapter-finder__form input { border: 1px solid #D9CCEA; padding: 0.85rem 1rem; }
+.chapter-finder--v3 .chapter-finder__form .btn { padding: 0.85rem 1.4rem; }
+.chapter-finder--v3 .chapter-finder__search-hint { font-size: 0.86rem; color: #6B6472; margin: 0.9rem 0 0; }
+.chapter-finder--v3 .chapter-finder__result { margin-top: 1.2rem; padding: 1.2rem 1.3rem; background: var(--sec-lav); border-left: 3px solid #693D84 !important; }
+.chapter-finder--v3 .chapter-finder__actions .btn { padding: 0.75rem 1.3rem; font-size: 0.74rem; }
+.chapter-finder__chips-label { font-family: var(--font-body); font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; color: #693D84; margin: 0.9rem 0 0.4rem; }
+.chapter-finder__chips-list { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+.cf-chip { background: #fff; border: 1px solid #D9CCEA; padding: 0.35rem 0.75rem; font-size: 0.8rem; font-weight: 600; color: #693D84; text-decoration: none; }
+.chapter-activity { margin-top: 0; background: #FFFFFF; padding: 1.4rem 1.6rem; flex: 1; }
+.chapter-activity__title::before { display: inline-block; }
+.chapter-finder--v3 .cf-map, .cf-map { position: relative; width: 100%; height: 100%; min-height: 320px; aspect-ratio: auto; background: transparent; border: 0 !important; padding: 0; }
+.chapter-finder--v3 .cf-map__svg, .cf-map__svg { position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; }
+.chapter-finder--v3 .chapter-finder__map-wrap { position: relative; flex-direction: column; }
+.chapter-finder--v3 .cf-map__legend { position: absolute; left: 0; bottom: 0; margin: 0; justify-content: flex-start; }
+@media (max-width: 980px) {
+  .chapter-finder--v3 .chapter-finder__inner { grid-template-columns: 1fr; grid-template-areas: "intro" "map" "cols" "link"; }
+  .chapter-finder--v3 .cf-map { aspect-ratio: 959 / 593; height: auto; min-height: 0; }
+}
+
+/* ---------- 5. Recognition band: logos on the background, no tiles ---------- */
+.recognition-band__eyebrow { display: block; }
+.recognition-cluster__items.recognition-badges { border: 0 !important; gap: clamp(2rem, 5vw, 4.5rem); align-items: center; justify-content: center; }
+.recognition-badge { flex: 0 1 auto; border: 0 !important; padding: 0.4rem 0; background: transparent; }
+.recognition-badge__img { height: 84px; }
+@media (max-width: 760px) { .recognition-badge { flex: 1 1 40%; border: 0 !important; } .recognition-badge__img { height: 64px; } }
+.trustrow {
+  list-style: none; padding: 0; margin: 2.2rem auto 2.8rem; max-width: 62rem;
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem 2.4rem;
+  font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; color: #693D84;
+}
+.recognition-cluster__label { margin-bottom: 1.2rem; }
+.marquee-logo { background: transparent !important; padding: 0 1.6rem; height: 72px; min-width: 0; }
+.marquee-logo img { height: 44px; max-width: 170px; }
+@media (max-width: 700px) { .marquee-logo { height: 56px; padding: 0 1rem; } .marquee-logo img { height: 34px; max-width: 130px; } }
+.recognition-band__cta { text-align: center; margin-top: 2.4rem; }
+
+/* ---------- 6. Quote band ----------
+   SRA social-impact-figma.css 208-238 (.si-quote): full-bleed 1920x542
+   band, serif italic 48/60 quote, uppercase 24/34 attribution tracked
+   0.06em with a 26px gap; 48px 30px padding and 22/32 + 14/20 on mobile.
+   Gold texture -> lavender wash with ghosted lotus shapes (no photo). */
+.quoteband {
+  position: relative; overflow: hidden; isolation: isolate; text-align: center;
+  width: 100%; aspect-ratio: 1920 / 542; background-color: var(--sec-lav);
+  padding: 0 min(140px, calc(140 / 1920 * 100vw)) !important;
+  display: flex; align-items: center; justify-content: center; box-sizing: border-box;
+}
+.quoteband::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: url('/assets/img/lotus-motif.svg') center / cover no-repeat;
+  filter: blur(6px); opacity: 0.55;
+}
+.quoteband::after {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: linear-gradient(90deg, rgba(231,221,240,0.55) 0%, rgba(244,238,249,0) 30%, rgba(244,238,249,0) 70%, rgba(231,221,240,0.45) 100%);
+}
+.quoteband__inner { position: relative; z-index: 1; max-width: min(1100px, calc(1100 / 1920 * 100vw)); padding: 0; }
+.quoteband__quote {
+  font-family: var(--font-display); font-style: italic; font-weight: 400;
+  font-size: min(48px, calc(48 / 1920 * 100vw)); line-height: calc(60 / 48); color: #693D84; margin: 0;
+  background: transparent; border: 0; padding: 0;
+}
+.quoteband__attr {
+  font-family: var(--font-body); font-weight: 500; font-size: min(24px, calc(24 / 1920 * 100vw)); line-height: calc(34 / 24);
+  letter-spacing: 0.06em; text-transform: uppercase; color: #693D84; margin: min(26px, calc(26 / 1920 * 100vw)) 0 0;
+}
+@media (max-width: 1023px) {
+  .quoteband { aspect-ratio: auto; padding: 48px 30px !important; }
+  .quoteband__inner { max-width: none; }
+  .quoteband__quote { font-size: 22px; line-height: 32px; }
+  .quoteband__attr { font-size: 14px; line-height: 20px; margin-top: 14px; white-space: nowrap; }
+}
+
+/* ---------- 7. Final CTA: two cards + inline newsletter ---------- */
+.final-cta__eyebrow { border: 0 !important; padding: 0; letter-spacing: 0.24em; font-weight: 600; }
+.final-cta__hero { margin-bottom: 2.4rem; }
+.fc-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.2rem, 2.5vw, 2.4rem); max-width: 60rem; margin: 0 auto clamp(2.4rem, 5vw, 3.6rem); }
+@media (max-width: 720px) { .fc-cards { grid-template-columns: 1fr; } }
+.fc-card { background: rgba(255,255,255,0.08); border-top: 2px solid rgba(255,255,255,0.55); padding: clamp(1.6rem, 3vw, 2.4rem) clamp(1.4rem, 3vw, 2.2rem); text-align: center; display: flex; flex-direction: column; align-items: center; gap: 0.7rem; }
+.fc-card__h { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.6rem, 2.8vw, 2.1rem); color: #FFFFFF; margin: 0; }
+.fc-card__p { font-family: var(--font-display); font-style: italic; font-size: 1.1rem; line-height: 1.5; color: rgba(255,255,255,0.92); margin: 0 0 0.6rem; max-width: 30ch; }
+.final-cta .btn--primary { background: #FFFFFF; color: #693D84; border-color: #FFFFFF; }
+.final-cta .btn--primary:hover { background: #F4EEF9; border-color: #F4EEF9; color: #41214E; }
+.fc-newsletter { background: transparent !important; border: 0 !important; padding: 0; max-width: 60rem; margin: 0 auto; gap: 1.6rem; }
+.fc-newsletter__copy h3 { color: #FFFFFF; }
+.fc-newsletter__copy p { color: rgba(255,255,255,0.9); }
+.fc-newsletter__form input { border: 1px solid rgba(255,255,255,0.6); background: #FFFFFF; padding: 0.85rem 1.05rem; }
+
+/* ---------- Inspiration and Founder: SRA hero, 1:1 ----------
+   SRA if-figma.css 30-66 (.if-hero): 903px-tall band at 1920 (scales
+   linearly), soft horizontal gradient wash over ~93% of the height, the
+   lineage figures PNG (833x903) pinned top-right at x=1040, kicker + title
+   block at 148/538, width 750. Below 1024 (if-figma.css 474-530) the
+   glow-baked figures asset sits centered 343x372 with the copy centered
+   beneath. Cream/tan -> lavender; gold title gradient -> purple. */
+.ifhero {
+  position: relative; width: 100%; height: min(903px, calc(903 / 1920 * 100vw)); overflow: hidden; margin: 0; padding: 0;
+  background-color: #FFFFFF;
+  background-image: linear-gradient(89.74deg, rgba(244,238,249,0.9) 0%, rgba(201,179,220,0.6) 99.9%);
+  background-repeat: no-repeat; background-position: top; background-size: 100% calc(837 / 903 * 100%);
+}
+.ifhero__figures {
+  position: absolute; top: 0; left: min(1040px, calc(1040 / 1920 * 100vw)); width: min(833px, calc(833 / 1920 * 100vw));
+  height: 100%; object-fit: cover; object-position: center; pointer-events: none; display: block; max-width: none;
+}
+.ifhero__inner {
+  position: absolute; left: min(148px, calc(148 / 1920 * 100vw)); top: min(538px, calc(538 / 1920 * 100vw));
+  width: min(750px, calc(750 / 1920 * 100vw)); text-align: left; margin: 0; padding: 0;
+}
+.ifhero__kicker {
+  font-family: var(--font-body); font-weight: 500; font-size: min(20px, calc(20 / 1920 * 100vw)); line-height: 1.2;
+  letter-spacing: 0.06em; text-transform: uppercase; color: #693D84; margin: 0 0 min(24px, calc(24 / 1920 * 100vw));
+}
+.ifhero__title {
+  font-family: var(--font-display); font-weight: 400; font-size: min(64px, calc(64 / 1920 * 100vw)); line-height: 1.05; letter-spacing: 0; margin: 0;
+  background: linear-gradient(to right, #693D84 33.69%, #41214E 98.41%); background-clip: text; -webkit-background-clip: text; color: transparent;
+}
+@media (max-width: 1023px) {
+  .ifhero { height: auto; display: flex; flex-direction: column; background: linear-gradient(89.85deg, rgba(244,238,249,0.7) 0%, rgba(201,179,220,0.36) 99.915%); padding: 0 0 calc(43 / 390 * 100vw); }
+  .ifhero__figures { order: 0; }
+  .ifhero__inner { order: 1; }
+  .ifhero__figures { content: url('/assets/img/inspiration/if-hero-figures-glow.png'); position: relative; left: auto; width: calc(343 / 390 * 100vw); height: calc(372 / 390 * 100vw); max-width: 100%; margin: calc(39 / 390 * 100vw) auto 0; object-fit: cover; object-position: center; }
+  .ifhero__inner { position: relative; top: auto; left: auto; width: calc(314 / 390 * 100vw); margin: calc(44 / 390 * 100vw) auto 0; text-align: center; }
+  .ifhero__kicker { font-size: max(12px, calc(12 / 390 * 100vw)); line-height: 1.6; letter-spacing: 0.07em; max-width: calc(260 / 390 * 100vw); margin: 0 auto calc(10 / 390 * 100vw); }
+  .ifhero__title { font-weight: 500; font-size: max(32px, calc(32 / 390 * 100vw)); line-height: 1.1; }
+}
+@media (min-width: 600px) and (max-width: 1023px) {
+  .ifhero__figures { width: min(560px, 70vw); height: auto; aspect-ratio: 343 / 372; margin-top: 40px; }
+  .ifhero__inner { width: min(620px, 80vw); margin-top: 40px; }
+  .ifhero__kicker { font-size: 14px; max-width: none; }
+  .ifhero__title { font-size: 44px; }
+}
+/* Section image, SRA band-image treatment (styles.css 1995-2036 +
+   if-figma.css .band-image--jinmandir): a 1619x913 full-scale band centered
+   under the section copy, 70px below it, never a small tile. */
+.if-band { width: min(1619px, calc(1619 / 1920 * 100vw)); margin: min(70px, calc(70 / 1920 * 100vw)) auto 0; padding: 0; }
+.if-band__img { display: block; width: 100%; height: auto; aspect-ratio: 1619 / 913; object-fit: cover; object-position: center; }
+@media (max-width: 1023px) { .if-band { width: 100%; margin-top: 40px; } .if-band__img { aspect-ratio: 4 / 3; } }
+
+/* Page-end navigation: SRA if-figma.css continue-band: 260px band, serif
+   34px line, two 60px pills 40px apart; 40px 20px + 22px on phones. */
+.pagenext {
+  background: var(--sec-lav-deep); text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: min(260px, calc(260 / 1920 * 100vw)); padding: min(40px, calc(40 / 1920 * 100vw)) 20px !important;
+}
+.pagenext__inner { padding: 0; }
+.pagenext__line { font-family: var(--font-display); font-weight: 500; font-size: min(34px, calc(34 / 1920 * 100vw)); line-height: 1.2; color: #693D84; margin: 0 0 min(40px, calc(40 / 1920 * 100vw)); }
+.pagenext__links { display: flex; justify-content: center; gap: min(40px, calc(40 / 1920 * 100vw)); flex-wrap: wrap; }
+.pagenext__links .btn { min-width: min(244px, calc(244 / 1920 * 100vw)); height: 52px; }
+@media (max-width: 1023px) {
+  .pagenext { padding: 40px 20px !important; min-height: 0; }
+  .pagenext__line { font-size: 22px; line-height: 1.25; margin-bottom: 24px; }
+  .pagenext__links { gap: 12px; }
+  .pagenext__links .btn { min-width: 0; }
+}
+
+/* ---------- Bits that stopped making sense with square corners ---------- */
+.quote-wall__btn { border: 1px solid rgba(255,255,255,0.3); }
+.newsletter-modal__panel { border-radius: 0 !important; }

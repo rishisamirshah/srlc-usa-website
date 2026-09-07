@@ -34,7 +34,7 @@ def render_volunteer():
     body = page_header(
         "Get Involved",
         "Volunteer with SRLC USA",
-        "Thousands of people across 11 states and Washington, D.C. give their time, their skills, and their energy to SRLC USA. Not because they have to. Because service is who they are.",
+        "Thousands of people across the nation give their time, their skills, and their energy to SRLC USA. Not because they have to. Because service is who they are.",
         cta='<a class="btn btn--primary" href="#signup">Volunteer With Us</a> <a class="btn btn--ghost" href="/our-work/united-states/">Find My State&rsquo;s Chapter</a>',
         image="/assets/img/fillers/community-gathering.jpg",
     ) + f"""
