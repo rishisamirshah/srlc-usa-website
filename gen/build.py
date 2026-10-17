@@ -119,7 +119,23 @@ def assemble_assets():
         if "targets = ['27'" in s:
             continue  # banned-number counter stub
         if "}, 8000)" in s and "newsletterDismissed" in s:
-            continue  # superseded by exit-intent
+            # 8s newsletter popup is superseded by exit-intent, but the hero
+            # carousel logic shares this block and must survive
+            s = s.split("// Newsletter popup")[0].rstrip() + "\n})();"
+            s = s.replace(
+                "function start(){ stop();",
+                "function start(){ stop(); if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;")
+            s = s.replace(
+                "carousel.addEventListener('mouseleave', start);",
+                "carousel.addEventListener('mouseleave', start);\n"
+                "    carousel.addEventListener('focusin', stop);\n"
+                "    carousel.addEventListener('focusout', start);")
+        # stats render their final values; no count-up animation (critic: template tell)
+        s = s.replace("document.querySelectorAll('.mstat__n, .count-up')", "document.querySelectorAll('.count-up-off')")
+        # quote wall left the homepage; its timer threw every 6.5s with no cards
+        s = s.replace(
+            "var dots = document.querySelectorAll('.quote-wall__dots .qd');\n  var idx = 0;",
+            "var dots = document.querySelectorAll('.quote-wall__dots .qd');\n  if (!cards.length) return;\n  var idx = 0;")
         s = s.replace(
             "if (sp && !reducedMotion) {",
             "var _rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;\n  if (sp && !_rm) {")
@@ -209,7 +225,7 @@ def main():
 
     emit("/", C.render_home(svg), "1.0")
     emit("/donate/", render_donate(), "0.9")
-    emit("/get-involved/volunteer/", I.render_volunteer(), "0.9")
+    emit("/get-involved/volunteer/", I.render_volunteer(svg), "0.9")
     emit("/get-involved/events/", I.render_events())
     emit("/get-involved/fundraise/", I.render_fundraise())
     emit("/get-involved/partner-with-us/", I.render_partner())

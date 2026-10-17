@@ -1,7 +1,9 @@
 """Renderers: Our Work — flat pass. Copy verbatim from the master doc tabs.
 Per-state stat bands are omitted (CLAUDE.md banned list) and flagged in the
 build log. End-of-page CTAs render as flat sections, never banners."""
-from shell import page, ph, page_header, flat_cta, filler, filler_entry
+from shell import (page, ph, page_header, flat_cta, filler, filler_entry, story_split, photo_alt, photo,
+                   img_tag, pick_distinct, photo_src_tag)
+from data_media import slot
 from data_states import STATES, CAMPAIGNS, US_HERO_BODY
 from data_cares import CARES, TEN_CARE_INTRO
 from data_india import INSTITUTES, INDIA_INTRO, SRV
@@ -15,6 +17,62 @@ CARE_TAGS = {
     "humanitarian-care": "hands", "animal-care": "animals", "environmental-care": "nature",
     "emergency-relief-care": "hands",
 }
+# Media Bank routes per Care: the Care's own tag first, then close relatives.
+CARE_ROUTE = {
+    "health-care": ["health-care", "hospital"],
+    "educational-care": ["educational-care", "gurukul", "vidyapeeth"],
+    "child-care": ["child-care", "educational-care"],
+    "woman-care": ["woman-care", "coew"],
+    "tribal-care": ["tribal-care", "health-care+india"],
+    "community-care": ["community-care", "us-community"],
+    "humanitarian-care": ["humanitarian-care", "global"],
+    "animal-care": ["animal-care", "jivamaitridham"],
+    "environmental-care": ["environmental-care", "us-environment"],
+    "emergency-relief-care": ["emergency-relief-care", "humanitarian-care"],
+}
+
+
+# US photo per Care: matched on subject (description keywords) so a Care page
+# never borrows a gala hall or a back-to-school table that belongs elsewhere.
+CARE_US_ROUTE = {
+    "health-care": ["us+alt:hygiene", "us+alt:health", "us+alt:medical", "us+alt:hospital"],
+    "educational-care": ["us-classroom-of-change+us", "us+alt:school"],
+    "child-care": ["us+alt:children", "us+alt:kids", "us-classroom-of-change+us"],
+    "woman-care": ["us+alt:women", "us+alt:mother"],
+    "tribal-care": ["us-community+us"],
+    "community-care": ["us-community+us", "us+alt:senior"],
+    "humanitarian-care": ["us-food+us", "us+alt:shelter", "us+alt:meal"],
+    "animal-care": ["us+alt:animal", "us+alt:cow", "us+alt:farm"],
+    "environmental-care": ["us-environment+us", "us+alt:tree", "us+alt:litter", "us+alt:clean"],
+    "emergency-relief-care": ["us+alt:fire", "us+alt:relief", "emergency-relief-care+us"],
+}
+
+
+# Description keywords that keep a Care's India photo on subject when the
+# Care has no India-tagged photos left.
+CARE_KEYWORDS = {
+    "health-care": ["doctor", "patient", "medical"], "educational-care": ["student", "school", "class"],
+    "child-care": ["child", "children"], "woman-care": ["woman", "women"], "tribal-care": ["village"],
+    "community-care": ["awareness", "donation drive", "volunteers at"], "humanitarian-care": ["food", "meal", "distribut"],
+    "animal-care": ["animal", "cow", "dog", "cat"], "environmental-care": ["sapling", "tree planting", "solar", "water conservation"],
+    "emergency-relief-care": ["relief", "flood", "cyclone", "earthquake"],
+}
+
+
+# Cares whose India photos are thin get a strict route: no photo beats an
+# off-subject one.
+CARE_INDIA_ROUTE = {
+    "community-care": ["community-care+india+!alt:dog+!alt:veterinar+!alt:animal"],
+    "environmental-care": ["environmental-care+india", "india+alt:sapling", "india+alt:tree planting"],
+    "emergency-relief-care": ["emergency-relief-care+india", "india+alt:flood", "india+alt:relief kit"],
+}
+
+
+def care_photo(c, min_w=1600):
+    """Hero-grade photo for a Care: the curated care-<slug> pick, else its route."""
+    return slot(f"care-{c['slug']}") or photo(f"care-{c['slug']}", CARE_ROUTE[c["slug"]], CARE_TAGS[c["slug"]], min_w=min_w)
+
+
 INSTITUTE_TAGS = {
     "hospital-and-research-center": "hospital", "vidyapeeth": "classroom", "gurukul": "children",
     "skill-development-center": "skills", "jivamaitridham": "animals",
@@ -77,12 +135,15 @@ def editorial_map(svg_inner):
     for i, (name, slug, x, y, mode) in enumerate(stack):
         ly = stack_y0 + i * stack_dy
         marks.append(f'<path class="edmap-leader" d="M {x + 6} {y} L {stack_x - 12} {ly - 4}"></path>')
-        marks.append(f'<text class="edmap-label" x="{stack_x}" y="{ly}">{name}</text>')
+        marks.append(f'<text class="edmap-label edmap-label--side" x="{stack_x}" y="{ly}">{name}</text>')
+    chapters = "".join(f'<li><a href="/our-work/united-states/{slug}/">{name}</a></li>'
+                       for name, slug, *_ in sorted(ED_MARKERS))
     return f"""<div class="edmap reveal">
   <svg viewBox="0 0 1180 593" xmlns="http://www.w3.org/2000/svg" aria-label="Editorial map of SRLC USA chapters" preserveAspectRatio="xMidYMid meet">
     <g>{svg_inner}</g>
     <g>{"".join(marks)}</g>
   </svg>
+  <ul class="edmap-list" aria-label="SRLC USA chapter states">{chapters}</ul>
 </div>"""
 
 
@@ -99,6 +160,13 @@ def state_chips():
         for s in STATES) + "</div>"
 
 
+CAMPAIGN_ROUTE = {
+    "Classroom of Change": ["us-classroom-of-change+us", "us-classroom-of-change"],
+    "Giving Tuesday": ["us-community+us", "volunteers+us"],
+    "Meals of Love and Care": ["us-food+us", "us-food"],
+}
+
+
 def render_us_hub(svg_inner):
     campaigns = ""
     for i, c in enumerate(CAMPAIGNS):
@@ -109,7 +177,7 @@ def render_us_hub(svg_inner):
         <p>{c["body"]}</p>
         <a class="btn btn--primary" href="/donate/">{c["cta"]}</a>
       </div>
-      <div class="vu-split__photo">{ph(c["img_label"])}</div>
+      <div class="vu-split__photo">{img_tag(photo("us-campaign-" + c["name"], CAMPAIGN_ROUTE.get(c["name"], ["us-community+us", "volunteers+us"]), "community", min_w=1200))}</div>
     </div>"""
 
     body = page_header(
@@ -126,7 +194,6 @@ def render_us_hub(svg_inner):
       <p class="edmap-meta">Chapters in 11 states and Washington, D.C. &middot; One mission</p>
     </div>
     {editorial_map(svg_inner)}
-    <div class="edmap-foot"><span>SRLC USA</span><em>Love and Care. Compassion in action.</em></div>
     <div class="zipline">
       <label for="zipInput">Find your chapter</label>
       <form class="chapter-finder__form" style="display:flex;gap:.6rem" onsubmit="event.preventDefault(); window.__cfZipLookup &amp;&amp; window.__cfZipLookup();">
@@ -164,19 +231,20 @@ def render_us_hub(svg_inner):
 
 
 def render_state(s, idx):
-    gallery_slots = "".join(
-        ph(s.get("gallery_note", f'{s["name"]} chapter photography, Media Bank'))
-        for i in range(min(s["gallery"], 6)))
-    gallery = f"""<section class="vu-shell vu-shell--cream vu-shell--narrow">
-  <div class="container">
-    <div class="sechead">
-      <h2 class="vu-h reveal" style="margin:0">Photo gallery</h2>
-      <div class="railnav"><button data-rail-prev="#gal" aria-label="Previous">&larr;</button><button data-rail-next="#gal" aria-label="Next">&rarr;</button></div>
-    </div>
-    <div class="rail" id="gal">{gallery_slots}</div>
-  </div>
-</section>""" if s["gallery"] else ""
+    # Shared state template (Naman, Oct 16: one layout replicated to all twelve).
+    # Photos come only from the state's own shoots; a state with fewer than two
+    # gets no gallery rather than another chapter's pictures.
+    route = [f"state-{s['slug']}", "us-community+us", "volunteers+us", "us-food", "us-events"]
+    hero = slot(f"state-{s['slug']}-hero") or photo(f"state-{s['slug']}-hero", route, "community", min_w=1600)
+    gal = pick_distinct(f"state-{s['slug']}-gallery", f"state-{s['slug']}", 3, [photo_src_tag(hero[0])])
+    gallery = ""
+    if len(gal) >= 2:
+        imgs = "".join(img_tag((p[0], p[2], p[3], p[4])) for p in gal)
+        gallery = f"""<section class="stategal" aria-label="{s["name"]} chapter photos">
+  <div class="container"><div class="stategal__grid stategal__grid--{len(gal)}">{imgs}</div></div>
+</section>"""
 
+    multi = len(s["centers"]) > 1
     tab_btns, tab_panels = "", ""
     for i, c in enumerate(s["centers"]):
         sel = "true" if i == 0 else "false"
@@ -191,35 +259,36 @@ def render_state(s, idx):
         partners = f'<p class="partnerline"><b>Serving alongside:</b> {c["partners"]}</p>' if c["partners"] else ""
         active = " active" if i == 0 else ""
         tab_panels += f'<div class="tabs__panel{active}" role="tabpanel">{secs}{contact}{partners}</div>'
+    tabs = (f'<div data-tabs class="mt-6"><div class="tabs__list" role="tablist">{tab_btns}</div>{tab_panels}</div>'
+            if multi else f'<div class="mt-6 state-single">{tab_panels}</div>')
 
     prev_s = STATES[(idx - 1) % len(STATES)]
     next_s = STATES[(idx + 1) % len(STATES)]
-
     body = page_header(
         '<a href="/our-work/united-states/">Where We Serve</a> &middot; United States',
         s["name"],
-        s["hero"],
-        image=filler(s["name"], "community"),
+        image=hero[0], size=(hero[1], hero[2]), alt=hero[3],
     ) + f"""
+<section class="leadsec" aria-label="About {s["name"]}">
+  <div class="container"><p class="leadsec__lead">{s["hero"]}</p></div>
+</section>
 {gallery}
-
-<section class="vu-shell vu-shell--lav">
+<section class="statework" aria-labelledby="state-work-h">
   <div class="container">
-    <h2 class="vu-h reveal">Constantly Serving Communities</h2>
-    <div data-tabs class="mt-6 reveal">
-      <div class="tabs__list" role="tablist">{tab_btns}</div>
-      {tab_panels}
-    </div>
+    <h2 class="statework__h" id="state-work-h">Constantly Serving Communities</h2>
+    {tabs}
   </div>
 </section>
-
-{flat_cta(f'Serve with us in {s["name"]}.', "Reach out to your local SRLC leaders, or sign up and your chapter coordinator will be in touch.", "Volunteer With Us", "/get-involved/volunteer/", ("Ways to Give", "/donate/"))}
-
-<section class="pagenav-strip">
+<section class="statecta" aria-labelledby="state-cta-h">
   <div class="container">
-    <a href="/our-work/united-states/{prev_s["slug"]}/">&larr; {prev_s["name"]}</a>
-    <a href="/our-work/united-states/">All states</a>
-    <a href="/our-work/united-states/{next_s["slug"]}/">{next_s["name"]} &rarr;</a>
+    <h2 class="statecta__h" id="state-cta-h">Serve with us in {s["name"]}.</h2>
+    <p class="statecta__p">Reach out to your local SRLC leaders, or sign up and your chapter coordinator will be in touch.</p>
+    <p class="statecta__actions"><a class="btn btn--primary" href="/get-involved/volunteer/">Volunteer With Us</a><a class="btn btn--secondary" href="/donate/">Ways to Give</a></p>
+    <nav class="statenav" aria-label="More states">
+      <a href="/our-work/united-states/{prev_s["slug"]}/">&larr; {prev_s["name"]}</a>
+      <a href="/our-work/united-states/">All states</a>
+      <a href="/our-work/united-states/{next_s["slug"]}/">{next_s["name"]} &rarr;</a>
+    </nav>
   </div>
 </section>
 """
@@ -227,29 +296,26 @@ def render_state(s, idx):
 
 
 def render_tencare_hub():
-    """Header band, sticky name-only jump strip, then one photo panel per Care.
-    No statistics on this hub (Naman, Aug 24). Reduced motion collapses the
-    panels to a stacked list via the shared .carepanel media queries."""
-    strip = jump_strip([(c["slug"], c["name"]) for c in CARES], "Care programs")
-    panels = ""
-    for i, c in enumerate(CARES):
-        inner = f"""
-      <img class="care-icon reveal" src="/assets/img/care-icons/{c["icon"]}" alt="" width="52" height="52">
-      <h2 class="reveal">{c["name"]}</h2>
-      <p class="vu-lead reveal" data-stagger="1" style="max-width:none">{c["one"]}</p>
-      <div class="mt-6 reveal" data-stagger="2"><a class="btn btn--secondary" href="/our-work/10-care-program/{c["slug"]}/">Explore {c["name"]}</a></div>
-    """
-        panels += photo_panel(c["slug"], c["name"] + " panel", CARE_TAGS[c["slug"]], inner, eager=(i == 0))
-
-    body = page_header(
-        "Our Work",
-        "10 Care Program",
-        TEN_CARE_INTRO,
-        image=filler("10 Care Program", "hands"),
-    ) + f"""
-{strip}
-{panels}
-{flat_cta("Every Care welcomes support.", "Your gift and your hours both count.", "Support the 10 Care Program", "/donate/", ("Volunteer", "/get-involved/volunteer/"))}
+    """Hero, the tab's intro as its own section, then the ten Cares as photo
+    tiles in the homepage grid (no numbers, no icons; one-liner on hover,
+    accordion rows below 1024). Each tile links to its Care page."""
+    tiles = "".join(f"""<a class="caretile caretile--hub" href="/our-work/10-care-program/{c["slug"]}/" style="background-image:url('{care_photo(c)[0]}')">
+        <span class="caretile__overlay" aria-hidden="true"></span>
+        <span class="caretile__chip"><span class="caretile__name">{c["name"]}</span></span>
+        <span class="caretile__hover"><span class="caretile__hover-h">{c["name"]}</span><span class="caretile__hover-p">{c["one"]}</span></span>
+      </a>""" for c in CARES)
+    hero = photo("10 Care Program hero", ["volunteers+india", "community-care+india", "educational-care+india"], "community", min_w=1600)
+    body = page_header("Our Work", "10 Care Program", image=hero[0], size=(hero[1], hero[2]), alt=hero[3]) + f"""
+<section class="leadsec" aria-label="About the 10 Care Program">
+  <div class="container">
+    <p class="leadsec__lead">{TEN_CARE_INTRO}</p>
+  </div>
+</section>
+<section class="care-section care-section--hub" aria-label="The ten Cares">
+  <div class="container">
+    <div class="caregrid">{tiles}</div>
+  </div>
+</section>
 """
     return page(
         "The 10 Care Program | Ten Ways to Care | SRLC USA",
@@ -258,100 +324,138 @@ def render_tencare_hub():
 
 
 def render_care(c):
-    cards = ""
+    # One template for all ten (Naman, Oct 16): why it matters, the work in
+    # India, the work in the US, one named story, your gift. Copy verbatim from
+    # each Care tab; the FINANCE-PENDING dollar line stays out until finance rules.
+    hero_src, hero_w, hero_h, hero_alt = care_photo(c)
+    route = CARE_ROUTE[c["slug"]]
+    india_route = CARE_INDIA_ROUTE.get(c["slug"]) or (
+        [f"{t}+india" for t in route] + [f"india+alt:{k}" for k in CARE_KEYWORDS[c["slug"]]])
+    india_img = photo(f"{c['slug']}-india", india_route, CARE_TAGS[c["slug"]], min_w=1200, strict=True)
+    programs = ""
     if c["cards"]:
-        cells = ""
-        for name, desc, href in c["cards"]:
-            inner = f"<h3>{name}</h3><p>{desc}</p>"
-            if href:
-                cells += f'<a class="cause-card reveal" href="{href}" style="display:block;text-decoration:none;color:inherit">{inner}<span class="card__cta">Visit the institute</span></a>'
-            else:
-                cells += f'<div class="cause-card reveal">{inner}</div>'
-        cards = f'<div class="card-grid mt-6">{cells}</div>'
+        rows = "".join(
+            f'<li class="proglist__item"><h3 class="proglist__h">{name}</h3><p class="proglist__d">{desc}</p>'
+            + (f'<a class="textlink" href="{href}">Visit the institute<span aria-hidden="true"> &rarr;</span></a>' if href else "")
+            + "</li>"
+            for name, desc, href in c["cards"])
+        programs = f'<div class="container"><ul class="proglist">{rows}</ul></div>'
 
     us = ""
     if c["us"]:
-        us = f"""<section class="vu-shell vu-shell--cream">
-  <div class="container">
-    <div class="vu-split vu-split--reverse">
-      <div class="vu-split__copy">
-        <h3>In the United States</h3>
-        <p>{c["us"]}</p>
-      </div>
-      <div class="vu-split__photo">{ph(c["us_img"])}</div>
-    </div>
-  </div>
-</section>"""
+        us_img = photo(f"{c['slug']}-us", CARE_US_ROUTE[c["slug"]] + ["volunteers+us"], "community", min_w=1200)
+        us = story_split("In the United States", [c["us"]], us_img, reverse=True, tone="white")
 
     story = ""
     if c["story"]:
         h, b = c["story"]
-        story = f"""<section class="vu-shell vu-shell--lav vu-shell--narrow">
-  <div class="container">
-    <div class="vu-card vu-card--accent vu-card--stack reveal">
-      <h3 class="vu-card__h" style="grid-column:1">{h}</h3>
-      <div class="vu-card__body"><p>{b}</p></div>
-    </div>
+        story = f"""<section class="storyband" aria-labelledby="story-h">
+  <div class="container storyband__inner">
+    <p class="storyband__eyebrow">Story</p>
+    <h2 class="storyband__h" id="story-h">{h}</h2>
+    <p class="storyband__body">{b}</p>
   </div>
 </section>"""
 
-    # Global statistics live on the homepage and Our Impact only (Naman, Aug 24).
-    # A Care page may carry one Care-specific figure; none is approved yet, so
-    # the slot stays empty rather than falling back to the global set.
-    impact = ""
-
     body = page_header(
-        f'<a href="/our-work/10-care-program/">10 Care Program</a> &middot; {c["num"]}',
-        c["name"],
-        c["opening"],
-        image=filler(c["name"], CARE_TAGS[c["slug"]]),
+        '<a href="/our-work/10-care-program/">10 Care Program</a>',
+        c["name"], image=hero_src, size=(hero_w, hero_h), alt=hero_alt,
     ) + f"""
-<section class="vu-shell vu-shell--lav">
+<section class="leadsec" aria-labelledby="why-h">
   <div class="container">
-    <div class="vu-split">
-      <div class="vu-split__copy">
-        <h3>The Work in India</h3>
-        <p>{c["india"]}</p>
-      </div>
-      <div class="vu-split__photo">{ph(c["hero_img"])}</div>
-    </div>
-    {cards}
+    <h2 class="leadsec__eyebrow" id="why-h">Why It Matters</h2>
+    <p class="leadsec__lead">{c["opening"]}</p>
   </div>
 </section>
+<div class="caresec caresec--india">
+{story_split("The Work in India", [c["india"]], india_img, tone="lav")}
+{programs}
+</div>
 {us}
 {story}
-{impact}
-{flat_cta(f'{c["name"]} continues with you.', "Your employer may match your gift. Check if your company participates.", c["cta"], "/donate/")}
+<section class="giftsec" aria-labelledby="gift-h">
+  <div class="container giftsec__inner">
+    <h2 class="giftsec__h" id="gift-h">Your Gift</h2>
+    <a class="btn btn--primary" href="/donate/">{c["cta"]}</a>
+  </div>
+</section>
 """
     return page(c["title"], c["desc"], f'/our-work/10-care-program/{c["slug"]}/', body)
 
 
-def render_india_hub():
-    """Same pattern as the 10 Care hub: header band, sticky name-only jump
-    strip, one photo panel per institute. No statistics. Reduced motion
-    collapses the panels to a stacked list via the shared .carepanel media queries."""
-    # Strip labels drop the shared "Shrimad Rajchandra" prefix so six names fit
-    # one slim row; the full name stays on the panel and the detail page.
-    strip = jump_strip([(inst["slug"], inst["name"].replace("Shrimad Rajchandra ", "", 1)) for inst in INSTITUTES], "Institutes")
-    panels = ""
-    for i, inst in enumerate(INSTITUTES):
-        inner = f"""
-      <p class="vu-eyebrow" style="display:inline-flex">{inst["tag"]}</p>
-      <h2 class="reveal">{inst["name"]}</h2>
-      <p class="vu-lead reveal" data-stagger="1" style="max-width:none">{inst["desc"]}</p>
-      <div class="mt-6 reveal" data-stagger="2"><a class="btn btn--secondary" href="/our-work/india/{inst["slug"]}/">Visit the institute</a></div>
-    """
-        panels += photo_panel(inst["slug"], inst["name"] + " panel", INSTITUTE_TAGS[inst["slug"]], inner, eager=(i == 0))
+INST_SLOTS = {
+    "hospital-and-research-center": "inst-hospital", "vidyapeeth": "inst-vidyapeeth",
+    "gurukul": "inst-gurukul", "skill-development-center": "inst-skills",
+    "jivamaitridham": "inst-jivamaitridham", "center-of-excellence-for-women": "inst-coew",
+}
 
+
+INST_TAG = {
+    "hospital-and-research-center": "hospital", "vidyapeeth": "vidyapeeth", "gurukul": "gurukul",
+    "skill-development-center": "skills", "jivamaitridham": "jivamaitridham",
+    "center-of-excellence-for-women": "coew",
+}
+
+_IC = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">{}</svg>'
+INST_ICONS = {
+    "hospital-and-research-center": _IC.format('<path d="M12 5v14M5 12h14"/>'),
+    "vidyapeeth": _IC.format('<path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3l-5-9V3M7.5 15h9"/>'),
+    "gurukul": _IC.format('<path d="M3 5h6a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H3zM21 5h-6a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h7z"/>'),
+    "skill-development-center": _IC.format('<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/>'),
+    "jivamaitridham": _IC.format('<circle cx="7" cy="9" r="1.8"/><circle cx="11" cy="5.5" r="1.8"/><circle cx="16" cy="6.5" r="1.8"/><circle cx="18.5" cy="11" r="1.8"/><path d="M8.5 18.5c0-2.5 1.8-5.5 4-5.5s4 3 4 5.5c0 1.5-1.2 2-2.5 1.6-1-.3-2-.3-3 0-1.3.4-2.5-.1-2.5-1.6z"/>'),
+    "center-of-excellence-for-women": _IC.format('<circle cx="12" cy="7" r="3.2"/><path d="M5.5 21v-1.5a6.5 6.5 0 0 1 13 0V21"/>'),
+}
+INST_LABELS = {
+    "hospital-and-research-center": "Hospital and Research Center", "vidyapeeth": "Vidyapeeth",
+    "gurukul": "Gurukul", "skill-development-center": "Skill Development Center",
+    "jivamaitridham": "Jivamaitridham", "center-of-excellence-for-women": "Center of Excellence for Women",
+}
+
+
+def flipcard(inst, back_desc, href, card_id="", link_label="Visit the institute"):
+    """Homepage institute card: square photo with a dark label bar and icon,
+    flipping to a purple back with the description and a text link."""
+    id_attr = f' id="{card_id}"' if card_id else ""
+    return f"""<li class="flipcard"{id_attr} tabindex="0">
+        <div class="flipcard__inner">
+          <div class="flipcard__front" style="background-image:url('{inst_photo(inst)[0]}')">
+            <span class="flipcard__label"><span class="flipcard__icon">{INST_ICONS[inst["slug"]]}</span><span class="flipcard__name">{INST_LABELS[inst["slug"]]}</span></span>
+          </div>
+          <div class="flipcard__back">
+            <h3 class="flipcard__h"><a href="{href}">{inst["home_name"]}</a></h3>
+            <p class="flipcard__d">{back_desc}</p>
+            <a class="textlink" href="{href}">{link_label}<span aria-hidden="true"> &rarr;</span></a>
+          </div>
+        </div>
+      </li>"""
+
+
+def inst_photo(inst):
+    """(src, w, h, alt) for an institute: the named Media Bank pick, else the pool."""
+    pick = slot(INST_SLOTS[inst["slug"]])
+    if pick:
+        return pick
+    f = filler_entry(inst["name"], INSTITUTE_TAGS[inst["slug"]])
+    return (f[0], f[2], f[3], photo_alt(f[0], inst["name"]))
+
+
+def render_india_hub():
+    """India tab: one block per institute (name, approved description, photo,
+    link to the detail page) in the homepage institute card pattern."""
+    cards = "".join(flipcard(inst, inst["desc"], f'/our-work/india/{inst["slug"]}/', inst["slug"]) for inst in INSTITUTES)
+    hero = slot("india-hero") or photo("india-hero", ["hospital+india", "india"], "children", min_w=1600)
     body = page_header(
         "Our Work &middot; Where We Serve",
         "Our Institutes in India",
         INDIA_INTRO,
-        image=filler("India", "children"),
+        image=hero[0], size=(hero[1], hero[2]), alt=hero[3],
     ) + f"""
-{strip}
-{panels}
-{flat_cta("Institutes built to serve for generations.", "Every institute welcomes support from across the world.", "Support Our Institutes", "/donate/")}
+<section class="initgrid-sec">
+  <div class="container">
+    <ul class="flipgrid">{cards}</ul>
+  </div>
+</section>
+{gift_section("Ways to Support", "", "Give to This Work")}
 """
     return page(
         "Our Institutes in India | SRLC USA",
@@ -359,104 +463,81 @@ def render_india_hub():
         "/our-work/india/", body)
 
 
-def peer_cards(current_slug):
-    cells = "".join(
-        f'<a class="cause-card reveal" href="/our-work/india/{i["slug"]}/" style="display:block;text-decoration:none;color:inherit"><h3 style="font-size:1.05rem">{i["name"]}</h3><p style="margin:0;font-size:.9rem;color:var(--color-ink-muted)">{i["tag"]}</p></a>'
-        for i in INSTITUTES if i["slug"] != current_slug)
-    return f"""<section class="vu-shell vu-shell--cream">
-  <div class="container">
-    <h2 class="vu-h reveal">More Institutes in India</h2>
-    <div class="card-grid mt-6">{cells}</div>
-    <p class="mt-6"><a href="/our-work/india/">Our Institutes in India</a></p>
+def gift_section(h2, body, cta, href="/donate/"):
+    body_html = f'<p class="giftsec__p">{body}</p>' if body else ""
+    return f"""<section class="giftsec" aria-labelledby="gift-h">
+  <div class="container giftsec__inner">
+    <div class="giftsec__copy"><h2 class="giftsec__h" id="gift-h">{h2}</h2>{body_html}</div>
+    <a class="btn btn--primary" href="{href}">{cta}</a>
   </div>
 </section>"""
+
+
+def peer_cards(current_slug):
+    """More institutes: the homepage flip-card row, minus the current one."""
+    cards = "".join(flipcard(inst, inst["home_desc"], f'/our-work/india/{inst["slug"]}/')
+                    for inst in INSTITUTES if inst["slug"] != current_slug)
+    return f"""<section class="instrow instrow--peers" aria-labelledby="peers-h">
+  <div class="container instrow__head">
+    <h2 class="instrow__h" id="peers-h">More Institutes in India</h2>
+  </div>
+  <div class="instrow__viewport">
+    <ul class="instrow__track" id="instrowTrack">{cards}</ul>
+  </div>
+  <div class="instrow__arrows">
+    <button type="button" class="instrow__arrow" data-dir="-1" aria-controls="instrowTrack" aria-label="Previous institutes"><svg viewBox="0 0 44 16" aria-hidden="true"><path d="M43 8H2M9 1L2 8l7 7"/></svg></button>
+    <button type="button" class="instrow__arrow" data-dir="1" aria-controls="instrowTrack" aria-label="Next institutes"><svg viewBox="0 0 44 16" aria-hidden="true"><path d="M1 8h41M35 1l7 7-7 7"/></svg></button>
+  </div>
+</section>"""
+
+
+def inst_hero(inst):
+    return photo(f"{inst['slug']}-hero", [INST_TAG[inst["slug"]], "india"], INSTITUTE_TAGS[inst["slug"]], min_w=1600)
 
 
 def render_institute(inst):
-    """Spec-pattern institute page (Document C): hero with the selected intro
-    sentence, description slot (empty where the approved description is
-    pending), peer-institute exit path. Blocking sections stay out."""
-    desc_section = ""
-    if inst.get("desc_full"):
-        desc_section = f"""<section class="vu-shell vu-shell--lav">
-  <div class="container">
-    <div class="vu-split">
-      <div class="vu-split__copy">
-        <h3>What This Institute Does</h3>
-        <p class="vu-lead--xl" style="margin-top:0">{inst["desc"]}</p>
-        {"<p>" + inst["extra"] + "</p>" if inst.get("extra") else ""}
-      </div>
-      <div class="vu-split__photo">{ph(inst["img"])}</div>
-    </div>
-  </div>
-</section>"""
-    else:
-        desc_section = f"""<section class="vu-shell vu-shell--lav">
-  <div class="container">
-    <div class="vu-split">
-      <div class="vu-split__copy">
-        <h3>What This Institute Does</h3>
-        <!-- Approved description pending; placed verbatim once supplied. The slot stays empty per the build rules. -->
-        <div class="desc-pending" style="min-height:140px"></div>
-      </div>
-      <div class="vu-split__photo">{ph(inst["img"])}</div>
-    </div>
-  </div>
-</section>"""
-
+    """One layout for the institute set: hero with the selected intro
+    sentence, what the institute does (approved description beside a photo),
+    the other institutes, then ways to support."""
+    paras = [inst["desc"]] + ([inst["extra"]] if inst.get("extra") else [])
+    hero = inst_hero(inst)
     body = page_header(
         '<a href="/our-work/india/">Our Institutes in India</a>',
         inst["name"],
-        inst["intro"],
-        cta=f'<a class="btn btn--primary" href="/donate/">{inst.get("cta", "Give to This Work")}</a>',
-        image=filler(inst["name"], INSTITUTE_TAGS[inst["slug"]]),
+        inst["intro"] or None,
+        image=hero[0], size=(hero[1], hero[2]), alt=hero[3],
     ) + f"""
-{desc_section}
+{story_split("What This Institute Does", paras, inst_photo(inst), tone="lav", compact=len(" ".join(paras)) < 260)}
 {peer_cards(inst["slug"])}
-{flat_cta("Ways to Support", "", inst.get("cta", "Give to This Work"), "/donate/")}
+{gift_section("Ways to Support", "", inst.get("cta", "Give to This Work"))}
 """
     return page(inst["meta_title"], inst["meta_desc"], f'/our-work/india/{inst["slug"]}/', body)
 
 
 def render_vidyapeeth():
-    programs = "".join(
-        f'<div class="cause-card reveal" data-stagger="{i % 4 + 1}"><h3>{n}</h3><p>{d}</p></div>'
-        for i, (n, d) in enumerate(SRV["programs"]))
-    pillars = "".join(
-        f'<div class="cause-card reveal" data-stagger="{i + 1}"><h3>{n}</h3><p>{d}</p></div>'
-        for i, (n, d) in enumerate(SRV["pillars"]))
-    need = "".join(f"<p>{p}</p>" for p in SRV["need"])
+    """Vidyapeeth on the shared institute layout, with its tab's programs and
+    support pillars as editorial rows."""
+    inst = next(i for i in INSTITUTES if i["slug"] == "vidyapeeth")
+    rows = lambda items: "".join(f'<li class="proglist__item"><h3 class="proglist__h">{n}</h3><p class="proglist__d">{d}</p></li>' for n, d in items)
+    hero = inst_hero(inst)
     body = page_header(
-        '<a href="/our-work/india/">Our Institutes in India</a> &middot; Science College',
+        '<a href="/our-work/india/">Our Institutes in India</a>',
         SRV["h1"],
         SRV["sub"],
-        cta=f'<a class="btn btn--primary" href="/donate/">{SRV["cta"]}</a>',
-        image=filler("Shrimad Rajchandra Vidyapeeth", "classroom"),
+        image=hero[0], size=(hero[1], hero[2]), alt=hero[3],
     ) + f"""
-<section class="vu-shell vu-shell--lav">
+{story_split(SRV["need_h2"], SRV["need"], inst_photo(inst), tone="lav")}
+<section class="progsec" aria-labelledby="srv-programs">
   <div class="container">
-    <div class="vu-split">
-      <div class="vu-split__copy">
-        <h3>{SRV["need_h2"]}</h3>
-        {need}
-      </div>
-      <div class="vu-split__photo">{ph("The Dharampur region: fields, village roads, the terrain between communities and the nearest city. Media Bank.")}</div>
-    </div>
+    <h2 class="progsec__h" id="srv-programs">{SRV["programs_h2"]}</h2>
+    <p class="progsec__intro">{SRV["programs_intro"]}</p>
+    <ul class="proglist">{rows(SRV["programs"])}</ul>
+    <p class="progsec__intro progsec__intro--gap">{SRV["support_intro"]}</p>
+    <ul class="proglist">{rows(SRV["pillars"])}</ul>
   </div>
 </section>
-
-<section class="vu-shell vu-shell--cream">
-  <div class="container">
-    <h2 class="vu-h reveal">{SRV["programs_h2"]}</h2>
-    <p class="vu-lead">{SRV["programs_intro"]}</p>
-    <div class="card-grid mt-6">{programs}</div>
-    <p class="mt-8 maxw-70">{SRV["support_intro"]}</p>
-    <div class="card-grid mt-6">{pillars}</div>
-  </div>
-</section>
-
 {peer_cards("vidyapeeth")}
-{flat_cta(SRV["close_h2"], SRV["close"], SRV["cta"])}
+{gift_section(SRV["close_h2"], SRV["close"], SRV["cta"])}
 """
     return page(SRV["title"], SRV["desc"], "/our-work/india/vidyapeeth/", body)
 
@@ -472,10 +553,10 @@ def render_africa():
   <div class="container">
     <div class="vu-split">
       <div class="vu-split__copy">
-        <h3>Distance should not decide who gets care</h3>
+        <h2 class="vu-h">Distance should not decide who gets care</h2>
         <p>In much of the region Mission Africa serves, the barrier to health is not the treatment. It is the miles between a family and anyone who can provide it, the distance where a curable illness quietly becomes a permanent one. Launched in 2024 by Shrimad Rajchandra Love and Care (SRLC), Mission Africa now works across 16 countries in Africa to close that distance.</p>
       </div>
-      <div class="vu-split__photo">{ph("A patient queue that reads as order and hope, morning light. Mission Africa team photos pending with consent records.")}</div>
+      <div class="vu-split__photo">{img_tag(photo("africa-queue", ["africa+alt:queue", "africa+alt:camp", "africa"], "hospital", min_w=1200))}</div>
     </div>
   </div>
 </section>
@@ -492,15 +573,15 @@ def render_africa():
 </section>
 
 <section class="vu-shell vu-shell--lav">
-  <div class="container container--narrow" style="max-width:820px">
+  <div class="container">
     <h2 class="vu-h reveal">Proven far from here</h2>
     <p>Mission Africa did not start from zero and your gift does not land on an experiment. It extends a healthcare model refined over decades in Dharampur, India, where a 250-bed hospital accredited by the National Accreditation Board for Hospitals and Healthcare Providers (NABH) treats patients regardless of their ability to pay. The movement behind it has touched 33M+ lives globally, and volunteers across the United States help fund and power the work.</p>
-    <div class="vu-toc--inline">
-      <a href="/our-work/10-care-program/">Our Causes</a>
-      <a href="/our-work/india/">India</a>
-      <a href="/our-work/united-states/">United States</a>
-    </div>
-    <div class="mt-6">{ph("50/50 photo pairing: a US chapter moment beside a camp moment, equal weight. Media Bank.", style="min-height:180px")}</div>
+    <p class="africa-links">
+      <a class="textlink" href="/our-work/10-care-program/">Our Causes<span aria-hidden="true"> &rarr;</span></a>
+      <a class="textlink" href="/our-work/india/">India<span aria-hidden="true"> &rarr;</span></a>
+      <a class="textlink" href="/our-work/united-states/">United States<span aria-hidden="true"> &rarr;</span></a>
+    </p>
+    <div class="photopair">{img_tag(photo("africa-pair-us", ["volunteers+us", "us-community+us"], "community", min_w=1200))}{img_tag(photo("africa-pair-camp", ["africa+alt:camp", "africa+alt:medical", "africa"], "hospital", min_w=1200))}</div>
   </div>
 </section>
 

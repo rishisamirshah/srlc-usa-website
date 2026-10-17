@@ -3,28 +3,29 @@ FAQs and Corporate Giving are Phase 2 (removed). Events / Fundraise / Partner
 have no content tabs yet: structure plus functional elements only, no invented
 copy. Banned figure "25+ cities" replaced with the approved footprint phrasing
 (conflict with tab copy flagged in the build log)."""
-from shell import page, ph, page_header, flat_cta, filler, EMAIL, PHONE, IG, FB
-from pages_core import prose_photo
+from shell import page, ph, page_header, flat_cta, filler, photo, img_tag, pick_distinct, EMAIL, PHONE, IG, FB
+from pages_core import prose_photo, chapter_finder
 
 US_FOOTPRINT = "chapters in 11 states and Washington, D.C."
 
 
-def render_volunteer():
+def render_volunteer(svg_inner):
     cards = [
         ("Community", "SRLC USA&rsquo;s chapters are built by people who show up for each other. At every event, volunteers meet neighbors, professionals, and students who share a commitment to service. Many join for the cause and stay for the community."),
         ("Purpose", "Every event organized, every food distribution completed, every campaign supported reaches real people across the United States, India, and Africa. The effort on the ground connects directly to lives changed."),
         ("Growth", "Leadership, event management, fundraising, communications, and logistics are all part of active chapter work. The skills built through SRLC USA are practical and lasting. Many of our chapter leaders developed those skills here."),
         ("Belonging", "Service is not something SRLC USA volunteers do occasionally. For many, it becomes part of how they identify. That is why so many volunteers who start with a single event stay involved for years."),
     ]
-    cards_html = prose_photo(cards, "/assets/img/fillers/hands-heart.jpg",
-                             alt="Volunteers in conversation at an SRLC USA chapter event")
+    why = photo("volunteer-community", ["volunteers", "us-community", "us-events"], "community")
+    cards_html = prose_photo(cards, why[0], alt=why[3] or "SRLC USA volunteers at a chapter event")
     steps = [
         ("01", "Sign up", "Fill out the form at the bottom of this page. Share where you are, what skills or interests you can offer, and how much time you have each month. It takes under two minutes."),
         ("02", "Meet your chapter", "A coordinator from the SRLC chapter in your area will reach out within a few days. They will introduce themselves and walk you through what the chapter is currently working on."),
         ("03", "Show up", "Attend your first event. Meet the people who make the chapter run. Most volunteers return for the next one within a month."),
     ]
-    steps_html = prose_photo([(t, b) for _, t, b in steps], "/assets/img/photos/event-recent.jpg",
-                             alt="An SRLC USA chapter event in progress", numbered=True, reverse=True)
+    start = photo("volunteer-steps", ["us-classroom-of-change+us", "volunteers+us"], "community", min_w=1200)
+    steps_html = prose_photo([(t, b) for _, t, b in steps], start[0],
+                             alt=start[3] or "SRLC USA volunteers at a chapter event", numbered=True, reverse=True)
     roles = ["Events and Logistics", "Food and Distribution", "Community Outreach", "Fundraising and Campaigns",
              "Communications and Social Media", "Healthcare Outreach", "University and Youth Programs",
              "Operations and Administration", "Chapter Leadership", "Internship", "Other"]
@@ -36,7 +37,6 @@ def render_volunteer():
         "Volunteer with SRLC USA",
         "Thousands of people across the nation give their time, their skills, and their energy to SRLC USA. Not because they have to. Because service is who they are.",
         cta='<a class="btn btn--primary" href="#signup">Volunteer With Us</a> <a class="btn btn--ghost" href="/our-work/united-states/">Find My State&rsquo;s Chapter</a>',
-        image="/assets/img/fillers/community-gathering.jpg",
     ) + f"""
 <section class="vu-shell vu-shell--lav vu-shell--first">
   <div class="container">
@@ -51,6 +51,8 @@ def render_volunteer():
     <div class="mt-6 reveal">{steps_html}</div>
   </div>
 </section>
+
+{chapter_finder(svg_inner)}
 
 <section class="vu-shell vu-shell--cream" id="signup">
   <div class="container" style="max-width:820px">
@@ -93,19 +95,36 @@ def render_volunteer():
 
 
 def render_events():
+    """No Events tab yet: real chapter-event photos and the newsletter row as
+    the way to hear about the next one, rather than an empty calendar."""
+    shots = pick_distinct("events-gallery", "us-events", 6)
+    grid = "".join(img_tag((p[0], p[2], p[3], p[4])) for p in shots)
     body = page_header(
         "Get Involved",
         "Events",
         "Chapter events, galas, and community gatherings.",
         image="/assets/img/photos/event-recent.jpg",
     ) + f"""
-<section class="vu-shell vu-shell--lav vu-shell--first">
-  <div class="container" style="max-width:820px">
-    <p class="vu-lead" style="color:var(--color-ink-muted)">Events calendar pending from the content team. Chapter coordinators share upcoming dates directly with volunteers.</p>
-    <p class="mt-6" style="display:flex;gap:.7rem;flex-wrap:wrap">
-      <a class="btn btn--primary" href="/get-involved/volunteer/">Get Event Invites</a>
-      <a class="btn btn--secondary" href="/our-work/united-states/">Find Your Chapter</a>
-    </p>
+<section class="eventgal" aria-label="Recent chapter events">
+  <div class="container"><div class="stategal__grid stategal__grid--3">{grid}</div></div>
+</section>
+<section class="takepart takepart--slim" aria-label="Event updates">
+  <div class="container">
+    <div class="nlrow nlrow--top" id="event-updates">
+      <div class="nlrow__copy">
+        <p class="nlrow__eyebrow">Stay informed. Be inspired.</p>
+        <p class="nlrow__line">Updates on who we serve, the programs we run, and what your support makes possible.</p>
+      </div>
+      <form class="nlrow__form" name="updates" method="POST" data-netlify="true" data-netlify-inline netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="updates">
+        <input type="hidden" name="source" value="events">
+        <p class="hp-field"><input name="bot-field" tabindex="-1"></p>
+        <input type="email" name="email" required placeholder="Email address" aria-label="Email address" class="form-hidewrap">
+        <button type="submit" class="btn btn--primary form-hidewrap">Subscribe</button>
+        <span class="form-success">Thank you. Check your inbox to confirm.</span>
+      </form>
+    </div>
+    <p class="events-more"><a class="btn btn--secondary" href="/our-work/united-states/">Find Your Chapter</a></p>
   </div>
 </section>
 """
@@ -122,18 +141,17 @@ FUND_CAUSES = ["General Fund", "Education", "Healthcare", "Humanitarian Care", "
 
 def render_fundraise():
     chips = "".join(
-        f'<a href="mailto:{EMAIL}?subject={("Start a fundraiser: " + name).replace(" ", "%20")}">{name}</a>'
+        f'<a class="btn btn--secondary" href="mailto:{EMAIL}?subject={("Start a fundraiser: " + name).replace(" ", "%20")}">{name}</a>'
         for name in FUND_CAUSES)
     body = page_header(
         "Get Involved",
         "Start a Fundraiser for SRLC USA",
         "Please choose what fund you would like to start a fundraiser for.",
-        image="/assets/img/fillers/community-gathering.jpg",
     ) + f"""
 <section class="vu-shell vu-shell--lav vu-shell--first">
-  <div class="container" style="max-width:820px">
-    <div class="chip-row reveal">{chips}</div>
-    <p class="mt-6" style="font-size:.9rem;color:var(--color-ink-muted)">Questions? Reach us at <a href="mailto:{EMAIL}">{EMAIL}</a> or {PHONE}.</p>
+  <div class="container">
+    <div class="fundpills">{chips}</div>
+    <p class="fund-contact">Questions? Reach us at <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
   </div>
 </section>
 """
@@ -148,12 +166,11 @@ def render_partner():
         "Get Involved",
         "Partner With Us",
         "Strategic partnerships for organizations and NGOs.",
-        image="/assets/img/fillers/hands-heart.jpg",
     ) + f"""
 <section class="vu-shell vu-shell--lav vu-shell--first">
-  <div class="container" style="max-width:820px">
-    <p class="vu-lead" style="color:var(--color-ink-muted)">Partnership program details pending from the content team.</p>
-    <p class="mt-6"><a class="btn btn--primary" href="mailto:{EMAIL}?subject=Partnership%20inquiry">Start the Conversation</a></p>
+  <div class="container">
+    <div class="stategal__grid stategal__grid--3">{"".join(img_tag((p[0], p[2], p[3], p[4])) for p in pick_distinct("partner-gallery", "us-community+us", 3))}</div>
+    <p class="partner-cta"><a class="btn btn--primary" href="mailto:{EMAIL}?subject=Partnership%20inquiry">Start the Conversation</a></p>
   </div>
 </section>
 """

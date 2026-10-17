@@ -170,7 +170,7 @@
       renderChips(match.others, match.href);
     } else {
       city.textContent = "We don't have a chapter in your area yet";
-      meta.textContent = "Email " + "info@srlc-usa.org" + " to help start one, or volunteer with the nearest chapter remotely.";
+      meta.textContent = "Email " + "info@srlcusa.org" + " to help start one, or volunteer with the nearest chapter remotely.";
       if (join) { join.href = "/get-involved/volunteer/"; join.textContent = "Volunteer anyway"; }
       result.classList.add("is-missing");
       hideChips();

@@ -1,10 +1,11 @@
 """Renderers: homepage (approved v2 base), donate, about cluster, 404 — flat pass."""
 import os
 from shell import (page, ph, page_header, flat_cta, trust_bar, impact_stats,
-                   recognition_chips, filler, EMAIL, PHONE, EIN_LINE, IG, FB)
+                   recognition_chips, filler, photo, story_split, EMAIL, PHONE, EIN_LINE, IG, FB)
 from data_states import STATES, CAMPAIGNS
 from data_cares import CARES
-from pages_work import cf_map, state_chips
+from data_media import slot
+from pages_work import cf_map, editorial_map, flipcard, inst_photo, state_chips
 
 US_FOOTPRINT = "chapters in 11 states and Washington, D.C."
 
@@ -76,31 +77,88 @@ def care_card_media(icon, name):
             f'<img src="/assets/img/care-icons/{icon}" alt="" width="110" height="110" style="width:44%;max-width:110px;opacity:.85"></div>')
 
 
+# Interim photos for slots Naman supplies later ("image to follow"); Media Bank
+# picks from data_media win over these.
+HOME_FALLBACK = {
+    "home-hero-1": ("/assets/img/photos/school-children-hero.jpg", 1600, 1067, "Students gathered outside a school"),
+    "home-hero-2": ("/assets/img/fillers/community-gathering.jpg", 2400, 1602, "Community volunteers gathered together"),
+    "home-hero-3": ("/assets/img/fillers/children-india.jpg", 1600, 1142, "Children smiling together"),
+    "home-impact-story": ("/assets/img/fillers/hospital-building.jpg", 1600, 1064, "Hospital building"),
+    "card-donate": ("/assets/img/fillers/children-smiling.jpg", 2400, 1600, "Children smiling"),
+    "card-volunteer": ("/assets/img/fillers/hands-heart.jpg", 1600, 1067, "Volunteers' hands together"),
+}
+
+
+def home_img(name):
+    return slot(name, HOME_FALLBACK.get(name))
+
+
+def chapter_finder(svg_inner, activity_html=""):
+    """Homepage chapter finder: ZIP search, optional chapter feed, dark
+    editorial map. Shared with the Volunteer page."""
+    return f"""<section class="chapter-finder chapter-finder--v3">
+  <div class="container chapter-finder__inner">
+    <div class="chapter-finder__intro">
+      <h2 class="chapter-finder__h">Find your nearest chapter.</h2>
+      <p class="chapter-finder__sub">Enter a ZIP code or click any pin on the map.</p>
+    </div>
+    <div class="chapter-finder__cols">
+      <div class="chapter-finder__search">
+        <p class="chapter-finder__search-title">Search by ZIP</p>
+        <form class="chapter-finder__form" onsubmit="event.preventDefault(); window.__cfZipLookup &amp;&amp; window.__cfZipLookup();">
+          <input type="text" id="zipInput" inputmode="numeric" maxlength="5" placeholder="ZIP code (e.g. 08820)" aria-label="ZIP code" pattern="\\d{{5}}">
+          <button type="submit" class="btn btn--primary" id="zipBtn">Find Chapter</button>
+        </form>
+        <div class="chapter-finder__result" id="zipResult" hidden>
+          <p class="chapter-finder__city" id="zipCity"></p>
+          <p class="chapter-finder__meta" id="zipMeta"></p>
+          <div class="chapter-finder__actions">
+            <a id="zipJoinBtn" class="btn btn--primary" href="/get-involved/volunteer/">Join This Chapter</a>
+            <a class="btn btn--secondary" href="mailto:{EMAIL}">Email the Lead</a>
+          </div>
+          <div class="chapter-finder__chips" id="zipChips" hidden>
+            <p class="chapter-finder__chips-label">Other chapters in this area</p>
+            <div class="chapter-finder__chips-list" id="zipChipsList"></div>
+          </div>
+        </div>
+        <p class="chapter-finder__search-hint">We&rsquo;ll point you to your nearest SRLC USA chapter.</p>
+      </div>
+      {activity_html}
+    </div>
+    <div class="chapter-finder__map-wrap edmap--dark">
+      {editorial_map(svg_inner)}
+      <p class="edmap-legend" aria-hidden="true"><svg viewBox="0 0 14 14"><circle cx="7" cy="7" r="6" fill="#2A1C36"/><circle cx="7" cy="7" r="3" fill="#FFFFFF"/></svg>Active SRLC USA chapter</p>
+    </div>
+    <p class="chapter-finder__link-row"><a class="btn btn--secondary" href="/our-work/united-states/">Browse All US Chapters</a></p>
+  </div>
+</section>"""
+
+
 def render_home(svg_inner):
-    # Homepage tab of the content wireframe (Naman, Sept 3): eyebrow, headline,
-    # one CTA per slide, no body copy. Slide photos are placeholders until the
-    # Media Bank pictures arrive (slide 2 wants a Caracas relief-site photo).
+    # Homepage tab of the content wireframe, with Naman's Oct 16 refinement doc:
+    # slide 2 is now the United States slide (Venezuela relief retired).
+    # Eyebrow, headline, one pill CTA per slide, no body copy.
     slides = [
         {
-            "img": "/assets/img/photos/school-children-hero.jpg",
+            "img": home_img("home-hero-1"),
             "eyebrow": "Classroom of Change",
             "title": "Turning the key to brighter futures.",
             "cta": ("See the Initiative", "/our-work/united-states/"),
         },
         {
-            "img": "/assets/img/fillers/community-gathering.jpg",
-            "eyebrow": "Venezuela Earthquake Relief",
-            "title": "Shelter, food, and care for families rebuilding in Caracas.",
-            "cta": ("Support the Cause", "/donate/"),
+            "img": home_img("home-hero-2"),
+            "eyebrow": "Across the United States",
+            "title": "Care and joy, close to home.",
+            "cta": ("Get Involved Locally", "/our-work/united-states/"),
         },
         {
-            "img": "/assets/img/fillers/children-india.jpg",
+            "img": home_img("home-hero-3"),
             "eyebrow": "Compassion in Action",
             "title": "One gift. Ten ways to care.",
             "cta": ("Donate Now", "/donate/"),
         },
     ]
-    slides_html = "".join(f"""<article class="hero-carousel__slide{' is-active' if i == 0 else ''}" data-slide="{i}" style="--bg:url('{s["img"]}')">
+    slides_html = "".join(f"""<article class="hero-carousel__slide{' is-active' if i == 0 else ''}" data-slide="{i}" role="group" aria-roledescription="slide" aria-label="{i + 1} of 3" style="--bg:url('{s["img"][0]}')">
       <div class="hero-carousel__overlay"></div>
       <div class="container hero-carousel__content">
         <p class="hero-carousel__eyebrow">{s["eyebrow"]}</p>
@@ -111,6 +169,10 @@ def render_home(svg_inner):
       </div>
     </article>""" for i, s in enumerate(slides))
     dots = "".join(f'<button class="dot{" is-active" if i == 0 else ""}" data-go="{i}" role="tab" aria-label="Slide {i + 1}"></button>' for i in range(3))
+
+    story_img = home_img("home-impact-story")
+    donate_img = home_img("card-donate")
+    volunteer_img = home_img("card-volunteer")
 
     mstats = "".join(f"""<div class="mstat">
         <p class="mstat__n">{n}</p>
@@ -128,16 +190,11 @@ def render_home(svg_inner):
       </a>""" for c in CARES)
 
     from data_india import INSTITUTES
-    # SRA "Initiatives Across the Globe" card: photo on top, name and one-liner
-    # stacked below, plus the tertiary Learn More link (SRA cards carry none).
-    institutes_cards = "".join(f"""<article class="instcard reveal" data-stagger="{i % 3 + 1}">
-        <a class="instcard__photo" href="/our-work/india/#{inst["slug"]}" tabindex="-1" aria-hidden="true" style="background-image:url('{filler(inst["img"], tag=INSTITUTE_HOME_TAGS[inst["slug"]])}')"></a>
-        <div class="instcard__body">
-          <h3 class="instcard__h">{inst["home_name"]}</h3>
-          <p class="instcard__d">{inst["home_desc"]}</p>
-          <a class="textlink" href="/our-work/india/#{inst["slug"]}">Learn More<span aria-hidden="true"> &rarr;</span></a>
-        </div>
-      </article>""" for i, inst in enumerate(INSTITUTES))
+    # charity:water "Ready to take action" row (Naman, Oct 16): edge-to-edge
+    # scroller of square photo cards, dark label bar with an icon, flipping to
+    # a purple back with the one-liner on hover / tap / keyboard focus.
+    institutes_cards = "".join(flipcard(inst, inst["home_desc"], f'/our-work/india/#{inst["slug"]}', link_label="Learn More")
+                               for inst in INSTITUTES)
 
     # Section 7, Latest Articles: hidden until three articles are published
     # (Naman 7.0). Markup kept verbatim inside the comment so it returns as is.
@@ -169,14 +226,13 @@ def render_home(svg_inner):
       </div>"""
 
     body = f"""
-<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
 <div class="newsletter-modal" id="newsletterModal" role="dialog" aria-modal="true" aria-labelledby="newsletterTitle" hidden>
   <div class="newsletter-modal__backdrop" data-newsletter-close></div>
   <div class="newsletter-modal__panel">
     <button class="newsletter-modal__close" data-newsletter-close aria-label="Close">&times;</button>
     <h3 id="newsletterTitle">Stay informed. Be inspired.</h3>
-    <p>Updates on the people we serve, the programs we run, and what your support makes possible.</p>
+    <p>Updates on who we serve, the programs we run, and what your support makes possible.</p>
     <form class="newsletter-modal__form" name="updates" method="POST" data-netlify="true" data-netlify-inline netlify-honeypot="bot-field">
       <input type="hidden" name="form-name" value="updates">
       <input type="hidden" name="source" value="modal">
@@ -223,9 +279,7 @@ def render_home(svg_inner):
 
 <section class="named-story" aria-label="Impact story">
   <div class="named-story__grid">
-    <div class="named-story__media named-story__media--parallax" role="img" aria-label="Portrait slot: Laxmibhai, Media Bank photo pending consent" style="background-color:#E7E3EC">
-      <div class="named-story__placeholder">Laxmibhai&rsquo;s portrait, Media Bank photo pending consent</div>
-    </div>
+    <div class="named-story__media named-story__media--parallax named-story__media--photo" role="img" aria-label="{story_img[3]}" style="background-image:url('{story_img[0]}')"></div>
     <div class="named-story__copy-wrap">
       <div class="named-story__copy reveal" data-stagger="1">
         <p class="named-story__eyebrow">Impact Story &middot; Laxmibhai</p>
@@ -238,52 +292,22 @@ def render_home(svg_inner):
   </div>
 </section>
 
-<section class="institutes-section">
-  <div class="container">
-    <div class="institutes-section__head">
-      <p class="institutes-section__eyebrow">Where the work happens</p>
-      <h2 class="institutes-section__h">Our Institutes</h2>
-      <p class="institutes-section__sub">Six institutes in South Gujarat, India, each built around a specific need. Your gift supports their day-to-day work.</p>
-    </div>
-    <div class="instgrid">{institutes_cards}</div>
+<section class="instrow" aria-labelledby="instrow-h">
+  <div class="container instrow__head">
+    <p class="instrow__eyebrow">Where the work happens</p>
+    <h2 class="instrow__h" id="instrow-h">Our Institutes</h2>
+    <p class="instrow__sub">Six institutes in South Gujarat, India, each built around a specific need. Your gift supports their day-to-day work.</p>
+  </div>
+  <div class="instrow__viewport">
+    <ul class="instrow__track" id="instrowTrack">{institutes_cards}</ul>
+  </div>
+  <div class="instrow__arrows">
+    <button type="button" class="instrow__arrow" data-dir="-1" aria-controls="instrowTrack" aria-label="Previous institutes"><svg viewBox="0 0 44 16" aria-hidden="true"><path d="M43 8H2M9 1L2 8l7 7"/></svg></button>
+    <button type="button" class="instrow__arrow" data-dir="1" aria-controls="instrowTrack" aria-label="Next institutes"><svg viewBox="0 0 44 16" aria-hidden="true"><path d="M1 8h41M35 1l7 7-7 7"/></svg></button>
   </div>
 </section>
 
-<section class="chapter-finder chapter-finder--v3">
-  <div class="container chapter-finder__inner">
-    <div class="chapter-finder__intro">
-      <h2 class="chapter-finder__h">Find your nearest chapter.</h2>
-      <p class="chapter-finder__sub">Enter a ZIP code or click any pin on the map.</p>
-    </div>
-    <div class="chapter-finder__cols">
-      <div class="chapter-finder__search">
-        <p class="chapter-finder__search-title">Search by ZIP</p>
-        <form class="chapter-finder__form" onsubmit="event.preventDefault(); window.__cfZipLookup &amp;&amp; window.__cfZipLookup();">
-          <input type="text" id="zipInput" inputmode="numeric" maxlength="5" placeholder="ZIP code (e.g. 08820)" aria-label="ZIP code" pattern="\\d{{5}}">
-          <button type="submit" class="btn btn--primary" id="zipBtn">Find Chapter</button>
-        </form>
-        <div class="chapter-finder__result" id="zipResult" hidden>
-          <p class="chapter-finder__city" id="zipCity"></p>
-          <p class="chapter-finder__meta" id="zipMeta"></p>
-          <div class="chapter-finder__actions">
-            <a id="zipJoinBtn" class="btn btn--primary" href="/get-involved/volunteer/">Join This Chapter</a>
-            <a class="btn btn--secondary" href="mailto:{EMAIL}">Email the Lead</a>
-          </div>
-          <div class="chapter-finder__chips" id="zipChips" hidden>
-            <p class="chapter-finder__chips-label">Other chapters in this area</p>
-            <div class="chapter-finder__chips-list" id="zipChipsList"></div>
-          </div>
-        </div>
-        <p class="chapter-finder__search-hint">We&rsquo;ll point you to your nearest SRLC USA chapter.</p>
-      </div>
-      {activity}
-    </div>
-    <div class="chapter-finder__map-wrap">
-      {cf_map(svg_inner)}
-    </div>
-    <p class="chapter-finder__link-row"><a class="btn btn--secondary" href="/our-work/united-states/">Browse All US Chapters</a></p>
-  </div>
-</section>
+{chapter_finder(svg_inner, activity)}
 
 <!-- Section 7, Latest Articles: hidden until at least three articles are published (Naman, Sept 3).
 <section class="news-section">
@@ -301,69 +325,55 @@ def render_home(svg_inner):
 </section>
 -->
 
-<section class="recognition-band" id="recognition" aria-label="Trust and recognition">
+<section class="takepart" id="take-part" aria-labelledby="takepart-h">
   <div class="container">
-    <div class="recognition-band__head reveal">
-      <p class="recognition-band__eyebrow">Trust and Credibility</p>
-      <h2 class="recognition-band__h">Globally recognized. Locally rooted.</h2>
-      <p class="recognition-band__sub">Shrimad Rajchandra Love and Care, the global organization SRLC USA is part of, holds Special Consultative Status with the United Nations Economic and Social Council. SRLC USA is a registered 501(c)(3) nonprofit in the United States.</p>
+    <div class="takepart__head">
+      <p class="takepart__eyebrow">Be part of the work</p>
+      <h2 class="takepart__h" id="takepart-h">Two ways to make a difference.</h2>
     </div>
-    <div class="recognition-badges-band reveal" data-stagger="1">
-      {recognition_chips()}
+    <div class="takepart__cards">
+      <article class="photocard">
+        <div class="photocard__frame">
+          <img class="photocard__img" src="{donate_img[0]}" alt="{donate_img[3]}" width="{donate_img[1]}" height="{donate_img[2]}" loading="lazy" decoding="async">
+          <div class="photocard__bar">
+            <h3 class="photocard__h">Donate</h3>
+            <a class="btn btn--primary" href="/donate/">Donate Now</a>
+          </div>
+        </div>
+        <p class="photocard__caption">To give without expecting anything in return is love in action.</p>
+      </article>
+      <article class="photocard">
+        <div class="photocard__frame">
+          <img class="photocard__img" src="{volunteer_img[0]}" alt="{volunteer_img[3]}" width="{volunteer_img[1]}" height="{volunteer_img[2]}" loading="lazy" decoding="async">
+          <div class="photocard__bar">
+            <h3 class="photocard__h">Volunteer</h3>
+            <a class="btn btn--primary" href="/get-involved/volunteer/">Volunteer Near You</a>
+          </div>
+        </div>
+        <p class="photocard__caption">Give someone your heart to understand and a hand to hold.</p>
+      </article>
     </div>
-    <ul class="trustrow reveal" data-stagger="2" aria-label="Recognition">
-      <li>UN ECOSOC &middot; Special Consultative Status</li>
-      <li>US IRS &middot; 501(c)(3) &middot; EIN 81-5162502</li>
-      <li>Candid &middot; Gold Seal of Transparency</li>
-      <li>NABH &middot; Hospital Accreditation</li>
-    </ul>
-    <div class="recognition-cluster reveal" data-stagger="3">
-      <p class="recognition-cluster__label">Partners and Supporters</p>
-      {partner_marquee()}
-    </div>
-    <div class="recognition-band__cta reveal"><a class="btn btn--secondary" href="/about/our-impact/">See Our Impact</a></div>
-  </div>
-</section>
-
-<section class="quoteband" aria-label="Quote">
-  <div class="container quoteband__inner">
-    <blockquote class="quoteband__quote">&ldquo;Selfless service is love made visible.&rdquo;</blockquote>
-    <p class="quoteband__attr">Pujya Gurudevshri Rakeshji</p>
-  </div>
-</section>
-
-<section class="final-cta" aria-label="Take the next step with SRLC USA">
-  <div class="container">
-    <div class="final-cta__hero">
-      <span class="final-cta__eyebrow">Be part of the work</span>
-      <h2 class="final-cta__h">Two ways to make a difference.</h2>
-    </div>
-    <div class="fc-cards">
-      <div class="fc-card reveal" data-stagger="1">
-        <h3 class="fc-card__h">Donate</h3>
-        <p class="fc-card__p">To give without expecting anything in return is love in action.</p>
-        <a class="btn btn--primary" href="/donate/">Donate Now</a>
+    <div class="nlrow" id="final-newsletter">
+      <div class="nlrow__copy">
+        <p class="nlrow__eyebrow">Stay informed. Be inspired.</p>
+        <p class="nlrow__line">Updates on who we serve, the programs we run, and what your support makes possible.</p>
       </div>
-      <div class="fc-card reveal" data-stagger="2">
-        <h3 class="fc-card__h">Volunteer</h3>
-        <p class="fc-card__p">Give someone your heart to understand and a hand to hold.</p>
-        <a class="btn btn--primary" href="/get-involved/volunteer/">Volunteer Near You</a>
-      </div>
-    </div>
-    <div class="fc-newsletter" id="final-newsletter">
-      <div class="fc-newsletter__copy">
-        <h3>Stay informed. Be inspired.</h3>
-        <p>Updates on the people we serve, the programs we run, and what your support makes possible.</p>
-      </div>
-      <form class="fc-newsletter__form" name="updates" method="POST" data-netlify="true" data-netlify-inline netlify-honeypot="bot-field">
+      <form class="nlrow__form" name="updates" method="POST" data-netlify="true" data-netlify-inline netlify-honeypot="bot-field">
         <input type="hidden" name="form-name" value="updates">
         <input type="hidden" name="source" value="homepage">
         <p class="hp-field"><input name="bot-field" tabindex="-1"></p>
         <input type="email" name="email" required placeholder="Email address" aria-label="Email address" class="form-hidewrap">
         <button type="submit" class="btn btn--primary form-hidewrap">Subscribe</button>
-        <span class="form-success" style="color:var(--color-srlc-purple);font-weight:600">Thank you. Check your inbox to confirm.</span>
+        <span class="form-success">Thank you. Check your inbox to confirm.</span>
       </form>
     </div>
+  </div>
+</section>
+
+<section class="lotusband" aria-label="Quote">
+  <div class="lotusband__inner">
+    <blockquote class="lotusband__quote">&ldquo;Selfless service is love made visible.&rdquo;</blockquote>
+    <p class="lotusband__attr">Pujya Gurudevshri Rakeshji</p>
   </div>
 </section>
 """
@@ -444,7 +454,7 @@ def render_donate():
 <section class="vu-shell vu-shell--cream vu-shell--narrow">
   <div class="container" style="max-width:820px;text-align:center">
     <p style="font-size:.9rem;color:var(--color-ink-muted);margin-top:1.2rem">{EIN_LINE}</p>
-    <p style="font-size:.9rem;color:var(--color-ink-muted)">Reach us at <a href="mailto:{EMAIL}">{EMAIL}</a> or {PHONE}.</p>
+    <p style="font-size:.9rem;color:var(--color-ink-muted)">Reach us at <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
   </div>
 </section>
 <script>
@@ -478,79 +488,65 @@ def render_donate():
 
 
 def render_who_we_are():
+    # Rebuilt per Naman's Oct 16 doc: Hero, Who We Are, What We Support, Care
+    # and Joy Close to Home, Why We Serve, How We Work, Continue Reading. No stat
+    # row, no Donate CTA. Every body line is verbatim from the Who We Are tab;
+    # the tab predates the seven-section structure, so the mapping is flagged.
+    routes = {
+        "wwa-hero": (["volunteers", "us-community"], 1600),
+        "wwa-who": (["volunteers", "us-community"], 1200),
+        "wwa-support": (["hospital+india", "india"], 1200),
+        "wwa-home": (["us-community", "volunteers"], 1200),
+    }
+    img = lambda k: slot(k) or photo(k, routes[k][0], "community", min_w=routes[k][1])
     how = [
         ("Volunteer led", "Programs are carried by volunteers who know their communities. Because they give their time, administration costs stay low and more of every dollar reaches the programs it was given to support."),
         ("Designed to scale", "We invest in models that can be replicated, so a program that works in one community can be extended to the next."),
         ("Measured against evidence", "Every initiative operates within professional frameworks and defined performance indicators. Results, not intentions, decide what continues."),
         ("Building the next generation of leaders", "Volunteers of every generation carry this work, from students to retirees, and young people lead most of the initiatives under the 10 Care Program."),
     ]
-    how_html = "".join(
-        f'<div class="cause-card reveal" data-stagger="{i % 4 + 1}"><h3>{t}</h3><p>{b}</p></div>'
-        for i, (t, b) in enumerate(how))
-    promises = [
-        ("Dignity, always", "Every living being deserves compassion, dignity and respect."),
-        ("Every figure verified", "Our commitment to transparency is unwavering."),
-        ("Built to last", "Long standing impact, for generations to come."),
-    ]
-    promises_html = prose_photo(promises, "/assets/img/fillers/hands-heart.jpg",
-                                alt="SRLC USA volunteers at a community event")
+    how_html = "".join(f'<div class="howwork__item"><h3>{t}</h3><p>{b}</p></div>' for t, b in how)
+    pills = """<div class="pillrow">
+      <a class="btn btn--secondary" href="/our-work/10-care-program/">10 Care Program</a>
+      <a class="btn btn--secondary" href="/our-work/united-states/">United States</a>
+      <a class="btn btn--secondary" href="/our-work/india/">India</a>
+      <a class="btn btn--secondary" href="/our-work/mission-africa/">Mission Africa</a>
+    </div>"""
+    hero = img("wwa-hero")
 
-    body = page_header(
-        "About Us",
-        "Love and care, in action",
-        "SRLC USA is what happens when physicians, engineers, teachers, and students decide their weekends belong to their neighbors. We are the US chapter of Shrimad Rajchandra Love and Care, a global nonprofit holding Special Consultative Status with the United Nations Economic and Social Council (ECOSOC), and a 501(c)(3) organization. But before we are any of that, we are people who believe care is not a profession. It is a practice.",
-        image="/assets/img/fillers/community-gathering.jpg",
-    ) + f"""
-<section class="vu-shell vu-shell--lav vu-shell--first">
+    body = page_header("About Us", "Who We Are", "Love and care, in action", image=hero[0], size=(hero[1], hero[2]), alt=hero[3]) + f"""
+{story_split("Who We Are", ["SRLC USA is what happens when physicians, engineers, teachers, and students decide their weekends belong to their neighbors. We are the US chapter of Shrimad Rajchandra Love and Care, a global nonprofit holding Special Consultative Status with the United Nations Economic and Social Council (ECOSOC), and a 501(c)(3) organization. But before we are any of that, we are people who believe care is not a profession. It is a practice."], img("wwa-who"), tone="white")}
+{story_split("What We Support", ["We focus on immediate needs and the systems behind them. In the United States, volunteers prepare and share meals, equip students for the school year, and organize community care events with local partners. Globally, the movement builds and sustains hospitals, schools, and development programs designed to serve for generations. The programs differ; the standard does not: high-quality, sustainable work that outlasts the day we arrive."], img("wwa-support"), reverse=True, tone="lav")}
+{story_split("Care and Joy Close to Home", ["Every initiative we run belongs to one of ten focus areas, together the 10 Care Program: Health Care, Educational Care, Child Care, Woman Care, Tribal Care, Community Care, Humanitarian Care, Animal Care, Environmental Care, and Emergency Relief Care. In the United States, that vision looks like service in your own city, on your own street. Globally, it stands as permanent institutes in India and Mission Africa."], img("wwa-home"), tone="white", extra=pills)}
+
+<section class="lotusband lotusband--page" aria-labelledby="wwa-why">
+  <div class="lotusband__inner">
+    <h2 class="lotusband__eyebrow" id="wwa-why">Why We Serve</h2>
+    <blockquote class="lotusband__quote">&ldquo;When there is love within, it flows naturally in the form of care.&rdquo;</blockquote>
+    <p class="lotusband__line">We serve and bring joy, not because we have to, or because it is our duty, but because we love to.</p>
+  </div>
+</section>
+
+<section class="howwork" aria-labelledby="wwa-how">
   <div class="container">
-    <div class="vu-split">
-      <div class="vu-split__copy">
-        <h3>Care you can point to</h3>
-        <p>We focus on immediate needs and the systems behind them. In the United States, volunteers prepare and share meals, equip students for the school year, and organize community care events with local partners. Globally, the movement builds and sustains hospitals, schools, and development programs designed to serve for generations. The programs differ; the standard does not: high-quality, sustainable work that outlasts the day we arrive.</p>
-      </div>
-      <div class="vu-split__photo"><img src="/assets/img/photos/event-recent.jpg" alt="SRLC USA volunteers in action at a community event" width="1024" height="683" loading="lazy"></div>
+    <p class="howwork__eyebrow">How We Work</p>
+    <h2 class="howwork__h" id="wwa-how">Built to be trusted</h2>
+    <div class="howwork__grid">{how_html}</div>
+    <div class="howwork__recog">{recognition_chips()}</div>
+    <p class="howwork__cta"><a class="btn btn--primary" href="/about/financials/">See Our Financials</a></p>
+  </div>
+</section>
+
+<section class="pagenext">
+  <div class="container pagenext__inner">
+    <p class="pagenext__line">Continue Reading</p>
+    <div class="pagenext__links">
+      <a class="btn btn--secondary" href="/about/our-impact/">Our Impact</a>
+      <a class="btn btn--secondary" href="/about/management-team/">Management Team</a>
+      <a class="btn btn--secondary" href="/about/our-inspiration/">Inspiration and Founder</a>
     </div>
   </div>
 </section>
-
-<section class="mission-band">
-  <div class="container mission-band__inner">
-    <p class="eyebrow eyebrow--orange">Our philosophy</p>
-    <h2 class="mission-band__h">&ldquo;When there is love within, it flows naturally in the form of care.&rdquo;</h2>
-    <p class="mission-band__sub">We serve and bring joy, not because we have to, or because it is our duty, but because we love to. That conviction shapes every program we run, from hospital corridors to classrooms to meal lines.</p>
-  </div>
-</section>
-
-<section class="vu-shell vu-shell--cream">
-  <div class="container">
-    <h2 class="vu-h reveal">Ten ways we care</h2>
-    <p class="maxw-70">Every initiative we run belongs to one of ten focus areas, together the 10 Care Program: Health Care, Educational Care, Child Care, Woman Care, Tribal Care, Community Care, Humanitarian Care, Animal Care, Environmental Care, and Emergency Relief Care. In the United States, that vision looks like service in your own city, on your own street. Globally, it stands as permanent institutes in India and Mission Africa.</p>
-    <div class="recognition-cluster mt-8">{recognition_chips()}</div>
-    <div class="vu-toc--inline">
-      <a href="/our-work/10-care-program/">10 Care Program</a>
-      <a href="/our-work/united-states/">United States</a>
-      <a href="/our-work/india/">India</a>
-      <a href="/our-work/mission-africa/">Mission Africa</a>
-    </div>
-  </div>
-</section>
-
-<section class="vu-shell vu-shell--lav">
-  <div class="container">
-    <h2 class="vu-h reveal">Built to be trusted</h2>
-    <div class="card-grid card-grid--2x2 mt-6">{how_html}</div>
-    <div class="mt-6">{ph("Close crops of hands at work: packing line, supply detail, planning table, young volunteers leading. Graded as a set. Media Bank.", style="min-height:160px")}</div>
-  </div>
-</section>
-
-<section class="vu-shell vu-shell--cream">
-  <div class="container">
-    <h2 class="vu-h reveal">Our commitments</h2>
-    <div class="mt-6 reveal">{promises_html}</div>
-  </div>
-</section>
-
-{flat_cta("Come see for yourself", "An about page can only introduce us; it cannot let you feel the work. The programs, the numbers, and the financials are all published for anyone to read, and the volunteers are probably closer than you think. Come find out what care looks like when it is organized.", "Explore the 10 Care Program", "/our-work/10-care-program/")}
 """
     return page(
         "Who We Are | SRLC USA | 501(c)(3) Nonprofit",
@@ -575,7 +571,7 @@ TIMELINE = [
 def render_our_impact(svg_inner):
     nodes = "".join(f"""<li class="reveal" data-stagger="{i % 4 + 1}">
       <span class="ft-year">{y}</span>
-      <h4 class="ft-name">{t}</h4>
+      <h3 class="ft-name">{t}</h3>
       <p class="ft-body">{b}</p>
     </li>""" for i, (y, t, b) in enumerate(TIMELINE))
     six = [(n, f"{l} {d}") for n, l, d in GLOBAL_STATS]
@@ -611,7 +607,6 @@ def render_our_impact(svg_inner):
   <div class="container">
     <h2 class="vu-h reveal">An operating model built for efficiency</h2>
     <p class="maxw-70">Because the programs are carried by experienced professionals and volunteers, administration costs remain low, and each initiative is managed against defined performance indicators. In practical terms, this means a greater share of every contribution reaches the programs it was intended to support.</p>
-    <div class="chip-row mt-6"><span>Volunteer delivery model</span><span>Low administration costs</span><span>Defined performance indicators</span></div>
   </div>
 </section>
 
@@ -619,8 +614,8 @@ def render_our_impact(svg_inner):
   <div class="container">
     <h2 class="vu-h reveal">Results in the United States</h2>
     <p class="maxw-70">In the United States, volunteers organize recurring service programs in cities from Los Angeles to New York, preparing and sharing meals, assembling school supplies, and holding community care events with established local partners. In 2024, US centers distributed 90,000+ educational items, reaching 18,000+ students.</p>
-    <div class="mt-6">{cf_map(svg_inner)}</div>
-    <p class="mt-6"><a href="/our-work/united-states/">Explore the US chapters</a></p>
+    <div class="mt-6">{editorial_map(svg_inner)}</div>
+    <p class="mt-6"><a class="btn btn--secondary" href="/our-work/united-states/">Explore the US chapters</a></p>
   </div>
 </section>
 
@@ -637,7 +632,7 @@ def render_our_impact(svg_inner):
     <div class="vu-card vu-card--accent vu-card--stack reveal">
       <h3 class="vu-card__h">What these figures mean in practice</h3>
       <div class="vu-card__body"><p>Laxmibhai, a 52-year-old farmer, had been living with triple-vessel heart disease, and the surgery he needed was beyond his family&rsquo;s means. He received the region&rsquo;s first cardiothoracic bypass at Shrimad Rajchandra Hospital at no cost, and he has since returned home to his fields. His recovery is one outcome among millions, and it is the kind of outcome every figure on this page represents.</p>
-      <p><a href="/about/financials/">Read the full record on the Financials page</a></p></div>
+      <p><a class="textlink" href="/about/financials/">Read the full record on the Financials page<span aria-hidden="true"> &rarr;</span></a></p></div>
     </div>
   </div>
 </section>
@@ -763,10 +758,9 @@ def render_management():
         "About SRLC USA",
         "The management team leading SRLC USA&rsquo;s work",
         "We are a 501(c)(3) nonprofit. Every person who sets strategy, approves the budget, and answers for results is named here, with what they oversee.",
-        image="/assets/img/fillers/community-gathering.jpg",
     ) + f"""
 <section class="vu-shell vu-shell--lav vu-shell--first">
-  <div class="container" style="max-width:820px">
+  <div class="container">
     <h2 class="vu-h reveal">How we govern</h2>
     <p>SRLC USA is the United States chapter of Shrimad Rajchandra Love and Care, holder of UN ECOSOC Special Consultative Status.</p>
   </div>
@@ -776,7 +770,6 @@ def render_management():
   <div class="container">
     <h2 class="vu-h reveal">The roster</h2>
     <p class="vu-lead">Leadership names, roles, and bios publish here once approved. Each person appears with a consistent portrait and a short account of what they oversee.</p>
-    <div class="bio-grid mt-6">{slots}</div>
   </div>
 </section>
 
@@ -794,7 +787,7 @@ F990_YEARS = ["2024", "2023", "2022", "2021", "2020", "2019", "2018", "2017"]
 def render_financials():
     cards = "".join(f"""<div class="vu-card vu-card--stack reveal" data-stagger="{i % 4 + 1}">
       <h3 class="vu-card__h">{y} Form 990</h3>
-      <div class="vu-card__body"><p>Annual IRS filing. <a href="mailto:{EMAIL}?subject=Request%3A%20{y}%20Form%20990">Request a copy</a></p></div>
+      <div class="vu-card__body"><p>Annual IRS filing.</p><p><a class="textlink" href="mailto:{EMAIL}?subject=Request%3A%20{y}%20Form%20990">Request a copy<span aria-hidden="true"> &rarr;</span></a></p></div>
     </div>""" for i, y in enumerate(F990_YEARS))
     body = page_header(
         "About Us",
@@ -803,25 +796,24 @@ def render_financials():
         image="/assets/img/photos/event-recent.jpg",
     ) + f"""
 <section class="vu-shell vu-shell--lav vu-shell--first vu-shell--narrow">
-  <div class="container"><div class="recognition-cluster">{recognition_chips()}</div></div>
+  <div class="container"><div class="recognition-cluster fin-badges">{recognition_chips(links=True)}</div></div>
 </section>
 
 <section class="vu-shell vu-shell--cream">
   <div class="container">
     <h2 class="vu-h reveal">Documents by year</h2>
-    <div class="vu-card reveal" style="grid-template-columns:1fr;margin-bottom:1.2rem">
+    <div class="vu-card vu-card--stack fin-report reveal">
       <h3 class="vu-card__h">Annual Report 2024&ndash;2025</h3>
-      <div class="vu-card__body"><p>The year in programs, numbers, and people. <a href="mailto:{EMAIL}?subject=Request%3A%20Annual%20Report%202024-2025">Request a copy</a></p></div>
+      <div class="vu-card__body"><p>The year in programs, numbers, and people.</p><p><a class="btn btn--secondary" href="mailto:{EMAIL}?subject=Request%3A%20Annual%20Report%202024-2025">Request a copy</a></p></div>
     </div>
     <div class="vu-doc-grid">{cards}</div>
-    <p style="font-size:.88rem;color:var(--color-ink-muted);margin-top:1.2rem">Self-hosted PDF downloads are being prepared. Until they are live, every document is available the same day by email.</p>
   </div>
 </section>
 
 <section class="vu-shell vu-shell--lav vu-shell--narrow">
-  <div class="container text-center">
-    <p style="font-size:.9rem;color:var(--color-ink-muted)">{EIN_LINE}</p>
-    <p style="font-size:.9rem;color:var(--color-ink-muted)">Additional financial information is available on request at <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
+  <div class="container fin-legal">
+    <p>{EIN_LINE.replace("EIN 81-5162502", '<span class="nowrap">EIN 81-5162502</span>')}</p>
+    <p>Additional financial information is available on request at <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
   </div>
 </section>
 """

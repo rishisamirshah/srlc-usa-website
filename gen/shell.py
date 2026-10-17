@@ -8,14 +8,20 @@ No em dashes, approved stats only, spiritual content only on /about/our-inspirat
 import hashlib
 import re
 
+from data_media import POOL as MB_POOL, SLOTS as MB_SLOTS
+
 SITE = "https://srlcusa.netlify.app"  # staging; production per Aug decision is AWS Amplify
-EMAIL = "info@srlc-usa.org"           # domain ruling pending Naman; do not mass-change
+EMAIL = "info@srlcusa.org"            # Naman, Oct 16; chapter addresses keep @srlc-usa.org until he rules
 PHONE = "1.551.775.2872"
 EIN_LINE = ("Shrimad Rajchandra Love and Care USA is a registered 501(c)(3) nonprofit "
             "organization. EIN 81-5162502. Contributions are tax deductible to the "
             "extent permitted by law.")
-IG = "https://www.instagram.com/srlc_usa/"
-FB = "https://www.facebook.com/SRLCUSA/"
+FOOTER_ORG_LINE = ('Shrimad Rajchandra Love and Care USA is a <span class="nowrap">501(c)(3)</span> nonprofit '
+                   'organization. <span class="nowrap">EIN 81-5162502.</span>')
+IG = "https://www.instagram.com/srlcusa/"
+FB = "https://www.facebook.com/srlcusa"
+LINKEDIN = "https://www.linkedin.com/company/srlcusa/"
+X = "https://x.com/srlcusa"
 
 CSS_FILE = "/assets/css/site.css"
 JS_FILE = "/assets/js/site.js"
@@ -33,9 +39,21 @@ LOGO_ALT = "Shrimad Rajchandra Love and Care"
 LOGO_W, LOGO_H = 340, 56
 
 SOCIAL_SVG = {
-    "ig": '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2m0 4.8a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 1.8a3.2 3.2 0 1 0 0 6.4 3.2 3.2 0 0 0 0-6.4m5.2-3a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4"/></svg>',
+    "ig": '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2m0 4.8a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 1.8a3.2 3.2 0 1 0 0 6.4 3.2 3.2 0 0 0 0-6.4m5.2-3a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4"/></svg>',
     "fb": '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12"/></svg>',
+    "li": '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5M3 9.5h4V21H3zM9.5 9.5h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1V21h-4v-5.1c0-1.22-.02-2.79-1.7-2.79-1.7 0-1.96 1.33-1.96 2.7V21h-4z"/></svg>',
+    "x": '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.78zm-1.08 16.2h1.7L7.4 4.7H5.58z"/></svg>',
 }
+
+# Compact recognition row for the footer (Naman, Oct 16: charity:water footer
+# model). Consistent optical height, no boxes; square-ish seals run a touch
+# larger than the wide ECOSOC lockup so the three read as equals.
+FOOTER_SEALS = [
+    ("/assets/img/badges/candid-gold-seal-2025.svg", 108, 108, "Candid Gold Seal of Transparency 2025", 52),
+    ("/assets/img/badges/greatnonprofits-top-rated-2025.png", 534, 400, "GreatNonprofits Top-Rated Nonprofit 2025", 52),
+    ("/assets/img/badges/un-ecosoc-consultative-status-2020-light.svg", 296, 84,
+     "SRLC (Global): UN ECOSOC Special Consultative Status, 2020", 40),
+]
 
 
 def head(title, desc, path, overlay=False):
@@ -72,10 +90,11 @@ def head(title, desc, path, overlay=False):
 """
 
 
-def nav_panel_link(href, label, desc):
+def nav_panel_link(href, label, desc=""):
+    # Labels only, as on the SRA dropdown; the old one-line descriptions put
+    # "spiritual lineage" in the header of every page.
     return (f'<a class="primary-nav__sublink" role="menuitem" href="{href}">'
-            f'<span class="primary-nav__sublabel">{label}</span>'
-            f'<span class="primary-nav__subdesc">{desc}</span></a>')
+            f'<span class="primary-nav__sublabel">{label}</span></a>')
 
 
 def nav(overlay=False):
@@ -100,7 +119,7 @@ def nav(overlay=False):
         <li class="primary-nav__item"><button class="primary-nav__trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="navpanel-work">Our Work</button>
           <div class="primary-nav__panel" id="navpanel-work" role="menu" aria-label="Our Work submenu">
             {nav_panel_link("/our-work/10-care-program/", "10 Care Program", "The 10 focus areas that frame SRLC&rsquo;s work globally.")}
-            <a class="primary-nav__sublink primary-nav__sublink--has-children" role="menuitem" href="/our-work/united-states/"><span class="primary-nav__sublabel">Where We Serve</span><span class="primary-nav__subdesc">Regional hub for the three places SRLC operates.</span></a>
+            <a class="primary-nav__sublink primary-nav__sublink--has-children" role="menuitem" href="/our-work/united-states/"><span class="primary-nav__sublabel">Where We Serve</span></a>
             <div class="primary-nav__subnest">
               <a class="primary-nav__sublink--nested" role="menuitem" href="/our-work/united-states/">United States</a>
               <a class="primary-nav__sublink--nested" role="menuitem" href="/our-work/india/">India</a>
@@ -134,12 +153,12 @@ def footer():
     <div class="site-footer__cols">
       <div>
         <p class="site-footer__brand"><img class="brand__logo-img" src="{LOGO_LIGHT}" alt="{LOGO_ALT}" width="260" height="43" loading="lazy"></p>
-        <p class="site-footer__legal">SRLC USA is a registered 501(c)(3).</p>
-        <p class="site-footer__legal">EIN: 81-5162502</p>
         <p class="site-footer__legal"><a href="mailto:{EMAIL}" style="color:inherit;text-decoration:none;border-bottom:1px solid currentColor">{EMAIL}</a></p>
         <div class="social">
-          <a href="{IG}" aria-label="Instagram" rel="noopener" target="_blank">{SOCIAL_SVG['ig']}</a>
-          <a href="{FB}" aria-label="Facebook" rel="noopener" target="_blank">{SOCIAL_SVG['fb']}</a>
+          <a href="{IG}" aria-label="SRLC USA on Instagram" rel="noopener" target="_blank">{SOCIAL_SVG['ig']}</a>
+          <a href="{FB}" aria-label="SRLC USA on Facebook" rel="noopener" target="_blank">{SOCIAL_SVG['fb']}</a>
+          <a href="{LINKEDIN}" aria-label="SRLC USA on LinkedIn" rel="noopener" target="_blank">{SOCIAL_SVG['li']}</a>
+          <a href="{X}" aria-label="SRLC USA on X" rel="noopener" target="_blank">{SOCIAL_SVG['x']}</a>
         </div>
       </div>
       <div>
@@ -179,9 +198,12 @@ def footer():
         </ul>
       </div>
     </div>
+    <div class="site-footer__recog">
+      <p class="site-footer__org">{FOOTER_ORG_LINE}</p>
+      <ul class="site-footer__seals" aria-label="Recognition">{"".join(f'<li><img src="{src}" alt="{alt}" width="{w}" height="{h}" style="height:{ht}px" loading="lazy" decoding="async"></li>' for src, w, h, alt, ht in FOOTER_SEALS)}</ul>
+    </div>
     <div class="site-footer__bottom">
       <p>&copy; Copyright <span data-year>2026</span> Shrimad Rajchandra Love and Care USA, All Rights Reserved</p>
-      <p>{EIN_LINE}</p>
     </div>
   </div>
 </footer>
@@ -191,10 +213,8 @@ def footer():
 
 
 def page(title, desc, path, body, overlay=False):
-    # Pages that open with a photo header get the transparent overlay nav with
-    # the light logo automatically; callers can still pass overlay=True themselves.
-    if not overlay and body.lstrip().startswith('<section class="pagehead'):
-        overlay = True
+    # Inner pages keep a solid header above the photo hero (SRA pattern); only the
+    # homepage carousel passes overlay=True.
     return head(title, desc, path, overlay) + nav(overlay) + body + footer()
 
 
@@ -249,17 +269,154 @@ def _tag_for(label):
     return None
 
 
+# ---------- Media Bank routing ----------
+# Old filler subject tags map to curated Media Bank tags, best first. Slot
+# labels that name a place (US chapter work, Africa) pull that place's photos
+# ahead of the subject route.
+_MB_ROUTE = {
+    "hospital": ("hospital", "health-care"),
+    "health": ("health-care", "hospital"),
+    "classroom": ("gurukul", "vidyapeeth", "educational-care", "us-classroom-of-change"),
+    "children": ("child-care", "educational-care", "gurukul", "tribal-care"),
+    "skills": ("skills",),
+    "women": ("coew", "woman-care"),
+    "animals": ("jivamaitridham", "animal-care"),
+    "community": ("us-community", "volunteers", "us-events", "community-care"),
+    "hands": ("us-food", "humanitarian-care", "volunteers"),
+    "nature": ("environmental-care", "us-environment", "tribal-care"),
+    "awards": ("us-events", "gala", "us-community"),
+    None: ("us-community", "volunteers", "india"),
+}
+_US_WORDS = ("united states", " us ", "u.s.", "chapter", "american", "local ", "neighbor", "hygiene kit", "backpack", "pb&j", "food drive")
+_MB_BY_KEY = {}
+_MB_USE = {}
+
+
+def _mb_tags(label, tag):
+    low = " " + re.sub(r"[^a-z0-9&.]+", " ", (label or "").lower()) + " "
+    route = list(_MB_ROUTE.get(tag, _MB_ROUTE[None]))
+    if any(w in low for w in _US_WORDS):
+        route = [t for t in route if t.startswith("us")] + ["us-community", "volunteers", "us-food", "us-events"] + route
+    elif " africa" in low:
+        route = ["africa"] + route
+    seen = set()
+    return [t for t in route if not (t in seen or seen.add(t))]
+
+
+def _has(p, spec):
+    """True when the photo carries every tag in spec ("tribal-care+india");
+    an "alt:word" part matches the curated description instead of a tag, and
+    a leading "!" excludes ("community-care+india+!alt:dog")."""
+    def ok(t):
+        if t.startswith("!"):
+            return not ok(t[1:])
+        return (t[4:] in p[4].lower()) if t.startswith("alt:") else (t in p[1])
+    return all(ok(t) for t in spec.split("+"))
+
+
+def mb_entry(key, tags, min_w=0):
+    """Media Bank photo for a slot: the same key always gets the same photo;
+    a new key gets, from the first tag spec with a photo not yet used anywhere
+    on the site, the best one at least min_w wide (else that spec's widest),
+    then the least-used match once every spec runs dry."""
+    if key in _MB_BY_KEY:
+        return _MB_BY_KEY[key]
+    if not _MB_USE:
+        _MB_USE.update({v[0]: 1 for v in MB_SLOTS.values()})
+    pick = None
+    for t in tags:  # subject first: a small photo of the right subject beats a sharp wrong one
+        fresh = [p for p in MB_POOL if _has(p, t) and p[0] not in _MB_USE]
+        if fresh:
+            wide = [p for p in fresh if p[2] >= min_w]
+            pick = (wide or sorted(fresh, key=lambda p: -p[2]))[0]
+            break
+    if pick is None:
+        for t in tags:
+            cands = [p for p in MB_POOL if _has(p, t)]
+            if cands:
+                pick = min(cands, key=lambda p: (_MB_USE.get(p[0], 0), -p[2]))
+                break
+    if pick:
+        _MB_USE[pick[0]] = _MB_USE.get(pick[0], 0) + 1
+        _MB_BY_KEY[key] = pick
+    return pick
+
+
+def _src(p):
+    return next((t for t in p[1] if t.startswith("src:")), p[0])
+
+
+def photo_src_tag(src):
+    """The shoot (src: tag) a Media Bank photo came from, if it is in the pool."""
+    return next((_src(p) for p in MB_POOL if p[0] == src), None)
+
+
+def pick_distinct(key, spec, n, avoid=()):
+    """Up to n unused photos matching spec, each from a different shoot and
+    none from a shoot in avoid; claimed site-wide like any other pick."""
+    if key in _MB_BY_KEY:
+        return _MB_BY_KEY[key]
+    if not _MB_USE:
+        _MB_USE.update({v[0]: 1 for v in MB_SLOTS.values()})
+    seen, out = set(a for a in avoid if a), []
+    for p in MB_POOL:
+        if len(out) == n:
+            break
+        if _has(p, spec) and p[0] not in _MB_USE and _src(p) not in seen:
+            seen.add(_src(p))
+            out.append(p)
+    for p in out:
+        _MB_USE[p[0]] = _MB_USE.get(p[0], 0) + 1
+    _MB_BY_KEY[key] = out
+    return out
+
+
 def filler(key, tag=None):
-    """Deterministic filler pick for a slot: same key always yields the same
-    photo. `tag` restricts the pool to one subject; an unknown tag falls back to
-    the whole set. Returns the /assets path (use filler_entry for dimensions)."""
+    """Photo for a slot: a Media Bank pick when the bank is loaded, else a
+    deterministic filler from the existing set (same key, same photo).
+    Returns the /assets path (use filler_entry for dimensions)."""
     return filler_entry(key, tag)[0]
 
 
-def filler_entry(key, tag=None):
+def filler_entry(key, tag=None, min_w=0):
+    if MB_POOL:
+        p = mb_entry(key, _mb_tags(key, tag), min_w)
+        if p:
+            return (p[0], tag, p[2], p[3])
     pool = [f for f in FILLERS if tag and f[1] == tag] or FILLERS
     h = int(hashlib.md5((key or "").encode("utf-8")).hexdigest(), 16)
     return pool[h % len(pool)]
+
+
+def photo(key, tags, fallback_tag=None, min_w=0, strict=False):
+    """(src, w, h, alt) for a slot on an explicit Media Bank tag route; the
+    filler set stands in when the bank has nothing for those tags, unless
+    strict, which returns None so the slot can go without a photo."""
+    if MB_POOL:
+        p = mb_entry(key, list(tags), min_w)
+        if p:
+            return (p[0], p[2], p[3], p[4])
+    if strict:
+        return None
+    f = filler_entry(key, fallback_tag)
+    return (f[0], f[2], f[3], "")
+
+
+def img_tag(entry, cls="", loading="lazy"):
+    src, w, h, alt = entry
+    c = f' class="{cls}"' if cls else ""
+    return f'<img{c} src="{src}" alt="{_attr(alt)}" width="{w}" height="{h}" loading="{loading}" decoding="async">'
+
+
+def photo_alt(src, fallback=""):
+    """Curated description for a Media Bank photo, else the fallback."""
+    for p in MB_POOL:
+        if p[0] == src:
+            return p[4]
+    for v in MB_SLOTS.values():
+        if v[0] == src:
+            return v[3]
+    return fallback
 
 
 def _attr(text):
@@ -275,9 +432,27 @@ def ph(label, cls="", style="", tag=None):
     path, ftag, w, h = filler_entry(label, tag or _tag_for(label))
     s = f' style="{style}"' if style else ""
     c = f"ph-media {cls}".strip()
-    alt = _attr(re.sub(r"\s+", " ", label or "").strip())
-    return (f'<img class="{c}" src="{path}" alt="{alt}" title="{alt}" width="{w}" height="{h}" '
+    direction = _attr(re.sub(r"\s+", " ", label or "").strip())
+    real = photo_alt(path)
+    if real:
+        return (f'<img class="{c}" src="{path}" alt="{_attr(real)}" width="{w}" height="{h}" '
+                f'loading="lazy" decoding="async"{s}>')
+    return (f'<img class="{c}" src="{path}" alt="{direction}" title="{direction}" width="{w}" height="{h}" '
             f'loading="lazy" decoding="async"{s}>')
+
+
+# Curated Media Bank hero per page, keyed by the page's H1.
+HERO_SLOTS = {
+    "Our impact": "impact-hero",
+    "The management team leading SRLC USA&rsquo;s work": "management-hero",
+    "Financials": "financials-hero",
+    "Volunteer with SRLC USA": "volunteer-hero",
+    "Events": "events-hero",
+    "Start a Fundraiser for SRLC USA": "fundraise-hero",
+    "Partner With Us": "partner-hero",
+    "SRLC&rsquo;s Nationwide Presence": "us-hero",
+    "Mission Africa": "africa-hero",
+}
 
 
 def page_header(eyebrow, h1, sub=None, cta=None, image=None, full=False, alt="", size=None):
@@ -285,15 +460,30 @@ def page_header(eyebrow, h1, sub=None, cta=None, image=None, full=False, alt="",
     single-color H1, flat dark-purple scrim for contrast. `image` is an /assets
     path; otherwise a filler chosen from the H1. `full` renders the full-bleed,
     full-height SRA hero (light gradient instead of the purple wash)."""
+    pick = MB_SLOTS.get(HERO_SLOTS.get(h1, ""))
+    if pick:
+        image, size, alt = pick[0], (pick[1], pick[2]), pick[3]
     if image:
         src, w, h = image, 2400, 1600
         for f in FILLERS:
             if f[0] == image:
                 w, h = f[2], f[3]
+        for p in MB_POOL:
+            if p[0] == image:
+                w, h = p[2], p[3]
+                alt = alt or p[4]
         if size:
             w, h = size
     else:
-        src, _, w, h = filler_entry(h1, _tag_for(f"{eyebrow} {h1} {sub or ''}"))
+        src, _, w, h = filler_entry(h1, _tag_for(f"{eyebrow} {h1} {sub or ''}"), min_w=1600)
+        alt = alt or photo_alt(src)
+    lead_html = ""
+    if sub and len(re.sub(r"<[^>]+>|&[a-z]+;", "", sub)) > 140:
+        lead_html = f"""
+<section class="leadsec leadsec--after-hero">
+  <div class="container"><p class="leadsec__lead">{sub}</p></div>
+</section>"""
+        sub = None
     sub_html = f'<p class="pagehead__sub">{sub}</p>' if sub else ""
     cta_html = f'<div class="pagehead__cta">{cta}</div>' if cta else ""
     return f"""<section class="pagehead pagehead--photo{' pagehead--full' if full else ''}">
@@ -304,6 +494,29 @@ def page_header(eyebrow, h1, sub=None, cta=None, image=None, full=False, alt="",
     <h1 class="pagehead__h1">{h1}</h1>
     {sub_html}
     {cta_html}
+  </div>
+</section>{lead_html}"""
+
+
+def story_split(h2, paras, img, reverse=False, tone="lav", extra="", compact=False):
+    """SRA two-column pattern: one paragraph beside a full-scale photo that
+    runs to the viewport edge. Copy passes through unchanged."""
+    body = "".join(f"<p>{x}</p>" for x in paras)
+    if img is None:
+        return f"""<section class="storysplit storysplit--text storysplit--{tone}">
+  <div class="container">
+    <h2 class="storysplit__h">{h2}</h2>
+    {body}{extra}
+  </div>
+</section>"""
+    src, w, h, alt = img
+    cls = ("storysplit" + (" storysplit--reverse" if reverse else "") + f" storysplit--{tone}"
+           + (" storysplit--compact" if compact else ""))
+    return f"""<section class="{cls}">
+  <div class="storysplit__media"><img src="{src}" alt="{alt}" width="{w}" height="{h}" loading="lazy" decoding="async"></div>
+  <div class="storysplit__copy">
+    <h2 class="storysplit__h">{h2}</h2>
+    {body}{extra}
   </div>
 </section>"""
 
@@ -339,7 +552,7 @@ def impact_stats(stats, cols=None):
 # badge from cdn.greatnonprofits.org; the UN ECOSOC lockup is built in-house
 # (the UN does not license its emblem to NGOs). See the build report.
 BADGES = [
-    ("/assets/img/badges/un-ecosoc-consultative-status-2020.svg", 320, 108,
+    ("/assets/img/badges/un-ecosoc-consultative-status-2020-plain.svg", 296, 84,
      "UN ECOSOC Special Consultative Status", "SRLC Global", "UN ECOSOC Special Consultative Status, 2020"),
     ("/assets/img/badges/greatnonprofits-top-rated-2025.png", 534, 400,
      "GreatNonprofits Top-Rated Nonprofit badge", "SRLC USA", "GreatNonprofits Top-Rated"),
@@ -348,14 +561,22 @@ BADGES = [
 ]
 
 
-def recognition_chips():
+BADGE_LINKS = {
+    "GreatNonprofits Top-Rated": "https://greatnonprofits.org/org/shrimad-rajchandra-love-and-care-usa",
+    "Candid Gold Transparency Seal, 2025": "https://www.guidestar.org/profile/81-5162502",
+}
+
+
+def recognition_chips(links=False):
     """Flat one-row band of the three official badge images with captions,
     thin dividers, no cards. Keeps the recognition-cluster__items class so
     existing wrappers keep working."""
-    items = "".join(
-        f'<figure class="recognition-badge">'
-        f'<img class="recognition-badge__img" src="{src}" alt="{alt}" width="{w}" height="{h}" loading="lazy" decoding="async">'
-        f'<figcaption class="recognition-badge__cap"><strong>{a}</strong> &middot; {b}</figcaption>'
-        f'</figure>'
-        for src, w, h, alt, a, b in BADGES)
+    def badge(src, w, h, alt, a, b):
+        fig = (f'<img class="recognition-badge__img" src="{src}" alt="{alt}" width="{w}" height="{h}" loading="lazy" decoding="async">'
+               f'<figcaption class="recognition-badge__cap"><strong>{a}</strong> &middot; {b}</figcaption>')
+        href = BADGE_LINKS.get(b) if links else None
+        if href:
+            fig = f'<a class="recognition-badge__link" href="{href}" rel="noopener" target="_blank">{fig}</a>'
+        return f'<figure class="recognition-badge">{fig}</figure>'
+    items = "".join(badge(*row) for row in BADGES)
     return f'<div class="recognition-cluster__items recognition-badges">{items}</div>'

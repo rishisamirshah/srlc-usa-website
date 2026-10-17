@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 296 84" width="296" height="84" role="img" aria-label="UN ECOSOC Special Consultative Status, 2020">
+  <!-- Footer variant of the built lockup (no white box) for dark backgrounds. Not an official UN asset. -->
+  <rect x="0" y="0" width="84" height="84" fill="#693D84"/>
+  <text x="42" y="36" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="22" font-weight="700" fill="#FFFFFF" letter-spacing="1">UN</text>
+  <text x="42" y="62" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#FFFFFF" letter-spacing="1.5">ECOSOC</text>
+  <text x="100" y="26" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#E4D9F2" letter-spacing="2.2">SPECIAL</text>
+  <text x="100" y="44" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#E4D9F2" letter-spacing="2.2">CONSULTATIVE STATUS</text>
+  <line x1="100" y1="54" x2="290" y2="54" stroke="#A387C6" stroke-width="1.5"/>
+  <text x="100" y="76" font-family="Georgia, 'Times New Roman', serif" font-size="16" font-weight="700" fill="#FFFFFF" letter-spacing="1">Since 2020</text>
+</svg>

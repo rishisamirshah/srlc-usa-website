@@ -14,7 +14,7 @@ strip follow his file. Adaptations, each noted in the build report:
     label naman-claude.md prescribes ("Corporate matching gift eligibility")
 """
 import os
-from shell import page, EMAIL
+from shell import img_tag, photo, page, EMAIL
 
 MATCH_QUALIFIER = ("These are examples of companies with employee matching-gift programs. "
                    "Logos are the property of their respective owners and do not imply "
@@ -28,7 +28,12 @@ HERO_PATH = "/assets/img/fillers/children-smiling.jpg"  # Naman's hero photo (Un
 
 
 def _hero_img():
-    """Same photo as Naman's hero. shell.FILLERS carries its dimensions."""
+    """Media Bank donate hero when curated, else Naman's original hero photo."""
+    from data_media import slot
+    from shell import photo
+    pick = slot("donate-hero") or photo("donate-hero", ["health-care+india", "child-care+india", "india"], "children", min_w=1600)
+    if pick:
+        return pick[0], pick[1], pick[2]
     try:
         from shell import FILLERS
         for f in FILLERS:
@@ -80,9 +85,7 @@ WAYS = [
 ]
 
 TRUST = [
-    ('<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/>',
-     "Payment security",
-     "Every transaction is processed by Stripe, a PCI-DSS Level 1 certified payment platform. 256-bit SSL encryption. SRLC USA never stores your card."),
+    # Stripe "Payment security" signal held until card processing is live (Naman, Aug 22).
     ('<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/>',
      "Tax receipts in 48 hours",
      "An IRS-compliant receipt arrives in your inbox within 48 hours of every gift. Year-end summaries are emailed each January for monthly donors."),
@@ -153,16 +156,13 @@ def _faq():
 def _trust():
     cards = "".join(f"""
       <article class="trust-sig">
-        <svg class="trust-sig__svg" viewBox="0 0 24 24" aria-hidden="true">{svg}</svg>
         <h3 class="trust-sig__h">{h}</h3>
         <p class="trust-sig__body">{body}</p>
-      </article>""" for svg, h, body in TRUST)
+      </article>""" for _, h, body in TRUST)
     cards += """
       <article class="trust-sig">
-        <svg class="trust-sig__svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21V12h6v9"/></svg>
         <h3 class="trust-sig__h">501(c)(3) registered</h3>
-        <p class="trust-sig__ein">EIN 81-5162502</p>
-        <p class="trust-sig__body trust-sig__body--after-ein">Incorporated in New Jersey. Contributions are tax deductible to the extent permitted by law.</p>
+        <p class="trust-sig__body">EIN 81-5162502. Incorporated in New Jersey. Contributions are tax deductible to the extent permitted by law.</p>
       </article>"""
     return cards
 
@@ -173,7 +173,7 @@ def render_donate():
 
 <section class="donate-hero" id="donate-form" aria-labelledby="page-title">
   <div class="donate-hero__media" aria-hidden="true">
-    <img src="{hero_img}" alt="" width="{hero_w}" height="{hero_h}" loading="eager" fetchpriority="high" decoding="async" data-photo-status="placeholder-stock">
+    <img src="{hero_img}" alt="" width="{hero_w}" height="{hero_h}" loading="eager" fetchpriority="high" decoding="async" >
   </div>
   <div class="container">
     <div class="donate-hero__grid">
@@ -213,23 +213,10 @@ def render_donate():
   <div class="container">
     <div class="section-head">
       <h2 class="section-h">Double Your Impact</h2>
-      <p class="section-sub">Thousands of companies match the donations their employees make to nonprofits like SRLC USA. Some also match volunteer hours. Search for your employer below to see your company's matching gift policy and get the forms you need in minutes.</p>
+      <p class="section-sub">Thousands of companies match the donations their employees make to nonprofits like SRLC USA. Some also match volunteer hours.</p>
     </div>
-    <!-- DOUBLE THE DONATION EMBED: PENDING ACCOUNT SETUP
-         Replace this placeholder block with the live embed snippet once
-         the Double the Donation account and API key are confirmed (owner: Hardik).
-         Standard embed shape:
-         <script src="https://doublethedonation.com/api/js/ddplugin.js"></script>
-         <div id="dd-container"></div>
-         plus the DDCONF API key config snippet from the DTD dashboard. -->
-    <div id="dd-container" class="dd-placeholder">
-      <div class="dd-mock">
-        <input class="dd-mock__input" type="text" placeholder="Search for your employer..." disabled aria-label="Employer search, launching soon">
-        <button class="dd-mock__btn" type="button" disabled>Search</button>
-      </div>
-      <p class="dd-mock__caption">Company search launching soon.</p>
-    </div>
-    <p class="dd-attribution">Matching gift information provided by Double the Donation.</p>
+    <!-- Double the Donation employer search returns here once the account and
+         API key are live (owner: Hardik); the disabled mock is out until then. -->
     <p class="dd-cta"><a href="#donate-form">Make your gift now and submit your match request today.</a></p>
     <div class="dd-logos">
       <h3 class="dd-logos__h">Corporate matching gift eligibility</h3>
@@ -239,8 +226,9 @@ def render_donate():
   </div>
 </section>
 
-<section class="donate-strip" id="monthly" aria-label="Become a monthly donor">
-  <div class="container">
+<section class="donate-strip donate-strip--split" id="monthly" aria-label="Become a monthly donor">
+  <div class="donate-strip__media">{img_tag(photo("donate-monthly", ["child-care+india", "health-care+india", "educational-care+india"], "children", min_w=1200))}</div>
+  <div class="donate-strip__copy">
     <p class="donate-strip__eyebrow">Sustaining gifts</p>
     <h2 class="donate-strip__h">A monthly gift sustains a Care every month of the year. <em>Not just today.</em></h2>
     <p class="donate-strip__body">Monthly donors are the backbone of SRLC USA. $25 a month is essential medicines for a different patient every month. $60 a month is one full mobile clinic day, twelve villages a year. Set it once.</p>
@@ -252,7 +240,7 @@ def render_donate():
 </section>
 
 <section class="section-pad section--lavender" id="other-ways" aria-label="Other ways to give">
-  <div class="container">
+  <div class="container donate-twocol">
     <div class="section-head">
       <p class="section-eyebrow">Other ways to give</p>
       <h2 class="section-h">More than a credit card. <em>Many paths, one mission.</em></h2>
@@ -281,7 +269,7 @@ def render_donate():
 </section>
 
 <section class="section-pad section--lavender" id="faq" aria-label="Donor questions">
-  <div class="container">
+  <div class="container donate-twocol">
     <div class="section-head">
       <p class="section-eyebrow">Before you give</p>
       <h2 class="section-h">Honest answers to the questions donors actually ask.</h2>

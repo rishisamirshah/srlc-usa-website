@@ -33,6 +33,7 @@
 (function(){
   var cards = document.querySelectorAll('.quote-card');
   var dots = document.querySelectorAll('.quote-wall__dots .qd');
+  if (!cards.length) return;
   var idx = 0; var timer;
   function go(n) {
     cards[idx].classList.remove('is-active'); dots[idx].classList.remove('is-active');
@@ -46,6 +47,34 @@
   });
   dots.forEach(function(d){ d.addEventListener('click', function(){ go(parseInt(d.dataset.go,10)); start(); }); });
   start();
+})();
+
+(function(){
+  // Hero carousel logic — keyboard, dots, prev/next, auto-rotate
+  var carousel = document.getElementById('heroCarousel');
+  if (carousel) {
+    var slides = carousel.querySelectorAll('.hero-carousel__slide');
+    var dots = carousel.querySelectorAll('.dot');
+    var idx = 0;
+    var timer;
+    function go(n){
+      slides[idx].classList.remove('is-active');
+      dots[idx].classList.remove('is-active');
+      idx = (n + slides.length) % slides.length;
+      slides[idx].classList.add('is-active');
+      dots[idx].classList.add('is-active');
+    }
+    function start(){ stop(); if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return; timer = setInterval(function(){go(idx+1);}, 7000); }
+    function stop(){ if(timer){ clearInterval(timer); timer=null; } }
+    carousel.querySelector('[data-dir="prev"]').addEventListener('click', function(){go(idx-1); start();});
+    carousel.querySelector('[data-dir="next"]').addEventListener('click', function(){go(idx+1); start();});
+    dots.forEach(function(d){ d.addEventListener('click', function(){go(parseInt(d.dataset.go,10)); start();}); });
+    carousel.addEventListener('mouseenter', stop);
+    carousel.addEventListener('mouseleave', start);
+    carousel.addEventListener('focusin', stop);
+    carousel.addEventListener('focusout', start);
+    start();
+  }
 })();
 
 (function(){
@@ -129,7 +158,7 @@
     }
 
     /* ===== 1b) Stat counter animation ===== */
-    var statEls = document.querySelectorAll('.mstat__n, .count-up');
+    var statEls = document.querySelectorAll('.count-up-off');
     if (statEls.length && !reducedMotion) {
       var counted = new WeakSet();
       var counterObs = new IntersectionObserver(function(entries){
@@ -509,7 +538,7 @@
       renderChips(match.others, match.href);
     } else {
       city.textContent = "We don't have a chapter in your area yet";
-      meta.textContent = "Email " + "info@srlc-usa.org" + " to help start one, or volunteer with the nearest chapter remotely.";
+      meta.textContent = "Email " + "info@srlcusa.org" + " to help start one, or volunteer with the nearest chapter remotely.";
       if (join) { join.href = "/get-involved/volunteer/"; join.textContent = "Volunteer anyway"; }
       result.classList.add("is-missing");
       hideChips();
@@ -729,6 +758,55 @@
 
   links.forEach(function (a) {
     a.addEventListener("click", function () { setActive(a.getAttribute("href").slice(1)); });
+  });
+})();
+
+
+/* ---- supplement-zz-refine.js ---- */
+/* Institute rows: arrows step one card and disable at the ends. Every flip
+   card flips on tap on touch screens (hover and keyboard focus flip via CSS). */
+(function () {
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var touch = window.matchMedia("(hover: none)");
+
+  var track = document.getElementById("instrowTrack");
+  if (track) {
+    var arrows = document.querySelectorAll(".instrow__arrow");
+    var step = function () {
+      var card = track.querySelector(".flipcard");
+      var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+      return card ? card.getBoundingClientRect().width + gap : 300;
+    };
+    var sync = function () {
+      var max = track.scrollWidth - track.clientWidth - 2;
+      arrows.forEach(function (b) {
+        b.disabled = Number(b.getAttribute("data-dir")) < 0 ? track.scrollLeft <= 2 : track.scrollLeft >= max;
+      });
+    };
+    arrows.forEach(function (b) {
+      b.addEventListener("click", function () {
+        track.scrollBy({ left: Number(b.getAttribute("data-dir")) * step(), behavior: reduce.matches ? "auto" : "smooth" });
+      });
+    });
+    track.addEventListener("scroll", function () { window.requestAnimationFrame(sync); }, { passive: true });
+    window.addEventListener("resize", sync);
+    sync();
+  }
+
+  var cards = document.querySelectorAll(".flipcard");
+  cards.forEach(function (card) {
+    card.addEventListener("click", function (e) {
+      if (!touch.matches) return;
+      if (e.target.closest("a") && card.classList.contains("is-flipped")) return;
+      cards.forEach(function (c) { if (c !== card) c.classList.remove("is-flipped"); });
+      card.classList.toggle("is-flipped");
+    });
+    card.addEventListener("keydown", function (e) {
+      if ((e.key === "Enter" || e.key === " ") && e.target === card) {
+        e.preventDefault();
+        card.classList.toggle("is-flipped");
+      }
+    });
   });
 })();
 
