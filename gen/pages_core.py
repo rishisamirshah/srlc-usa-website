@@ -209,9 +209,8 @@ def render_home(svg_inner):
     from data_india import INSTITUTES
     # charity:water "Ready to take action" row (Naman, Oct 16): edge-to-edge
     # scroller of square photo cards, dark label bar with an icon, flipping to
-    # a purple back with the one-liner on hover / tap / keyboard focus. Each
-    # card carries the institute's official name (Naman, Oct 18).
-    institutes_cards = "".join(flipcard(inst, inst["home_desc"], f'/our-work/india/{inst["slug"]}/', link_label="Learn More", label=inst["name"])
+    # a purple back with the one-liner on hover / tap / keyboard focus.
+    institutes_cards = "".join(flipcard(inst, inst["home_desc"], f'/our-work/india/{inst["slug"]}/', link_label="Learn More")
                                for inst in sorted(INSTITUTES, key=lambda i: NAMAN.INSTITUTE_ORDER.index(i["slug"])))
 
     # Section 7, Latest Articles: hidden until three articles are published

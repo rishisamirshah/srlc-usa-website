@@ -437,25 +437,21 @@ INST_ICONS = {
     "jivamaitridham": _IC.format('<circle cx="7" cy="9" r="1.8"/><circle cx="11" cy="5.5" r="1.8"/><circle cx="16" cy="6.5" r="1.8"/><circle cx="18.5" cy="11" r="1.8"/><path d="M8.5 18.5c0-2.5 1.8-5.5 4-5.5s4 3 4 5.5c0 1.5-1.2 2-2.5 1.6-1-.3-2-.3-3 0-1.3.4-2.5-.1-2.5-1.6z"/>'),
     "center-of-excellence-for-women": _IC.format('<circle cx="12" cy="7" r="3.2"/><path d="M5.5 21v-1.5a6.5 6.5 0 0 1 13 0V21"/>'),
 }
-INST_LABELS = {
-    "hospital-and-research-center": "Hospital and Research Center", "vidyapeeth": "Vidyapeeth",
-    "gurukul": "Gurukul", "skill-development-center": "Skill Development Center",
-    "jivamaitridham": "Jivamaitridham", "center-of-excellence-for-women": "Center of Excellence for Women",
-}
 
 
 # Vertical crop for institute photos whose subject sits high in the frame
 INST_POS = {"jivamaitridham": "50% 12%", "skill-development-center": "15% 50%"}
 
 
-def flipcard(inst, back_desc, href, card_id="", link_label="Visit the institute", label=None):
+def flipcard(inst, back_desc, href, card_id="", link_label="Visit the institute"):
     """Homepage institute card: square photo with a dark label bar and icon,
-    flipping to a purple back with the description and a text link."""
+    flipping to a purple back with the description and a text link. The bar
+    carries the institute's official name (Naman, Oct 18)."""
     id_attr = f' id="{card_id}"' if card_id else ""
     return f"""<li class="flipcard"{id_attr} tabindex="0">
         <div class="flipcard__inner">
           <div class="flipcard__front" style="background-image:url('{inst_photo(inst)[0]}');background-position:{INST_POS.get(inst["slug"], "50% 50%")}">
-            <span class="flipcard__label"><span class="flipcard__icon">{INST_ICONS[inst["slug"]]}</span><span class="flipcard__name">{label or INST_LABELS[inst["slug"]]}</span></span>
+            <span class="flipcard__label"><span class="flipcard__icon">{INST_ICONS[inst["slug"]]}</span><span class="flipcard__name">{inst["name"]}</span></span>
           </div>
           <div class="flipcard__back">
             <h3 class="flipcard__h"><a href="{href}" tabindex="-1">{inst["home_name"]}</a></h3>
