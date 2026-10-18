@@ -5,6 +5,7 @@ from shell import (page, ph, page_header, flat_cta, filler, filler_entry, story_
                    img_tag, pick_distinct, photo_src_tag, pinned)
 from data_media import slot
 from data_states import STATES, CAMPAIGNS, US_HERO_BODY
+from data_naman import CARE_TILES
 from data_cares import CARES, TEN_CARE_INTRO
 from data_india import INSTITUTES, INDIA_INTRO, SRV
 
@@ -76,7 +77,7 @@ FOCAL = {"/assets/img/mb/mb-208.webp": "72%", "/assets/img/mb/mb-433.webp": "88%
 
 
 # US photos that must not drift with render order (a state page can claim them first)
-CARE_US_PIN = {"community-care": 428}
+CARE_US_PIN = {"community-care": 542, "environmental-care": 543}  # cleanups, matching each Care's US copy
 
 
 def care_photo(c, min_w=1600):
@@ -188,7 +189,7 @@ def render_us_hub(svg_inner):
         campaigns += f"""<div class="{split_cls} reveal" id="{c["name"].lower().replace(" ", "-")}">
       <div class="vu-split__copy">
         <h3>{c["name"]}</h3>
-        <p>{c["body"]}</p>
+        <p>{c["body"].replace("Title 1", "Title&nbsp;1")}</p>
         <a class="btn btn--secondary" href="/donate/">{c["cta"]}</a>
       </div>
       <div class="vu-split__photo">{img}</div>
@@ -322,14 +323,14 @@ def render_tencare_hub():
     """Hero, the tab's intro as its own section, then the ten Cares as photo
     tiles in the homepage grid (no numbers, no icons; one-liner on hover,
     accordion rows below 1024). Each tile links to its Care page."""
-    tiles = "".join(f"""<a class="caretile caretile--hub" href="/our-work/10-care-program/{c["slug"]}/" style="background-image:url('{care_photo(c)[0]}');background-position:{FOCAL.get(care_photo(c)[0], '50%')} 50%">
+    tiles = "".join(f"""<a class="caretile caretile--hub" href="/our-work/10-care-program/{c["slug"]}/" style="background-image:url('{CARE_TILES[c["slug"]]}')">
         <span class="caretile__overlay" aria-hidden="true"></span>
         <span class="caretile__chip"><span class="caretile__name">{c["name"]}</span></span>
         <span class="caretile__hover"><span class="caretile__hover-h">{c["name"]}</span><span class="caretile__hover-p">{c["one"]}</span><span class="caretile__more">Explore {c["name"]}<span aria-hidden="true">&rarr;</span></span></span>
       </a>""" for c in CARES)
     # a volunteer group at work, not one Care's subject (the sanctuary echoed the Animal Care tile)
     hero = pinned(334) or photo("10 Care Program hero", ["volunteers+india", "community-care+india", "educational-care+india"], "community", min_w=1600)
-    body = page_header("Our Work", "10 Care Program", image=hero[0], size=(hero[1], hero[2]), alt=hero[3]) + f"""
+    body = page_header("Our Work", "10 Care Program", image=hero[0], size=(hero[1], hero[2]), alt=hero[3], pos="50% 25%") + f"""
 <section class="care-section care-section--hub" aria-label="The ten Cares">
   <div class="container">
     <p class="leadsec__lead">{TEN_CARE_INTRO}</p>
@@ -444,7 +445,7 @@ INST_LABELS = {
 
 
 # Vertical crop for institute photos whose subject sits high in the frame
-INST_POS = {"jivamaitridham": "50% 12%"}
+INST_POS = {"jivamaitridham": "50% 12%", "skill-development-center": "15% 50%"}
 
 
 def flipcard(inst, back_desc, href, card_id="", link_label="Visit the institute"):
@@ -457,16 +458,19 @@ def flipcard(inst, back_desc, href, card_id="", link_label="Visit the institute"
             <span class="flipcard__label"><span class="flipcard__icon">{INST_ICONS[inst["slug"]]}</span><span class="flipcard__name">{INST_LABELS[inst["slug"]]}</span></span>
           </div>
           <div class="flipcard__back">
-            <h3 class="flipcard__h"><a href="{href}">{inst["home_name"]}</a></h3>
+            <h3 class="flipcard__h"><a href="{href}" tabindex="-1">{inst["home_name"]}</a></h3>
             <p class="flipcard__d">{back_desc}</p>
-            <a class="textlink" href="{href}">{link_label}<span aria-hidden="true"> &rarr;</span></a>
+            <a class="textlink" href="{href}" tabindex="-1">{link_label}<span aria-hidden="true"> &rarr;</span></a>
           </div>
         </div>
       </li>"""
 
 
 def inst_photo(inst):
-    """(src, w, h, alt) for an institute: the named Media Bank pick, else the pool."""
+    """(src, w, h, alt) for an institute: Naman's pick, the named Media Bank pick, else the pool."""
+    from data_naman import INSTITUTES as NAMAN_INST
+    if inst["slug"] in NAMAN_INST:
+        return NAMAN_INST[inst["slug"]]
     pick = slot(INST_SLOTS[inst["slug"]])
     if pick:
         return pick
@@ -538,7 +542,7 @@ def render_institute(inst):
     hero = inst_hero(inst)
     body = page_header(
         '<a href="/our-work/india/">Our Institutes in India</a>',
-        inst["name"],
+        inst["name"].replace("Shrimad Rajchandra ", "Shrimad&nbsp;Rajchandra "),
         inst["intro"] or None,
         image=hero[0], size=(hero[1], hero[2]), alt=hero[3],
     ) + f"""
@@ -592,7 +596,7 @@ def render_africa():
         <h2 class="vu-h">Distance should not decide who gets care</h2>
         <p>In much of the region Mission Africa serves, the barrier to health is not the treatment. It is the miles between a family and anyone who can provide it, the distance where a curable illness quietly becomes a permanent one. Launched in 2024 by Shrimad Rajchandra Love and Care (SRLC), Mission Africa now works across 16 countries in Africa to close that distance.</p>
       </div>
-      <div class="vu-split__photo">{img_tag(pinned(208), pos="72% 50%")}</div>
+      <div class="vu-split__photo">{img_tag(pinned(185))}</div>
     </div>
   </div>
 </section>
@@ -617,7 +621,7 @@ def render_africa():
       <a class="textlink" href="/our-work/india/">India<span aria-hidden="true"> &rarr;</span></a>
       <a class="textlink" href="/our-work/united-states/">United States<span aria-hidden="true"> &rarr;</span></a>
     </p>
-    <div class="photopair">{img_tag(pinned(310))}{img_tag(photo("africa-pair-camp", ["africa+alt:camp", "africa+alt:medical", "africa"], "hospital", min_w=1200))}</div>
+    <div class="photopair">{img_tag(pinned(310))}{img_tag(pinned(209))}</div>
   </div>
 </section>
 

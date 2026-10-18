@@ -19,19 +19,26 @@ SKIP_TAGS = {"spiritual", "sarvamangal"}
 # an outreach talk (116, 143; 174 shares the outreach banner): spiritual
 # imagery, which belongs on /about/our-inspiration/ only.
 SKIP_PHOTOS = {102, 104, 108, 116, 117, 118, 120, 143, 170, 171, 174, 177, 210, 432, 440}
+# San Francisco gala frames carry the photographer's watermark; 622 crops to a
+# headless torso in every landscape frame.
+SKIP_PHOTOS |= {722, 723, 724, 725, 726, 727, 729, 730, 732, 733, 622}
+# Beer-brand T-shirts (Corona) on a volunteer or guest in frame
+SKIP_PHOTOS |= {396, 426}
 # Hand picks that win over the curator's first choice. home-impact-story: no
-# identifiable patient beside Laxmibhai's story, subject in the left half for
+# identifiable patient beside Laxibhai's story, subject in the left half for
 # the fixed-background parallax panel.
 SLOT_OVERRIDES = {
     "home-impact-story": 123,
     "card-volunteer": 546,    # tree planting: hero slides already cover school kits and the PB&J line
-    "management-hero": 727,   # guests at the gala, not one identifiable speaker under stage light
+    "management-hero": 721,   # guests at a Dallas luncheon table; the San Francisco frames are watermarked
+    "events-hero": 716,       # a full Dallas banquet; the San Francisco frames are watermarked
     "wwa-hero": 311,          # bright San Diego kit handout
     "impact-hero": 195,       # a school courtyard at scale, the tab's brief; the curator's picks were livery shots
     "donate-hero": 472,       # boy with his new backpack, face clear of the copy and the gift widget
     "us-hero": 470,           # unbranded; the curator's pick has a beer logo on a T-shirt
-    "home-hero-3": 175,       # first slide; the curator's pick shows an SRMD-branded shirt up front
-    "state-arizona-hero": 426,  # the curator's pick has a framed deity picture on the wall
+    "home-hero-3": 392,       # first slide: bright, outdoors, people at work; the curator's pick shows an SRMD-branded shirt
+    "care-educational-care": 176,  # India classroom, so the first Care row is not three frames from one Africa shoot
+    "state-arizona-hero": 428,  # the curator's pick has a framed deity picture on the wall
 }
 # Minimum source width per slot family: full-bleed heroes, half-width splits,
 # square cards. A slot with no candidate this wide is left out so the page's

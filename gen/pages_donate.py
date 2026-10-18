@@ -150,7 +150,7 @@ def _ways():
         </button></h3>
         <div class="faq-item__body" id="{pid}" hidden>
           <p>{body}</p>
-          <a class="textlink way-card__cta" href="{href}">{cta}<span aria-hidden="true"> &rarr;</span></a>
+          <a class="textlink way-card__cta" href="{href}">{cta}<span aria-hidden="true">&nbsp;&rarr;</span></a>
         </div>
       </div>""")
     return "\n      ".join(items)
@@ -235,7 +235,7 @@ def render_donate():
     </div>
     <!-- Double the Donation employer search returns here once the account and
          API key are live (owner: Hardik); the disabled mock is out until then. -->
-    <p class="dd-cta"><a class="textlink" href="#donate-form">Make your gift now and submit your match request today.<span aria-hidden="true"> &rarr;</span></a></p>
+    <p class="dd-cta"><a class="textlink" href="#donate-form">Make your gift now and submit your match request today.<span aria-hidden="true">&nbsp;&rarr;</span></a></p>
     <div class="dd-logos">
       <p class="section-eyebrow dd-logos__h">Corporate matching gift eligibility</p>
       <p class="dd-logos__qualifier">{MATCH_QUALIFIER}</p>
@@ -251,7 +251,7 @@ def render_donate():
     <h2 class="donate-strip__h">A monthly gift sustains a Care every month of the year. <em>Not just today.</em></h2>
     <p class="donate-strip__body">Monthly donors are the backbone of SRLC USA. $25 a month is essential medicines for a different patient every month. $60 a month is one full mobile clinic day, twelve villages a year. Set it once.</p>
     <div class="donate-strip__ctas">
-      <a class="btn btn--primary btn--lg" href="{MAIL_MONTHLY}%20(%2425%20monthly)">Become a monthly donor at $25</a>
+      <a class="btn btn--primary" href="{MAIL_MONTHLY}%20(%2425%20monthly)">Become a monthly donor at $25</a>
       <a class="btn btn--ghost" href="#donate-form" data-select-freq="monthly">Choose another monthly amount</a>
     </div>
   </div>

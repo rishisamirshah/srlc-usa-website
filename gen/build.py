@@ -138,13 +138,13 @@ def assemble_assets():
             "var dots = document.querySelectorAll('.quote-wall__dots .qd');\n  if (!cards.length) return;\n  var idx = 0;")
         s = s.replace(
             "function start(){ stop(); timer = setInterval(function(){go(idx+1);}, 6500); }",
-            "function start(){ stop(); if (hold || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) return; timer = setInterval(function(){go(idx+1);}, 6500); }")
+            "function start(){ stop(); if (hold || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) return; timer = setInterval(function(){go(idx+1);}, 11000); }")
         s = s.replace(
             "dots.forEach(function(d){ d.addEventListener('click', function(){ go(parseInt(d.dataset.go,10)); start(); }); });\n  start();",
             "dots.forEach(function(d){ d.addEventListener('click', function(){ go(parseInt(d.dataset.go,10)); start(); }); });\n"
             "  var wall = document.querySelector('.quote-wall');\n"
             "  var hold = false;\n"
-            "  if (wall) { wall.addEventListener('mouseenter', function(){ hold = true; stop(); }); wall.addEventListener('mouseleave', function(){ hold = false; start(); }); wall.addEventListener('focusin', function(){ hold = true; stop(); }); wall.addEventListener('focusout', function(e){ if (!wall.contains(e.relatedTarget)) { hold = false; start(); } }); }\n"
+            "  if (wall) { wall.addEventListener('mouseenter', function(){ hold = true; stop(); }); wall.addEventListener('mouseleave', function(){ if (!wall.contains(document.activeElement)) { hold = false; start(); } }); wall.addEventListener('focusin', function(){ hold = true; stop(); }); wall.addEventListener('focusout', function(e){ if (!wall.contains(e.relatedTarget)) { hold = false; start(); } }); }\n"
             "  start();")
         s = s.replace(
             "if (sp && !reducedMotion) {",

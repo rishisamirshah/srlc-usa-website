@@ -42,6 +42,15 @@
         card.classList.toggle("is-flipped");
       }
     });
+    var links = card.querySelectorAll("a");
+    var syncLinks = function () {
+      var on = card.classList.contains("is-flipped");
+      links.forEach(function (a) { a.tabIndex = on ? 0 : -1; });
+    };
+    if (window.MutationObserver) new MutationObserver(syncLinks).observe(card, { attributes: true, attributeFilter: ["class"] });
+    card.addEventListener("focus", function () {
+      card.scrollIntoView({ block: "nearest", inline: "nearest", behavior: reduce.matches ? "auto" : "smooth" });
+    });
   });
 })();
 
@@ -54,6 +63,8 @@
     var open = nav.classList.contains("is-open") && window.innerWidth <= 900;
     nav.style.top = open ? Math.max(0, header.getBoundingClientRect().bottom) + "px" : "";
     document.documentElement.classList.toggle("nav-locked", open);
+    var btn = header.querySelector(".nav-toggle");
+    if (btn) btn.setAttribute("aria-label", nav.classList.contains("is-open") ? "Close menu" : "Open menu");
   }
   new MutationObserver(sync).observe(nav, { attributes: true, attributeFilter: ["class"] });
   window.addEventListener("resize", sync);

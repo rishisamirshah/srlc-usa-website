@@ -21,8 +21,15 @@ ADDRESS = ("500 Paterson Plank Rd #33685", "Union City, NJ 07087")
 FOOTER_LEGAL = ('Shrimad Rajchandra Love and Care - USA Inc is a registered <span class="nowrap">501(c)(3)</span> '
                 'nonprofit organization. <span class="nowrap">EIN 81-5162502</span>. Contributions are tax '
                 'deductible to the extent permitted by law.')
-# First carousel slide's image: the homepage preloads it
-HOME_FIRST_SLIDE = "home-hero-3"
+# Naman, Oct 17: ECOSOC issues no badge and the UN emblem is not for outside use,
+# so the parent organization's status is stated in words, never as a seal
+ECOSOC_LINE = ("Shrimad Rajchandra Love and Care, the global organization SRLC USA is part of, holds "
+               "Special Consultative Status with the United Nations Economic and Social Council.")
+# Candid serves the seal live so it updates itself (Naman, Oct 17)
+CANDID_SEAL = "https://widgets.guidestar.org/prod/v1/pdp/transparency-seal//81-5162502/svg?env=prod"
+CANDID_URL = "https://www.guidestar.org/profile/81-5162502"
+GNP_SEAL = "/assets/img/badges/greatnonprofits-top-rated-2024.png"
+GNP_URL = "https://greatnonprofits.org/org/shrimad-rajchandra-love-and-care-usa"
 IG = "https://www.instagram.com/srlcusa/"
 FB = "https://www.facebook.com/srlcusa"
 LINKEDIN = "https://www.linkedin.com/company/srlcusa/"
@@ -53,22 +60,17 @@ SOCIAL_SVG = {
 # Compact recognition row for the footer (Naman, Oct 16: charity:water footer
 # model). Consistent optical height, no boxes; square-ish seals run a touch
 # larger than the wide ECOSOC lockup so the three read as equals.
-FOOTER_SEALS = [
-    ("/assets/img/badges/candid-gold-seal-2025.svg", 108, 108, "Candid Gold Seal of Transparency 2025", 52),
-    ("/assets/img/badges/greatnonprofits-top-rated-2025.png", 534, 400, "GreatNonprofits Top-Rated Nonprofit 2025", 52),
-    ("/assets/img/badges/un-ecosoc-consultative-status-2020-light.svg", 296, 84,
-     "UN ECOSOC Special Consultative Status, 2020, held by Shrimad Rajchandra Love and Care, global", 40),
+FOOTER_SEALS = [  # (src, w, h, alt, display height, link)
+    (CANDID_SEAL, 108, 108, "Candid Seal of Transparency", 52, CANDID_URL),
+    (GNP_SEAL, 691, 518, "GreatNonprofits Top-Rated Nonprofit 2024", 52, GNP_URL),
 ]
-# The ECOSOC status belongs to the parent organization, never to SRLC USA
-SEAL_HOLDER = {"/assets/img/badges/un-ecosoc-consultative-status-2020-light.svg": "Shrimad Rajchandra Love and Care, global"}
 
 
 def head(title, desc, path, overlay=False):
     canonical = SITE + path
     body_cls = ' class="has-overlay-nav"' if overlay else ""
-    first = MB_SLOTS.get(HOME_FIRST_SLIDE)
-    preload = (f'<link rel="preload" as="image" href="{first[0]}">\n'
-               if path == "/" and first else "")
+    from data_naman import SLIDE_1
+    preload = f'<link rel="preload" as="image" href="{SLIDE_1[0]}">\n' if path == "/" else ""
     return f"""<!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
@@ -156,9 +158,9 @@ def nav(overlay=False):
 def footer():
     # Address and phone confirmed by Naman (Oct 17 refinement doc).
     seals = "".join(
-        f'<li><img src="{src}" alt="{alt}" width="{w}" height="{h}" style="height:{ht}px" loading="lazy" decoding="async">'
-        + (f'<span class="site-footer__seal-cap">{SEAL_HOLDER[src]}</span>' if src in SEAL_HOLDER else "") + "</li>"
-        for src, w, h, alt, ht in FOOTER_SEALS)
+        f'<li><a href="{href}" rel="noopener" target="_blank"><img src="{src}" alt="{alt}" width="{w}" height="{h}" '
+        f'style="height:{ht}px" loading="lazy" decoding="async"></a></li>'
+        for src, w, h, alt, ht, href in FOOTER_SEALS)
     return f"""</main><footer class="site-footer" role="contentinfo">
   <div class="container">
     <div class="site-footer__cols">
@@ -213,12 +215,15 @@ def footer():
         </ul>
       </div>
     </div>
-    <div class="site-footer__recog">
-      <ul class="site-footer__seals" aria-label="Recognition">{seals}</ul>
-    </div>
-    <div class="site-footer__bottom">
-      <p>&copy; Copyright <span data-year>2026</span> Shrimad Rajchandra Love and Care USA, All Rights Reserved</p>
-      <p class="site-footer__legalline">{FOOTER_LEGAL}</p>
+    <div class="site-footer__base">
+      <div class="site-footer__legal-block">
+        <p>&copy; Copyright <span data-year>2026</span> Shrimad Rajchandra Love and Care USA, All Rights Reserved</p>
+        <p class="site-footer__legalline">{FOOTER_LEGAL}</p>
+      </div>
+      <div class="site-footer__recog-block">
+        <ul class="site-footer__seals" aria-label="Recognition">{seals}</ul>
+        <p class="site-footer__ecosoc">{ECOSOC_LINE}</p>
+      </div>
     </div>
   </div>
 </footer>
@@ -486,7 +491,13 @@ HERO_SLOTS = {
 }
 
 
-def page_header(eyebrow, h1, sub=None, cta=None, image=None, full=False, alt="", size=None, mod="", focal=""):
+def img_style(focal="", pos=""):
+    """Inline crop for a hero photo: phone focal x and/or a fixed object-position."""
+    parts = ([f"--focal-x:{focal}"] if focal else []) + ([f"object-position:{pos}"] if pos else [])
+    return f' style="{";".join(parts)}"' if parts else ""
+
+
+def page_header(eyebrow, h1, sub=None, cta=None, image=None, full=False, alt="", size=None, mod="", focal="", pos=""):
     """SRA-pattern page header over a real photo: one small eyebrow line, short
     single-color H1, flat dark-purple scrim for contrast. `image` is an /assets
     path; otherwise a filler chosen from the H1. `full` renders the full-bleed,
@@ -518,7 +529,7 @@ def page_header(eyebrow, h1, sub=None, cta=None, image=None, full=False, alt="",
     sub_html = f'<p class="pagehead__sub">{sub}</p>' if sub else ""
     cta_html = f'<div class="pagehead__cta">{cta}</div>' if cta else ""
     return f"""<section class="pagehead pagehead--photo{' pagehead--full' if full else ''}{f' pagehead--{mod}' if mod else ''}">
-  <img class="pagehead__img"{f' style="--focal-x:{focal}"' if focal else ''} src="{src}" alt="{alt}" width="{w}" height="{h}" loading="eager" fetchpriority="high" decoding="async">
+  <img class="pagehead__img"{img_style(focal, pos)} src="{src}" alt="{alt}" width="{w}" height="{h}" loading="eager" fetchpriority="high" decoding="async">
   <div class="pagehead__scrim"></div>
   <div class="container pagehead__inner">
     <p class="pagehead__eyebrow">{eyebrow}</p>
@@ -583,23 +594,19 @@ def impact_stats(stats, cols=None):
 # badge from cdn.greatnonprofits.org; the UN ECOSOC lockup is built in-house
 # (the UN does not license its emblem to NGOs). See the build report.
 BADGES = [
-    ("/assets/img/badges/candid-gold-seal-2025.svg", 108, 108,
-     "Candid Gold Seal of Transparency 2025", "SRLC USA", "Candid Gold Transparency Seal, 2025"),
-    ("/assets/img/badges/greatnonprofits-top-rated-2025.png", 534, 400,
-     "GreatNonprofits Top-Rated Nonprofit badge", "SRLC USA", "GreatNonprofits Top\u2011Rated"),
-    ("/assets/img/badges/un-ecosoc-consultative-status-2020-plain.svg", 296, 84,
-     "UN ECOSOC Special Consultative Status", "Shrimad Rajchandra Love and Care, global", "UN ECOSOC Special Consultative Status, 2020"),
+    (CANDID_SEAL, 108, 108, "Candid Seal of Transparency", "SRLC USA", "Candid Seal of Transparency"),
+    (GNP_SEAL, 691, 518, "GreatNonprofits Top-Rated Nonprofit 2024", "SRLC USA", "GreatNonprofits Top\u2011Rated, 2024"),
 ]
 
 
 BADGE_LINKS = {
-    "GreatNonprofits Top\u2011Rated": "https://greatnonprofits.org/org/shrimad-rajchandra-love-and-care-usa",
-    "Candid Gold Transparency Seal, 2025": "https://www.guidestar.org/profile/81-5162502",
+    "GreatNonprofits Top\u2011Rated, 2024": GNP_URL,
+    "Candid Seal of Transparency": CANDID_URL,
 }
 
 
 def recognition_chips(links=False, holders_only=False):
-    """Flat one-row band of the three official badge images with captions,
+    """Flat one-row band of the two official badge images with captions, plus the ECOSOC line,
     thin dividers, no cards. Keeps the recognition-cluster__items class so
     existing wrappers keep working."""
     def badge(src, w, h, alt, a, b):
@@ -617,4 +624,5 @@ def recognition_chips(links=False, holders_only=False):
             fig = f'<span class="recognition-badge__link">{fig}</span>'
         return f'<figure class="recognition-badge">{fig}</figure>'
     items = "".join(badge(*row) for row in BADGES)
-    return f'<div class="recognition-cluster__items recognition-badges">{items}</div>'
+    return (f'<div class="recognition-cluster__items recognition-badges">{items}</div>'
+            f'<p class="recognition-ecosoc">{ECOSOC_LINE}</p>')

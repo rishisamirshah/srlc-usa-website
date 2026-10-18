@@ -24,7 +24,7 @@ CARES = [
             ("Health Awareness and Education", "Spreading health awareness across rural communities.", None),
         ],
         "us": "SRLC USA chapters bring Health Care home: volunteers assemble hygiene kits for shelters and families in need, deliver comfort items, toys, and books to patients in local hospitals, and run wellness-focused programs for seniors and community members across our chapter cities.",
-        "story": ("Laxmibhai&rsquo;s second chance", "Laxmibhai, a 52-year-old farmer, was diagnosed with severe triple-vessel heart disease, the kind of diagnosis that ends a working life in a place without care. Instead, he received the region&rsquo;s first-ever cardiothoracic bypass surgery, performed entirely free of charge. Today he is back on his feet."),
+        "story": ("Laxibhai&rsquo;s second chance", "Laxibhai, a 52-year-old farmer, was diagnosed with severe triple-vessel heart disease, the kind of diagnosis that ends a working life in a place without care. Instead, he received the region&rsquo;s first-ever cardiothoracic bypass surgery, performed entirely free of charge. Today he is back on his feet."),
         "cta": "Support Health Care",
         "title": "Health Care | Free and Affordable Treatment | SRLC USA",
         "desc": "Hospitals, camps, and clinics bringing treatment to families who need it most. 8.35M+ patients treated globally. Support Health Care. SRLC USA.",

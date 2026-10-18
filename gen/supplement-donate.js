@@ -22,7 +22,11 @@
     if (pressed) { sel.amt = pressed.getAttribute("data-amt"); sel.outcome = pressed.getAttribute("data-outcome") || sel.outcome; }
 
     function currentAmt() {
-      if (sel.amt === "custom") return (customInput && customInput.value) ? String(customInput.value) : "";
+      if (sel.amt === "custom") {
+        var v = customInput ? parseFloat(customInput.value) : NaN;
+        if (!(v > 0)) return "";
+        return v % 1 ? v.toFixed(2) : String(v);
+      }
       return sel.amt;
     }
     function render() {
@@ -48,6 +52,7 @@
         sel.amt = btn.getAttribute("data-amt");
         sel.outcome = btn.getAttribute("data-outcome") || sel.outcome;
         if (sel.amt === "custom" && customInput) customInput.focus();
+        else if (customInput) customInput.value = "";
         render();
       });
     });

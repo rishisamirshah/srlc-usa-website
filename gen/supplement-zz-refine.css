@@ -405,7 +405,7 @@
 .storysplit .pillrow { display: grid; grid-template-columns: repeat(2, max-content); gap: 0.7rem 0.8rem; }
 @media (max-width: 345px) { .storysplit .pillrow { grid-template-columns: max-content; } }
 @media (min-width: 900px) {
-  .howwork__recog .recognition-badges { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 1.6rem 2.4rem; align-items: start; }
+  .howwork__recog .recognition-badges { display: flex !important; flex-wrap: wrap; gap: 1.6rem clamp(2.4rem, 4vw, 3.6rem) !important; align-items: flex-start; }
 }
 
 /* Continue Reading band: fixed fluid sizes instead of the 1920-scaled ones */
@@ -628,8 +628,10 @@
   .caregrid { grid-template-columns: repeat(5, minmax(0, 1fr)) !important; gap: 4px !important; justify-content: stretch !important; }
   .caretile { width: auto !important; height: auto !important; aspect-ratio: 325 / 500; }
 }
-.caretile__name { font-size: max(13px, 0.86rem) !important; }
-.caretile__num { font-size: max(20px, 1.3rem) !important; }
+@media (min-width: 1024px) {
+  .caretile__name { font-size: max(13px, 0.86rem) !important; }
+  .caretile__num { font-size: max(20px, 1.3rem) !important; }
+}
 .chapter-finder--v3 .chapter-finder__cols .chapter-activity { padding: var(--space-5) 0 0 !important; }
 .chapter-finder--v3 .chapter-finder__link-row a.btn { padding: 0 1.75rem !important; border: 1px solid currentColor !important; display: inline-flex; align-items: center; min-height: 52px; }
 .chapter-finder__h, .chapter-finder__sub { text-align: left !important; margin-left: 0 !important; }
@@ -695,7 +697,7 @@ p { text-wrap: pretty; }
 .donate-page .donate-hero__media img { transform: none !important; will-change: auto; object-position: 50% 40%; }
 .donate-page .donate-hero__grid { align-items: end; }
 .donate-page .donate-hero .donate-hero__eyebrow { color: rgba(255, 255, 255, 0.85) !important; }
-.donate-page .donate-hero__h { font-weight: 600; font-size: clamp(2rem, 4.2vw, 2.9rem); line-height: 1.08; max-width: 18ch; text-shadow: 0 1px 14px rgba(20, 10, 26, 0.28); }
+.donate-page .donate-hero__h { font-weight: 500; font-size: clamp(2rem, 4.2vw, 2.9rem); line-height: 1.08; max-width: 18ch; text-shadow: 0 1px 14px rgba(20, 10, 26, 0.28); }
 .donate-page .donate-hero__sub, .donate-page .donate-hero__meta { text-shadow: 0 1px 10px rgba(20, 10, 26, 0.35); }
 @media (max-width: 900px) {
   .donate-page .donate-hero { min-height: 0; display: block; background: var(--lav); color: var(--color-ink); padding: 0 0 var(--sec-pad); }
@@ -855,8 +857,7 @@ p { text-wrap: pretty; }
 .donate-page p.section-eyebrow, .donate-page p.donate-hero__eyebrow, .donate-page p.donate-strip__eyebrow,
 .donate-page p.dd-logos__h, .donate-page .way-card__eyebrow { font-size: 0.74rem !important; line-height: 1.4 !important; }
 .donate-page .donate-strip .donate-strip__eyebrow { color: rgba(255, 255, 255, 0.85) !important; }
-.donate-page h2 em { font-style: italic; font-weight: inherit; }
-.donate-page .donate-widget { scroll-margin-top: 96px; }
+.donate-page h2 em { font-style: italic !important; font-weight: inherit !important; }
 
 /* Management: two rows in one section, heading left and text right */
 .govrow { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 1rem clamp(2rem, 5vw, 4.5rem); align-items: baseline; }
@@ -864,7 +865,7 @@ p { text-wrap: pretty; }
 .govrow .vu-h, .govrow .vu-lead { margin: 0 !important; }
 @media (max-width: 900px) { .govrow { grid-template-columns: minmax(0, 1fr); } }
 .flatcta .flatcta__h { margin: 0 0 1rem; }
-#documents { scroll-margin-top: 80px; }
+#documents { scroll-margin-top: -23px; }
 
 /* Financials */
 .fin-report + .vu-doc-grid { margin-top: 2rem; }
@@ -876,7 +877,6 @@ p { text-wrap: pretty; }
 
 /* Events, state pages, shared type */
 .nlrow__line { font-size: 1.02rem !important; }
-@media (max-width: 640px) { .eventgal img[src$="mb-622.webp"] { object-position: 100% 50% !important; } }
 .site-footer__seal-cap { text-wrap: balance; }
 .statecta__p { max-width: 36rem; text-wrap: balance; }
 @media (max-width: 640px) { .statenav a, .lead-card a { display: inline-block; padding: 0.7rem 0; } }
@@ -944,3 +944,75 @@ p { text-wrap: pretty; }
   .tlwrap__photo img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; }
 }
 @media (max-width: 1023px) { .tlwrap__photo { display: none; } }
+
+/* Critic round 4: hero hierarchy, Care tile labels, phone details */
+.pagehead__h1 { font-weight: 500 !important; }
+@media (max-width: 640px) { .pagehead__h1 { font-size: 2.35rem !important; } }
+@media (min-width: 1024px) {
+  .caretile__chip { top: auto !important; bottom: min(36px, calc(36 / 1920 * 100vw)) !important; max-width: calc(100% - 2 * min(56px, calc(56 / 1920 * 100vw))); }
+}
+.newsletter-modal__panel { width: 100%; box-sizing: border-box; }
+.newsletter-modal__form input { min-width: 0; }
+@media (max-width: 860px) { .storysplit .storysplit__media { order: 2 !important; } }
+@media (max-width: 640px) {
+  .lotusband { padding-bottom: 150px !important; }
+  .lotusband::before { width: 62% !important; right: -6% !important; bottom: -3% !important; }
+}
+
+/* Critic round 4: Donate, US hub, footer, menu button */
+.donate-page .donate-amount[data-amt="custom"] { grid-column: span 2; }
+.donate-page .textlink { display: inline !important; font-size: 1rem; }
+.zipline .chapter-finder__form { margin: 0 !important; }
+@media (max-width: 640px) {
+  .vu-doc-grid .vu-card__body .textlink { display: inline-block; padding: 10px 0; margin: -10px 0; }
+}
+@media (min-width: 901px) and (max-width: 1199px) {
+  .site-footer__cols { grid-template-columns: auto repeat(4, max-content) !important; justify-content: space-between; column-gap: 1.5rem; }
+}
+.nav-toggle span { transition: background-color 0.2s ease; }
+.nav-toggle span::before, .nav-toggle span::after { transition: transform 0.2s ease, top 0.2s ease; }
+.nav-toggle[aria-expanded="true"] span { background-color: transparent !important; }
+.nav-toggle[aria-expanded="true"] span::before { top: 0 !important; transform: rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span::after { top: 0 !important; transform: rotate(-45deg); }
+
+/* Critic round 4: Inspiration rhythm, quote dots, Care page spacing */
+.vu-shell .container.prose > .vu-h:first-child { margin-top: 0 !important; }
+.vu-shell .container.prose > :last-child { margin-bottom: 0 !important; }
+@media (max-width: 1023px) { .if-band { width: calc(100% - 2 * var(--gutter)) !important; margin-inline: auto !important; } }
+.qd { position: relative; }
+.qd::after { content: ""; position: absolute; inset: -8px; }
+.caresec--india .storysplit--text { padding-bottom: 0 !important; }
+.caresec--india .storysplit--text + .container .proglist { margin-top: clamp(2.4rem, 4vw, 3.2rem); }
+@media (max-width: 860px) { .storysplit .storysplit__copy { padding-top: var(--sec-pad) !important; padding-bottom: var(--sec-pad) !important; } }
+@media (min-width: 1024px) { .proglist__h { min-height: 2.6em; } }
+
+/* Critic round 4: institute cards and story band */
+.flipcard__name { text-wrap: balance; }
+.flipcard__back .textlink { position: relative; }
+.flipcard__back .textlink::after { content: ""; position: absolute; inset: -12px -4px; }
+@media (min-width: 641px) and (max-width: 760px) {
+  .flipgrid .flipcard__back { padding: 14px !important; gap: 0.4rem !important; }
+  .flipgrid .flipcard__h { font-size: 1rem !important; }
+  .flipgrid .flipcard__d { font-size: 0.85rem !important; line-height: 1.45 !important; }
+}
+img[src$="mb-180.webp"] { object-position: 15% 50%; }
+@media (min-width: 761px) and (max-width: 1180px) { .storyband::before { width: 34% !important; right: -4% !important; bottom: -10% !important; } }
+
+/* Footer (Naman, Oct 17 revision): legal lines left; two linked seals and the ECOSOC line right */
+.site-footer__base {
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 1.6rem 3rem; flex-wrap: wrap;
+  margin-top: clamp(1.8rem, 3vw, 2.6rem); padding-top: 1.6rem; border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+.site-footer__legal-block { flex: 1 1 30rem; min-width: 0; }
+.site-footer__legal-block p { margin: 0; }
+.site-footer__recog-block { flex: 0 1 24rem; display: grid; gap: 0.8rem; justify-items: end; }
+.site-footer__seals a { display: block; border: 0; }
+.site-footer__ecosoc { margin: 0; font-size: 0.78rem; line-height: 1.5; color: rgba(255, 255, 255, 0.66); text-align: right; text-wrap: balance; }
+@media (max-width: 760px) {
+  .site-footer__recog-block { justify-items: start; }
+  .site-footer__ecosoc { text-align: left; }
+}
+
+/* Recognition modules on About pages: two seals, then the ECOSOC line */
+.recognition-cluster .recognition-badges { justify-content: flex-start !important; }
+.recognition-ecosoc { margin: 1.4rem 0 0; font-size: 0.95rem; line-height: 1.6; color: var(--color-ink-muted); max-width: 46rem; text-wrap: pretty; }

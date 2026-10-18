@@ -1,8 +1,8 @@
 """Renderers: homepage (approved v2 base), donate, about cluster, 404 — flat pass."""
 import os
 from shell import (page, ph, page_header, flat_cta, trust_bar, impact_stats, pinned,
-                   recognition_chips, filler, photo, img_tag, story_split, EMAIL, PHONE, EIN_LINE, IG, FB,
-                   HOME_FIRST_SLIDE)
+                   recognition_chips, filler, photo, img_tag, story_split, EMAIL, PHONE, EIN_LINE, IG, FB)
+import data_naman as NAMAN
 from data_states import STATES, CAMPAIGNS
 from data_cares import CARES
 from data_media import slot
@@ -15,7 +15,7 @@ GLOBAL_STATS = [
     ("8.90M+", "Lives", "benefitted globally through Emergency Relief initiatives"),
     ("12.24M+", "People", "benefitted globally through humanitarian initiatives"),
     ("3.28M+", "Students", "supported globally by educational activities"),
-    ("8.35M+", "Patients", "treated at Shrimad Rajchandra Hospital"),
+    ("8.35M+", "Patients", "treated globally"),  # approved list; never the hospital's own count
     ("450K+", "Animals", "saved, treated, and rehabilitated globally"),
 ]
 
@@ -143,19 +143,19 @@ def render_home(svg_inner):
     # headline, one pill CTA per slide, no body copy.
     slides = [
         {
-            "img": home_img(HOME_FIRST_SLIDE),
+            "img": NAMAN.SLIDE_1,
             "eyebrow": "Compassion in Action",
-            "title": "One gift. Ten ways to care.",
+            "title": 'One gift. <span class="nowrap">Ten ways to care.</span>',
             "cta": ("Donate Now", "/donate/"),
         },
         {
-            "img": home_img("home-hero-2"),
+            "img": NAMAN.SLIDES[2],
             "eyebrow": "Across the United States",
             "title": "Care and joy, close to home.",
             "cta": ("Get Involved Locally", "/our-work/united-states/"),
         },
         {
-            "img": home_img("home-hero-1"),
+            "img": NAMAN.SLIDES[3],
             "eyebrow": "Classroom of Change",
             "title": "Turning the key to brighter futures.",
             "cta": ("See the Initiative", "/our-work/united-states/#classroom-of-change"),
@@ -173,9 +173,9 @@ def render_home(svg_inner):
     </article>""" for i, s in enumerate(slides))
     dots = "".join(f'<button class="dot{" is-active" if i == 0 else ""}" data-go="{i}" role="tab" aria-label="Slide {i + 1}"></button>' for i in range(3))
 
-    story_img = home_img("home-impact-story")
-    donate_img = home_img("card-donate")
-    volunteer_img = home_img("card-volunteer")
+    story_img = NAMAN.STORY
+    donate_img = NAMAN.CARDS["donate"]
+    volunteer_img = NAMAN.CARDS["volunteer"]
 
     mstats = "".join(f"""<div class="mstat">
         <p class="mstat__n">{n}</p>
@@ -186,7 +186,7 @@ def render_home(svg_inner):
     # SRA "Our Unique Approach" tile: photo, flat veil, chip (number + name),
     # hover layer with the one-liner. Below 1024 the same markup collapses to
     # the SRA accordion rows (tap reveals the one-liner, tap again to open).
-    care_tiles = "".join(f"""<a class="caretile" href="/our-work/10-care-program/{c["slug"]}/" style="background-image:url('{CARE_PHOTOS[c["slug"]]}')">
+    care_tiles = "".join(f"""<a class="caretile" href="/our-work/10-care-program/{c["slug"]}/" style="background-image:url('{NAMAN.CARE_TILES[c["slug"]]}')">
         <span class="caretile__overlay" aria-hidden="true"></span>
         <span class="caretile__chip"><span class="caretile__num">{c["num"]}</span><span class="caretile__name">{c["name"]}</span></span>
         <span class="caretile__hover"><span class="caretile__hover-h">{c["num"]}<br>{c["name"]}</span><span class="caretile__hover-p">{c["one"]}</span></span>
@@ -197,7 +197,7 @@ def render_home(svg_inner):
     # scroller of square photo cards, dark label bar with an icon, flipping to
     # a purple back with the one-liner on hover / tap / keyboard focus.
     institutes_cards = "".join(flipcard(inst, inst["home_desc"], f'/our-work/india/{inst["slug"]}/', link_label="Learn More")
-                               for inst in INSTITUTES)
+                               for inst in sorted(INSTITUTES, key=lambda i: NAMAN.INSTITUTE_ORDER.index(i["slug"])))
 
     # Section 7, Latest Articles: hidden until three articles are published
     # (Naman 7.0). Markup kept verbatim inside the comment so it returns as is.
@@ -282,12 +282,12 @@ def render_home(svg_inner):
 
 <section class="named-story" aria-label="Impact story">
   <div class="named-story__grid">
-    <div class="named-story__media named-story__media--parallax named-story__media--photo" role="img" aria-label="{story_img[3]}" style="background-image:url('{story_img[0]}')"></div>
+    <div class="named-story__media named-story__media--photo" role="img" aria-label="{story_img[3]}" style="background-image:url('{story_img[0]}');background-position:57% 30%"></div>
     <div class="named-story__copy-wrap">
       <div class="named-story__copy reveal" data-stagger="1">
-        <p class="named-story__eyebrow">Impact Story &middot; Laxmibhai</p>
+        <p class="named-story__eyebrow">Impact Story &middot; Laxibhai</p>
         <p class="named-story__quote">A 52-year-old farmer received the region&rsquo;s first-ever cardiothoracic bypass surgery, performed entirely free of charge. Today he is back on his feet.</p>
-        <p class="named-story__attribution">Laxmibhai&rsquo;s second chance</p>
+        <p class="named-story__attribution">Laxibhai&rsquo;s second chance</p>
         <p class="named-story__attribution-meta">Health Care &middot; Shrimad Rajchandra Hospital and Research Center</p>
         <a class="btn btn--primary named-story__btn" href="/our-work/10-care-program/health-care/">Explore Health Care</a>
       </div>
@@ -645,7 +645,7 @@ def render_our_impact(svg_inner):
 <section class="vu-shell vu-shell--cream">
   <div class="container">
     <h2 class="vu-h reveal">What these figures mean in practice</h2>
-    <p class="vu-lead">Laxmibhai, a 52-year-old farmer, had been living with triple-vessel heart disease, and the surgery he needed was beyond his family&rsquo;s means. He received the region&rsquo;s first cardiothoracic bypass at Shrimad Rajchandra Hospital at no cost, and he has since returned home to his fields. His recovery is one outcome among millions, and it is the kind of outcome every figure on this page represents.</p>
+    <p class="vu-lead">Laxibhai, a 52-year-old farmer, had been living with triple-vessel heart disease, and the surgery he needed was beyond his family&rsquo;s means. He received the region&rsquo;s first cardiothoracic bypass at Shrimad Rajchandra Hospital at no cost, and he has since returned home to his fields. His recovery is one outcome among millions, and it is the kind of outcome every figure on this page represents.</p>
     <p class="mt-6"><a class="textlink" href="/about/financials/">Read the full record on the Financials page<span aria-hidden="true"> &rarr;</span></a></p>
   </div>
 </section>
@@ -766,7 +766,7 @@ def render_management():
       <p class="bio__name" style="color:var(--color-ink-muted)">Roster pending approval</p>
     </div>""" for i in range(4))
     body = page_header(
-        "About SRLC USA",
+        "About Us",
         "The management team leading SRLC USA&rsquo;s work",
         "We are a 501(c)(3) nonprofit. Every person who sets strategy, approves the budget, and answers for results is named here, with what they oversee.",
     ) + f"""
