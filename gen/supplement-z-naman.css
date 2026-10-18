@@ -14,7 +14,7 @@
 }
 
 /* ---------- 0.1 Border radius: zero, site-wide. Pills and dots excepted. ---------- */
-*:not(.btn):not(.dot):not(.qd):not(.cf-pin__dot):not(.swatch):not(.hero-carousel__arrow):not(.progressrail a) {
+*:not(.btn):not(.dot):not(.qd):not(.cf-pin__dot):not(.swatch):not(.hero-carousel__arrow):not(.progressrail a):not(.quote-wall__btn) {
   border-radius: 0 !important;
 }
 img.ph-media, .bio__photo, .donate-tile, .fc-newsletter, .lead-card, .chip-row a, .chip-row span,

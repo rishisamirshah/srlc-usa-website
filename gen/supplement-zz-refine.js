@@ -44,3 +44,17 @@
     });
   });
 })();
+
+/* Mobile menu: a full-height sheet under the header; the page stays put behind it */
+(function () {
+  var header = document.querySelector(".site-header");
+  var nav = header && header.querySelector(".primary-nav");
+  if (!nav || !window.MutationObserver) return;
+  function sync() {
+    var open = nav.classList.contains("is-open") && window.innerWidth <= 900;
+    nav.style.top = open ? Math.max(0, header.getBoundingClientRect().bottom) + "px" : "";
+    document.documentElement.classList.toggle("nav-locked", open);
+  }
+  new MutationObserver(sync).observe(nav, { attributes: true, attributeFilter: ["class"] });
+  window.addEventListener("resize", sync);
+})();

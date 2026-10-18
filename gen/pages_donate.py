@@ -44,6 +44,22 @@ def _hero_img():
     return HERO_PATH, 2400, 1600
 
 
+def _logo_box(path, area=2200, max_w=124, max_h=36):
+    """Display size giving every logo about the same amount of ink, so a solid
+    block and a thin wordmark read at one optical size."""
+    from PIL import Image
+    with Image.open(path) as im:
+        im = im.convert("RGBA")
+        ar = im.width / im.height
+        im.thumbnail((400, 400))
+        px = list(im.getdata())
+    ink = sum(1 for r, g, b, a in px if a > 16 and min(r, g, b) < 235) / len(px)
+    area *= min(1.4, max(0.5, 0.45 / max(ink, 0.05)))
+    h = min(max_h, (area / ar) ** 0.5)
+    w = min(max_w, h * ar)
+    return round(w), round(w / ar)
+
+
 def _partner_marquee():
     pdir = os.path.join(os.path.dirname(__file__), "..", "assets", "img", "partners")
     logos = sorted(f for f in os.listdir(pdir) if not f.startswith("."))
@@ -51,8 +67,8 @@ def _partner_marquee():
     def group(hidden):
         alt = (lambda f: "") if hidden else (lambda f: f.rsplit(".", 1)[0].replace("-", " ").replace("_", " ").title())
         return "".join(
-            f'<div class="marquee-logo"><img src="/assets/img/partners/{f}" alt="{alt(f)}" width="150" height="56" loading="lazy"></div>'
-            for f in logos)
+            f'<div class="marquee-logo"><img src="/assets/img/partners/{f}" alt="{alt(f)}" width="{w}" height="{h}" style="--w:{w}px;--h:{h}px" loading="lazy"></div>'
+            for f, (w, h) in ((f, _logo_box(os.path.join(pdir, f))) for f in logos))
     return f"""<div class="partner-marquee" aria-label="Employers with matching gift programs">
   <div class="partner-marquee__track">
     <div class="partner-marquee__group">{group(False)}</div>
@@ -134,7 +150,7 @@ def _ways():
         </button></h3>
         <div class="faq-item__body" id="{pid}" hidden>
           <p>{body}</p>
-          <a class="way-card__cta" href="{href}">{cta}</a>
+          <a class="textlink way-card__cta" href="{href}">{cta}<span aria-hidden="true"> &rarr;</span></a>
         </div>
       </div>""")
     return "\n      ".join(items)
@@ -162,7 +178,7 @@ def _trust():
     cards += """
       <article class="trust-sig">
         <h3 class="trust-sig__h">501(c)(3) registered</h3>
-        <p class="trust-sig__body">EIN 81-5162502. Incorporated in New Jersey. Contributions are tax deductible to the extent permitted by law.</p>
+        <p class="trust-sig__body"><span class="nowrap">EIN 81-5162502</span>. Incorporated in New Jersey. Contributions are tax deductible to the extent permitted by law.</p>
       </article>"""
     return cards
 
@@ -171,24 +187,27 @@ def render_donate():
     hero_img, hero_w, hero_h = _hero_img()
     body = f"""<div class="donate-page">
 
-<section class="donate-hero" id="donate-form" aria-labelledby="page-title">
+<section class="donate-hero" aria-labelledby="page-title">
   <div class="donate-hero__media" aria-hidden="true">
     <img src="{hero_img}" alt="" width="{hero_w}" height="{hero_h}" loading="eager" fetchpriority="high" decoding="async" >
   </div>
   <div class="container">
     <div class="donate-hero__grid">
-      <div>
-        <p class="donate-hero__eyebrow">Make a Gift</p>
-        <h1 class="donate-hero__h" id="page-title">Every dollar funds a specific outcome.</h1>
-        <p class="donate-hero__sub">Choose an amount. We'll show you exactly what it funds. Contributions are tax deductible to the extent permitted by law.</p>
-        <div class="donate-hero__meta">
-          <span>501(c)(3) registered</span>
-          <span>EIN 81-5162502</span>
-          <span>Tax-deductible</span>
+      <div class="donate-hero__copy">
+        <div class="donate-hero__title">
+          <p class="donate-hero__eyebrow">Make a Gift</p>
+          <h1 class="donate-hero__h" id="page-title">Every dollar funds a specific outcome.</h1>
+        </div>
+        <div class="donate-hero__detail">
+          <p class="donate-hero__sub">Choose an amount. We'll show you exactly what it funds. Contributions are tax deductible to the extent permitted by law.</p>
+          <div class="donate-hero__meta">
+            <span class="nowrap">501(c)(3) registered</span>
+            <span class="nowrap">EIN 81-5162502</span>
+            <span class="nowrap">Tax-deductible</span>
+          </div>
         </div>
       </div>
-      <aside class="donate-widget" aria-label="Donation form">
-        <p class="donate-widget__head">Make a Gift</p>
+      <aside class="donate-widget" id="donate-form" aria-label="Donation form">
         <h2 class="donate-widget__h">Start with an amount.</h2>
         <div class="donate-toggle" role="group" aria-label="Gift frequency">
           <button type="button" class="donate-toggle__btn" data-freq="one-time" aria-pressed="true">One time</button>
@@ -203,7 +222,6 @@ def render_donate():
         </div>
         <p class="donate-widget__outcome" id="donate-outcome" aria-live="polite">Your $50 gift funds school supplies for one student for a term.</p>
         <a class="btn btn--primary btn--lg donate-widget__cta" id="donate-cta" href="{MAIL_GIVE}%20(%2450)" data-mail="{MAIL_GIVE}">Email us to give</a>
-        <p class="donate-widget__legal">Contributions are tax deductible to the extent permitted by law.</p>
       </aside>
     </div>
   </div>
@@ -217,9 +235,9 @@ def render_donate():
     </div>
     <!-- Double the Donation employer search returns here once the account and
          API key are live (owner: Hardik); the disabled mock is out until then. -->
-    <p class="dd-cta"><a href="#donate-form">Make your gift now and submit your match request today.</a></p>
+    <p class="dd-cta"><a class="textlink" href="#donate-form">Make your gift now and submit your match request today.<span aria-hidden="true"> &rarr;</span></a></p>
     <div class="dd-logos">
-      <h3 class="dd-logos__h">Corporate matching gift eligibility</h3>
+      <p class="section-eyebrow dd-logos__h">Corporate matching gift eligibility</p>
       <p class="dd-logos__qualifier">{MATCH_QUALIFIER}</p>
       {_partner_marquee()}
     </div>
@@ -250,8 +268,8 @@ def render_donate():
       {_ways()}
     </div>
     <div class="check-wire">
-      <p class="check-wire__h">Prefer to give by check or wire?</p>
-      <p class="check-wire__body">Make checks payable to <strong>SRLC USA</strong>, EIN 81-5162502, and mail to 500 Paterson Plank Rd #33685, Union City, NJ 07087. For wires, email <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
+      <h3 class="check-wire__h">Prefer to give by check or wire?</h3>
+      <p class="check-wire__body">Make checks payable to <strong>SRLC USA</strong>, <span class="nowrap">EIN 81-5162502</span>, and mail to 500 Paterson Plank Rd #33685, Union City, NJ 07087. For wires, email <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
     </div>
   </div>
 </section>

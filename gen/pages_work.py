@@ -2,7 +2,7 @@
 Per-state stat bands are omitted (CLAUDE.md banned list) and flagged in the
 build log. End-of-page CTAs render as flat sections, never banners."""
 from shell import (page, ph, page_header, flat_cta, filler, filler_entry, story_split, photo_alt, photo,
-                   img_tag, pick_distinct, photo_src_tag)
+                   img_tag, pick_distinct, photo_src_tag, pinned)
 from data_media import slot
 from data_states import STATES, CAMPAIGNS, US_HERO_BODY
 from data_cares import CARES, TEN_CARE_INTRO
@@ -40,7 +40,7 @@ CARE_US_ROUTE = {
     "child-care": ["us+alt:children", "us+alt:kids", "us-classroom-of-change+us"],
     "woman-care": ["us+alt:women", "us+alt:mother"],
     "tribal-care": ["us-community+us"],
-    "community-care": ["us-community+us", "us+alt:senior"],
+    "community-care": ["us+alt:ice cream truck", "us+alt:serve food", "us-community+us", "us+alt:senior"],
     "humanitarian-care": ["us-food+us", "us+alt:shelter", "us+alt:meal"],
     "animal-care": ["us+alt:animal", "us+alt:cow", "us+alt:farm"],
     "environmental-care": ["us-environment+us", "us+alt:tree", "us+alt:litter", "us+alt:clean"],
@@ -62,10 +62,21 @@ CARE_KEYWORDS = {
 # Cares whose India photos are thin get a strict route: no photo beats an
 # off-subject one.
 CARE_INDIA_ROUTE = {
-    "community-care": ["community-care+india+!alt:dog+!alt:veterinar+!alt:animal"],
+    # organ donation, prison programs and village development: nothing on-subject in the bank yet, so text only
+    "community-care": ["india+alt:organ donation", "india+alt:prison", "india+alt:pledge"],
     "environmental-care": ["environmental-care+india", "india+alt:sapling", "india+alt:tree planting"],
     "emergency-relief-care": ["emergency-relief-care+india", "india+alt:flood", "india+alt:relief kit"],
 }
+
+
+# Horizontal focal point for wide Care photos cut into portrait tiles and
+# phone heroes, so the faces stay in frame.
+FOCAL = {"/assets/img/mb/mb-208.webp": "72%", "/assets/img/mb/mb-433.webp": "88%", "/assets/img/mb/mb-92.webp": "35%",
+         "/assets/img/mb/mb-432.webp": "20%"}
+
+
+# US photos that must not drift with render order (a state page can claim them first)
+CARE_US_PIN = {"community-care": 428}
 
 
 def care_photo(c, min_w=1600):
@@ -160,10 +171,11 @@ def state_chips():
         for s in STATES) + "</div>"
 
 
-CAMPAIGN_ROUTE = {
-    "Classroom of Change": ["us-classroom-of-change+us", "us-classroom-of-change"],
-    "Giving Tuesday": ["us-community+us", "volunteers+us"],
-    "Meals of Love and Care": ["us-food+us", "us-food"],
+# Media Bank number and crop per campaign
+CAMPAIGN_PHOTO = {
+    "Classroom of Change": (307, "50% 50%"),
+    "Giving Tuesday": (305, "50% 50%"),
+    "Meals of Love and Care": (355, "50% 50%"),
 }
 
 
@@ -171,13 +183,15 @@ def render_us_hub(svg_inner):
     campaigns = ""
     for i, c in enumerate(CAMPAIGNS):
         split_cls = "vu-split" if i % 2 == 0 else "vu-split vu-split--reverse"
-        campaigns += f"""<div class="{split_cls} reveal" style="margin-bottom:2.4rem">
+        n, pos = CAMPAIGN_PHOTO[c["name"]]
+        img = img_tag(pinned(n), pos=pos)
+        campaigns += f"""<div class="{split_cls} reveal" id="{c["name"].lower().replace(" ", "-")}">
       <div class="vu-split__copy">
         <h3>{c["name"]}</h3>
         <p>{c["body"]}</p>
-        <a class="btn btn--primary" href="/donate/">{c["cta"]}</a>
+        <a class="btn btn--secondary" href="/donate/">{c["cta"]}</a>
       </div>
-      <div class="vu-split__photo">{img_tag(photo("us-campaign-" + c["name"], CAMPAIGN_ROUTE.get(c["name"], ["us-community+us", "volunteers+us"]), "community", min_w=1200))}</div>
+      <div class="vu-split__photo">{img}</div>
     </div>"""
 
     body = page_header(
@@ -238,7 +252,14 @@ def render_state(s, idx):
     hero = slot(f"state-{s['slug']}-hero") or photo(f"state-{s['slug']}-hero", route, "community", min_w=1600)
     gal = pick_distinct(f"state-{s['slug']}-gallery", f"state-{s['slug']}", 3, [photo_src_tag(hero[0])])
     gallery = ""
-    if len(gal) >= 2:
+    if len(gal) < 2:
+        # one shoot for the whole state: a single wide band from it rather than nothing
+        band = gal[0][:1] + gal[0][2:] if gal else photo(f"state-{s['slug']}-band", [f"state-{s['slug']}"], "community", min_w=1200, strict=True)
+        if band and band[0] != hero[0]:
+            gallery = f"""<section class="stategal" aria-label="{s["name"]} chapter photo">
+  <div class="container"><div class="stategal__grid stategal__grid--1">{img_tag(band)}</div></div>
+</section>"""
+    else:
         imgs = "".join(img_tag((p[0], p[2], p[3], p[4])) for p in gal)
         gallery = f"""<section class="stategal" aria-label="{s["name"]} chapter photos">
   <div class="container"><div class="stategal__grid stategal__grid--{len(gal)}">{imgs}</div></div>
@@ -248,7 +269,8 @@ def render_state(s, idx):
     tab_btns, tab_panels = "", ""
     for i, c in enumerate(s["centers"]):
         sel = "true" if i == 0 else "false"
-        tab_btns += f'<button role="tab" aria-selected="{sel}">{c["name"]}</button>'
+        tab_btns += (f'<button role="tab" id="tab-{s["slug"]}-{i}" aria-controls="panel-{s["slug"]}-{i}" '
+                     f'aria-selected="{sel}" tabindex="{0 if i == 0 else -1}">{c["name"]}</button>')
         secs = "".join(f"<h3>{h}</h3><p>{b}</p>" for h, b in c["sections"])
         contact = ""
         if c["contact"]:
@@ -258,16 +280,17 @@ def render_state(s, idx):
             contact = f'<div class="lead-card"><div><b>{name}</b>{link}</div></div>'
         partners = f'<p class="partnerline"><b>Serving alongside:</b> {c["partners"]}</p>' if c["partners"] else ""
         active = " active" if i == 0 else ""
-        tab_panels += f'<div class="tabs__panel{active}" role="tabpanel">{secs}{contact}{partners}</div>'
+        tab_panels += (f'<div class="tabs__panel{active}" role="tabpanel" id="panel-{s["slug"]}-{i}" '
+                       f'aria-labelledby="tab-{s["slug"]}-{i}">{secs}{contact}{partners}</div>')
     tabs = (f'<div data-tabs class="mt-6"><div class="tabs__list" role="tablist">{tab_btns}</div>{tab_panels}</div>'
             if multi else f'<div class="mt-6 state-single">{tab_panels}</div>')
 
     prev_s = STATES[(idx - 1) % len(STATES)]
     next_s = STATES[(idx + 1) % len(STATES)]
     body = page_header(
-        '<a href="/our-work/united-states/">Where We Serve</a> &middot; United States',
+        'Where We Serve &middot; <a href="/our-work/united-states/">United States</a>',
         s["name"],
-        image=hero[0], size=(hero[1], hero[2]), alt=hero[3],
+        image=hero[0], size=(hero[1], hero[2]), alt=hero[3], focal=FOCAL.get(hero[0], ""),
     ) + f"""
 <section class="leadsec" aria-label="About {s["name"]}">
   <div class="container"><p class="leadsec__lead">{s["hero"]}</p></div>
@@ -281,7 +304,7 @@ def render_state(s, idx):
 </section>
 <section class="statecta" aria-labelledby="state-cta-h">
   <div class="container">
-    <h2 class="statecta__h" id="state-cta-h">Serve with us in {s["name"]}.</h2>
+    <h2 class="statecta__h" id="state-cta-h">Serve with us in {s["name"].rstrip(".")}.</h2>
     <p class="statecta__p">Reach out to your local SRLC leaders, or sign up and your chapter coordinator will be in touch.</p>
     <p class="statecta__actions"><a class="btn btn--primary" href="/get-involved/volunteer/">Volunteer With Us</a><a class="btn btn--secondary" href="/donate/">Ways to Give</a></p>
     <nav class="statenav" aria-label="More states">
@@ -299,21 +322,28 @@ def render_tencare_hub():
     """Hero, the tab's intro as its own section, then the ten Cares as photo
     tiles in the homepage grid (no numbers, no icons; one-liner on hover,
     accordion rows below 1024). Each tile links to its Care page."""
-    tiles = "".join(f"""<a class="caretile caretile--hub" href="/our-work/10-care-program/{c["slug"]}/" style="background-image:url('{care_photo(c)[0]}')">
+    tiles = "".join(f"""<a class="caretile caretile--hub" href="/our-work/10-care-program/{c["slug"]}/" style="background-image:url('{care_photo(c)[0]}');background-position:{FOCAL.get(care_photo(c)[0], '50%')} 50%">
         <span class="caretile__overlay" aria-hidden="true"></span>
         <span class="caretile__chip"><span class="caretile__name">{c["name"]}</span></span>
-        <span class="caretile__hover"><span class="caretile__hover-h">{c["name"]}</span><span class="caretile__hover-p">{c["one"]}</span></span>
+        <span class="caretile__hover"><span class="caretile__hover-h">{c["name"]}</span><span class="caretile__hover-p">{c["one"]}</span><span class="caretile__more">Explore {c["name"]}<span aria-hidden="true">&rarr;</span></span></span>
       </a>""" for c in CARES)
-    hero = photo("10 Care Program hero", ["volunteers+india", "community-care+india", "educational-care+india"], "community", min_w=1600)
+    # a volunteer group at work, not one Care's subject (the sanctuary echoed the Animal Care tile)
+    hero = pinned(334) or photo("10 Care Program hero", ["volunteers+india", "community-care+india", "educational-care+india"], "community", min_w=1600)
     body = page_header("Our Work", "10 Care Program", image=hero[0], size=(hero[1], hero[2]), alt=hero[3]) + f"""
-<section class="leadsec" aria-label="About the 10 Care Program">
-  <div class="container">
-    <p class="leadsec__lead">{TEN_CARE_INTRO}</p>
-  </div>
-</section>
 <section class="care-section care-section--hub" aria-label="The ten Cares">
   <div class="container">
+    <p class="leadsec__lead">{TEN_CARE_INTRO}</p>
     <div class="caregrid">{tiles}</div>
+  </div>
+</section>
+<section class="pagenext">
+  <div class="container pagenext__inner">
+    <h2 class="pagenext__line">Continue Reading</h2>
+    <div class="pagenext__links">
+      <a class="btn btn--secondary" href="/our-work/united-states/">United States</a>
+      <a class="btn btn--secondary" href="/our-work/india/">India</a>
+      <a class="btn btn--secondary" href="/our-work/mission-africa/">Mission Africa</a>
+    </div>
   </div>
 </section>
 """
@@ -343,7 +373,8 @@ def render_care(c):
 
     us = ""
     if c["us"]:
-        us_img = photo(f"{c['slug']}-us", CARE_US_ROUTE[c["slug"]] + ["volunteers+us"], "community", min_w=1200)
+        us_img = (pinned(CARE_US_PIN[c["slug"]]) if c["slug"] in CARE_US_PIN
+                  else photo(f"{c['slug']}-us", CARE_US_ROUTE[c["slug"]] + ["volunteers+us"], "community", min_w=1200))
         us = story_split("In the United States", [c["us"]], us_img, reverse=True, tone="white")
 
     story = ""
@@ -359,7 +390,7 @@ def render_care(c):
 
     body = page_header(
         '<a href="/our-work/10-care-program/">10 Care Program</a>',
-        c["name"], image=hero_src, size=(hero_w, hero_h), alt=hero_alt,
+        c["name"], image=hero_src, size=(hero_w, hero_h), alt=hero_alt, focal=FOCAL.get(hero_src, ""),
     ) + f"""
 <section class="leadsec" aria-labelledby="why-h">
   <div class="container">
@@ -412,13 +443,17 @@ INST_LABELS = {
 }
 
 
+# Vertical crop for institute photos whose subject sits high in the frame
+INST_POS = {"jivamaitridham": "50% 12%"}
+
+
 def flipcard(inst, back_desc, href, card_id="", link_label="Visit the institute"):
     """Homepage institute card: square photo with a dark label bar and icon,
     flipping to a purple back with the description and a text link."""
     id_attr = f' id="{card_id}"' if card_id else ""
     return f"""<li class="flipcard"{id_attr} tabindex="0">
         <div class="flipcard__inner">
-          <div class="flipcard__front" style="background-image:url('{inst_photo(inst)[0]}')">
+          <div class="flipcard__front" style="background-image:url('{inst_photo(inst)[0]}');background-position:{INST_POS.get(inst["slug"], "50% 50%")}">
             <span class="flipcard__label"><span class="flipcard__icon">{INST_ICONS[inst["slug"]]}</span><span class="flipcard__name">{INST_LABELS[inst["slug"]]}</span></span>
           </div>
           <div class="flipcard__back">
@@ -448,7 +483,7 @@ def render_india_hub():
         "Our Work &middot; Where We Serve",
         "Our Institutes in India",
         INDIA_INTRO,
-        image=hero[0], size=(hero[1], hero[2]), alt=hero[3],
+        image=hero[0], size=(hero[1], hero[2]), alt=hero[3], mod="sky",
     ) + f"""
 <section class="initgrid-sec">
   <div class="container">
@@ -544,9 +579,10 @@ def render_vidyapeeth():
 
 def render_africa():
     body = page_header(
-        "Our Work &middot; Where We Serve",
         "Mission Africa",
+        "Distance never decides who receives care",
         "Mission Africa brings doctors, medicine, and follow-up care to communities where the nearest clinic can be hours away, at no cost to patients. We work with local health workers and community partners across 16 countries in Africa.",
+        cta='<a class="btn btn--primary" href="/donate/">Stand With Mission Africa</a>',
         image=filler("Mission Africa", "hospital"),
     ) + f"""
 <section class="vu-shell vu-shell--lav">
@@ -556,7 +592,7 @@ def render_africa():
         <h2 class="vu-h">Distance should not decide who gets care</h2>
         <p>In much of the region Mission Africa serves, the barrier to health is not the treatment. It is the miles between a family and anyone who can provide it, the distance where a curable illness quietly becomes a permanent one. Launched in 2024 by Shrimad Rajchandra Love and Care (SRLC), Mission Africa now works across 16 countries in Africa to close that distance.</p>
       </div>
-      <div class="vu-split__photo">{img_tag(photo("africa-queue", ["africa+alt:queue", "africa+alt:camp", "africa"], "hospital", min_w=1200))}</div>
+      <div class="vu-split__photo">{img_tag(pinned(208), pos="72% 50%")}</div>
     </div>
   </div>
 </section>
@@ -575,13 +611,13 @@ def render_africa():
 <section class="vu-shell vu-shell--lav">
   <div class="container">
     <h2 class="vu-h reveal">Proven far from here</h2>
-    <p>Mission Africa did not start from zero and your gift does not land on an experiment. It extends a healthcare model refined over decades in Dharampur, India, where a 250-bed hospital accredited by the National Accreditation Board for Hospitals and Healthcare Providers (NABH) treats patients regardless of their ability to pay. The movement behind it has touched 33M+ lives globally, and volunteers across the United States help fund and power the work.</p>
+    <p class="vu-lead">Mission Africa did not start from zero and your gift does not land on an experiment. It extends a healthcare model refined over decades in Dharampur, India, where a 250-bed hospital accredited by the National Accreditation Board for Hospitals and Healthcare Providers (NABH) treats patients regardless of their ability to pay. The movement behind it has touched 33M+ lives globally, and volunteers across the United States help fund and power the work.</p>
     <p class="africa-links">
       <a class="textlink" href="/our-work/10-care-program/">Our Causes<span aria-hidden="true"> &rarr;</span></a>
       <a class="textlink" href="/our-work/india/">India<span aria-hidden="true"> &rarr;</span></a>
       <a class="textlink" href="/our-work/united-states/">United States<span aria-hidden="true"> &rarr;</span></a>
     </p>
-    <div class="photopair">{img_tag(photo("africa-pair-us", ["volunteers+us", "us-community+us"], "community", min_w=1200))}{img_tag(photo("africa-pair-camp", ["africa+alt:camp", "africa+alt:medical", "africa"], "hospital", min_w=1200))}</div>
+    <div class="photopair">{img_tag(pinned(310))}{img_tag(photo("africa-pair-camp", ["africa+alt:camp", "africa+alt:medical", "africa"], "hospital", min_w=1200))}</div>
   </div>
 </section>
 

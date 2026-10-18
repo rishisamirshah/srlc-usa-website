@@ -16,8 +16,13 @@ PHONE = "1.551.775.2872"
 EIN_LINE = ("Shrimad Rajchandra Love and Care USA is a registered 501(c)(3) nonprofit "
             "organization. EIN 81-5162502. Contributions are tax deductible to the "
             "extent permitted by law.")
-FOOTER_ORG_LINE = ('Shrimad Rajchandra Love and Care USA is a <span class="nowrap">501(c)(3)</span> nonprofit '
-                   'organization. <span class="nowrap">EIN 81-5162502.</span>')
+ADDRESS = ("500 Paterson Plank Rd #33685", "Union City, NJ 07087")
+# Naman, Oct 17: the only place the EIN appears in the footer, under the copyright
+FOOTER_LEGAL = ('Shrimad Rajchandra Love and Care - USA Inc is a registered <span class="nowrap">501(c)(3)</span> '
+                'nonprofit organization. <span class="nowrap">EIN 81-5162502</span>. Contributions are tax '
+                'deductible to the extent permitted by law.')
+# First carousel slide's image: the homepage preloads it
+HOME_FIRST_SLIDE = "home-hero-3"
 IG = "https://www.instagram.com/srlcusa/"
 FB = "https://www.facebook.com/srlcusa"
 LINKEDIN = "https://www.linkedin.com/company/srlcusa/"
@@ -52,15 +57,18 @@ FOOTER_SEALS = [
     ("/assets/img/badges/candid-gold-seal-2025.svg", 108, 108, "Candid Gold Seal of Transparency 2025", 52),
     ("/assets/img/badges/greatnonprofits-top-rated-2025.png", 534, 400, "GreatNonprofits Top-Rated Nonprofit 2025", 52),
     ("/assets/img/badges/un-ecosoc-consultative-status-2020-light.svg", 296, 84,
-     "SRLC (Global): UN ECOSOC Special Consultative Status, 2020", 40),
+     "UN ECOSOC Special Consultative Status, 2020, held by Shrimad Rajchandra Love and Care, global", 40),
 ]
+# The ECOSOC status belongs to the parent organization, never to SRLC USA
+SEAL_HOLDER = {"/assets/img/badges/un-ecosoc-consultative-status-2020-light.svg": "Shrimad Rajchandra Love and Care, global"}
 
 
 def head(title, desc, path, overlay=False):
     canonical = SITE + path
     body_cls = ' class="has-overlay-nav"' if overlay else ""
-    preload = ('<link rel="preload" as="image" href="/assets/img/photos/school-children-hero.jpg">\n'
-               if path == "/" else "")
+    first = MB_SLOTS.get(HOME_FIRST_SLIDE)
+    preload = (f'<link rel="preload" as="image" href="{first[0]}">\n'
+               if path == "/" and first else "")
     return f"""<!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
@@ -146,14 +154,21 @@ def nav(overlay=False):
 
 
 def footer():
-    # Address and phone withheld pending Naman's confirmation (CLAUDE.md: must be
-    # confirmed real before appearing on any deployed page).
+    # Address and phone confirmed by Naman (Oct 17 refinement doc).
+    seals = "".join(
+        f'<li><img src="{src}" alt="{alt}" width="{w}" height="{h}" style="height:{ht}px" loading="lazy" decoding="async">'
+        + (f'<span class="site-footer__seal-cap">{SEAL_HOLDER[src]}</span>' if src in SEAL_HOLDER else "") + "</li>"
+        for src, w, h, alt, ht in FOOTER_SEALS)
     return f"""</main><footer class="site-footer" role="contentinfo">
   <div class="container">
     <div class="site-footer__cols">
       <div>
         <p class="site-footer__brand"><img class="brand__logo-img" src="{LOGO_LIGHT}" alt="{LOGO_ALT}" width="260" height="43" loading="lazy"></p>
-        <p class="site-footer__legal"><a href="mailto:{EMAIL}" style="color:inherit;text-decoration:none;border-bottom:1px solid currentColor">{EMAIL}</a></p>
+        <address class="site-footer__contact">
+          <span>{ADDRESS[0]}<br>{ADDRESS[1]}</span>
+          <a href="mailto:{EMAIL}">{EMAIL}</a>
+          <a href="tel:+15517752872">{PHONE}</a>
+        </address>
         <div class="social">
           <a href="{IG}" aria-label="SRLC USA on Instagram" rel="noopener" target="_blank">{SOCIAL_SVG['ig']}</a>
           <a href="{FB}" aria-label="SRLC USA on Facebook" rel="noopener" target="_blank">{SOCIAL_SVG['fb']}</a>
@@ -199,11 +214,11 @@ def footer():
       </div>
     </div>
     <div class="site-footer__recog">
-      <p class="site-footer__org">{FOOTER_ORG_LINE}</p>
-      <ul class="site-footer__seals" aria-label="Recognition">{"".join(f'<li><img src="{src}" alt="{alt}" width="{w}" height="{h}" style="height:{ht}px" loading="lazy" decoding="async"></li>' for src, w, h, alt, ht in FOOTER_SEALS)}</ul>
+      <ul class="site-footer__seals" aria-label="Recognition">{seals}</ul>
     </div>
     <div class="site-footer__bottom">
       <p>&copy; Copyright <span data-year>2026</span> Shrimad Rajchandra Love and Care USA, All Rights Reserved</p>
+      <p class="site-footer__legalline">{FOOTER_LEGAL}</p>
     </div>
   </div>
 </footer>
@@ -402,10 +417,26 @@ def photo(key, tags, fallback_tag=None, min_w=0, strict=False):
     return (f[0], f[2], f[3], "")
 
 
-def img_tag(entry, cls="", loading="lazy"):
+def pinned(n):
+    """A named Media Bank photo for a slot whose subject must not drift when
+    other pages claim photos; counted as used like any pick."""
+    src = f"/assets/img/mb/mb-{n}.webp"
+    p = next((p for p in MB_POOL if p[0] == src), None)
+    if p is None:
+        return None
+    if not _MB_USE:
+        _MB_USE.update({v[0]: 1 for v in MB_SLOTS.values()})
+    _MB_USE[src] = _MB_USE.get(src, 0) + 1
+    return (p[0], p[2], p[3], p[4])
+
+
+def img_tag(entry, cls="", loading="lazy", pos=None):
     src, w, h, alt = entry
     c = f' class="{cls}"' if cls else ""
-    return f'<img{c} src="{src}" alt="{_attr(alt)}" width="{w}" height="{h}" loading="{loading}" decoding="async">'
+    # portrait originals land in landscape frames: keep the heads in
+    pos = pos or ("50% 15%" if h > w * 1.15 else None)
+    st = f' style="object-position:{pos}"' if pos else ""
+    return f'<img{c}{st} src="{src}" alt="{_attr(alt)}" width="{w}" height="{h}" loading="{loading}" decoding="async">'
 
 
 def photo_alt(src, fallback=""):
@@ -451,11 +482,11 @@ HERO_SLOTS = {
     "Start a Fundraiser for SRLC USA": "fundraise-hero",
     "Partner With Us": "partner-hero",
     "SRLC&rsquo;s Nationwide Presence": "us-hero",
-    "Mission Africa": "africa-hero",
+    "Distance never decides who receives care": "africa-hero",
 }
 
 
-def page_header(eyebrow, h1, sub=None, cta=None, image=None, full=False, alt="", size=None):
+def page_header(eyebrow, h1, sub=None, cta=None, image=None, full=False, alt="", size=None, mod="", focal=""):
     """SRA-pattern page header over a real photo: one small eyebrow line, short
     single-color H1, flat dark-purple scrim for contrast. `image` is an /assets
     path; otherwise a filler chosen from the H1. `full` renders the full-bleed,
@@ -486,8 +517,8 @@ def page_header(eyebrow, h1, sub=None, cta=None, image=None, full=False, alt="",
         sub = None
     sub_html = f'<p class="pagehead__sub">{sub}</p>' if sub else ""
     cta_html = f'<div class="pagehead__cta">{cta}</div>' if cta else ""
-    return f"""<section class="pagehead pagehead--photo{' pagehead--full' if full else ''}">
-  <img class="pagehead__img" src="{src}" alt="{alt}" width="{w}" height="{h}" loading="eager" fetchpriority="high" decoding="async">
+    return f"""<section class="pagehead pagehead--photo{' pagehead--full' if full else ''}{f' pagehead--{mod}' if mod else ''}">
+  <img class="pagehead__img"{f' style="--focal-x:{focal}"' if focal else ''} src="{src}" alt="{alt}" width="{w}" height="{h}" loading="eager" fetchpriority="high" decoding="async">
   <div class="pagehead__scrim"></div>
   <div class="container pagehead__inner">
     <p class="pagehead__eyebrow">{eyebrow}</p>
@@ -552,31 +583,38 @@ def impact_stats(stats, cols=None):
 # badge from cdn.greatnonprofits.org; the UN ECOSOC lockup is built in-house
 # (the UN does not license its emblem to NGOs). See the build report.
 BADGES = [
-    ("/assets/img/badges/un-ecosoc-consultative-status-2020-plain.svg", 296, 84,
-     "UN ECOSOC Special Consultative Status", "SRLC Global", "UN ECOSOC Special Consultative Status, 2020"),
-    ("/assets/img/badges/greatnonprofits-top-rated-2025.png", 534, 400,
-     "GreatNonprofits Top-Rated Nonprofit badge", "SRLC USA", "GreatNonprofits Top-Rated"),
     ("/assets/img/badges/candid-gold-seal-2025.svg", 108, 108,
      "Candid Gold Seal of Transparency 2025", "SRLC USA", "Candid Gold Transparency Seal, 2025"),
+    ("/assets/img/badges/greatnonprofits-top-rated-2025.png", 534, 400,
+     "GreatNonprofits Top-Rated Nonprofit badge", "SRLC USA", "GreatNonprofits Top\u2011Rated"),
+    ("/assets/img/badges/un-ecosoc-consultative-status-2020-plain.svg", 296, 84,
+     "UN ECOSOC Special Consultative Status", "Shrimad Rajchandra Love and Care, global", "UN ECOSOC Special Consultative Status, 2020"),
 ]
 
 
 BADGE_LINKS = {
-    "GreatNonprofits Top-Rated": "https://greatnonprofits.org/org/shrimad-rajchandra-love-and-care-usa",
+    "GreatNonprofits Top\u2011Rated": "https://greatnonprofits.org/org/shrimad-rajchandra-love-and-care-usa",
     "Candid Gold Transparency Seal, 2025": "https://www.guidestar.org/profile/81-5162502",
 }
 
 
-def recognition_chips(links=False):
+def recognition_chips(links=False, holders_only=False):
     """Flat one-row band of the three official badge images with captions,
     thin dividers, no cards. Keeps the recognition-cluster__items class so
     existing wrappers keep working."""
     def badge(src, w, h, alt, a, b):
-        fig = (f'<img class="recognition-badge__img" src="{src}" alt="{alt}" width="{w}" height="{h}" loading="lazy" decoding="async">'
-               f'<figcaption class="recognition-badge__cap"><strong>{a}</strong> &middot; {b}</figcaption>')
+        if holders_only:
+            # the footer seal module: a caption only where the holder is not SRLC USA
+            cap = f'<figcaption class="recognition-badge__cap">{a}</figcaption>' if a != "SRLC USA" else ""
+        else:
+            cap = (f'<figcaption class="recognition-badge__cap"><strong>{a}</strong>'
+                   f'<span class="recognition-badge__sep"> &middot; </span>{b}</figcaption>')
+        fig = f'<img class="recognition-badge__img" src="{src}" alt="{alt}" width="{w}" height="{h}" loading="lazy" decoding="async">{cap}'
         href = BADGE_LINKS.get(b) if links else None
         if href:
             fig = f'<a class="recognition-badge__link" href="{href}" rel="noopener" target="_blank">{fig}</a>'
+        elif links:
+            fig = f'<span class="recognition-badge__link">{fig}</span>'
         return f'<figure class="recognition-badge">{fig}</figure>'
     items = "".join(badge(*row) for row in BADGES)
     return f'<div class="recognition-cluster__items recognition-badges">{items}</div>'

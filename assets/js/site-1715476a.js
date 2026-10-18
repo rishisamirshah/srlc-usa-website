@@ -40,12 +40,15 @@
     idx = (n + cards.length) % cards.length;
     cards[idx].classList.add('is-active'); dots[idx].classList.add('is-active');
   }
-  function start(){ stop(); timer = setInterval(function(){go(idx+1);}, 6500); }
+  function start(){ stop(); if (hold || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) return; timer = setInterval(function(){go(idx+1);}, 6500); }
   function stop(){ if(timer){clearInterval(timer); timer=null;} }
   document.querySelectorAll('.quote-wall__btn').forEach(function(b){
     b.addEventListener('click', function(){ go(idx + (b.dataset.dir==='next'?1:-1)); start(); });
   });
   dots.forEach(function(d){ d.addEventListener('click', function(){ go(parseInt(d.dataset.go,10)); start(); }); });
+  var wall = document.querySelector('.quote-wall');
+  var hold = false;
+  if (wall) { wall.addEventListener('mouseenter', function(){ hold = true; stop(); }); wall.addEventListener('mouseleave', function(){ hold = false; start(); }); wall.addEventListener('focusin', function(){ hold = true; stop(); }); wall.addEventListener('focusout', function(e){ if (!wall.contains(e.relatedTarget)) { hold = false; start(); } }); }
   start();
 })();
 
@@ -417,12 +420,20 @@
   doc.querySelectorAll("[data-tabs]").forEach(function (root) {
     var btns = root.querySelectorAll(".tabs__list button");
     var panels = root.querySelectorAll(".tabs__panel");
+    function select(i, focus) {
+      btns.forEach(function (x, k) { x.setAttribute("aria-selected", k === i ? "true" : "false"); x.tabIndex = k === i ? 0 : -1; });
+      panels.forEach(function (p, k) { p.classList.toggle("active", k === i); });
+      if (focus) btns[i].focus();
+    }
     btns.forEach(function (b, i) {
-      b.addEventListener("click", function () {
-        btns.forEach(function (x) { x.setAttribute("aria-selected", "false"); });
-        panels.forEach(function (p) { p.classList.remove("active"); });
-        b.setAttribute("aria-selected", "true");
-        panels[i].classList.add("active");
+      b.addEventListener("click", function () { select(i, false); });
+      b.addEventListener("keydown", function (e) {
+        var n = btns.length, to = null;
+        if (e.key === "ArrowRight") to = (i + 1) % n;
+        else if (e.key === "ArrowLeft") to = (i - 1 + n) % n;
+        else if (e.key === "Home") to = 0;
+        else if (e.key === "End") to = n - 1;
+        if (to !== null) { e.preventDefault(); select(to, true); }
       });
     });
   });
@@ -470,11 +481,14 @@
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams(data).toString()
-      }).then(function () {
+      }).then(function (res) {
+        if (!res.ok) throw new Error("form post " + res.status);
         var ok = form.querySelector(".form-success");
         if (ok) {
           form.querySelectorAll(".form-hidewrap").forEach(function (x) { x.style.display = "none"; });
           ok.style.display = "block";
+          var box = form.closest(".nlrow, .newsletter-modal__panel");
+          if (box) box.classList.add("is-subscribed");
         } else form.reset();
       }).catch(function () { form.submit(); });
     });
@@ -522,13 +536,17 @@
     var meta = doc.getElementById("zipMeta");
     var join = doc.getElementById("zipJoinBtn");
     result.removeAttribute("hidden");
+    if (join) join.style.display = "";
     if (!/^\d{5}$/.test(z)) {
+      if (join) join.style.display = "none";
+      result.classList.add("is-hint");
       city.textContent = "Enter a 5-digit ZIP";
       meta.textContent = "We'll match you to the closest SRLC USA chapter.";
       result.classList.remove("is-missing");
       hideChips();
       return;
     }
+    result.classList.remove("is-hint");
     var match = Z[z.substring(0, 2)];
     if (match) {
       city.textContent = "Your nearest chapter: " + match.city;
@@ -808,6 +826,20 @@
       }
     });
   });
+})();
+
+/* Mobile menu: a full-height sheet under the header; the page stays put behind it */
+(function () {
+  var header = document.querySelector(".site-header");
+  var nav = header && header.querySelector(".primary-nav");
+  if (!nav || !window.MutationObserver) return;
+  function sync() {
+    var open = nav.classList.contains("is-open") && window.innerWidth <= 900;
+    nav.style.top = open ? Math.max(0, header.getBoundingClientRect().bottom) + "px" : "";
+    document.documentElement.classList.toggle("nav-locked", open);
+  }
+  new MutationObserver(sync).observe(nav, { attributes: true, attributeFilter: ["class"] });
+  window.addEventListener("resize", sync);
 })();
 
 /* Newsletter modal close wiring + session suppression */

@@ -3,7 +3,7 @@ FAQs and Corporate Giving are Phase 2 (removed). Events / Fundraise / Partner
 have no content tabs yet: structure plus functional elements only, no invented
 copy. Banned figure "25+ cities" replaced with the approved footprint phrasing
 (conflict with tab copy flagged in the build log)."""
-from shell import page, ph, page_header, flat_cta, filler, photo, img_tag, pick_distinct, EMAIL, PHONE, IG, FB
+from shell import page, ph, page_header, flat_cta, filler, photo, img_tag, pick_distinct, pinned, EMAIL, PHONE, IG, FB
 from pages_core import prose_photo, chapter_finder
 
 US_FOOTPRINT = "chapters in 11 states and Washington, D.C."
@@ -16,7 +16,8 @@ def render_volunteer(svg_inner):
         ("Growth", "Leadership, event management, fundraising, communications, and logistics are all part of active chapter work. The skills built through SRLC USA are practical and lasting. Many of our chapter leaders developed those skills here."),
         ("Belonging", "Service is not something SRLC USA volunteers do occasionally. For many, it becomes part of how they identify. That is why so many volunteers who start with a single event stay involved for years."),
     ]
-    why = photo("volunteer-community", ["volunteers", "us-community", "us-events"], "community")
+    # the Volunteer tab: no SRMD visual identifiers in chapter imagery
+    why = pinned(497) or photo("volunteer-community", ["volunteers", "us-community", "us-events"], "community")
     cards_html = prose_photo(cards, why[0], alt=why[3] or "SRLC USA volunteers at a chapter event")
     steps = [
         ("01", "Sign up", "Fill out the form at the bottom of this page. Share where you are, what skills or interests you can offer, and how much time you have each month. It takes under two minutes."),
@@ -36,7 +37,7 @@ def render_volunteer(svg_inner):
         "Get Involved",
         "Volunteer with SRLC USA",
         "Thousands of people across the nation give their time, their skills, and their energy to SRLC USA. Not because they have to. Because service is who they are.",
-        cta='<a class="btn btn--primary" href="#signup">Volunteer With Us</a> <a class="btn btn--ghost" href="/our-work/united-states/">Find My State&rsquo;s Chapter</a>',
+        cta='<a class="btn btn--primary" href="#signup">Volunteer With Us</a> <a class="btn btn--ghost" href="#find-chapter">Find My State&rsquo;s Chapter</a>',
     ) + f"""
 <section class="vu-shell vu-shell--lav vu-shell--first">
   <div class="container">
@@ -52,13 +53,16 @@ def render_volunteer(svg_inner):
   </div>
 </section>
 
-{chapter_finder(svg_inner)}
+{chapter_finder(svg_inner, tone="lav")}
 
 <section class="vu-shell vu-shell--cream" id="signup">
-  <div class="container" style="max-width:820px">
-    <h2 class="vu-h reveal">Join the mission. Sign up to volunteer.</h2>
-    <p class="vu-lead">Under two minutes. A chapter coordinator from your area will follow up personally.</p>
-    <form class="form mt-6" name="volunteer" method="POST" data-netlify="true" data-netlify-inline netlify-honeypot="bot-field">
+  <div class="container signup">
+    <div class="signup__head">
+      <h2 class="vu-h reveal">Join the mission. Sign up to volunteer.</h2>
+      <p class="vu-lead">Under two minutes. A chapter coordinator from your area will follow up personally.</p>
+      <p class="signup__note">Not ready to sign up yet? Follow us on <a href="{IG}" rel="noopener" target="_blank">Instagram</a> and <a href="{FB}" rel="noopener" target="_blank">Facebook</a> to see what SRLC USA chapters are doing in your city.</p>
+    </div>
+    <form class="form signup__form" name="volunteer" method="POST" data-netlify="true" data-netlify-inline netlify-honeypot="bot-field">
       <input type="hidden" name="form-name" value="volunteer">
       <p class="hp-field"><input name="bot-field" tabindex="-1"></p>
       <div class="form-hidewrap">
@@ -84,7 +88,6 @@ def render_volunteer(svg_inner):
         <p class="vu-lead--xl">Thank you. A chapter coordinator from your area will be in touch within a few days.</p>
       </div>
     </form>
-    <p style="font-size:.9rem;color:var(--color-ink-muted);margin-top:1.4rem">Not ready to sign up yet? Follow us on <a href="{IG}" rel="noopener" target="_blank">Instagram</a> and <a href="{FB}" rel="noopener" target="_blank">Facebook</a> to see what SRLC USA chapters are doing in your city.</p>
   </div>
 </section>
 """
@@ -105,8 +108,12 @@ def render_events():
         "Chapter events, galas, and community gatherings.",
         image="/assets/img/photos/event-recent.jpg",
     ) + f"""
-<section class="eventgal" aria-label="Recent chapter events">
-  <div class="container"><div class="stategal__grid stategal__grid--3">{grid}</div></div>
+<section class="eventgal" aria-labelledby="events-h">
+  <div class="container">
+    <h2 class="vu-h" id="events-h">Recent chapter events</h2>
+    <div class="stategal__grid stategal__grid--3">{grid}</div>
+    <p class="events-more"><a class="btn btn--secondary" href="/our-work/united-states/">Find Your Chapter</a></p>
+  </div>
 </section>
 <section class="takepart takepart--slim" aria-label="Event updates">
   <div class="container">
@@ -121,10 +128,9 @@ def render_events():
         <p class="hp-field"><input name="bot-field" tabindex="-1"></p>
         <input type="email" name="email" required placeholder="Email address" aria-label="Email address" class="form-hidewrap">
         <button type="submit" class="btn btn--primary form-hidewrap">Subscribe</button>
-        <span class="form-success">Thank you. Check your inbox to confirm.</span>
+        <span class="form-success">Thank you for subscribing. Please check your inbox to confirm your email.</span>
       </form>
     </div>
-    <p class="events-more"><a class="btn btn--secondary" href="/our-work/united-states/">Find Your Chapter</a></p>
   </div>
 </section>
 """
@@ -151,7 +157,7 @@ def render_fundraise():
 <section class="vu-shell vu-shell--lav vu-shell--first">
   <div class="container">
     <div class="fundpills">{chips}</div>
-    <p class="fund-contact">Questions? Reach us at <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
+    <p class="fund-contact">Questions? Reach us at <a href="mailto:{EMAIL}">{EMAIL}</a> or {PHONE}.</p>
   </div>
 </section>
 """

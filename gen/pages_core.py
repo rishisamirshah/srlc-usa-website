@@ -1,7 +1,8 @@
 """Renderers: homepage (approved v2 base), donate, about cluster, 404 — flat pass."""
 import os
-from shell import (page, ph, page_header, flat_cta, trust_bar, impact_stats,
-                   recognition_chips, filler, photo, story_split, EMAIL, PHONE, EIN_LINE, IG, FB)
+from shell import (page, ph, page_header, flat_cta, trust_bar, impact_stats, pinned,
+                   recognition_chips, filler, photo, img_tag, story_split, EMAIL, PHONE, EIN_LINE, IG, FB,
+                   HOME_FIRST_SLIDE)
 from data_states import STATES, CAMPAIGNS
 from data_cares import CARES
 from data_media import slot
@@ -93,10 +94,11 @@ def home_img(name):
     return slot(name, HOME_FALLBACK.get(name))
 
 
-def chapter_finder(svg_inner, activity_html=""):
+def chapter_finder(svg_inner, activity_html="", tone=""):
     """Homepage chapter finder: ZIP search, optional chapter feed, dark
     editorial map. Shared with the Volunteer page."""
-    return f"""<section class="chapter-finder chapter-finder--v3">
+    mod = f" chapter-finder--{tone}" if tone else ""
+    return f"""<section class="chapter-finder chapter-finder--v3{mod}" id="find-chapter">
   <div class="container chapter-finder__inner">
     <div class="chapter-finder__intro">
       <h2 class="chapter-finder__h">Find your nearest chapter.</h2>
@@ -135,15 +137,16 @@ def chapter_finder(svg_inner, activity_html=""):
 
 
 def render_home(svg_inner):
-    # Homepage tab of the content wireframe, with Naman's Oct 16 refinement doc:
-    # slide 2 is now the United States slide (Venezuela relief retired).
-    # Eyebrow, headline, one pill CTA per slide, no body copy.
+    # Naman's refinement doc (Oct 17 revision): the organization-level slide
+    # leads, the United States slide is second, Classroom of Change third with
+    # its CTA on the campaign itself (Venezuela relief retired). Eyebrow,
+    # headline, one pill CTA per slide, no body copy.
     slides = [
         {
-            "img": home_img("home-hero-1"),
-            "eyebrow": "Classroom of Change",
-            "title": "Turning the key to brighter futures.",
-            "cta": ("See the Initiative", "/our-work/united-states/"),
+            "img": home_img(HOME_FIRST_SLIDE),
+            "eyebrow": "Compassion in Action",
+            "title": "One gift. Ten ways to care.",
+            "cta": ("Donate Now", "/donate/"),
         },
         {
             "img": home_img("home-hero-2"),
@@ -152,10 +155,10 @@ def render_home(svg_inner):
             "cta": ("Get Involved Locally", "/our-work/united-states/"),
         },
         {
-            "img": home_img("home-hero-3"),
-            "eyebrow": "Compassion in Action",
-            "title": "One gift. Ten ways to care.",
-            "cta": ("Donate Now", "/donate/"),
+            "img": home_img("home-hero-1"),
+            "eyebrow": "Classroom of Change",
+            "title": "Turning the key to brighter futures.",
+            "cta": ("See the Initiative", "/our-work/united-states/#classroom-of-change"),
         },
     ]
     slides_html = "".join(f"""<article class="hero-carousel__slide{' is-active' if i == 0 else ''}" data-slide="{i}" role="group" aria-roledescription="slide" aria-label="{i + 1} of 3" style="--bg:url('{s["img"][0]}')">
@@ -193,7 +196,7 @@ def render_home(svg_inner):
     # charity:water "Ready to take action" row (Naman, Oct 16): edge-to-edge
     # scroller of square photo cards, dark label bar with an icon, flipping to
     # a purple back with the one-liner on hover / tap / keyboard focus.
-    institutes_cards = "".join(flipcard(inst, inst["home_desc"], f'/our-work/india/#{inst["slug"]}', link_label="Learn More")
+    institutes_cards = "".join(flipcard(inst, inst["home_desc"], f'/our-work/india/{inst["slug"]}/', link_label="Learn More")
                                for inst in INSTITUTES)
 
     # Section 7, Latest Articles: hidden until three articles are published
@@ -239,7 +242,7 @@ def render_home(svg_inner):
       <p class="hp-field"><input name="bot-field" tabindex="-1"></p>
       <input type="email" name="email" required placeholder="Email address" aria-label="Email address" class="form-hidewrap">
       <button type="submit" class="btn btn--primary form-hidewrap">Subscribe</button>
-      <span class="form-success" style="color:var(--color-srlc-purple);font-weight:600">Thank you. Check your inbox to confirm.</span>
+      <span class="form-success" style="color:var(--color-srlc-purple);font-weight:600">Thank you for subscribing. Please check your inbox to confirm your email.</span>
     </form>
   </div>
 </div>
@@ -258,7 +261,7 @@ def render_home(svg_inner):
       <h2 class="mission-split__h">A global initiative to offer service and bring joy to the lives of underserved sections of society.</h2>
       <p class="mission-split__body">Shrimad Rajchandra Love and Care (SRLC) USA is the US chapter of a global nonprofit organization that has been recognized by the United Nations for its humanitarian efforts. A 501(c)(3) organization, SRLC USA supports community development projects across India and Africa, and brings holistic care and joy to local communities throughout the US. With a presence in 25+ cities, SRLC USA focuses on raising funds and awareness in high-impact areas, while putting compassion in action.</p>
       <div class="mission-split__actions">
-        <a class="btn btn--primary btn--lg" href="/about/our-impact/">See Our Impact</a>
+        <a class="btn btn--primary" href="/about/our-impact/">See Our Impact</a>
       </div>
       <p class="mission-split__micro">Registered 501(c)(3) &middot; EIN 81-5162502</p>
     </div>
@@ -364,7 +367,7 @@ def render_home(svg_inner):
         <p class="hp-field"><input name="bot-field" tabindex="-1"></p>
         <input type="email" name="email" required placeholder="Email address" aria-label="Email address" class="form-hidewrap">
         <button type="submit" class="btn btn--primary form-hidewrap">Subscribe</button>
-        <span class="form-success">Thank you. Check your inbox to confirm.</span>
+        <span class="form-success">Thank you for subscribing. Please check your inbox to confirm your email.</span>
       </form>
     </div>
   </div>
@@ -454,7 +457,7 @@ def render_donate():
 <section class="vu-shell vu-shell--cream vu-shell--narrow">
   <div class="container" style="max-width:820px;text-align:center">
     <p style="font-size:.9rem;color:var(--color-ink-muted);margin-top:1.2rem">{EIN_LINE}</p>
-    <p style="font-size:.9rem;color:var(--color-ink-muted)">Reach us at <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
+    <p style="font-size:.9rem;color:var(--color-ink-muted)">Reach us at <a href="mailto:{EMAIL}">{EMAIL}</a> or {PHONE}.</p>
   </div>
 </section>
 <script>
@@ -515,7 +518,7 @@ def render_who_we_are():
     hero = img("wwa-hero")
 
     body = page_header("About Us", "Who We Are", "Love and care, in action", image=hero[0], size=(hero[1], hero[2]), alt=hero[3]) + f"""
-{story_split("Who We Are", ["SRLC USA is what happens when physicians, engineers, teachers, and students decide their weekends belong to their neighbors. We are the US chapter of Shrimad Rajchandra Love and Care, a global nonprofit holding Special Consultative Status with the United Nations Economic and Social Council (ECOSOC), and a 501(c)(3) organization. But before we are any of that, we are people who believe care is not a profession. It is a practice."], img("wwa-who"), tone="white")}
+{story_split("Who We Are", ["SRLC USA is what happens when physicians, engineers, teachers, and students decide their weekends belong to their neighbors. We are the US chapter of Shrimad Rajchandra Love and Care, a global nonprofit holding Special Consultative Status with the United Nations Economic and Social Council (ECOSOC), and a <span class='nowrap'>501(c)(3)</span> organization. But before we are any of that, we are people who believe care is not a profession. It is a practice."], img("wwa-who"), tone="white")}
 {story_split("What We Support", ["We focus on immediate needs and the systems behind them. In the United States, volunteers prepare and share meals, equip students for the school year, and organize community care events with local partners. Globally, the movement builds and sustains hospitals, schools, and development programs designed to serve for generations. The programs differ; the standard does not: high-quality, sustainable work that outlasts the day we arrive."], img("wwa-support"), reverse=True, tone="lav")}
 {story_split("Care and Joy Close to Home", ["Every initiative we run belongs to one of ten focus areas, together the 10 Care Program: Health Care, Educational Care, Child Care, Woman Care, Tribal Care, Community Care, Humanitarian Care, Animal Care, Environmental Care, and Emergency Relief Care. In the United States, that vision looks like service in your own city, on your own street. Globally, it stands as permanent institutes in India and Mission Africa."], img("wwa-home"), tone="white", extra=pills)}
 
@@ -532,14 +535,14 @@ def render_who_we_are():
     <p class="howwork__eyebrow">How We Work</p>
     <h2 class="howwork__h" id="wwa-how">Built to be trusted</h2>
     <div class="howwork__grid">{how_html}</div>
-    <div class="howwork__recog">{recognition_chips()}</div>
+    <div class="howwork__recog">{recognition_chips(holders_only=True)}</div>
     <p class="howwork__cta"><a class="btn btn--primary" href="/about/financials/">See Our Financials</a></p>
   </div>
 </section>
 
 <section class="pagenext">
   <div class="container pagenext__inner">
-    <p class="pagenext__line">Continue Reading</p>
+    <h2 class="pagenext__line">Continue Reading</h2>
     <div class="pagenext__links">
       <a class="btn btn--secondary" href="/about/our-impact/">Our Impact</a>
       <a class="btn btn--secondary" href="/about/management-team/">Management Team</a>
@@ -555,8 +558,8 @@ def render_who_we_are():
 
 
 TIMELINE = [
-    ("2006&ndash;08", "Mobile care begins", "A mobile dispensary begins carrying medical care to rural doorsteps, and a mid-day meal program gives families one more reason to send their children to school."),
-    ("2009&ndash;11", "Gurukul opens", "Shrimad Rajchandra Gurukul opens in Karanjveri, Gujarat, and a new neonatal intensive care unit begins providing critical care for premature newborns."),
+    ("2006 to 2008", "Mobile care begins", "A mobile dispensary begins carrying medical care to rural doorsteps, and a mid-day meal program gives families one more reason to send their children to school."),
+    ("2009 to 2011", "Gurukul opens", "Shrimad Rajchandra Gurukul opens in Karanjveri, Gujarat, and a new neonatal intensive care unit begins providing critical care for premature newborns."),
     ("2015", "First Love and Care Walk", "New York City hosts SRLC&rsquo;s first Love and Care Walk, with more than 550 participants."),
     ("2016", "Vidyapeeth opens", "Shrimad Rajchandra Vidyapeeth opens as the first science college serving 238 villages of South Gujarat, and the Skill Development Center begins vocational training for tribal youth."),
     ("2019", "GuideStar Platinum", "GuideStar awards SRLC its Platinum Seal for the highest level of transparency and accountability."),
@@ -574,7 +577,11 @@ def render_our_impact(svg_inner):
       <h3 class="ft-name">{t}</h3>
       <p class="ft-body">{b}</p>
     </li>""" for i, (y, t, b) in enumerate(TIMELINE))
-    six = [(n, f"{l} {d}") for n, l, d in GLOBAL_STATS]
+    # the Our Impact tab's own labels and order ("globally" on every figure, per A4)
+    six = [("33M+", "lives touched globally"), ("8.35M+", "patients treated globally"),
+           ("3.28M+", "students reached globally"), ("12.24M+", "reached through Humanitarian Care globally"),
+           ("450K+", "animals saved, treated, or rehabilitated globally"),
+           ("8.90M+", "supported through Emergency Relief Care globally")]
 
     body = page_header(
         "About Us",
@@ -586,7 +593,7 @@ def render_our_impact(svg_inner):
   <div class="container">
     <h2 class="vu-h reveal">Global results</h2>
     <p class="vu-lead">SRLC USA is one chapter of a global movement carried largely by volunteers. The figures below reflect the movement&rsquo;s worldwide reach and behind them are individual people whose circumstances changed because someone was in a position to help.</p>
-    <div class="mt-6">{impact_stats(six)}</div>
+    <div class="mt-6">{impact_stats(six, cols=3)}</div>
   </div>
 </section>
 
@@ -594,10 +601,10 @@ def render_our_impact(svg_inner):
   <div class="container">
     <div class="vu-split">
       <div class="vu-split__copy">
-        <h3>Independent recognition and accreditation</h3>
+        <h2 class="vu-h reveal">Independent recognition and accreditation</h2>
         <p>The movement received Special Consultative Status from the United Nations Economic and Social Council in 2020, and GuideStar awarded its Platinum Seal for transparency and accountability in 2019. Independent recognition matters because it does not depend on our own account of the work. The 250-bed Shrimad Rajchandra Hospital and Research Center earned accreditation from the National Accreditation Board for Hospitals and Healthcare Providers (NABH) within its first year of operation.</p>
       </div>
-      <div class="vu-split__photo"><img src="/assets/img/photos/awards.jpg" alt="SRLC recognition and accolades on display" width="1024" height="768" loading="lazy"></div>
+      <div class="vu-split__photo">{img_tag(photo("impact-recognition", ["hospital+alt:baby's foot", "hospital+alt:doctor", "health-care+india"], "hospital", min_w=900))}</div>
     </div>
     <div class="recognition-cluster mt-8">{recognition_chips()}</div>
   </div>
@@ -612,9 +619,14 @@ def render_our_impact(svg_inner):
 
 <section class="vu-shell vu-shell--cream">
   <div class="container">
-    <h2 class="vu-h reveal">Results in the United States</h2>
-    <p class="maxw-70">In the United States, volunteers organize recurring service programs in cities from Los Angeles to New York, preparing and sharing meals, assembling school supplies, and holding community care events with established local partners. In 2024, US centers distributed 90,000+ educational items, reaching 18,000+ students.</p>
-    <div class="mt-6">{editorial_map(svg_inner)}</div>
+    <div class="vu-split">
+      <div class="vu-split__copy">
+        <h2 class="vu-h reveal">Results in the United States</h2>
+        <p>In the United States, volunteers organize recurring service programs in cities from Los Angeles to New York, preparing and sharing meals, assembling school supplies, and holding community care events with established local partners. In 2024, US centers distributed 90,000+ educational items, reaching 18,000+ students.</p>
+      </div>
+      <div class="vu-split__photo">{img_tag(photo("impact-us", ["us-food+alt:sandwiches", "us-food+us", "volunteers+us"], "community", min_w=1200))}</div>
+    </div>
+    <div class="mt-8">{editorial_map(svg_inner)}</div>
     <p class="mt-6"><a class="btn btn--secondary" href="/our-work/united-states/">Explore the US chapters</a></p>
   </div>
 </section>
@@ -623,21 +635,22 @@ def render_our_impact(svg_inner):
   <div class="container">
     <h2 class="vu-h reveal">Two decades of documented growth</h2>
     <p class="vu-lead">The milestones below are drawn from the movement&rsquo;s published record. They trace twenty years of steady growth, from volunteers delivering medicine to rural doorsteps to permanent institutes that now serve millions.</p>
-    <ol class="founder-timeline vu-tl-rail">{nodes}</ol>
-  </div>
-</section>
-
-<section class="vu-shell vu-shell--cream vu-shell--narrow">
-  <div class="container" style="max-width:820px">
-    <div class="vu-card vu-card--accent vu-card--stack reveal">
-      <h3 class="vu-card__h">What these figures mean in practice</h3>
-      <div class="vu-card__body"><p>Laxmibhai, a 52-year-old farmer, had been living with triple-vessel heart disease, and the surgery he needed was beyond his family&rsquo;s means. He received the region&rsquo;s first cardiothoracic bypass at Shrimad Rajchandra Hospital at no cost, and he has since returned home to his fields. His recovery is one outcome among millions, and it is the kind of outcome every figure on this page represents.</p>
-      <p><a class="textlink" href="/about/financials/">Read the full record on the Financials page<span aria-hidden="true"> &rarr;</span></a></p></div>
+    <div class="tlwrap">
+      <ol class="founder-timeline vu-tl-rail">{nodes}</ol>
+      <figure class="tlwrap__photo">{img_tag(pinned(160))}</figure>
     </div>
   </div>
 </section>
 
-{flat_cta("Support work you can verify", "Each result presented here belongs to a program that can be examined, visited, and audited, and each of those programs welcomes new support.", "Explore the 10 Care Program", "/our-work/10-care-program/")}
+<section class="vu-shell vu-shell--cream">
+  <div class="container">
+    <h2 class="vu-h reveal">What these figures mean in practice</h2>
+    <p class="vu-lead">Laxmibhai, a 52-year-old farmer, had been living with triple-vessel heart disease, and the surgery he needed was beyond his family&rsquo;s means. He received the region&rsquo;s first cardiothoracic bypass at Shrimad Rajchandra Hospital at no cost, and he has since returned home to his fields. His recovery is one outcome among millions, and it is the kind of outcome every figure on this page represents.</p>
+    <p class="mt-6"><a class="textlink" href="/about/financials/">Read the full record on the Financials page<span aria-hidden="true"> &rarr;</span></a></p>
+  </div>
+</section>
+
+{flat_cta("Support work you can verify", "Each result presented here belongs to a program that can be examined, visited, and audited, and each of those programs welcomes new support. We invite you to explore the work, or to read the record for yourself.", "Explore the 10 Care Program", "/our-work/10-care-program/")}
 """
     return page(
         "Our Impact | Verified Global Results | SRLC USA",
@@ -705,15 +718,13 @@ def render_inspiration():
 </section>
 
 <section class="vu-shell vu-shell--cream">
-  <div class="container prose text-center">
+  <div class="container prose">
     <h2 class="vu-h">Inner Awakening and Compassionate Action</h2>
-    <p class="vu-lead" style="margin-inline:auto">Pujya Gurudevshri teaches a simple and complete path. Inner awakening brings clarity and harmony within, and love naturally flows outward as kindness in action. This path leads toward lasting peace and compassionate living in the world.</p>
-  </div>
-</section>
-
-<section class="vu-shell vu-shell--lav vu-shell--narrow">
-  <div class="container" style="max-width:820px">
-    {ph("Pujya Gurudevshri and His Holiness the Dalai Lama at the World Alliance of Religions: Peace Summit in Seoul, South Korea (2014).", style="min-height:200px")}
+    <p class="vu-lead">Pujya Gurudevshri teaches a simple and complete path. Inner awakening brings clarity and harmony within, and love naturally flows outward as kindness in action. This path leads toward lasting peace and compassionate living in the world.</p>
+    <figure class="if-photo">
+      <img src="/assets/img/inspiration/if-gurudevshri-dalai-lama.jpg" alt="Pujya Gurudevshri and His Holiness the Dalai Lama" width="1400" height="929" loading="lazy" decoding="async">
+      <figcaption>Pujya Gurudevshri and His Holiness the Dalai Lama at the World Alliance of Religions: Peace Summit in Seoul, South Korea (2014).</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -726,13 +737,13 @@ def render_inspiration():
       <div class="quote-wall__dots">{qdots}</div>
       <button class="quote-wall__btn" data-dir="next" aria-label="Next quote">&rarr;</button>
     </div>
-    <p style="color:#C9B3DC;font-size:.9rem;max-width:56ch;margin:0 auto">A beacon of unity that transcends faiths and boundaries, Pujya Gurudevshri&rsquo;s message and Mission resonate across traditions and communities.</p>
+    <p class="quote-wall__note">A beacon of unity that transcends faiths and boundaries, Pujya Gurudevshri&rsquo;s message and Mission resonate across traditions and communities.</p>
   </div>
 </section>
 
 <section class="pagenext">
   <div class="container pagenext__inner">
-    <p class="pagenext__line">Continue learning about the wider movement and the work it supports.</p>
+    <h2 class="pagenext__line">Continue learning about the wider movement and the work it supports.</h2>
     <div class="pagenext__links">
       <a class="btn btn--secondary" href="/our-work/10-care-program/">The 10 Care Program</a>
       <a class="btn btn--secondary" href="/about/who-we-are/">Who We Are</a>
@@ -761,19 +772,18 @@ def render_management():
     ) + f"""
 <section class="vu-shell vu-shell--lav vu-shell--first">
   <div class="container">
-    <h2 class="vu-h reveal">How we govern</h2>
-    <p>SRLC USA is the United States chapter of Shrimad Rajchandra Love and Care, holder of UN ECOSOC Special Consultative Status.</p>
+    <div class="govrow">
+      <h2 class="vu-h reveal">How we govern</h2>
+      <p class="vu-lead">SRLC USA is the United States chapter of Shrimad Rajchandra Love and Care, holder of UN ECOSOC Special Consultative Status.</p>
+    </div>
+    <div class="govrow">
+      <h2 class="vu-h reveal">The roster</h2>
+      <p class="vu-lead">Leadership names, roles, and bios publish here once approved. Each person appears with a consistent portrait and a short account of what they oversee.</p>
+    </div>
   </div>
 </section>
 
-<section class="vu-shell vu-shell--cream">
-  <div class="container">
-    <h2 class="vu-h reveal">The roster</h2>
-    <p class="vu-lead">Leadership names, roles, and bios publish here once approved. Each person appears with a consistent portrait and a short account of what they oversee.</p>
-  </div>
-</section>
-
-{flat_cta("The record behind the roster", "Annual filings and financial statements are published in full on the Financials page.", "Read Our Annual Report", "/about/financials/")}
+{flat_cta("The record behind the roster", "Annual filings and financial statements are published in full on the Financials page.", "Read Our Annual Report", "/about/financials/#documents")}
 """
     return page(
         "Management Team | Leadership at SRLC USA",
@@ -793,13 +803,13 @@ def render_financials():
         "About Us",
         "Financials",
         "We know how much it matters to you that your gift reaches the people it&rsquo;s meant for. It matters just as much to us. That&rsquo;s why every filing, report, and financial record we produce is published here in full, for anyone to read.",
-        image="/assets/img/photos/event-recent.jpg",
+        image="/assets/img/photos/event-recent.jpg", mod="sky",
     ) + f"""
 <section class="vu-shell vu-shell--lav vu-shell--first vu-shell--narrow">
   <div class="container"><div class="recognition-cluster fin-badges">{recognition_chips(links=True)}</div></div>
 </section>
 
-<section class="vu-shell vu-shell--cream">
+<section class="vu-shell vu-shell--cream" id="documents">
   <div class="container">
     <h2 class="vu-h reveal">Documents by year</h2>
     <div class="vu-card vu-card--stack fin-report reveal">

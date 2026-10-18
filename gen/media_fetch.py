@@ -13,13 +13,25 @@ from PIL import Image
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "assets", "img", "mb")
 SKIP_TAGS = {"spiritual", "sarvamangal"}
+# Ambulance and library-bus livery and a camp welcome banner carrying the
+# portraits of Shrimad Rajchandraji and Pujya Gurudevshri, plus a devotional
+# wall banner (440), a framed deity picture (432) and a village shrine behind
+# an outreach talk (116, 143; 174 shares the outreach banner): spiritual
+# imagery, which belongs on /about/our-inspiration/ only.
+SKIP_PHOTOS = {102, 104, 108, 116, 117, 118, 120, 143, 170, 171, 174, 177, 210, 432, 440}
 # Hand picks that win over the curator's first choice. home-impact-story: no
 # identifiable patient beside Laxmibhai's story, subject in the left half for
 # the fixed-background parallax panel.
 SLOT_OVERRIDES = {
     "home-impact-story": 123,
-    "card-volunteer": 9,      # school-kit packing; the PB&J line is already hero slide 2
+    "card-volunteer": 546,    # tree planting: hero slides already cover school kits and the PB&J line
     "management-hero": 727,   # guests at the gala, not one identifiable speaker under stage light
+    "wwa-hero": 311,          # bright San Diego kit handout
+    "impact-hero": 195,       # a school courtyard at scale, the tab's brief; the curator's picks were livery shots
+    "donate-hero": 472,       # boy with his new backpack, face clear of the copy and the gift widget
+    "us-hero": 470,           # unbranded; the curator's pick has a beer logo on a T-shirt
+    "home-hero-3": 175,       # first slide; the curator's pick shows an SRMD-branded shirt up front
+    "state-arizona-hero": 426,  # the curator's pick has a framed deity picture on the wall
 }
 # Minimum source width per slot family: full-bleed heroes, half-width splits,
 # square cards. A slot with no candidate this wide is left out so the page's
@@ -57,9 +69,9 @@ def main():
     cur = json.load(open(sys.argv[1], encoding="utf-8"))
     folders = {o["n"]: o["folder"] for o in json.load(open(sys.argv[2], encoding="utf-8"))}
     min_q = int(sys.argv[sys.argv.index("--min-q") + 1]) if "--min-q" in sys.argv else 3
-    photos = {p["n"]: p for p in cur["photos"] if p.get("keep")}
+    photos = {p["n"]: p for p in cur["photos"] if p.get("keep") and p["n"] not in SKIP_PHOTOS}
     options = {name: ([SLOT_OVERRIDES[name]] if name in SLOT_OVERRIDES else [n for n in cands if n in photos])
-               for name, cands in cur.get("slots", {}).items()}
+               for name, cands in {**cur.get("slots", {}), **{s: [] for s in SLOT_OVERRIDES}}.items()}
     pool = [p for p in photos.values()
             if p.get("q", 0) >= min_q and not (set(p.get("tags", [])) & SKIP_TAGS)
             and not ("render" in p.get("tags", []) and "jivamaitridham" not in p.get("tags", []))]
