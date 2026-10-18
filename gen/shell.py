@@ -492,6 +492,37 @@ HERO_SLOTS = {
 }
 
 
+# Hero crops per photo (Naman, Oct 18: some heroes were cut off or too zoomed
+# in). One object-position per source keeps the subject in frame at 1440, 1024
+# and on phones; an inline position also overrides the phone focal rule.
+HERO_POS = {
+    "/assets/img/mb/mb-543.webp": "50% 6%",     # Washington, D.C.
+    "/assets/img/mb/mb-57.webp": "24% 0%",      # Animal Care
+    "/assets/img/mb/mb-399.webp": "50% 10%",    # Massachusetts (portrait)
+    "/assets/img/mb/mb-436.webp": "50% 24%",    # New Jersey (portrait)
+    "/assets/img/mb/mb-60.webp": "100% 42%",    # Jivamaitridham
+    "/assets/img/mb/mb-491.webp": "9% 42%",     # Emergency Relief Care
+    "/assets/img/mb/mb-354.webp": "85% 42%",    # Volunteer
+    "/assets/img/mb/mb-519.webp": "15% 30%",    # Georgia
+    "/assets/img/mb/mb-443.webp": "20% 42%",    # Washington
+    "/assets/img/mb/mb-176.webp": "28% 30%",    # Educational Care
+    "/assets/img/mb/mb-201.webp": "66% 42%",    # Mission Africa
+    "/assets/img/mb/mb-360.webp": "12% 24%",    # Indiana
+    "/assets/img/mb/mb-159.webp": "18% 25%",    # Vidyapeeth (900px source)
+    "/assets/img/mb/mb-84.webp": "50% 25%",     # Gurukul (900px source)
+    "/assets/img/mb/mb-82.webp": "50% 0%",      # Woman Care
+    "/assets/img/mb/mb-167.webp": "15% 5%",     # Skill Development Center
+    "/assets/img/mb/mb-433.webp": "88% 20%",    # Arizona
+    "/assets/img/mb/mb-306.webp": "60% 22%",    # California
+    "/assets/img/mb/mb-470.webp": "50% 0%",     # United States
+    "/assets/img/mb/mb-458.webp": "50% 25%",    # Partner With Us
+    "/assets/img/mb/mb-157.webp": "50% 62%",    # Financials (sky)
+    "/assets/img/mb/mb-92.webp": "35% 25%",     # Humanitarian Care
+    "/assets/img/mb/mb-339.webp": "50% 39%",    # Pennsylvania (portrait)
+    "/assets/img/mb/mb-394.webp": "50% 30%",    # New York (wide screens)
+}
+
+
 def img_style(focal="", pos=""):
     """Inline crop for a hero photo: phone focal x and/or a fixed object-position."""
     parts = ([f"--focal-x:{focal}"] if focal else []) + ([f"object-position:{pos}"] if pos else [])
@@ -527,6 +558,7 @@ def page_header(eyebrow, h1, sub=None, cta=None, image=None, full=False, alt="",
   <div class="container"><p class="leadsec__lead">{sub}</p></div>
 </section>"""
         sub = None
+    pos = pos or HERO_POS.get(src, "")
     sub_html = f'<p class="pagehead__sub">{sub}</p>' if sub else ""
     cta_html = f'<div class="pagehead__cta">{cta}</div>' if cta else ""
     return f"""<section class="pagehead pagehead--photo{' pagehead--full' if full else ''}{f' pagehead--{mod}' if mod else ''}">

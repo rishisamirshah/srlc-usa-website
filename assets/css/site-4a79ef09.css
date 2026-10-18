@@ -4565,7 +4565,7 @@ p { text-wrap: pretty; }
 .donate-page .donate-hero__media::after {
   background: linear-gradient(to top, rgba(31, 19, 38, 0.76) 0%, rgba(31, 19, 38, 0.4) 38%, rgba(31, 19, 38, 0) 66%) !important;
 }
-.donate-page .donate-hero__media img { transform: none !important; will-change: auto; object-position: 50% 40%; }
+.donate-page .donate-hero__media img { transform: none !important; will-change: auto; object-position: 50% 25%; }
 .donate-page .donate-hero__grid { align-items: end; }
 .donate-page .donate-hero .donate-hero__eyebrow { color: rgba(255, 255, 255, 0.85) !important; }
 .donate-page .donate-hero__h { font-weight: 500; font-size: clamp(2rem, 4.2vw, 2.9rem); line-height: 1.08; max-width: 18ch; text-shadow: 0 1px 14px rgba(20, 10, 26, 0.28); }
