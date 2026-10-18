@@ -15,7 +15,8 @@
    Section, header and intro keep the Sept 7 Institutes styling; the row is
    an edge-to-edge scroller starting on the container's content edge. */
 .instrow { overflow: hidden; }
-.instrow .institutes-section__head { margin-bottom: clamp(1.8rem, 3vw, 2.6rem); }
+.instrow .institutes-section__head { margin-bottom: clamp(1.8rem, 3vw, 2.6rem); max-width: none; }
+.instrow .institutes-section__sub { max-width: 64rem; }
 .instrow__viewport { --row-pad: calc(max(0px, (100vw - var(--container-max)) / 2) + var(--gutter)); }
 .instrow__track {
   display: flex; gap: clamp(16px, 2vw, 28px); margin: 0; list-style: none;

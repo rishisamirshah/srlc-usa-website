@@ -311,7 +311,7 @@ def render_home(svg_inner):
     <div class="institutes-section__head">
       <p class="institutes-section__eyebrow">Where the work happens</p>
       <h2 class="institutes-section__h" id="instrow-h">Our Institutes</h2>
-      <p class="institutes-section__sub">Six institutes in South Gujarat, India, each built around a specific need. Your gift supports their day-to-day work.</p>
+      <p class="institutes-section__sub">Six institutes in South Gujarat, India, each built around a specific need. Your gift supports their <span class="nowrap">day-to-day</span> work.</p>
     </div>
   </div>
   <div class="instrow__viewport">
