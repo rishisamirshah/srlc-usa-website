@@ -350,3 +350,6 @@ img { max-width: 100%; }
 @media (max-width: 900px) {
   .hero-carousel__content { padding-left: 1.25rem; padding-right: 1.25rem; }
 }
+
+/* Newsletter: inline error when the submit fails (never a native POST to the 404 page) */
+.form-error { flex-basis: 100%; color: #A1261B; font-size: 0.9rem; font-weight: 500; }

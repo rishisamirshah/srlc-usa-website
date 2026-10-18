@@ -448,14 +448,14 @@ INST_LABELS = {
 INST_POS = {"jivamaitridham": "50% 12%", "skill-development-center": "15% 50%"}
 
 
-def flipcard(inst, back_desc, href, card_id="", link_label="Visit the institute"):
+def flipcard(inst, back_desc, href, card_id="", link_label="Visit the institute", label=None):
     """Homepage institute card: square photo with a dark label bar and icon,
     flipping to a purple back with the description and a text link."""
     id_attr = f' id="{card_id}"' if card_id else ""
     return f"""<li class="flipcard"{id_attr} tabindex="0">
         <div class="flipcard__inner">
           <div class="flipcard__front" style="background-image:url('{inst_photo(inst)[0]}');background-position:{INST_POS.get(inst["slug"], "50% 50%")}">
-            <span class="flipcard__label"><span class="flipcard__icon">{INST_ICONS[inst["slug"]]}</span><span class="flipcard__name">{INST_LABELS[inst["slug"]]}</span></span>
+            <span class="flipcard__label"><span class="flipcard__icon">{INST_ICONS[inst["slug"]]}</span><span class="flipcard__name">{label or INST_LABELS[inst["slug"]]}</span></span>
           </div>
           <div class="flipcard__back">
             <h3 class="flipcard__h"><a href="{href}" tabindex="-1">{inst["home_name"]}</a></h3>

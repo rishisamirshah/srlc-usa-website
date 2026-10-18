@@ -10,12 +10,17 @@ from pages_work import cf_map, editorial_map, flipcard, inst_photo, state_chips
 
 US_FOOTPRINT = "chapters in 11 states and Washington, D.C."
 
-GLOBAL_STATS = [
+# Homepage map colors (Naman, Oct 18: the dark landmass is out; options a, b, c
+# sent for him to pick). Chapter states stay orange as on Sept 7.
+HOME_MAP = "b"
+
+# Homepage stat row: live order and wording from the Homepage tab, as on Sept 7
+HOME_STATS = [
     ("33M+", "Lives", "touched globally through various initiatives"),
     ("8.90M+", "Lives", "benefitted globally through Emergency Relief initiatives"),
     ("12.24M+", "People", "benefitted globally through humanitarian initiatives"),
     ("3.28M+", "Students", "supported globally by educational activities"),
-    ("8.35M+", "Patients", "treated globally"),  # approved list; never the hospital's own count
+    ("8.35M+", "Patients", "treated at Shrimad Rajchandra Hospital"),
     ("450K+", "Animals", "saved, treated, and rehabilitated globally"),
 ]
 
@@ -136,11 +141,20 @@ def chapter_finder(svg_inner, activity_html="", tone=""):
 </section>"""
 
 
+# Homepage 10 Care tile crops (Naman, Oct 18): the boy stays in frame on Child
+# Care; Humanitarian Care zooms in so the two people fill the tile.
+CARE_TILE_CROP = {
+    "child-care": "background-position:100% 50%",
+    "humanitarian-care": "background-size:150%;background-position:50% 47%",
+}
+
+
 def render_home(svg_inner):
-    # Naman's refinement doc (Oct 17 revision): the organization-level slide
-    # leads, the United States slide is second, Classroom of Change third with
-    # its CTA on the campaign itself (Venezuela relief retired). Eyebrow,
-    # headline, one pill CTA per slide, no body copy.
+    # Naman, Oct 18: the Sept 7 homepage plus only the items he asked for in the
+    # refinement doc (Oct 16, revised Oct 17) and on WhatsApp Oct 18. Slides:
+    # the organization-level slide leads, the United States slide is second,
+    # Classroom of Change third with its CTA on the campaign itself (Venezuela
+    # relief retired). Eyebrow, headline, one CTA per slide, no body copy.
     slides = [
         {
             "img": NAMAN.SLIDE_1,
@@ -181,12 +195,12 @@ def render_home(svg_inner):
         <p class="mstat__n">{n}</p>
         <p class="mstat__label">{l}</p>
         <p class="mstat__desc">{d}</p>
-      </div>""" for n, l, d in GLOBAL_STATS)
+      </div>""" for n, l, d in HOME_STATS)
 
     # SRA "Our Unique Approach" tile: photo, flat veil, chip (number + name),
     # hover layer with the one-liner. Below 1024 the same markup collapses to
     # the SRA accordion rows (tap reveals the one-liner, tap again to open).
-    care_tiles = "".join(f"""<a class="caretile" href="/our-work/10-care-program/{c["slug"]}/" style="background-image:url('{NAMAN.CARE_TILES[c["slug"]]}')">
+    care_tiles = "".join(f"""<a class="caretile" href="/our-work/10-care-program/{c["slug"]}/" style="background-image:url('{NAMAN.CARE_TILES[c["slug"]]}'){";" + CARE_TILE_CROP[c["slug"]] if c["slug"] in CARE_TILE_CROP else ""}">
         <span class="caretile__overlay" aria-hidden="true"></span>
         <span class="caretile__chip"><span class="caretile__num">{c["num"]}</span><span class="caretile__name">{c["name"]}</span></span>
         <span class="caretile__hover"><span class="caretile__hover-h">{c["num"]}<br>{c["name"]}</span><span class="caretile__hover-p">{c["one"]}</span></span>
@@ -195,8 +209,9 @@ def render_home(svg_inner):
     from data_india import INSTITUTES
     # charity:water "Ready to take action" row (Naman, Oct 16): edge-to-edge
     # scroller of square photo cards, dark label bar with an icon, flipping to
-    # a purple back with the one-liner on hover / tap / keyboard focus.
-    institutes_cards = "".join(flipcard(inst, inst["home_desc"], f'/our-work/india/{inst["slug"]}/', link_label="Learn More")
+    # a purple back with the one-liner on hover / tap / keyboard focus. Each
+    # card carries the institute's official name (Naman, Oct 18).
+    institutes_cards = "".join(flipcard(inst, inst["home_desc"], f'/our-work/india/{inst["slug"]}/', link_label="Learn More", label=inst["name"])
                                for inst in sorted(INSTITUTES, key=lambda i: NAMAN.INSTITUTE_ORDER.index(i["slug"])))
 
     # Section 7, Latest Articles: hidden until three articles are published
@@ -229,6 +244,7 @@ def render_home(svg_inner):
       </div>"""
 
     body = f"""
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
 <div class="newsletter-modal" id="newsletterModal" role="dialog" aria-modal="true" aria-labelledby="newsletterTitle" hidden>
   <div class="newsletter-modal__backdrop" data-newsletter-close></div>
@@ -261,7 +277,7 @@ def render_home(svg_inner):
       <h2 class="mission-split__h">A global initiative to offer service and bring joy to the lives of underserved sections of society.</h2>
       <p class="mission-split__body">Shrimad Rajchandra Love and Care (SRLC) USA is the US chapter of a global nonprofit organization that has been recognized by the United Nations for its humanitarian efforts. A 501(c)(3) organization, SRLC USA supports community development projects across India and Africa, and brings holistic care and joy to local communities throughout the US. With a presence in 25+ cities, SRLC USA focuses on raising funds and awareness in high-impact areas, while putting compassion in action.</p>
       <div class="mission-split__actions">
-        <a class="btn btn--primary" href="/about/our-impact/">See Our Impact</a>
+        <a class="btn btn--primary btn--lg" href="/about/our-impact/">See Our Impact</a>
       </div>
       <p class="mission-split__micro">Registered 501(c)(3) &middot; EIN 81-5162502</p>
     </div>
@@ -295,11 +311,13 @@ def render_home(svg_inner):
   </div>
 </section>
 
-<section class="instrow" aria-labelledby="instrow-h">
-  <div class="container instrow__head">
-    <p class="instrow__eyebrow">Where the work happens</p>
-    <h2 class="instrow__h" id="instrow-h">Our Institutes</h2>
-    <p class="instrow__sub">Six institutes in South Gujarat, India, each built around a specific need. Your gift supports their day-to-day work.</p>
+<section class="institutes-section instrow" aria-labelledby="instrow-h">
+  <div class="container">
+    <div class="institutes-section__head">
+      <p class="institutes-section__eyebrow">Where the work happens</p>
+      <h2 class="institutes-section__h" id="instrow-h">Our Institutes</h2>
+      <p class="institutes-section__sub">Six institutes in South Gujarat, India, each built around a specific need. Your gift supports their day-to-day work.</p>
+    </div>
   </div>
   <div class="instrow__viewport">
     <ul class="instrow__track" id="instrowTrack">{institutes_cards}</ul>
@@ -310,7 +328,42 @@ def render_home(svg_inner):
   </div>
 </section>
 
-{chapter_finder(svg_inner, activity)}
+<section class="chapter-finder chapter-finder--v3">
+  <div class="container chapter-finder__inner">
+    <div class="chapter-finder__intro">
+      <h2 class="chapter-finder__h">Find your nearest chapter.</h2>
+      <p class="chapter-finder__sub">Enter a ZIP code or click any pin on the map.</p>
+    </div>
+    <div class="chapter-finder__cols">
+      <div class="chapter-finder__search">
+        <p class="chapter-finder__search-title">Search by ZIP</p>
+        <form class="chapter-finder__form" onsubmit="event.preventDefault(); window.__cfZipLookup &amp;&amp; window.__cfZipLookup();">
+          <input type="text" id="zipInput" inputmode="numeric" maxlength="5" placeholder="ZIP code (e.g. 08820)" aria-label="ZIP code" pattern="\\d{{5}}">
+          <button type="submit" class="btn btn--primary" id="zipBtn">Find Chapter</button>
+        </form>
+        <div class="chapter-finder__result" id="zipResult" hidden>
+          <p class="chapter-finder__city" id="zipCity"></p>
+          <p class="chapter-finder__meta" id="zipMeta"></p>
+          <div class="chapter-finder__actions">
+            <a id="zipJoinBtn" class="btn btn--primary" href="/get-involved/volunteer/">Join This Chapter</a>
+            <a class="btn btn--secondary" href="mailto:{EMAIL}">Email the Lead</a>
+          </div>
+          <div class="chapter-finder__chips" id="zipChips" hidden>
+            <p class="chapter-finder__chips-label">Other chapters in this area</p>
+            <div class="chapter-finder__chips-list" id="zipChipsList"></div>
+          </div>
+        </div>
+        <p class="chapter-finder__search-hint">We&rsquo;ll point you to your nearest SRLC USA chapter.</p>
+      </div>
+      {activity}
+    </div>
+    <div class="chapter-finder__map-wrap homemap homemap--{HOME_MAP}">
+      {editorial_map(svg_inner)}
+      <div class="cf-map__legend" aria-hidden="true"><span><span class="swatch"></span>Active SRLC USA chapter</span></div>
+    </div>
+    <p class="chapter-finder__link-row"><a class="btn btn--secondary" href="/our-work/united-states/">Browse All US Chapters</a></p>
+  </div>
+</section>
 
 <!-- Section 7, Latest Articles: hidden until at least three articles are published (Naman, Sept 3).
 <section class="news-section">

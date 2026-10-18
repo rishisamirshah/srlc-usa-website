@@ -1,0 +1,191 @@
+/* Homepage only (Naman, Oct 18): the Sept 7 homepage plus only the items he
+   asked for in the refinement doc (Oct 16, revised Oct 17) and on WhatsApp
+   Oct 18. Loads in the homepage bundle in place of supplement-zz-refine.css;
+   the components below are ported from that layer as built and approved. */
+
+/* ---------- Hero: per-slide crops so faces stay in frame ---------- */
+.hero-carousel__slide[data-slide="1"]::before { background-position: 50% 0%; }
+.hero-carousel__slide[data-slide="2"]::before { background-position: 50% 35%; }
+@media (max-width: 760px) { .hero-carousel__slide[data-slide="1"]::before { background-position: 18% 0%; } }
+
+/* ---------- Impact story: Laxibhai's photo in the portrait slot ---------- */
+.named-story__media--photo { background-size: cover; background-position: center; background-color: #E7E3EC; }
+
+/* ---------- Institutes: charity:water "Ready to take action" row ----------
+   Section, header and intro keep the Sept 7 Institutes styling; the row is
+   an edge-to-edge scroller starting on the container's content edge. */
+.instrow { overflow: hidden; }
+.instrow .institutes-section__head { margin-bottom: clamp(1.8rem, 3vw, 2.6rem); }
+.instrow__viewport { --row-pad: calc(max(0px, (100vw - var(--container-max)) / 2) + var(--gutter)); }
+.instrow__track {
+  display: flex; gap: clamp(16px, 2vw, 28px); margin: 0; list-style: none;
+  padding: 0 var(--row-pad) 6px; overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory; scroll-padding-inline: var(--row-pad); scrollbar-width: none;
+}
+.instrow__track::-webkit-scrollbar { display: none; }
+.flipcard {
+  flex: 0 0 auto; width: clamp(270px, 23vw, 330px); aspect-ratio: 1 / 1;
+  scroll-snap-align: start; perspective: 1600px; outline: none; cursor: pointer;
+}
+.flipcard__inner {
+  position: relative; width: 100%; height: 100%; transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.flipcard__front, .flipcard__back { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.flipcard__front { background-color: #3A2649; background-size: cover; background-position: center; background-repeat: no-repeat; }
+.flipcard__label {
+  position: absolute; left: 14px; right: 14px; bottom: 18px; min-height: calc(2.7em + 20px);
+  display: flex; align-items: center; gap: 12px; padding: 10px 14px 10px 10px;
+  background: rgba(24, 14, 31, 0.66); color: #FFFFFF;
+  font-family: var(--font-body); font-size: 0.72rem; font-weight: 600; line-height: 1.35;
+  letter-spacing: 0.12em; text-transform: uppercase;
+}
+.flipcard__name { text-wrap: balance; }
+.flipcard__icon {
+  flex: none; width: 30px; height: 30px; display: grid; place-items: center;
+  background: var(--color-warm-orange); color: #2A1C36;
+}
+.flipcard__icon svg { width: 16px; height: 16px; }
+.flipcard__back {
+  transform: rotateY(180deg); background: var(--color-srlc-purple); color: #FFFFFF;
+  padding: clamp(16px, 1.6vw, 28px); display: flex; flex-direction: column; justify-content: flex-end; gap: 0.6rem;
+  pointer-events: none;
+}
+.flipcard__h { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.02rem, 1.25vw, 1.4rem); line-height: 1.22; margin: 0; text-wrap: balance; }
+.flipcard__h a { color: #FFFFFF; text-decoration: none; }
+.flipcard__h a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.flipcard__d { margin: 0; font-size: 0.9rem; line-height: 1.55; color: rgba(255, 255, 255, 0.9); }
+.flipcard__back .textlink { position: relative; color: #FFFFFF; font-weight: 600; text-decoration: none; }
+.flipcard__back .textlink::after { content: ""; position: absolute; inset: -12px -4px; }
+.flipcard.is-flipped .flipcard__inner, .flipcard:focus-visible .flipcard__inner,
+.flipcard:has(:focus-visible) .flipcard__inner { transform: rotateY(180deg); }
+.flipcard.is-flipped .flipcard__back, .flipcard:focus-visible .flipcard__back,
+.flipcard:has(:focus-visible) .flipcard__back { pointer-events: auto; }
+@media (hover: hover) {
+  .flipcard:hover .flipcard__inner { transform: rotateY(180deg); }
+  .flipcard:hover .flipcard__back { pointer-events: auto; }
+}
+.flipcard:focus-visible { outline: 2px solid var(--color-warm-orange); outline-offset: 4px; }
+@media (prefers-reduced-motion: reduce) { .flipcard__inner { transition: none; } }
+.instrow__arrows { display: flex; justify-content: center; gap: clamp(48px, 6vw, 96px); margin-top: clamp(1.4rem, 2.4vw, 2rem); }
+.instrow__arrow { background: none; border: 0; padding: 14px 10px; min-height: 44px; cursor: pointer; color: var(--color-ink); line-height: 0; }
+.instrow__arrow svg { width: 44px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.instrow__arrow:hover svg { stroke-width: 2; }
+.instrow__arrow[disabled] { color: #BDB3C6; cursor: default; }
+.instrow__arrow:focus-visible { outline: 2px solid var(--color-srlc-purple); outline-offset: 2px; }
+@media (max-width: 640px) { .flipcard { width: 78vw; } }
+@media (max-width: 359px) {
+  .flipcard__back { padding: 12px; gap: 0.35rem; }
+  .flipcard__h { font-size: 0.95rem; }
+  .flipcard__d { font-size: 0.8rem; line-height: 1.4; }
+}
+
+/* ---------- Chapter finder: everything stays except the map colors,
+   the feed's city column and the one-color Browse button ---------- */
+.chapter-finder--v3 .chapter-activity__item { grid-template-columns: 5.6rem minmax(0, 1fr); }
+.chapter-finder--v3 .chapter-finder__link-row a.btn { border-bottom: 1px solid currentColor; padding-bottom: 0; }
+.homemap { justify-content: center; }
+.homemap .edmap { width: 100%; }
+.homemap .edmap-list { display: none; }
+.homemap .edmap .edmap-label { font-size: 21px; paint-order: stroke; stroke-width: 4px; stroke-linejoin: round; }
+.homemap .edmap .edmap-leader { stroke: #A387C6; }
+/* a: SRLC Purple landmass */
+.homemap--a .edmap .cf-state { fill: #693D84; stroke: #8361A0; }
+.homemap--a .edmap .edmap-dot { fill: #FFFFFF; }
+.homemap--a .edmap .edmap-ring { stroke: #FFFFFF; opacity: 0.75; }
+.homemap--a .edmap .edmap-label { fill: #FFFFFF; stroke: #693D84; }
+/* b: Light Purple landmass */
+.homemap--b .edmap .cf-state { fill: #A387C6; stroke: #B79FD2; }
+.homemap--b .edmap .edmap-dot { fill: #FFFFFF; }
+.homemap--b .edmap .edmap-ring { stroke: #FFFFFF; opacity: 0.8; }
+.homemap--b .edmap .edmap-label { fill: #2A1C36; stroke: #FFFFFF; }
+/* c: white landmass */
+.homemap--c .edmap .cf-state { fill: #FFFFFF; stroke: #DCD0EA; }
+.homemap--c .edmap .edmap-dot { fill: #693D84; }
+.homemap--c .edmap .edmap-ring { stroke: #693D84; opacity: 0.45; }
+.homemap--c .edmap .edmap-label { fill: #2A1C36; stroke: #FFFFFF; }
+/* Every option: chapter states stay orange, side labels sit on the section in ink */
+.homemap .edmap .cf-state.cf-state--active { fill: #FD954F; stroke: rgba(255, 255, 255, 0.55); }
+.homemap .edmap .cf-state.cf-state--active:hover, .homemap .edmap .cf-state.cf-state--active:focus,
+.homemap .edmap .cf-state.cf-state--active.is-hot { fill: #F07E33; }
+.homemap .edmap .edmap-label.edmap-label--side { font-size: 19px; fill: var(--color-ink); stroke: none; }
+@media (max-width: 760px) {
+  .homemap .edmap .edmap-label, .homemap .edmap .edmap-leader { display: none; }
+}
+
+/* ---------- Be part of the work: two square photo cards on the lavender
+   background, then the newsletter as a plain row ---------- */
+.takepart { background: var(--sec-lav); padding: var(--sec-pad) 0; }
+.takepart__head { text-align: center; margin: 0 auto 2.4rem; max-width: 48rem; }
+.takepart__eyebrow {
+  font-family: var(--font-body); font-size: 0.74rem; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--color-srlc-purple); font-weight: 600; margin: 0 0 1.1rem;
+}
+.takepart__h {
+  font-family: var(--font-display); font-weight: 500; font-size: clamp(2.1rem, 4.5vw, 3.1rem);
+  line-height: 1.1; color: #1F1326; margin: 0; font-variation-settings: "opsz" 72;
+}
+.takepart__cards, .takepart .nlrow { max-width: 64rem; margin-left: auto; margin-right: auto; }
+.takepart__cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 2vw, 28px); }
+.photocard { position: relative; margin: 0; }
+.photocard__frame { position: relative; aspect-ratio: 1 / 1; overflow: hidden; background: #3A2649; }
+.photocard__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+.photocard__bar {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 18px 24px;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  background: rgba(31, 19, 38, 0.72); color: #FFFFFF;
+}
+.photocard__h { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.6rem, 2.4vw, 2.1rem); line-height: 1.1; margin: 0; color: #FFFFFF; }
+.photocard__bar .btn { background: #FFFFFF; border-color: #FFFFFF; color: var(--color-srlc-purple); }
+.photocard__bar .btn:hover { background: var(--color-lavender-white); border-color: var(--color-lavender-white); }
+.photocard__caption { margin: 0.9rem 0 0; font-size: 1.02rem; line-height: 1.6; color: var(--color-ink-muted); text-wrap: pretty; }
+.nlrow {
+  display: flex; align-items: center; justify-content: space-between; gap: clamp(1.2rem, 3vw, 3rem);
+  margin-top: clamp(2.4rem, 4vw, 3.6rem); padding-top: clamp(1.8rem, 3vw, 2.4rem); border-top: 1px solid #D9CCEA;
+}
+.nlrow__eyebrow {
+  font-family: var(--font-body); font-size: 0.74rem; font-weight: 600; letter-spacing: 0.24em;
+  text-transform: uppercase; color: var(--color-srlc-purple); margin: 0 0 0.4rem;
+}
+.nlrow__line { margin: 0; font-size: 1.02rem; line-height: 1.55; color: var(--color-ink); max-width: 32rem; text-wrap: pretty; }
+.nlrow__form { display: flex; flex-wrap: wrap; gap: 12px; flex: 0 1 470px; }
+.nlrow__form input[type="email"] {
+  flex: 1 1 220px; min-width: 0; height: 52px; box-sizing: border-box; border-radius: 0; border: 1px solid #B9A8CE;
+  background: #FFFFFF; padding: 0 1rem; font: inherit; font-size: 1rem; color: var(--color-ink);
+}
+.nlrow__form input[type="email"]:focus { outline: 2px solid var(--color-srlc-purple); outline-offset: 1px; }
+.nlrow__form .form-success { color: var(--color-srlc-purple); font-weight: 600; }
+@media (max-width: 900px) { .takepart__cards { grid-template-columns: 1fr; } }
+@media (max-width: 760px) {
+  .nlrow { flex-direction: column; align-items: stretch; }
+  .nlrow__form { flex-basis: auto; }
+  .nlrow__form input[type="email"] { height: 46px; }
+}
+
+/* ---------- Quote band: last section, SRA Social Impact treatment in the
+   lavender scale with a line-art lotus at low opacity ---------- */
+.lotusband {
+  position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;
+  min-height: clamp(300px, 28vw, 440px); padding: clamp(2.5rem, 5vw, 4rem) clamp(20px, 7vw, 140px);
+  background: #EDE6F7;
+}
+.lotusband::before {
+  content: ""; position: absolute; right: -4%; bottom: -12%; width: min(62%, 760px); aspect-ratio: 600 / 380;
+  background: url("/assets/img/lotus-line.svg") center / contain no-repeat; opacity: 0.16; pointer-events: none;
+}
+.lotusband__inner { position: relative; text-align: center; max-width: 1100px; }
+.lotusband__quote {
+  margin: 0; padding: 0; border: 0; background: none;
+  font-family: var(--font-display); font-style: italic; font-weight: 400;
+  font-size: clamp(1.7rem, 2.6vw, 3rem); line-height: 1.25; color: #4B2A5E; text-wrap: balance;
+}
+.lotusband__attr {
+  margin: 1.1rem 0 0; font-family: var(--font-body); font-weight: 500; font-size: clamp(0.78rem, 1vw, 1rem);
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-srlc-purple);
+}
+@media (max-width: 1024px) { .lotusband::before { bottom: 0; width: min(70%, 520px); right: -6%; } }
+@media (max-width: 760px) { .lotusband { min-height: 240px; } }
+@media (max-width: 640px) {
+  .lotusband { padding-top: 4rem; padding-bottom: 150px; }
+  .lotusband::before { width: 62%; right: -6%; bottom: -3%; }
+}

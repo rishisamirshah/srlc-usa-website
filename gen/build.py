@@ -28,6 +28,11 @@ EXTRA_CSS = """
   background: var(--color-warm-orange); z-index: 300; pointer-events: none; }
 """
 
+# Homepage-only stylesheet layer; every other page loads supplement-zz-refine.css instead
+HOME_ONLY_CSS = ("supplement-zz-home.css",)
+# Shell rules (header, mobile menu, footer, newsletter) the homepage shares with every page
+SHELL_SELECTORS = r"site-header|site-footer|nav-toggle|primary-nav|newsletter-modal|nav-locked|brand__logo|\.nowrap"
+
 EXTRA_JS = """
 /* Newsletter modal close wiring + session suppression */
 (function () {
@@ -65,13 +70,13 @@ UNSPLASH_LOCAL = {
 }
 
 
-def _supplements(ext):
+def _supplements(ext, skip=()):
     """All gen/supplement*.{ext} files: supplement.{ext} first, then the rest by
-    name (supplement-core, supplement-donate, supplement-work, ...)."""
+    name (supplement-core, supplement-donate, supplement-work, ...), minus skip."""
     import glob
     gen = os.path.join(ROOT, "gen")
     base = os.path.join(gen, f"supplement.{ext}")
-    others = sorted(p for p in glob.glob(os.path.join(gen, f"supplement-*.{ext}")))
+    others = sorted(p for p in glob.glob(os.path.join(gen, f"supplement-*.{ext}")) if os.path.basename(p) not in skip)
     out = []
     for p in ([base] if os.path.exists(base) else []) + others:
         out.append(f"/* ---- {os.path.basename(p)} ---- */\n" + open(p).read())
@@ -109,7 +114,15 @@ def assemble_assets():
     css = re.sub(r"url\(['\"]?https://images\.unsplash\.com/photo-(\d+)-[^'\")]*['\"]?\)",
                  lambda m: f"url('{UNSPLASH_LOCAL.get(m.group(1), '/assets/img/fillers/children-smiling.jpg')}')", css)
 
-    css_out = css + "\n\n" + "\n\n".join(_supplements("css")) + EXTRA_CSS
+    css_out = css + "\n\n" + "\n\n".join(_supplements("css", skip=HOME_ONLY_CSS)) + EXTRA_CSS
+    # Homepage (Naman, Oct 18): back to the Sept 7 build plus only what he asked
+    # for, so the Oct 17 critic layer stays off it. It keeps the shared header,
+    # footer and newsletter rules from that layer so the shell matches every page.
+    import cssx
+    refine = open(os.path.join(ROOT, "gen", "supplement-zz-refine.css")).read()
+    shell_css = cssx.dump(cssx.pick(cssx.parse(refine), SHELL_SELECTORS))
+    css_home = (css + "\n\n" + "\n\n".join(_supplements("css", skip=("supplement-zz-refine.css",)))
+                + "\n\n/* ---- shared shell rules from supplement-zz-refine.css ---- */\n" + shell_css + EXTRA_CSS)
 
     scripts = re.findall(r"<script(?:\s+id=\"[^\"]*\")?>(.*?)</script>", html, re.S)
     keep = []
@@ -130,8 +143,9 @@ def assemble_assets():
                 "carousel.addEventListener('mouseleave', start);\n"
                 "    carousel.addEventListener('focusin', stop);\n"
                 "    carousel.addEventListener('focusout', start);")
-        # stats render their final values; no count-up animation (critic: template tell)
-        s = s.replace("document.querySelectorAll('.mstat__n, .count-up')", "document.querySelectorAll('.count-up-off')")
+        # Homepage mission stats count up again (Naman, Oct 18: the Sept 7 behavior);
+        # inner-page stats keep rendering their final values
+        s = s.replace("document.querySelectorAll('.mstat__n, .count-up')", "document.querySelectorAll('.mstat__n')")
         # quote wall left the homepage; its timer threw every 6.5s with no cards
         s = s.replace(
             "var dots = document.querySelectorAll('.quote-wall__dots .qd');\n  var idx = 0;",
@@ -155,11 +169,15 @@ def assemble_assets():
     # Content-hashed filenames: no cache layer can serve a stale bundle.
     import hashlib, glob
     ch = hashlib.md5(css_out.encode()).hexdigest()[:8]
+    hh = hashlib.md5(css_home.encode()).hexdigest()[:8]
     jh = hashlib.md5(js_out.encode()).hexdigest()[:8]
-    for old in glob.glob(os.path.join(ROOT, "assets", "css", "site-*.css")) + glob.glob(os.path.join(ROOT, "assets", "js", "site-*.js")):
+    for old in (glob.glob(os.path.join(ROOT, "assets", "css", "site-*.css")) + glob.glob(os.path.join(ROOT, "assets", "css", "home-*.css"))
+                + glob.glob(os.path.join(ROOT, "assets", "js", "site-*.js"))):
         os.remove(old)
     with open(os.path.join(ROOT, "assets", "css", f"site-{ch}.css"), "w") as f:
         f.write(css_out)
+    with open(os.path.join(ROOT, "assets", "css", f"home-{hh}.css"), "w") as f:
+        f.write(css_home)
     with open(os.path.join(ROOT, "assets", "js", f"site-{jh}.js"), "w") as f:
         f.write(js_out)
     # legacy names keep working so any stale cached HTML still picks up current styles
@@ -169,8 +187,9 @@ def assemble_assets():
         f.write(js_out)
     import shell as _shell
     _shell.CSS_FILE = f"/assets/css/site-{ch}.css"
+    _shell.HOME_CSS_FILE = f"/assets/css/home-{hh}.css"
     _shell.JS_FILE = f"/assets/js/site-{jh}.js"
-    print(f"  assets: site-{ch}.css, site-{jh}.js (+legacy names)")
+    print(f"  assets: site-{ch}.css, home-{hh}.css, site-{jh}.js (+legacy names)")
 
 
 def process_map():

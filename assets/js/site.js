@@ -161,7 +161,7 @@
     }
 
     /* ===== 1b) Stat counter animation ===== */
-    var statEls = document.querySelectorAll('.count-up-off');
+    var statEls = document.querySelectorAll('.mstat__n');
     if (statEls.length && !reducedMotion) {
       var counted = new WeakSet();
       var counterObs = new IntersectionObserver(function(entries){
@@ -490,7 +490,15 @@
           var box = form.closest(".nlrow, .newsletter-modal__panel");
           if (box) box.classList.add("is-subscribed");
         } else form.reset();
-      }).catch(function () { form.submit(); });
+      }).catch(function () {
+        // never fall through to a native POST: it lands on the 404 page
+        if (form.querySelector(".form-error")) return;
+        var err = doc.createElement("span");
+        err.className = "form-error";
+        err.setAttribute("role", "alert");
+        err.textContent = "Something went wrong. Please try again in a moment.";
+        form.appendChild(err);
+      });
     });
   });
 

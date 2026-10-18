@@ -3235,6 +3235,9 @@ img { max-width: 100%; }
   .hero-carousel__content { padding-left: 1.25rem; padding-right: 1.25rem; }
 }
 
+/* Newsletter: inline error when the submit fails (never a native POST to the 404 page) */
+.form-error { flex-basis: 100%; color: #A1261B; font-size: 0.9rem; font-weight: 500; }
+
 
 /* ---- supplement-core.css ---- */
 /* ---------- supplement-core.css: prose + one photo sections (Aug 24 edits) ----------

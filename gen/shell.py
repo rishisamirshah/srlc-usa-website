@@ -36,6 +36,7 @@ LINKEDIN = "https://www.linkedin.com/company/srlcusa/"
 X = "https://x.com/srlcusa"
 
 CSS_FILE = "/assets/css/site.css"
+HOME_CSS_FILE = "/assets/css/site.css"  # the build points this at the homepage bundle
 JS_FILE = "/assets/js/site.js"
 
 # Exactly the pairing the approved homepage HTML loads (gen/base-homepage-v2.html):
@@ -91,7 +92,7 @@ def head(title, desc, path, overlay=False):
 {preload}<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="{FONTS}">
-<link rel="stylesheet" href="{CSS_FILE}">
+<link rel="stylesheet" href="{HOME_CSS_FILE if path == "/" else CSS_FILE}">
 <script>document.documentElement.classList.replace("no-js","js")</script>
 <script src="{JS_FILE}" defer></script>
 </head>
