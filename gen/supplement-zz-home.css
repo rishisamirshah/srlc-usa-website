@@ -191,11 +191,12 @@
 }
 
 /* ---------- Naman, Oct 18 (2nd pass): split the sections by color, tighter
-   spacing. Chapter finder and quote band on white so Be Part of the Work
-   (lavender) reads as its own section; the search panel turns lavender so it
-   still reads as a panel on white. ---------- */
+   spacing. Institutes and Be Part of the Work on lavender, the chapter finder
+   and quote band on white between them, so every section reads as its own;
+   the search panel turns lavender so it still reads as a panel on white. ---------- */
 .chapter-finder--v3 { background: #FFFFFF; }
-.institutes-section + .chapter-finder--v3 { padding-top: calc(var(--sec-pad) * 0.5) !important; }
+.instrow.institutes-section { background: var(--sec-lav); padding-bottom: calc(var(--sec-pad) * 0.75) !important; }
+.institutes-section + .chapter-finder--v3 { padding-top: calc(var(--sec-pad) * 0.75) !important; }
 .chapter-finder--v3 { padding-bottom: calc(var(--sec-pad) * 0.75) !important; }
 .takepart { padding-top: calc(var(--sec-pad) * 0.75); }
 .chapter-finder--v3 .chapter-finder__cols, .chapter-finder--v3 .chapter-finder__search { background: var(--sec-lav); }
