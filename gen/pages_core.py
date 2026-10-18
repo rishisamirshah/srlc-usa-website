@@ -10,10 +10,6 @@ from pages_work import cf_map, editorial_map, flipcard, inst_photo, state_chips
 
 US_FOOTPRINT = "chapters in 11 states and Washington, D.C."
 
-# Homepage map colors (Naman, Oct 18: the dark landmass is out; options a, b, c
-# sent for him to pick). Chapter states stay orange as on Sept 7.
-HOME_MAP = "b"
-
 # Homepage stat row: live order and wording from the Homepage tab, as on Sept 7
 HOME_STATS = [
     ("33M+", "Lives", "touched globally through various initiatives"),
@@ -356,7 +352,7 @@ def render_home(svg_inner):
       </div>
       {activity}
     </div>
-    <div class="chapter-finder__map-wrap homemap homemap--{HOME_MAP}">
+    <div class="chapter-finder__map-wrap homemap">
       {editorial_map(svg_inner)}
       <div class="cf-map__legend" aria-hidden="true"><span><span class="swatch"></span>Active SRLC USA chapter</span></div>
     </div>

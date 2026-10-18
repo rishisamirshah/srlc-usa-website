@@ -3951,35 +3951,26 @@ main > section + section { margin-top: 0; }
   .flipcard__d { font-size: 0.8rem; line-height: 1.4; }
 }
 
-/* ---------- Chapter finder: everything stays except the map colors,
+/* ---------- Chapter finder: everything stays except the map (colors, size),
    the feed's city column and the one-color Browse button ---------- */
 .chapter-finder--v3 .chapter-activity__item { grid-template-columns: 5.6rem minmax(0, 1fr); }
 .chapter-finder--v3 .chapter-finder__link-row a.btn { border-bottom: 1px solid currentColor; padding-bottom: 0; }
 .homemap { justify-content: center; }
 .homemap .edmap { width: 100%; }
 .homemap .edmap-list { display: none; }
-.homemap .edmap .edmap-label { font-size: 21px; paint-order: stroke; stroke-width: 4px; stroke-linejoin: round; }
+.homemap .edmap .edmap-label { font-size: 25px; paint-order: stroke; stroke-width: 4px; stroke-linejoin: round; fill: #2A1C36; stroke: #FFFFFF; }
 .homemap .edmap .edmap-leader { stroke: #A387C6; }
-/* a: SRLC Purple landmass */
-.homemap--a .edmap .cf-state { fill: #693D84; stroke: #8361A0; }
-.homemap--a .edmap .edmap-dot { fill: #FFFFFF; }
-.homemap--a .edmap .edmap-ring { stroke: #FFFFFF; opacity: 0.75; }
-.homemap--a .edmap .edmap-label { fill: #FFFFFF; stroke: #693D84; }
-/* b: Light Purple landmass */
-.homemap--b .edmap .cf-state { fill: #A387C6; stroke: #B79FD2; }
-.homemap--b .edmap .edmap-dot { fill: #FFFFFF; }
-.homemap--b .edmap .edmap-ring { stroke: #FFFFFF; opacity: 0.8; }
-.homemap--b .edmap .edmap-label { fill: #2A1C36; stroke: #FFFFFF; }
-/* c: white landmass */
-.homemap--c .edmap .cf-state { fill: #FFFFFF; stroke: #DCD0EA; }
-.homemap--c .edmap .edmap-dot { fill: #693D84; }
-.homemap--c .edmap .edmap-ring { stroke: #693D84; opacity: 0.45; }
-.homemap--c .edmap .edmap-label { fill: #2A1C36; stroke: #FFFFFF; }
-/* Every option: chapter states stay orange, side labels sit on the section in ink */
-.homemap .edmap .cf-state.cf-state--active { fill: #FD954F; stroke: rgba(255, 255, 255, 0.55); }
+/* The original light lavender landmass (Naman, Oct 18: back to it once the
+   section turned white); chapter states stay orange */
+.homemap .edmap .cf-state { fill: #EFE6FB; stroke: #FFFFFF; }
+.homemap .edmap .cf-state.cf-state--active { fill: #FD954F; stroke: #FFFFFF; }
 .homemap .edmap .cf-state.cf-state--active:hover, .homemap .edmap .cf-state.cf-state--active:focus,
 .homemap .edmap .cf-state.cf-state--active.is-hot { fill: #F07E33; }
-.homemap .edmap .edmap-label.edmap-label--side { font-size: 19px; fill: var(--color-ink); stroke: none; }
+.homemap .edmap .edmap-dot { fill: #FFFFFF; }
+.homemap .edmap .edmap-ring { stroke: #FFFFFF; opacity: 0.85; }
+.homemap .edmap .edmap-label.edmap-label--side { font-size: 23px; fill: var(--color-ink); stroke: none; }
+/* Bigger map: it runs into the right margin, so the search panel keeps its width */
+@media (min-width: 1200px) { .chapter-finder--v3 .chapter-finder__map-wrap.homemap { width: calc(100% + min(110px, (100vw - var(--container-max)) / 2)); } }
 @media (max-width: 760px) {
   .homemap .edmap .edmap-label, .homemap .edmap .edmap-leader { display: none; }
 }
