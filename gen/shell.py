@@ -25,6 +25,9 @@ FOOTER_LEGAL = ('Shrimad Rajchandra Love and Care - USA Inc is a registered <spa
 # so the parent organization's status is stated in words, never as a seal
 ECOSOC_LINE = ("Shrimad Rajchandra Love and Care, the global organization SRLC USA is part of, holds "
                "Special Consultative Status with the United Nations Economic and Social Council.")
+# Footer version (Naman, Oct 18: the full name was repeated too often in the footer)
+FOOTER_ECOSOC_LINE = ("SRLC USA is the US chapter of Shrimad Rajchandra Love and Care, which holds Special "
+                      "Consultative Status with the United Nations Economic and Social Council.")
 # Candid serves the seal live so it updates itself (Naman, Oct 17)
 CANDID_SEAL = "https://widgets.guidestar.org/prod/v1/pdp/transparency-seal//81-5162502/svg?env=prod"
 CANDID_URL = "https://www.guidestar.org/profile/81-5162502"
@@ -218,12 +221,12 @@ def footer():
     </div>
     <div class="site-footer__base">
       <div class="site-footer__legal-block">
-        <p>&copy; Copyright <span data-year>2026</span> Shrimad Rajchandra Love and Care USA, All Rights Reserved</p>
+        <p>&copy; <span data-year>2026</span> SRLC USA. All rights reserved.</p>
         <p class="site-footer__legalline">{FOOTER_LEGAL}</p>
       </div>
       <div class="site-footer__recog-block">
         <ul class="site-footer__seals" aria-label="Recognition">{seals}</ul>
-        <p class="site-footer__ecosoc">{ECOSOC_LINE}</p>
+        <p class="site-footer__ecosoc">{FOOTER_ECOSOC_LINE}</p>
       </div>
     </div>
   </div>
