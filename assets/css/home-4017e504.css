@@ -4066,6 +4066,44 @@ main > section + section { margin-top: 0; }
 .chapter-finder--v3 .chapter-finder__form input { background: #FFFFFF; }
 .lotusband { background: #FFFFFF; }
 
+/* ---------- Naman, Oct 18 (3rd pass): spacing, font sizes, alignment and
+   line breaks, measured at 1920 / 1440 / 1280 / 1024 ---------- */
+/* One H2 size for the section headings (the Care and Institutes value) */
+.chapter-finder--v3 .chapter-finder__h, .takepart__h { font-size: clamp(1.75rem, 3.4vw, 2.4rem); }
+/* Institutes intro at the same size as the other intros */
+.instrow .institutes-section__sub { font-size: 1.02rem; }
+/* No lone last words */
+.mstat__desc, .mission-split__h, .named-story__quote, .named-story__attribution-meta,
+.caretile__hover-p, .flipcard__d { text-wrap: pretty; }
+.hero-carousel__title { text-wrap: balance; }
+/* ZIP field shows its whole placeholder between 981 and 1100 */
+@media (min-width: 981px) and (max-width: 1100px) {
+  .chapter-finder--v3 .chapter-finder__form input { padding-left: 14px; padding-right: 14px; letter-spacing: 0; }
+  .chapter-finder--v3 .chapter-finder__form .btn { padding-left: 1.1rem; padding-right: 1.1rem; }
+}
+/* Browse All US Chapters at the same weight as the other buttons */
+.chapter-finder--v3 .chapter-finder__link-row a.btn { font-weight: 500; }
+/* Care eyebrow to heading gap matches the other sections */
+.care-section__eyebrow { margin-bottom: 1rem; }
+
+/* ---------- Same pass, phones and tablets (390 / 360 / 768 / 834) ---------- */
+.takepart__h, .chapter-finder__h, .chapter-finder__sub, .chapter-finder__search-hint { text-wrap: balance; }
+/* Mission copy and stats on the page gutter once they stack */
+@media (max-width: 900px) {
+  .mission-split__copy, .mission-split__stats { padding-left: var(--gutter); padding-right: var(--gutter); }
+}
+/* Map legend under the map instead of on Texas; map centered under the heading */
+@media (max-width: 760px) {
+  .chapter-finder--v3 .cf-map__legend { position: static; margin-top: 0.6rem; }
+  .homemap .edmap { overflow: hidden; }
+  .homemap .edmap svg { transform: translateX(10%); }
+}
+/* Donate / Volunteer bars fit the button on small phones */
+@media (max-width: 389px) {
+  .photocard__bar { padding-left: 16px; padding-right: 16px; gap: 10px; }
+  .photocard__h { font-size: 1.5rem; }
+}
+
 
 /* ---- shared shell rules from supplement-zz-refine.css ---- */
 .nav-toggle { border: 0 !important; align-items: center; justify-content: center; padding: 0 !important; }
@@ -4127,13 +4165,25 @@ main > section + section { margin-top: 0; }
 .site-footer__recog-block { flex: 0 1 24rem; display: grid; gap: 0.8rem; justify-items: end; margin-left: auto; }
 .site-footer__seals a { display: block; border: 0; }
 .site-footer__ecosoc { margin: 0; font-size: 0.78rem; line-height: 1.5; color: rgba(255, 255, 255, 0.66); text-align: right; text-wrap: balance; }
-@media (max-width: 760px) {
+@media (max-width: 968px) {
   .site-footer__recog-block { justify-items: start; margin-left: 0; flex-basis: 100%; }
   .site-footer__ecosoc { text-align: left; }
 }
 @media (min-width: 901px) and (max-width: 960px) {
   .site-footer__cols { column-gap: 1rem !important; }
 }
+.site-footer .social { margin-left: -8px; }
+@media (max-width: 900px) {
+  body.has-overlay-nav .site-header--overlay:not(.is-scrolled) .primary-nav__trigger:hover,
+  body.has-overlay-nav .site-header--overlay:not(.is-scrolled) .primary-nav__trigger[aria-expanded="true"] { color: #693D84; background: rgba(105, 61, 132, 0.06); }
+  .primary-nav.is-open .primary-nav__trigger { padding-left: var(--gutter); padding-right: var(--gutter); }
+  .primary-nav.is-open .primary-nav__panel { padding-left: calc(var(--gutter) - 9px); }
+}
+.newsletter-modal h3 { text-wrap: balance; }
+.newsletter-modal__form input { font-size: 1rem; }
+.newsletter-modal__close { min-width: 44px; min-height: 44px; display: grid; place-items: center; top: 4px; right: 7px; }
+.site-footer__legal-block p:first-child { font-size: 0.825rem; }
+.site-footer__cols li a { display: inline-block; padding-block: 10px; margin-block: -10px; }
 
 .scroll-progress { position: fixed; top: 0; left: 0; height: 3px; width: 0;
   background: var(--color-warm-orange); z-index: 300; pointer-events: none; }

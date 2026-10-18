@@ -194,3 +194,41 @@
 .chapter-finder--v3 .chapter-finder__cols, .chapter-finder--v3 .chapter-finder__search { background: var(--sec-lav); }
 .chapter-finder--v3 .chapter-finder__form input { background: #FFFFFF; }
 .lotusband { background: #FFFFFF; }
+
+/* ---------- Naman, Oct 18 (3rd pass): spacing, font sizes, alignment and
+   line breaks, measured at 1920 / 1440 / 1280 / 1024 ---------- */
+/* One H2 size for the section headings (the Care and Institutes value) */
+.chapter-finder--v3 .chapter-finder__h, .takepart__h { font-size: clamp(1.75rem, 3.4vw, 2.4rem); }
+/* Institutes intro at the same size as the other intros */
+.instrow .institutes-section__sub { font-size: 1.02rem; }
+/* No lone last words */
+.mstat__desc, .mission-split__h, .named-story__quote, .named-story__attribution-meta,
+.caretile__hover-p, .flipcard__d { text-wrap: pretty; }
+.hero-carousel__title { text-wrap: balance; }
+/* ZIP field shows its whole placeholder between 981 and 1100 */
+@media (min-width: 981px) and (max-width: 1100px) {
+  .chapter-finder--v3 .chapter-finder__form input { padding-left: 14px; padding-right: 14px; letter-spacing: 0; }
+  .chapter-finder--v3 .chapter-finder__form .btn { padding-left: 1.1rem; padding-right: 1.1rem; }
+}
+/* Browse All US Chapters at the same weight as the other buttons */
+.chapter-finder--v3 .chapter-finder__link-row a.btn { font-weight: 500; }
+/* Care eyebrow to heading gap matches the other sections */
+.care-section__eyebrow { margin-bottom: 1rem; }
+
+/* ---------- Same pass, phones and tablets (390 / 360 / 768 / 834) ---------- */
+.takepart__h, .chapter-finder__h, .chapter-finder__sub, .chapter-finder__search-hint { text-wrap: balance; }
+/* Mission copy and stats on the page gutter once they stack */
+@media (max-width: 900px) {
+  .mission-split__copy, .mission-split__stats { padding-left: var(--gutter); padding-right: var(--gutter); }
+}
+/* Map legend under the map instead of on Texas; map centered under the heading */
+@media (max-width: 760px) {
+  .chapter-finder--v3 .cf-map__legend { position: static; margin-top: 0.6rem; }
+  .homemap .edmap { overflow: hidden; }
+  .homemap .edmap svg { transform: translateX(10%); }
+}
+/* Donate / Volunteer bars fit the button on small phones */
+@media (max-width: 389px) {
+  .photocard__bar { padding-left: 16px; padding-right: 16px; gap: 10px; }
+  .photocard__h { font-size: 1.5rem; }
+}

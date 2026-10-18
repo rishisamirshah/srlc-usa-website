@@ -20,7 +20,7 @@ ADDRESS = ("500 Paterson Plank Rd #33685", "Union City, NJ 07087")
 # Naman, Oct 17: the only place the EIN appears in the footer, under the copyright
 FOOTER_LEGAL = ('Shrimad Rajchandra Love and Care - USA Inc is a registered <span class="nowrap">501(c)(3)</span> '
                 'nonprofit organization. <span class="nowrap">EIN 81-5162502</span>. Contributions are tax '
-                'deductible to the extent permitted by law.')
+                'deductible to the extent permitted by&nbsp;law.')
 # Naman, Oct 17: ECOSOC issues no badge and the UN emblem is not for outside use,
 # so the parent organization's status is stated in words, never as a seal
 ECOSOC_LINE = ("SRLC USA is the US chapter of Shrimad Rajchandra Love and Care, which holds Special "

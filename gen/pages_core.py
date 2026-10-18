@@ -1,5 +1,6 @@
 """Renderers: homepage (approved v2 base), donate, about cluster, 404 — flat pass."""
 import os
+import re
 from shell import (page, ph, page_header, flat_cta, trust_bar, impact_stats, pinned,
                    recognition_chips, filler, photo, img_tag, story_split, EMAIL, PHONE, EIN_LINE, IG, FB)
 import data_naman as NAMAN
@@ -137,6 +138,11 @@ def chapter_finder(svg_inner, activity_html="", tone=""):
 </section>"""
 
 
+def nobreak(text):
+    """Keep hyphenated words (life-changing, 250-bed) on one line."""
+    return re.sub(r"[\w.,+]+(?:-\w+)+", lambda m: f'<span class="nowrap">{m.group(0)}</span>', text)
+
+
 # Homepage 10 Care tile crops (Naman, Oct 18): the boy stays in frame on Child
 # Care; Humanitarian Care zooms in so the two people fill the tile.
 CARE_TILE_CROP = {
@@ -199,14 +205,14 @@ def render_home(svg_inner):
     care_tiles = "".join(f"""<a class="caretile" href="/our-work/10-care-program/{c["slug"]}/" style="background-image:url('{NAMAN.CARE_TILES[c["slug"]]}'){";" + CARE_TILE_CROP[c["slug"]] if c["slug"] in CARE_TILE_CROP else ""}">
         <span class="caretile__overlay" aria-hidden="true"></span>
         <span class="caretile__chip"><span class="caretile__num">{c["num"]}</span><span class="caretile__name">{c["name"]}</span></span>
-        <span class="caretile__hover"><span class="caretile__hover-h">{c["num"]}<br>{c["name"]}</span><span class="caretile__hover-p">{c["one"]}</span></span>
+        <span class="caretile__hover"><span class="caretile__hover-h">{c["num"]}<br>{c["name"]}</span><span class="caretile__hover-p">{nobreak(c["one"])}</span></span>
       </a>""" for c in CARES)
 
     from data_india import INSTITUTES
     # charity:water "Ready to take action" row (Naman, Oct 16): edge-to-edge
     # scroller of square photo cards, dark label bar with an icon, flipping to
     # a purple back with the one-liner on hover / tap / keyboard focus.
-    institutes_cards = "".join(flipcard(inst, inst["home_desc"], f'/our-work/india/{inst["slug"]}/', link_label="Learn More")
+    institutes_cards = "".join(flipcard(inst, nobreak(inst["home_desc"]), f'/our-work/india/{inst["slug"]}/', link_label="Learn More")
                                for inst in sorted(INSTITUTES, key=lambda i: NAMAN.INSTITUTE_ORDER.index(i["slug"])))
 
     # Section 7, Latest Articles: hidden until three articles are published
@@ -225,15 +231,15 @@ def render_home(svg_inner):
         <ul class="chapter-activity__list">
           <li class="chapter-activity__item">
             <span class="chapter-activity__city">Boston</span>
-            <span class="chapter-activity__body">Meal kits assembled and delivered through Open Table<span class="chapter-activity__time">Ongoing</span></span>
+            <span class="chapter-activity__body">Meal kits assembled and delivered through Open&nbsp;Table<span class="chapter-activity__time">Ongoing</span></span>
           </li>
           <li class="chapter-activity__item">
             <span class="chapter-activity__city">Chicago</span>
-            <span class="chapter-activity__body">500+ PB&amp;J sandwiches packed and 1,000+ pounds of food donated<span class="chapter-activity__time">Recent drive</span></span>
+            <span class="chapter-activity__body">500+ PB&amp;J sandwiches packed and 1,000+ pounds of food&nbsp;donated<span class="chapter-activity__time">Recent drive</span></span>
           </li>
           <li class="chapter-activity__item">
             <span class="chapter-activity__city">Phoenix</span>
-            <span class="chapter-activity__body">Hot meals and breakfast packs with TCAA and Andre House<span class="chapter-activity__time">Year-round</span></span>
+            <span class="chapter-activity__body">Hot meals and breakfast packs with TCAA and Andre&nbsp;House<span class="chapter-activity__time">Year-round</span></span>
           </li>
         </ul>
       </div>"""
@@ -270,7 +276,7 @@ def render_home(svg_inner):
     <div class="mission-split__copy">
       <p class="mission-split__eyebrow">Our Mission</p>
       <h2 class="mission-split__h">A global initiative to offer service and bring joy to the lives of underserved sections of society.</h2>
-      <p class="mission-split__body">Shrimad Rajchandra Love and Care (SRLC) USA is the US chapter of a global nonprofit organization that has been recognized by the United Nations for its humanitarian efforts. A 501(c)(3) organization, SRLC USA supports community development projects across India and Africa, and brings holistic care and joy to local communities throughout the US. With a presence in 25+ cities, SRLC USA focuses on raising funds and awareness in high-impact areas, while putting compassion in action.</p>
+      <p class="mission-split__body">Shrimad Rajchandra Love and Care (SRLC) USA is the US chapter of a global nonprofit organization that has been recognized by the United Nations for its humanitarian efforts. A 501(c)(3) organization, SRLC USA supports community development projects across India and Africa, and brings holistic care and joy to local communities throughout the US. With a presence in 25+ cities, SRLC USA focuses on raising funds and awareness in <span class="nowrap">high-impact</span> areas, while putting compassion in action.</p>
       <div class="mission-split__actions">
         <a class="btn btn--primary btn--lg" href="/about/our-impact/">See Our Impact</a>
       </div>
@@ -297,7 +303,7 @@ def render_home(svg_inner):
     <div class="named-story__copy-wrap">
       <div class="named-story__copy reveal" data-stagger="1">
         <p class="named-story__eyebrow">Impact Story &middot; Laxibhai</p>
-        <p class="named-story__quote">A 52-year-old farmer received the region&rsquo;s first-ever cardiothoracic bypass surgery, performed entirely free of charge. Today he is back on his feet.</p>
+        <p class="named-story__quote">A 52-year-old farmer received the region&rsquo;s <span class="nowrap">first-ever</span> cardiothoracic bypass surgery, performed entirely free of charge. Today he is back on his feet.</p>
         <p class="named-story__attribution">Laxibhai&rsquo;s second chance</p>
         <p class="named-story__attribution-meta">Health Care &middot; Shrimad Rajchandra Hospital and Research Center</p>
         <a class="btn btn--primary named-story__btn" href="/our-work/10-care-program/health-care/">Explore Health Care</a>

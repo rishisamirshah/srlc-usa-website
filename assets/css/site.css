@@ -4884,7 +4884,7 @@ img[src$="mb-180.webp"] { object-position: 15% 50%; }
 .site-footer__recog-block { flex: 0 1 24rem; display: grid; gap: 0.8rem; justify-items: end; margin-left: auto; }
 .site-footer__seals a { display: block; border: 0; }
 .site-footer__ecosoc { margin: 0; font-size: 0.78rem; line-height: 1.5; color: rgba(255, 255, 255, 0.66); text-align: right; text-wrap: balance; }
-@media (max-width: 760px) {
+@media (max-width: 968px) {
   .site-footer__recog-block { justify-items: start; margin-left: 0; flex-basis: 100%; }
   .site-footer__ecosoc { text-align: left; }
 }
@@ -4946,6 +4946,26 @@ img[src$="mb-180.webp"] { object-position: 15% 50%; }
   .hero-carousel__eyebrow, .hero-carousel__title { text-shadow: 0 1px 10px rgba(31, 19, 38, 0.5); }
 }
 @media (min-width: 641px) and (max-width: 1023px) { .pagehead__h1 { font-size: clamp(2.35rem, 4.4vw, 2.6rem) !important; } }
+
+/* Footer social icons on the text column's left edge (the links carry 12px of tap padding) */
+.site-footer .social { margin-left: -8px; }
+
+/* Mobile menu (Oct 18 QA): the tapped label keeps its color on the white panel
+   when the menu opens over the top of the homepage; on tablets the labels and
+   chevrons line up with the logo and the close button */
+@media (max-width: 900px) {
+  body.has-overlay-nav .site-header--overlay:not(.is-scrolled) .primary-nav__trigger:hover,
+  body.has-overlay-nav .site-header--overlay:not(.is-scrolled) .primary-nav__trigger[aria-expanded="true"] { color: #693D84; background: rgba(105, 61, 132, 0.06); }
+  .primary-nav.is-open .primary-nav__trigger { padding-left: var(--gutter); padding-right: var(--gutter); }
+  .primary-nav.is-open .primary-nav__panel { padding-left: calc(var(--gutter) - 9px); }
+}
+.newsletter-modal h3 { text-wrap: balance; }
+/* Newsletter pop-up: 16px field (no iOS zoom on tap), 44px close target */
+.newsletter-modal__form input { font-size: 1rem; }
+.newsletter-modal__close { min-width: 44px; min-height: 44px; display: grid; place-items: center; top: 4px; right: 7px; }
+/* Footer: copyright line at the legal block's scale; 44px tap height on column links */
+.site-footer__legal-block p:first-child { font-size: 0.825rem; }
+.site-footer__cols li a { display: inline-block; padding-block: 10px; margin-block: -10px; }
 
 .scroll-progress { position: fixed; top: 0; left: 0; height: 3px; width: 0;
   background: var(--color-warm-orange); z-index: 300; pointer-events: none; }
