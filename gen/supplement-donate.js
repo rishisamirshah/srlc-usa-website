@@ -33,8 +33,9 @@
       var amt = currentAmt();
       var monthly = (freq === "monthly");
       if (amt) {
-        cta.setAttribute("href", mailBase + encodeURIComponent(" ($" + amt + (monthly ? " monthly" : "") + ")"));
-        outcome.textContent = "Your $" + amt + (monthly ? "/mo" : "") + " gift funds " + sel.outcome + ".";
+        var shown = Number(amt).toLocaleString("en-US", { maximumFractionDigits: 2 });
+        cta.setAttribute("href", mailBase + encodeURIComponent(" ($" + shown + (monthly ? " monthly" : "") + ")"));
+        outcome.textContent = "Your $" + shown + (monthly ? "/mo" : "") + " gift funds " + sel.outcome + ".";
       } else {
         cta.setAttribute("href", mailBase + (monthly ? encodeURIComponent(" (monthly)") : ""));
         outcome.textContent = "Enter an amount to see exactly what it funds.";

@@ -557,7 +557,7 @@
     } else {
       city.textContent = "We don't have a chapter in your area yet";
       meta.textContent = "Email " + "info@srlcusa.org" + " to help start one, or volunteer with the nearest chapter remotely.";
-      if (join) { join.href = "/get-involved/volunteer/"; join.textContent = "Volunteer anyway"; }
+      if (join) { join.href = "/get-involved/volunteer/#signup"; join.textContent = "Volunteer anyway"; }
       result.classList.add("is-missing");
       hideChips();
     }
@@ -645,8 +645,9 @@
       var amt = currentAmt();
       var monthly = (freq === "monthly");
       if (amt) {
-        cta.setAttribute("href", mailBase + encodeURIComponent(" ($" + amt + (monthly ? " monthly" : "") + ")"));
-        outcome.textContent = "Your $" + amt + (monthly ? "/mo" : "") + " gift funds " + sel.outcome + ".";
+        var shown = Number(amt).toLocaleString("en-US", { maximumFractionDigits: 2 });
+        cta.setAttribute("href", mailBase + encodeURIComponent(" ($" + shown + (monthly ? " monthly" : "") + ")"));
+        outcome.textContent = "Your $" + shown + (monthly ? "/mo" : "") + " gift funds " + sel.outcome + ".";
       } else {
         cta.setAttribute("href", mailBase + (monthly ? encodeURIComponent(" (monthly)") : ""));
         outcome.textContent = "Enter an amount to see exactly what it funds.";

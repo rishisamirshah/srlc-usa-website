@@ -38,7 +38,8 @@ SLOT_OVERRIDES = {
     "us-hero": 470,           # unbranded; the curator's pick has a beer logo on a T-shirt
     "home-hero-3": 392,       # first slide: bright, outdoors, people at work; the curator's pick shows an SRMD-branded shirt
     "care-educational-care": 176,  # India classroom, so the first Care row is not three frames from one Africa shoot
-    "state-arizona-hero": 428,  # the curator's pick has a framed deity picture on the wall
+    "state-arizona-hero": 433,  # people at work, not a branded food truck; the curator's pick has a deity picture on the wall
+    "care-community-care": 542,  # neighborhood cleanup, so Arizona keeps the Phoenix handout
 }
 # Minimum source width per slot family: full-bleed heroes, half-width splits,
 # square cards. A slot with no candidate this wide is left out so the page's

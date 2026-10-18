@@ -77,7 +77,7 @@ FOCAL = {"/assets/img/mb/mb-208.webp": "72%", "/assets/img/mb/mb-433.webp": "88%
 
 
 # US photos that must not drift with render order (a state page can claim them first)
-CARE_US_PIN = {"community-care": 542, "environmental-care": 543}  # cleanups, matching each Care's US copy
+CARE_US_PIN = {"community-care": 627, "environmental-care": 543}  # cleanups, matching each Care's US copy
 
 
 def care_photo(c, min_w=1600):
@@ -201,7 +201,7 @@ def render_us_hub(svg_inner):
         US_HERO_BODY,
         image=filler("United States", "community"),
     ) + f"""
-<section class="edmap-section vu-shell vu-shell--first">
+<section class="edmap-section vu-shell vu-shell--first" id="chapters">
   <div class="container">
     <div class="edmap-head">
       <p class="edmap-kicker">Chapter Network</p>
@@ -330,7 +330,7 @@ def render_tencare_hub():
       </a>""" for c in CARES)
     # a volunteer group at work, not one Care's subject (the sanctuary echoed the Animal Care tile)
     hero = pinned(334) or photo("10 Care Program hero", ["volunteers+india", "community-care+india", "educational-care+india"], "community", min_w=1600)
-    body = page_header("Our Work", "10 Care Program", image=hero[0], size=(hero[1], hero[2]), alt=hero[3], pos="50% 25%") + f"""
+    body = page_header("Our Work", "10 Care Program", image=hero[0], size=(hero[1], hero[2]), alt=hero[3], pos="50% 14%") + f"""
 <section class="care-section care-section--hub" aria-label="The ten Cares">
   <div class="container">
     <p class="leadsec__lead">{TEN_CARE_INTRO}</p>
@@ -591,7 +591,7 @@ def render_africa():
     ) + f"""
 <section class="vu-shell vu-shell--lav">
   <div class="container">
-    <div class="vu-split">
+    <div class="vu-split vu-split--even">
       <div class="vu-split__copy">
         <h2 class="vu-h">Distance should not decide who gets care</h2>
         <p>In much of the region Mission Africa serves, the barrier to health is not the treatment. It is the miles between a family and anyone who can provide it, the distance where a curable illness quietly becomes a permanent one. Launched in 2024 by Shrimad Rajchandra Love and Care (SRLC), Mission Africa now works across 16 countries in Africa to close that distance.</p>

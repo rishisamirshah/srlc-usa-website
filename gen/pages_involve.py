@@ -112,7 +112,7 @@ def render_events():
   <div class="container">
     <h2 class="vu-h" id="events-h">Recent chapter events</h2>
     <div class="stategal__grid stategal__grid--3">{grid}</div>
-    <p class="events-more"><a class="btn btn--secondary" href="/our-work/united-states/">Find Your Chapter</a></p>
+    <p class="events-more"><a class="btn btn--secondary" href="/our-work/united-states/#chapters">Find Your Chapter</a></p>
   </div>
 </section>
 <section class="takepart takepart--slim" aria-label="Event updates">

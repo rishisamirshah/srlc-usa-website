@@ -604,9 +604,9 @@ def render_our_impact(svg_inner):
         <h2 class="vu-h reveal">Independent recognition and accreditation</h2>
         <p>The movement received Special Consultative Status from the United Nations Economic and Social Council in 2020, and GuideStar awarded its Platinum Seal for transparency and accountability in 2019. Independent recognition matters because it does not depend on our own account of the work. The 250-bed Shrimad Rajchandra Hospital and Research Center earned accreditation from the National Accreditation Board for Hospitals and Healthcare Providers (NABH) within its first year of operation.</p>
       </div>
-      <div class="vu-split__photo">{img_tag(photo("impact-recognition", ["hospital+alt:baby's foot", "hospital+alt:doctor", "health-care+india"], "hospital", min_w=900))}</div>
+      <div class="vu-split__photo">{img_tag(pinned(97))}</div>
     </div>
-    <div class="recognition-cluster mt-8">{recognition_chips()}</div>
+    <div class="recognition-cluster fin-badges mt-8">{recognition_chips(links=True)}</div>
   </div>
 </section>
 
@@ -644,9 +644,14 @@ def render_our_impact(svg_inner):
 
 <section class="vu-shell vu-shell--cream">
   <div class="container">
+    <div class="vu-split vu-split--story">
+    <div class="vu-split__copy">
     <h2 class="vu-h reveal">What these figures mean in practice</h2>
     <p class="vu-lead">Laxibhai, a 52-year-old farmer, had been living with triple-vessel heart disease, and the surgery he needed was beyond his family&rsquo;s means. He received the region&rsquo;s first cardiothoracic bypass at Shrimad Rajchandra Hospital at no cost, and he has since returned home to his fields. His recovery is one outcome among millions, and it is the kind of outcome every figure on this page represents.</p>
     <p class="mt-6"><a class="textlink" href="/about/financials/">Read the full record on the Financials page<span aria-hidden="true"> &rarr;</span></a></p>
+    </div>
+    <div class="vu-split__photo vu-split__photo--portrait">{img_tag(NAMAN.STORY)}</div>
+    </div>
   </div>
 </section>
 

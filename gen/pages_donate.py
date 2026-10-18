@@ -16,7 +16,7 @@ strip follow his file. Adaptations, each noted in the build report:
 import os
 from shell import img_tag, photo, page, EMAIL
 
-MATCH_QUALIFIER = ("These are examples of companies with employee matching-gift programs. "
+MATCH_QUALIFIER = ("These are examples of companies with employee matching\u2011gift programs. "
                    "Logos are the property of their respective owners and do not imply "
                    "partnership with or endorsement of SRLC USA.")
 
@@ -60,12 +60,23 @@ def _logo_box(path, area=2200, max_w=124, max_h=36):
     return round(w), round(w / ar)
 
 
+LOGO_NAMES = {
+    "1024px-Cisco_logo.svg.png": "Cisco", "1200px-The_Blackstone_Group_Logo.svg.png": "Blackstone",
+    "1280px-Lilly-Logo.svg.png": "Lilly", "2560px-3M_wordmark.svg.png": "3M", "600px-Gap_logo.svg.png": "Gap",
+    "ATT_logo_2016.png": "AT&amp;T", "Bank-of-America-logo.png": "Bank of America", "Burlington.png": "Burlington",
+    "Capital-one-logo.png": "Capital One", "Ford_logo_flat.svg.png": "Ford", "Hilton.png": "Hilton",
+    "Intel_logo_2006-2020.svg.png": "Intel", "Walmart-Logo.jpg": "Walmart", "adobe.png": "Adobe", "amazon.png": "Amazon",
+    "cbre.png": "CBRE", "chevron-hallmark-twitter.png": "Chevron", "ebay.png": "eBay", "facebook.png": "Facebook",
+    "honeywell.png": "Honeywell", "target.png": "Target",
+}
+
+
 def _partner_marquee():
     pdir = os.path.join(os.path.dirname(__file__), "..", "assets", "img", "partners")
     logos = sorted(f for f in os.listdir(pdir) if not f.startswith("."))
 
     def group(hidden):
-        alt = (lambda f: "") if hidden else (lambda f: f.rsplit(".", 1)[0].replace("-", " ").replace("_", " ").title())
+        alt = (lambda f: "") if hidden else (lambda f: LOGO_NAMES.get(f, f.rsplit(".", 1)[0]))
         return "".join(
             f'<div class="marquee-logo"><img src="/assets/img/partners/{f}" alt="{alt(f)}" width="{w}" height="{h}" style="--w:{w}px;--h:{h}px" loading="lazy"></div>'
             for f, (w, h) in ((f, _logo_box(os.path.join(pdir, f))) for f in logos))
@@ -112,7 +123,7 @@ TRUST = [
 
 FAQ = [
     ("Is my donation tax-deductible?",
-     "Yes. SRLC USA is a registered 501(c)(3) nonprofit, EIN 81-5162502. Every gift made through srlcusa.org is tax deductible to the extent permitted by law. No goods or services are exchanged in return for your gift."),
+     "Yes. SRLC USA is a registered <span class='nowrap'>501(c)(3)</span> nonprofit, <span class='nowrap'>EIN 81-5162502</span>. Every gift made through srlcusa.org is tax deductible to the extent permitted by law. No goods or services are exchanged in return for your gift."),
     ("When will I receive my tax receipt?",
      f'Within 48 hours of your gift, you receive an IRS-compliant receipt by email. Monthly donors also get a year-end summary in January, listing every gift from the prior calendar year. If a receipt does not arrive, email <a href="mailto:{EMAIL}">{EMAIL}</a> and we will resend it the same day.'),
     ("Can I cancel or change my monthly gift?",
