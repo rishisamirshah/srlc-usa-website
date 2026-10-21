@@ -529,7 +529,7 @@ def img_style(focal="", pos=""):
     return f' style="{";".join(parts)}"' if parts else ""
 
 
-def page_header(eyebrow, h1, sub=None, cta=None, image=None, full=False, alt="", size=None, mod="", focal="", pos=""):
+def page_header(eyebrow, h1, sub=None, cta=None, image=None, full=False, alt="", size=None, mod="", focal="", pos="", keep_sub=False):
     """SRA-pattern page header over a real photo: one small eyebrow line, short
     single-color H1, flat dark-purple scrim for contrast. `image` is an /assets
     path; otherwise a filler chosen from the H1. `full` renders the full-bleed,
@@ -552,7 +552,7 @@ def page_header(eyebrow, h1, sub=None, cta=None, image=None, full=False, alt="",
         src, _, w, h = filler_entry(h1, _tag_for(f"{eyebrow} {h1} {sub or ''}"), min_w=1600)
         alt = alt or photo_alt(src)
     lead_html = ""
-    if sub and len(re.sub(r"<[^>]+>|&[a-z]+;", "", sub)) > 140:
+    if sub and not keep_sub and len(re.sub(r"<[^>]+>|&[a-z]+;", "", sub)) > 140:
         lead_html = f"""
 <section class="leadsec leadsec--after-hero">
   <div class="container"><p class="leadsec__lead">{sub}</p></div>
@@ -573,14 +573,16 @@ def page_header(eyebrow, h1, sub=None, cta=None, image=None, full=False, alt="",
 </section>{lead_html}"""
 
 
-def story_split(h2, paras, img, reverse=False, tone="lav", extra="", compact=False):
+def story_split(h2, paras, img, reverse=False, tone="lav", extra="", compact=False, eyebrow=""):
     """SRA two-column pattern: one paragraph beside a full-scale photo that
-    runs to the viewport edge. Copy passes through unchanged."""
+    runs to the viewport edge. Copy passes through unchanged. `eyebrow` is an
+    optional section label above the H2."""
     body = "".join(f"<p>{x}</p>" for x in paras)
+    eyebrow_html = f'<p class="storysplit__eyebrow">{eyebrow}</p>\n    ' if eyebrow else ""
     if img is None:
         return f"""<section class="storysplit storysplit--text storysplit--{tone}">
   <div class="container">
-    <h2 class="storysplit__h">{h2}</h2>
+    {eyebrow_html}<h2 class="storysplit__h">{h2}</h2>
     {body}{extra}
   </div>
 </section>"""
@@ -590,7 +592,7 @@ def story_split(h2, paras, img, reverse=False, tone="lav", extra="", compact=Fal
     return f"""<section class="{cls}">
   <div class="storysplit__media"><img src="{src}" alt="{alt}" width="{w}" height="{h}" loading="lazy" decoding="async"></div>
   <div class="storysplit__copy">
-    <h2 class="storysplit__h">{h2}</h2>
+    {eyebrow_html}<h2 class="storysplit__h">{h2}</h2>
     {body}{extra}
   </div>
 </section>"""

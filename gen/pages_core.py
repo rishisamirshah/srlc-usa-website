@@ -545,60 +545,70 @@ def render_donate():
 
 
 def render_who_we_are():
-    # Rebuilt per Naman's Oct 16 doc: Hero, Who We Are, What We Support, Care
-    # and Joy Close to Home, Why We Serve, How We Work, Continue Reading. No stat
-    # row, no Donate CTA. Every body line is verbatim from the Who We Are tab;
-    # the tab predates the seven-section structure, so the mapping is flagged.
-    routes = {
-        "wwa-hero": (["volunteers", "us-community"], 1600),
-        "wwa-who": (["volunteers", "us-community"], 1200),
-        "wwa-support": (["hospital+india", "india"], 1200),
-        "wwa-home": (["us-community", "volunteers"], 1200),
-    }
-    img = lambda k: slot(k) or photo(k, routes[k][0], "community", min_w=routes[k][1])
-    how = [
-        ("Volunteer led", "Programs are carried by volunteers who know their communities. Because they give their time, administration costs stay low and more of every dollar reaches the programs it was given to support."),
-        ("Designed to scale", "We invest in models that can be replicated, so a program that works in one community can be extended to the next."),
-        ("Measured against evidence", "Every initiative operates within professional frameworks and defined performance indicators. Results, not intentions, decide what continues."),
-        ("Building the next generation of leaders", "Volunteers of every generation carry this work, from students to retirees, and young people lead most of the initiatives under the 10 Care Program."),
-    ]
-    how_html = "".join(f'<div class="howwork__item"><h3>{t}</h3><p>{b}</p></div>' for t, b in how)
-    pills = """<div class="pillrow">
-      <a class="btn btn--secondary" href="/our-work/10-care-program/">10 Care Program</a>
-      <a class="btn btn--secondary" href="/our-work/united-states/">United States</a>
-      <a class="btn btn--secondary" href="/our-work/india/">India</a>
+    # Naman's updated Who We Are tab (Oct 20) and his round 1 notes: Hero, Who
+    # We Are, What We Support (global stat row + pills), Care and Joy Close to
+    # Home, Why We Serve (a statement, no quote marks), How We Work (centered,
+    # four columns, charity:water reference), Continue Reading. Image layout
+    # unchanged; hero and the third section photo are his picks.
+    hero = NAMAN.WWA_HERO
+    support_img = slot("wwa-support") or photo("wwa-support", ["hospital+india", "india"], "community", min_w=1200)
+    stats = [("42M+", "lives touched globally"), ("16.4M+", "patients treated globally through Health Care initiatives"),
+             ("3.4M+", "students supported globally")]
+    stats_html = '<dl class="wwastats">' + "".join(
+        f'<div class="wwastats__item"><dt class="wwastats__n">{n}</dt><dd class="wwastats__l">{l}</dd></div>' for n, l in stats) + "</dl>"
+    support_pills = """<div class="pillrow pillrow--wrap">
+      <a class="btn btn--secondary" href="/our-work/10-care-program/">Explore the 10 Care Program</a>
+      <a class="btn btn--secondary" href="/our-work/india/">Our Institutes in India</a>
       <a class="btn btn--secondary" href="/our-work/mission-africa/">Mission Africa</a>
     </div>"""
-    hero = img("wwa-hero")
+    home_pills = """<div class="pillrow">
+      <a class="btn btn--secondary" href="/our-work/united-states/">See Where We Serve</a>
+    </div>"""
+    how = [
+        ("Led by people who know their communities", "Programs are carried by volunteers and experienced professionals who live where they serve. Because they give their time, administration costs stay low and more of every dollar reaches the programs it was given to support."),
+        ("Integrated, not isolated", "The same community benefits from the hospital, its children attend the school, its women train at the Center of Excellence for Women, and its local leaders are trained through community development programs."),
+        ("Measured against evidence", "Every initiative operates within professional frameworks and defined performance indicators. Third-party impact audits, digital tracking of health programs, and annual reports and Forms 990 published in full on our Financials page hold us to that standard."),
+        ("Dignity, not dependency", "Programs are designed so people can do things for themselves. Communities are partners, not recipients. Every living being deserves compassion, dignity, and respect."),
+    ]
+    how_html = "".join(f'<div class="howwork__item"><h3>{t}</h3><p>{b}</p></div>' for t, b in how)
 
-    body = page_header("About Us", "Who We Are", "Love and care, in action", image=hero[0], size=(hero[1], hero[2]), alt=hero[3]) + f"""
-{story_split("Who We Are", ["SRLC USA is what happens when physicians, engineers, teachers, and students decide their weekends belong to their neighbors. We are the US chapter of Shrimad Rajchandra Love and Care, a global nonprofit holding Special Consultative Status with the United Nations Economic and Social Council (ECOSOC), and a <span class='nowrap'>501(c)(3)</span> organization. But before we are any of that, we are people who believe care is not a profession. It is a practice."], img("wwa-who"), tone="white")}
-{story_split("What We Support", ["We focus on immediate needs and the systems behind them. In the United States, volunteers prepare and share meals, equip students for the school year, and organize community care events with local partners. Globally, the movement builds and sustains hospitals, schools, and development programs designed to serve for generations. The programs differ; the standard does not: high-quality, sustainable work that outlasts the day we arrive."], img("wwa-support"), reverse=True, tone="lav")}
-{story_split("Care and Joy Close to Home", ["Every initiative we run belongs to one of ten focus areas, together the 10 Care Program: Health Care, Educational Care, Child Care, Woman Care, Tribal Care, Community Care, Humanitarian Care, Animal Care, Environmental Care, and Emergency Relief Care. In the United States, that vision looks like service in your own city, on your own street. Globally, it stands as permanent institutes in India and Mission Africa."], img("wwa-home"), tone="white", extra=pills)}
+    body = page_header("About SRLC USA", "Who We Are", "The US chapter of a global social impact organization, raising funds and awareness for high-impact projects across India and Africa, and bringing care and joy to communities in 25+ US cities.",
+                       image=hero[0], size=(hero[1], hero[2]), alt=hero[3], mod="wwa", keep_sub=True) + f"""
+{story_split("Care is not a profession. It is a practice.", [
+    "Shrimad Rajchandra Love and Care (SRLC) USA is the US chapter of a global social impact organization that has been recognized by the United Nations for its humanitarian efforts. A <span class='nowrap'>501(c)(3)</span> organization, SRLC USA supports community development projects across India and Africa, and brings holistic care and joy to local communities throughout the US. With a presence in 25+ cities, SRLC USA focuses on raising funds and awareness in <span class='nowrap'>high-impact</span> areas, while putting compassion in action.",
+    "Our volunteers are physicians, engineers, teachers, students, and retirees in 25+ cities. They raise the funds and awareness that reach hospitals, schools, and relief efforts around the world, and they put compassion in action in their own neighborhoods."],
+    slot("wwa-who") or photo("wwa-who", ["volunteers", "us-community"], "community", min_w=1200), tone="white", eyebrow="Who We Are",
+    extra='<p class="storysplit__trust">Registered <span class="nowrap">501(c)(3)</span> nonprofit &middot; EIN <span class="nowrap">81-5162502</span></p>')}
+{story_split("High-impact projects across India and Africa.", [
+    "SRLC USA raises funds and awareness for Shrimad Rajchandra Love and Care, a global organization offering selfless service to underserved communities through 136 centers worldwide. Its work spans ten focus areas, together the 10 Care Program: Health Care, Educational Care, Child Care, Woman Care, Tribal Care, Community Care, Humanitarian Care, Animal Care, Environmental Care, and Emergency Relief Care. In India, that care stands as permanent institutes, including a <span class='nowrap'>NABH-accredited</span>, <span class='nowrap'>250-bed</span> charitable hospital. Across Africa, it reaches communities through Mission Africa."],
+    support_img, reverse=True, tone="lav", eyebrow="What We Support", extra=stats_html + support_pills)}
+{story_split("Care and joy, close to home.", [
+    "SRLC USA chapters in 25+ cities partner with local schools, food banks, hospitals, shelters, and senior homes. Three national programs anchor the year: Classroom of Change equips students at Title 1 schools with backpacks, learning materials, and digital tools; Meals of Love and Care packs and distributes food with local food banks and pantries <span class='nowrap'>year-round</span>; and Giving Tuesday, SRLC USA&rsquo;s largest annual campaign, channels donor support into the most pertinent global initiatives. Between them, chapters run blood drives, health awareness camps, hygiene kit assembly, senior home visits, tree plantings, neighborhood cleanups, animal shelter shifts, and disaster relief kit packing."],
+    NAMAN.WWA_HOME, tone="white", eyebrow="Our Communities", extra=home_pills)}
 
 <section class="lotusband lotusband--page" aria-labelledby="wwa-why">
   <div class="lotusband__inner">
     <h2 class="lotusband__eyebrow" id="wwa-why">Why We Serve</h2>
-    <blockquote class="lotusband__quote">&ldquo;When there is love within, it flows naturally in the form of care.&rdquo;</blockquote>
-    <p class="lotusband__line">We serve and bring joy, not because we have to, or because it is our duty, but because we love to.</p>
+    <p class="lotusband__quote">We serve and bring joy, not because we have to, or because it is our duty, but because we love to.</p>
+    <p class="lotusband__line">When there is love within, it flows naturally in the form of care.</p>
   </div>
 </section>
 
-<section class="howwork" aria-labelledby="wwa-how">
+<section class="howwork howwork--center" aria-labelledby="wwa-how">
   <div class="container">
     <p class="howwork__eyebrow">How We Work</p>
-    <h2 class="howwork__h" id="wwa-how">Built to be trusted</h2>
+    <h2 class="howwork__h" id="wwa-how">Built to be trusted.</h2>
     <div class="howwork__grid">{how_html}</div>
     <div class="howwork__recog">{recognition_chips(holders_only=True)}</div>
     <p class="howwork__cta"><a class="btn btn--primary" href="/about/financials/">See Our Financials</a></p>
   </div>
 </section>
 
-<section class="pagenext">
+<section class="pagenext pagenext--if">
   <div class="container pagenext__inner">
-    <h2 class="pagenext__line">Continue Reading</h2>
+    <h2 class="pagenext__line">Continue with the results, the people behind the work, and the story that inspires it.</h2>
     <div class="pagenext__links">
-      <a class="btn btn--secondary" href="/about/our-impact/">Our Impact</a>
+      <a class="btn btn--primary" href="/about/our-impact/">Our Impact</a>
       <a class="btn btn--secondary" href="/about/management-team/">Management Team</a>
       <a class="btn btn--secondary" href="/about/inspiration-and-founder/">Inspiration and Founder</a>
     </div>
@@ -607,7 +617,7 @@ def render_who_we_are():
 """
     return page(
         "Who We Are | SRLC USA | 501(c)(3) Nonprofit",
-        "Meet the volunteers bringing care and joy to communities across the US and worldwide. A 501(c)(3) nonprofit. See who we are. SRLC USA.",
+        "SRLC USA raises funds and awareness for high-impact projects across India and Africa, and brings care and joy to 25+ US cities. A 501(c)(3) nonprofit.",
         "/about/who-we-are/", body)
 
 

@@ -42,3 +42,7 @@ CARDS = {
 
 # The hospital's own published photo (April 2023 article), cropped to the figure
 STORY = ("/assets/img/naman/laxibhai-v2.webp", 850, 1024, "Laxibhai smiles from his hospital bed after his surgery at Shrimad Rajchandra Hospital.")
+
+# Who We Are (Naman, Oct 20): hero and the Care and Joy Close to Home photo
+WWA_HERO = ("/assets/img/naman/wwa-hero.webp", 2400, 1800, "SRLC USA volunteers gather around boxes of packed meal bags at a Meals of Love and Care drive.")
+WWA_HOME = ("/assets/img/naman/wwa-home.webp", 1800, 1510, "A volunteer hands school supplies to two smiling girls at a Classroom of Change distribution.")

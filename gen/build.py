@@ -121,7 +121,9 @@ def assemble_assets():
     import cssx
     refine = open(os.path.join(ROOT, "gen", "supplement-zz-refine.css")).read()
     shell_css = cssx.dump(cssx.pick(cssx.parse(refine), SHELL_SELECTORS))
-    css_home = (css + "\n\n" + "\n\n".join(_supplements("css", skip=("supplement-zz-refine.css", "supplement-zzz-inspiration.css")))
+    import glob as _glob
+    inner_only = tuple(os.path.basename(p) for p in _glob.glob(os.path.join(ROOT, "gen", "supplement-zzz-*.css")))  # per-page layers for inner pages
+    css_home = (css + "\n\n" + "\n\n".join(_supplements("css", skip=("supplement-zz-refine.css",) + inner_only))
                 + "\n\n/* ---- shared shell rules from supplement-zz-refine.css ---- */\n" + shell_css + EXTRA_CSS)
 
     scripts = re.findall(r"<script(?:\s+id=\"[^\"]*\")?>(.*?)</script>", html, re.S)
