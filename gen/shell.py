@@ -3,7 +3,7 @@ Aug 24 change list applied (Aug 30): Newsreader + DM Sans, official logo,
 no trust bar, real filler photography in every image slot, badge images.
 Sources: Naman's CLAUDE.md v2 (gen/naman-claude.md), SRLC_USA_Brand_Guide.pdf,
 approved homepage HTML v2, the Aug 22 edits list and the Aug 24 change list.
-No em dashes, approved stats only, spiritual content only on /about/our-inspiration/.
+No em dashes, approved stats only, spiritual content only on /about/inspiration-and-founder/.
 """
 import hashlib
 import re
@@ -120,7 +120,7 @@ def nav(overlay=False):
       <ul class="primary-nav__list">
         <li class="primary-nav__item"><button class="primary-nav__trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="navpanel-about">About Us</button>
           <div class="primary-nav__panel" id="navpanel-about" role="menu" aria-label="About Us submenu">
-            {nav_panel_link("/about/our-inspiration/", "Inspiration and Founder", "The spiritual lineage that inspires SRLC&rsquo;s mission.")}
+            {nav_panel_link("/about/inspiration-and-founder/", "Inspiration and Founder", "The spiritual lineage that inspires SRLC&rsquo;s mission.")}
             {nav_panel_link("/about/who-we-are/", "Who We Are", "A modern overview of SRLC USA. Who, what, and how.")}
             {nav_panel_link("/about/our-impact/", "Our Impact", "Program outcomes, impact stories, aggregate numbers.")}
             {nav_panel_link("/about/management-team/", "Management Team", "Board, leadership, and team profiles.")}
@@ -182,7 +182,7 @@ def footer():
       <div>
         <h4>About Us</h4>
         <ul>
-          <li><a href="/about/our-inspiration/">Inspiration and Founder</a></li>
+          <li><a href="/about/inspiration-and-founder/">Inspiration and Founder</a></li>
           <li><a href="/about/who-we-are/">Who We Are</a></li>
           <li><a href="/about/our-impact/">Our Impact</a></li>
           <li><a href="/about/management-team/">Management Team</a></li>

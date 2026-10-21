@@ -121,7 +121,7 @@ def assemble_assets():
     import cssx
     refine = open(os.path.join(ROOT, "gen", "supplement-zz-refine.css")).read()
     shell_css = cssx.dump(cssx.pick(cssx.parse(refine), SHELL_SELECTORS))
-    css_home = (css + "\n\n" + "\n\n".join(_supplements("css", skip=("supplement-zz-refine.css",)))
+    css_home = (css + "\n\n" + "\n\n".join(_supplements("css", skip=("supplement-zz-refine.css", "supplement-zzz-inspiration.css")))
                 + "\n\n/* ---- shared shell rules from supplement-zz-refine.css ---- */\n" + shell_css + EXTRA_CSS)
 
     scripts = re.findall(r"<script(?:\s+id=\"[^\"]*\")?>(.*?)</script>", html, re.S)
@@ -278,7 +278,7 @@ def main():
 
     emit("/about/who-we-are/", C.render_who_we_are(), "0.8")
     emit("/about/our-impact/", C.render_our_impact(svg), "0.8")
-    emit("/about/our-inspiration/", C.render_inspiration(), "0.8")
+    emit(C.IF_PATH, C.render_inspiration(), "0.8")
     emit("/about/management-team/", C.render_management())
     emit("/about/financials/", C.render_financials())
 
@@ -298,8 +298,9 @@ def main():
         ("/corporate-giving/*", "/donate/"),
         ("/about/faqs/*", "/"),
         ("/about/management/*", "/about/management-team/"),
+        ("/about/our-inspiration/*", "/about/inspiration-and-founder/"),
         # legacy WordPress slugs
-        ("/inspiration/*", "/about/our-inspiration/"),
+        ("/inspiration/*", "/about/inspiration-and-founder/"),
         ("/faqs/*", "/"),
         ("/event/*", "/get-involved/events/"),
         ("/grants/*", "/donate/"),

@@ -17,7 +17,7 @@ SKIP_TAGS = {"spiritual", "sarvamangal"}
 # portraits of Shrimad Rajchandraji and Pujya Gurudevshri, plus a devotional
 # wall banner (440), a framed deity picture (432) and a village shrine behind
 # an outreach talk (116, 143; 174 shares the outreach banner): spiritual
-# imagery, which belongs on /about/our-inspiration/ only.
+# imagery, which belongs on /about/inspiration-and-founder/ only.
 SKIP_PHOTOS = {102, 104, 108, 116, 117, 118, 120, 143, 170, 171, 174, 177, 210, 432, 440}
 # San Francisco gala frames carry the photographer's watermark; 622 crops to a
 # headless torso in every landscape frame.

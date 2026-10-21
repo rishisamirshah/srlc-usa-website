@@ -34,8 +34,13 @@
   status = 301
 
 [[redirects]]
+  from = "/about/our-inspiration/*"
+  to = "/about/inspiration-and-founder/"
+  status = 301
+
+[[redirects]]
   from = "/inspiration/*"
-  to = "/about/our-inspiration/"
+  to = "/about/inspiration-and-founder/"
   status = 301
 
 [[redirects]]

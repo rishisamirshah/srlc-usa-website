@@ -600,7 +600,7 @@ def render_who_we_are():
     <div class="pagenext__links">
       <a class="btn btn--secondary" href="/about/our-impact/">Our Impact</a>
       <a class="btn btn--secondary" href="/about/management-team/">Management Team</a>
-      <a class="btn btn--secondary" href="/about/our-inspiration/">Inspiration and Founder</a>
+      <a class="btn btn--secondary" href="/about/inspiration-and-founder/">Inspiration and Founder</a>
     </div>
   </div>
 </section>
@@ -717,27 +717,42 @@ def render_our_impact(svg_inner):
         "/about/our-impact/", body)
 
 
+IF_PATH = "/about/inspiration-and-founder/"
+FOUNDER_IMG = None  # ("if-gurudevshri.jpg", width, height) once the portrait is in
+
+# Voices of Respect (Naman's Inspiration and Founder doc, Oct 19): five
+# speakers, Morari Bapu removed; quotes unchanged; each slide captions the
+# speaker's name and title; Clarke has no photo, so his quote runs full width.
 VOICES = [
-    ("No matter how much I praise Gurudev Rakeshji, it will not be enough. He walks on the path of right knowledge as well as the path of selfless action. To have the opportunity of meeting Rakeshji, I consider it my great fortune.", "Honorable Narendra Modi", "Prime Minister of India"),
-    ("One of the great things that has come out of Jainism is this Mission and the great work that it is doing now as I understand, all over the world, for humanity, and may this movement go onwards and upwards.", "Honorable David John Clarke", "Member, New South Wales Legislative Council, Australia"),
-    ("This is not a meet of knowledge, but a meet of love. He has such a pleasant personality. He has immense love for saints, no matter which saint it is.", "His Holiness Mahant Swami Maharaj", "Spiritual Head, BAPS Swaminarayan Sanstha"),
-    ("My most beloved, most revered Rakeshji. You are invaluable to this world. May You keep spreading such light.", "Sri Sri Ravi Shankar", "Founder and Spiritual Head, The Art of Living"),
-    ("We have all become confined in our pigeon holes, while this saint has broken down all walls and come out. One needs to have such magnanimity.", "Pujyashri Morari Bapu", "Renowned Ram Katha Narrator"),
-    ("Each time I see Him, it&rsquo;s a special experience. So calm and quiet and so peaceful. To experience true peace, you don&rsquo;t need to listen to much talk. You just need to come closer to Gurudev Rakeshji, and just sit.", "Venerable Bhikkhu Sanghasena", "Founder, Mahabodhi International Meditation Centre, Ladakh"),
+    ("No matter how much I praise Gurudev Rakeshji, it will not be enough. He walks on the path of right knowledge as well as the path of selfless action. To have the opportunity of meeting Rakeshji, I consider it my great fortune.", "Honorable Narendra Modi", "Prime Minister of India", "voice-modi.jpg"),
+    ("This is not a meet of knowledge, but a meet of love. He has such a pleasant personality. He has immense love for saints, no matter which saint it is.", "His Holiness Mahant Swami Maharaj", "Spiritual Head, BAPS Swaminarayan Sanstha", "voice-mahant-swami.jpg"),
+    ("My most beloved, most revered Rakeshji. You are invaluable to this world. May You keep spreading such light.", "Sri Sri Ravi Shankar", "Founder and Spiritual Head, The Art of Living", "voice-ravi-shankar.jpg"),
+    ("Each time I see Him, it&rsquo;s a special experience. So calm and quiet and so peaceful. To experience true peace, you don&rsquo;t need to listen to much talk. You just need to come closer to Gurudev Rakeshji, and just sit.", "Venerable Bhikkhu Sanghasena", "Founder, Mahabodhi International Meditation Centre, Ladakh", "voice-bhikkhu.jpg"),
+    ("One of the great things that has come out of Jainism is this Mission and the great work that it is doing now as I understand, all over the world, for humanity, and may this movement go onwards and upwards.", "Honorable David John Clarke", "Member, New South Wales Legislative Council, Australia", None),
 ]
 
 
 def render_inspiration():
-    quote_cards = "".join(f"""<figure class="quote-card{' is-active' if i == 0 else ''}">
-      <blockquote>&ldquo;{q}&rdquo;</blockquote>
-      <span class="quote-card__name">{n}</span>
-      <span class="quote-card__role" style="color:#C9B3DC">{r}</span>
-    </figure>""" for i, (q, n, r) in enumerate(VOICES))
+    quote_cards = "".join(f"""<figure class="quote-card ifvoice{' is-active' if i == 0 else ''}{'' if img else ' ifvoice--text'}">
+      {f'<img class="ifvoice__img" src="/assets/img/inspiration/{img}" alt="Pujya Gurudevshri Rakeshji with {n}" width="1400" height="930" loading="lazy" decoding="async">' if img else ''}
+      <div class="ifvoice__copy">
+        <blockquote class="ifvoice__quote">&ldquo;{q}&rdquo;</blockquote>
+        <figcaption class="ifvoice__cap"><span class="ifvoice__name">{n}</span>, {r}</figcaption>
+      </div>
+    </figure>""" for i, (q, n, r, img) in enumerate(VOICES))
     qdots = "".join(f'<button class="qd{" is-active" if i == 0 else ""}" data-go="{i}" aria-label="Quote {i + 1}"></button>' for i in range(len(VOICES)))
 
-    # SRA inspiration-and-founder.html 177-183: full-height hero band with the
-    # Lord Mahavir / Shrimad Rajchandraji / Pujya Gurudevshri lineage artwork
-    # (the SRA asset, reused per the wireframe), kicker + title bottom-left.
+    # Founder portrait (Naman's DSC03898_NJ4.tiff, cropped 4:5 to Pujya
+    # Gurudevshri alone). Until it arrives the section keeps its text layout.
+    founder_img = FOUNDER_IMG
+    founder_media = (f'''<div class="ifsplit__media ifsplit__media--portrait"><img src="/assets/img/inspiration/{founder_img[0]}" alt="Pujya Gurudevshri Rakeshji" width="{founder_img[1]}" height="{founder_img[2]}" loading="lazy" decoding="async"></div>'''
+                     if founder_img else "")
+
+    # Layout per Naman's Inspiration and Founder doc (Oct 19): one container
+    # edge for every section; Jainism keeps its temple photo, now full-bleed;
+    # Shrimad Rajchandraji and Pujya Gurudevshri are two-column, text left
+    # (46rem measure) and the portrait filling the rest; the Inner Awakening
+    # section is gone and the Dalai Lama photo leads Voices of Respect.
     body = f"""<section class="ifhero" aria-labelledby="ifHeroTitle">
   <div class="ifhero__inner">
     <p class="ifhero__kicker">A timeless legacy flowing through a present-day visionary</p>
@@ -746,27 +761,28 @@ def render_inspiration():
   <img class="ifhero__figures" src="/assets/img/inspiration/if-hero-figures.png" alt="Lord Mahavir, Shrimad Rajchandraji, and Pujya Gurudevshri Rakeshji" width="833" height="903" loading="eager" fetchpriority="high" decoding="async">
 </section>
 
-<section class="vu-shell vu-shell--lav vu-shell--first">
+<section class="vu-shell vu-shell--lav vu-shell--first ifroots">
   <div class="container prose">
     <h2 class="vu-h">Jainism and Lord Mahavir</h2>
     <p>Jainism, one of the world&rsquo;s oldest spiritual philosophies, teaches enduring, universal principles of love and kindness.</p>
     <p>Lord Mahavir, a revered spiritual leader who graced the Indian subcontinent over 2,500 years ago, illuminated a path to inner peace through understanding and kindness toward all, a message that continues to guide the modern world.</p>
   </div>
-  <div class="if-band"><img class="if-band__img" src="/assets/img/inspiration/if-mahavir-web.jpg" alt="Shrimad Rajchandra Jin Mandir, Dharampur" width="2400" height="1353" loading="lazy" decoding="async"></div>
+  <div class="if-band if-band--bleed"><img class="if-band__img" src="/assets/img/inspiration/if-mahavir-web.jpg" alt="Shrimad Rajchandra Jin Mandir, Dharampur" width="2400" height="1353" loading="lazy" decoding="async"></div>
 </section>
 
-<section class="vu-shell vu-shell--cream">
-  <div class="container prose">
-    <h2 class="vu-h">Shrimad Rajchandraji</h2>
+<section class="ifsplit ifsplit--white" aria-labelledby="ifShrimadji">
+  <div class="ifsplit__copy prose">
+    <h2 class="vu-h" id="ifShrimadji">Shrimad Rajchandraji</h2>
     <p>In the late 19th century, the self-realized saint and poet-philosopher Shrimad Rajchandraji illuminated the wisdom of Lord Mahavir with remarkable clarity, shaping a spiritual path for a new era.</p>
     <p>Grounded in direct inner experience, He articulated the subtle truths of spirituality through His own life, valuable teachings, and influential writings, including Shri Atmasiddhi Shastra, blending deep philosophical insights with practical steps for inner transformation.</p>
     <p>Shrimad Rajchandraji&rsquo;s formative influence on Mahatma Gandhi&rsquo;s philosophy of truth and non-violence stands as a testament to the enduring impact of His message, which continues to resonate today.</p>
   </div>
+  <div class="ifsplit__media"><img src="/assets/img/inspiration/if-shrimadji.jpg" alt="Shrimad Rajchandraji" width="1920" height="1080" loading="lazy" decoding="async"></div>
 </section>
 
-<section class="vu-shell vu-shell--lav">
-  <div class="container prose">
-    <h2 class="vu-h">Pujya Gurudevshri Rakeshji</h2>
+<section class="{'ifsplit ifsplit--lav' if founder_img else 'vu-shell vu-shell--lav'}" aria-labelledby="ifFounder">
+  <div class="{'ifsplit__copy' if founder_img else 'container'} prose">
+    <h2 class="vu-h" id="ifFounder">Pujya Gurudevshri Rakeshji</h2>
     <h3>Legacy of Wisdom</h3>
     <p>Pujya Gurudevshri Rakeshji is an enlightened visionary, global ambassador of peace, and the founder of Shrimad Rajchandra Mission Dharampur (SRMD). Following the revered footsteps of Shrimad Rajchandraji, Pujya Gurudevshri carries forward a legacy of timeless wisdom, translating profound spiritual truths into transformative teachings that make spirituality accessible to all.</p>
     <h3>Steady Force of Compassion</h3>
@@ -774,37 +790,33 @@ def render_inspiration():
     <h3>A Movement Reaching America</h3>
     <p>That vision now lives across the United States. Through SRLC USA, volunteers in communities nationwide carry this spirit of seva, selfless service, into action: serving their neighborhoods through the 10 Care Program and supporting institutes in India and initiatives around the world.</p>
   </div>
+  {founder_media}
 </section>
 
-<section class="vu-shell vu-shell--cream">
-  <div class="container prose">
-    <h2 class="vu-h">Inner Awakening and Compassionate Action</h2>
-    <p class="vu-lead">Pujya Gurudevshri teaches a simple and complete path. Inner awakening brings clarity and harmony within, and love naturally flows outward as kindness in action. This path leads toward lasting peace and compassionate living in the world.</p>
-    <figure class="if-photo">
-      <img src="/assets/img/inspiration/if-gurudevshri-dalai-lama.jpg" alt="Pujya Gurudevshri and His Holiness the Dalai Lama" width="1400" height="929" loading="lazy" decoding="async">
-      <figcaption>Pujya Gurudevshri and His Holiness the Dalai Lama at the World Alliance of Religions: Peace Summit in Seoul, South Korea (2014).</figcaption>
+<section class="ifvoices" aria-labelledby="ifVoicesTitle">
+  <div class="container">
+    <div class="ifvoices__head">
+      <h2 class="vu-h" id="ifVoicesTitle">Voices of Respect</h2>
+      <p class="ifvoices__intro">A beacon of unity that transcends faiths and boundaries, Pujya Gurudevshri&rsquo;s message and Mission resonate across traditions and communities.</p>
+    </div>
+    <figure class="ifvoices__lead">
+      <img src="/assets/img/inspiration/if-gurudevshri-dalai-lama.jpg" alt="Pujya Gurudevshri Rakeshji with His Holiness the Dalai Lama" width="1400" height="929" loading="lazy" decoding="async">
+      <figcaption>Pujya Gurudevshri Rakeshji with His Holiness the Dalai Lama at the World Alliance of Religions: Peace Summit, Seoul, South Korea, 2014.</figcaption>
     </figure>
-  </div>
-</section>
-
-<section class="quote-wall">
-  <div class="container text-center">
-    <h2 class="quote-wall__h">Voices of Respect</h2>
-    <div class="quote-wall__track">{quote_cards}</div>
-    <div class="quote-wall__controls">
+    <div class="ifvoices__track">{quote_cards}</div>
+    <div class="quote-wall__controls ifvoices__controls">
       <button class="quote-wall__btn" data-dir="prev" aria-label="Previous quote">&larr;</button>
       <div class="quote-wall__dots">{qdots}</div>
       <button class="quote-wall__btn" data-dir="next" aria-label="Next quote">&rarr;</button>
     </div>
-    <p class="quote-wall__note">A beacon of unity that transcends faiths and boundaries, Pujya Gurudevshri&rsquo;s message and Mission resonate across traditions and communities.</p>
   </div>
 </section>
 
-<section class="pagenext">
+<section class="pagenext pagenext--if">
   <div class="container pagenext__inner">
     <h2 class="pagenext__line">Continue learning about the wider movement and the work it supports.</h2>
     <div class="pagenext__links">
-      <a class="btn btn--secondary" href="/our-work/10-care-program/">The 10 Care Program</a>
+      <a class="btn btn--primary" href="/our-work/10-care-program/">The 10 Care Program</a>
       <a class="btn btn--secondary" href="/about/who-we-are/">Who We Are</a>
     </div>
   </div>
@@ -813,7 +825,7 @@ def render_inspiration():
     return page(
         "Inspiration and Founder | Shrimad Rajchandraji | SRLC USA",
         "The story and philosophy behind SRLC&rsquo;s work: Shrimad Rajchandraji, Pujya Gurudevshri Rakeshji, and the movement of selfless service they inspire. SRLC USA.",
-        "/about/our-inspiration/", body)
+        IF_PATH, body)
 
 
 def render_management():
