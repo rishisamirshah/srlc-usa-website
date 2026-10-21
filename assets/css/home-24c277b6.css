@@ -4124,6 +4124,18 @@ main > section + section { margin-top: 0; }
   transform: translate3d(0, var(--hero-par, 0px), 0) scale(1);
 }
 
+/* ---------- Naman, Oct 20 (late): newsletter asks for first and last name
+   (CRM personalization). Names share the first row, email + Subscribe the
+   second, in the popup and in the row above the quote band. ---------- */
+.newsletter-modal__form { flex-wrap: wrap; }
+.newsletter-modal__form input.form-name { flex: 1 1 calc(50% - 0.25rem); width: auto; }
+.nlrow__form input.form-name {
+  flex: 1 1 calc(50% - 6px); min-width: 0; height: 52px; box-sizing: border-box; border-radius: 0; border: 1px solid #B9A8CE;
+  background: #FFFFFF; padding: 0 1rem; font: inherit; font-size: 1rem; color: var(--color-ink);
+}
+.nlrow__form input.form-name:focus { outline: 2px solid var(--color-srlc-purple); outline-offset: 1px; }
+@media (max-width: 760px) { .nlrow__form input.form-name { height: 46px; } }
+
 
 /* ---- shared shell rules from supplement-zz-refine.css ---- */
 .nav-toggle { border: 0 !important; align-items: center; justify-content: center; padding: 0 !important; }

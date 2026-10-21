@@ -257,7 +257,9 @@ def render_home(svg_inner):
       <input type="hidden" name="form-name" value="updates">
       <input type="hidden" name="source" value="modal">
       <p class="hp-field"><input name="bot-field" tabindex="-1"></p>
-      <input type="email" name="email" required placeholder="Email address" aria-label="Email address" class="form-hidewrap">
+      <input type="text" name="first_name" required placeholder="First name" aria-label="First name" autocomplete="given-name" class="form-hidewrap form-name">
+      <input type="text" name="last_name" required placeholder="Last name" aria-label="Last name" autocomplete="family-name" class="form-hidewrap form-name">
+      <input type="email" name="email" required placeholder="Email address" aria-label="Email address" autocomplete="email" class="form-hidewrap">
       <button type="submit" class="btn btn--primary form-hidewrap">Subscribe</button>
       <span class="form-success" style="color:var(--color-srlc-purple);font-weight:600">Thank you for subscribing. Please check your inbox to confirm your email.</span>
     </form>
@@ -342,12 +344,12 @@ def render_home(svg_inner):
           <input type="text" id="zipInput" inputmode="numeric" maxlength="5" placeholder="ZIP code (e.g. 08820)" aria-label="ZIP code" pattern="\\d{{5}}">
           <button type="submit" class="btn btn--primary" id="zipBtn">Find Chapter</button>
         </form>
-        <div class="chapter-finder__result" id="zipResult" hidden>
+        <div class="chapter-finder__result" id="zipResult" data-chips-only hidden>
           <p class="chapter-finder__city" id="zipCity"></p>
           <p class="chapter-finder__meta" id="zipMeta"></p>
           <div class="chapter-finder__actions">
             <a id="zipJoinBtn" class="btn btn--primary" href="/get-involved/volunteer/">Join This Chapter</a>
-            <a class="btn btn--secondary" href="mailto:{EMAIL}">Email the Lead</a>
+            <a id="zipVolBtn" class="btn btn--secondary" href="/get-involved/volunteer/#signup">Volunteer with us</a>
           </div>
           <div class="chapter-finder__chips" id="zipChips" hidden>
             <p class="chapter-finder__chips-label">Other chapters in this area</p>
@@ -419,7 +421,9 @@ def render_home(svg_inner):
         <input type="hidden" name="form-name" value="updates">
         <input type="hidden" name="source" value="homepage">
         <p class="hp-field"><input name="bot-field" tabindex="-1"></p>
-        <input type="email" name="email" required placeholder="Email address" aria-label="Email address" class="form-hidewrap">
+        <input type="text" name="first_name" required placeholder="First name" aria-label="First name" autocomplete="given-name" class="form-hidewrap form-name">
+        <input type="text" name="last_name" required placeholder="Last name" aria-label="Last name" autocomplete="family-name" class="form-hidewrap form-name">
+        <input type="email" name="email" required placeholder="Email address" aria-label="Email address" autocomplete="email" class="form-hidewrap">
         <button type="submit" class="btn btn--primary form-hidewrap">Subscribe</button>
         <span class="form-success">Thank you for subscribing. Please check your inbox to confirm your email.</span>
       </form>

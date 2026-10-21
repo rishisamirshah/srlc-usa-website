@@ -179,22 +179,30 @@
       result.classList.add("is-hint");
       city.textContent = "Enter a 5-digit ZIP";
       meta.textContent = "We'll match you to the closest SRLC USA chapter.";
+      meta.hidden = false;
       result.classList.remove("is-missing");
       hideChips();
       return;
     }
     result.classList.remove("is-hint");
     var match = Z[z.substring(0, 2)];
+    var vol = doc.getElementById("zipVolBtn");
+    var chipsOnly = result.hasAttribute("data-chips-only");
+    if (vol) vol.style.display = "";
     if (match) {
       city.textContent = "Your nearest chapter: " + match.city;
-      meta.textContent = match.meta;
+      /* homepage (Naman, Oct 20): the chips already list the centers, so no centers line */
+      meta.textContent = chipsOnly ? "" : match.meta;
+      meta.hidden = chipsOnly;
       if (join) { join.href = match.href; join.textContent = "Visit this chapter"; }
       result.classList.remove("is-missing");
       renderChips(match.others, match.href);
     } else {
       city.textContent = "We don't have a chapter in your area yet";
       meta.textContent = "Email " + "info@srlcusa.org" + " to help start one, or volunteer with the nearest chapter remotely.";
+      meta.hidden = false;
       if (join) { join.href = "/get-involved/volunteer/#signup"; join.textContent = "Volunteer anyway"; }
+      if (vol) vol.style.display = "none";
       result.classList.add("is-missing");
       hideChips();
     }

@@ -19,9 +19,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&display=swap">
-<link rel="stylesheet" href="/assets/css/home-f2f2472a.css">
+<link rel="stylesheet" href="/assets/css/home-24c277b6.css">
 <script>document.documentElement.classList.replace("no-js","js")</script>
-<script src="/assets/js/site-fd704e85.js" defer></script>
+<script src="/assets/js/site-ada06fce.js" defer></script>
 </head>
 <body class="has-overlay-nav">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -81,7 +81,9 @@
       <input type="hidden" name="form-name" value="updates">
       <input type="hidden" name="source" value="modal">
       <p class="hp-field"><input name="bot-field" tabindex="-1"></p>
-      <input type="email" name="email" required placeholder="Email address" aria-label="Email address" class="form-hidewrap">
+      <input type="text" name="first_name" required placeholder="First name" aria-label="First name" autocomplete="given-name" class="form-hidewrap form-name">
+      <input type="text" name="last_name" required placeholder="Last name" aria-label="Last name" autocomplete="family-name" class="form-hidewrap form-name">
+      <input type="email" name="email" required placeholder="Email address" aria-label="Email address" autocomplete="email" class="form-hidewrap">
       <button type="submit" class="btn btn--primary form-hidewrap">Subscribe</button>
       <span class="form-success" style="color:var(--color-srlc-purple);font-weight:600">Thank you for subscribing. Please check your inbox to confirm your email.</span>
     </form>
@@ -323,12 +325,12 @@
           <input type="text" id="zipInput" inputmode="numeric" maxlength="5" placeholder="ZIP code (e.g. 08820)" aria-label="ZIP code" pattern="\d{5}">
           <button type="submit" class="btn btn--primary" id="zipBtn">Find Chapter</button>
         </form>
-        <div class="chapter-finder__result" id="zipResult" hidden>
+        <div class="chapter-finder__result" id="zipResult" data-chips-only hidden>
           <p class="chapter-finder__city" id="zipCity"></p>
           <p class="chapter-finder__meta" id="zipMeta"></p>
           <div class="chapter-finder__actions">
             <a id="zipJoinBtn" class="btn btn--primary" href="/get-involved/volunteer/">Join This Chapter</a>
-            <a class="btn btn--secondary" href="mailto:info@srlcusa.org">Email the Lead</a>
+            <a id="zipVolBtn" class="btn btn--secondary" href="/get-involved/volunteer/#signup">Volunteer with us</a>
           </div>
           <div class="chapter-finder__chips" id="zipChips" hidden>
             <p class="chapter-finder__chips-label">Other chapters in this area</p>
@@ -709,7 +711,9 @@
         <input type="hidden" name="form-name" value="updates">
         <input type="hidden" name="source" value="homepage">
         <p class="hp-field"><input name="bot-field" tabindex="-1"></p>
-        <input type="email" name="email" required placeholder="Email address" aria-label="Email address" class="form-hidewrap">
+        <input type="text" name="first_name" required placeholder="First name" aria-label="First name" autocomplete="given-name" class="form-hidewrap form-name">
+        <input type="text" name="last_name" required placeholder="Last name" aria-label="Last name" autocomplete="family-name" class="form-hidewrap form-name">
+        <input type="email" name="email" required placeholder="Email address" aria-label="Email address" autocomplete="email" class="form-hidewrap">
         <button type="submit" class="btn btn--primary form-hidewrap">Subscribe</button>
         <span class="form-success">Thank you for subscribing. Please check your inbox to confirm your email.</span>
       </form>
