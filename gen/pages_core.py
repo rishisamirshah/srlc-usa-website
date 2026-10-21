@@ -718,7 +718,7 @@ def render_our_impact(svg_inner):
 
 
 IF_PATH = "/about/inspiration-and-founder/"
-FOUNDER_IMG = None  # ("if-gurudevshri.jpg", width, height) once the portrait is in
+FOUNDER_IMG = ("if-gurudevshri.jpg", 1600, 2000)  # Naman's DSC03898_NJ4.tiff, FOGRA39 -> sRGB via its profile, 4:5 on Gurudevshri alone
 
 # Voices of Respect (Naman's Inspiration and Founder doc, Oct 19): five
 # speakers, Morari Bapu removed; quotes unchanged; each slide captions the
