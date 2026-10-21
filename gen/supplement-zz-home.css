@@ -232,3 +232,13 @@
   .photocard__bar { padding-left: 16px; padding-right: 16px; gap: 10px; }
   .photocard__h { font-size: 1.5rem; }
 }
+
+/* ---------- Naman, Oct 19 (WhatsApp) ---------- */
+/* ZIP result: text clears the purple rule */
+.chapter-finder--v3 .chapter-finder__search .chapter-finder__result { padding: 0.2rem 0 0.2rem 1.15rem; }
+.chapter-finder--v3 .chapter-finder__city { text-wrap: balance; }
+/* Hero buttons a bit larger, bold text */
+.hero-carousel__ctas .btn { height: 58px; padding: 0 34px; font-size: 16px; font-weight: 700; }
+@media (max-width: 640px) { .hero-carousel__ctas .btn { height: 52px; padding: 0 28px; font-size: 15px; } }
+/* Map key sits right under the map, not at the bottom of the column */
+.chapter-finder--v3 .homemap .cf-map__legend { position: static; margin-top: 0.75rem; }

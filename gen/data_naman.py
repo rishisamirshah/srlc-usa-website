@@ -41,4 +41,4 @@ CARDS = {
 }
 
 # The hospital's own published photo (April 2023 article), cropped to the figure
-STORY = ("/assets/img/naman/laxibhai.webp", 500, 600, "Laxibhai smiles from his hospital bed after his surgery at Shrimad Rajchandra Hospital.")
+STORY = ("/assets/img/naman/laxibhai-v2.webp", 850, 1024, "Laxibhai smiles from his hospital bed after his surgery at Shrimad Rajchandra Hospital.")
