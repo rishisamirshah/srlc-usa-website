@@ -299,7 +299,7 @@ def render_home(svg_inner):
 
 <section class="named-story" aria-label="Impact story">
   <div class="named-story__grid">
-    <div class="named-story__media named-story__media--photo" role="img" aria-label="{story_img[3]}" style="background-image:url('{story_img[0]}');background-position:57% 30%"></div>
+    <div class="named-story__media named-story__media--photo" role="img" aria-label="{story_img[3]}" data-parallax-bg="57 30" style="background-image:url('{story_img[0]}');background-position:57% 30%"></div>
     <div class="named-story__copy-wrap">
       <div class="named-story__copy reveal" data-stagger="1">
         <p class="named-story__eyebrow">Impact Story &middot; Laxibhai</p>
@@ -718,7 +718,7 @@ def render_our_impact(svg_inner):
 
 
 IF_PATH = "/about/inspiration-and-founder/"
-FOUNDER_IMG = ("if-gurudevshri.jpg", 1600, 2000)  # Naman's DSC03898_NJ4.tiff, FOGRA39 -> sRGB via its profile, 4:5 on Gurudevshri alone
+FOUNDER_IMG = ("if-gurudevshri-tall.jpg", 1500, 2270)  # Naman's DSC03898_NJ4.tiff, FOGRA39 -> sRGB via its profile, 4:5 on Gurudevshri alone
 
 # Voices of Respect (Naman's Inspiration and Founder doc, Oct 19): five
 # speakers, Morari Bapu removed; quotes unchanged; each slide captions the
@@ -733,26 +733,29 @@ VOICES = [
 
 
 def render_inspiration():
-    quote_cards = "".join(f"""<figure class="quote-card ifvoice{' is-active' if i == 0 else ''}{'' if img else ' ifvoice--text'}">
-      {f'<img class="ifvoice__img" src="/assets/img/inspiration/{img}" alt="Pujya Gurudevshri Rakeshji with {n}" width="1400" height="930" loading="lazy" decoding="async">' if img else ''}
+    slides = [(None, "Pujya Gurudevshri Rakeshji with His Holiness the Dalai Lama",
+               "at the World Alliance of Religions: Peace Summit, Seoul, South Korea, 2014.", "if-gurudevshri-dalai-lama.jpg")] + VOICES
+    quote_cards = "".join(f"""<figure class="quote-card ifvoice{' is-active' if i == 0 else ''}{'' if img else ' ifvoice--text'}{'' if q else ' ifvoice--photo'}">
+      {f'<img class="ifvoice__img" src="/assets/img/inspiration/{img}" alt="{n if not q else "Pujya Gurudevshri Rakeshji with " + n}" width="1400" height="930" loading="lazy" decoding="async">' if img else ''}
       <div class="ifvoice__copy">
-        <blockquote class="ifvoice__quote">&ldquo;{q}&rdquo;</blockquote>
-        <figcaption class="ifvoice__cap"><span class="ifvoice__name">{n}</span>, {r}</figcaption>
+        {f'<blockquote class="ifvoice__quote">&ldquo;{q}&rdquo;</blockquote>' if q else ''}
+        <figcaption class="ifvoice__cap"><span class="ifvoice__name">{n}</span>{" " if not q else ", "}{r}</figcaption>
       </div>
-    </figure>""" for i, (q, n, r, img) in enumerate(VOICES))
-    qdots = "".join(f'<button class="qd{" is-active" if i == 0 else ""}" data-go="{i}" aria-label="Quote {i + 1}"></button>' for i in range(len(VOICES)))
+    </figure>""" for i, (q, n, r, img) in enumerate(slides))
+    qdots = "".join(f'<button class="qd{" is-active" if i == 0 else ""}" data-go="{i}" aria-label="Slide {i + 1}"></button>' for i in range(len(slides)))
 
     # Founder portrait (Naman's DSC03898_NJ4.tiff, cropped 4:5 to Pujya
     # Gurudevshri alone). Until it arrives the section keeps its text layout.
     founder_img = FOUNDER_IMG
-    founder_media = (f'''<div class="ifsplit__media ifsplit__media--portrait"><img src="/assets/img/inspiration/{founder_img[0]}" alt="Pujya Gurudevshri Rakeshji" width="{founder_img[1]}" height="{founder_img[2]}" loading="lazy" decoding="async"></div>'''
+    founder_media = (f'''<div class="ifsplit__media ifsplit__media--portrait ifsplit__media--parallax"><img src="/assets/img/inspiration/{founder_img[0]}" alt="Pujya Gurudevshri Rakeshji" width="{founder_img[1]}" height="{founder_img[2]}" loading="lazy" decoding="async"></div>'''
                      if founder_img else "")
 
-    # Layout per Naman's Inspiration and Founder doc (Oct 19): one container
-    # edge for every section; Jainism keeps its temple photo, now full-bleed;
-    # Shrimad Rajchandraji and Pujya Gurudevshri are two-column, text left
-    # (46rem measure) and the portrait filling the rest; the Inner Awakening
-    # section is gone and the Dalai Lama photo leads Voices of Respect.
+    # Layout per Naman's Inspiration and Founder doc (Oct 19) and his Oct 20
+    # notes: one container edge for every section; Jainism, Shrimad
+    # Rajchandraji and Pujya Gurudevshri are two-column, text left (46rem
+    # measure) and the photo filling the rest at full section height; the
+    # Inner Awakening section is gone; the Dalai Lama photo is slide 1 of
+    # Voices of Respect.
     body = f"""<section class="ifhero" aria-labelledby="ifHeroTitle">
   <div class="ifhero__inner">
     <p class="ifhero__kicker">A timeless legacy flowing through a present-day visionary</p>
@@ -761,13 +764,13 @@ def render_inspiration():
   <img class="ifhero__figures" src="/assets/img/inspiration/if-hero-figures.png" alt="Lord Mahavir, Shrimad Rajchandraji, and Pujya Gurudevshri Rakeshji" width="833" height="903" loading="eager" fetchpriority="high" decoding="async">
 </section>
 
-<section class="vu-shell vu-shell--lav vu-shell--first ifroots">
-  <div class="container prose">
-    <h2 class="vu-h">Jainism and Lord Mahavir</h2>
+<section class="ifsplit ifsplit--lav ifsplit--first" aria-labelledby="ifRoots">
+  <div class="ifsplit__copy prose">
+    <h2 class="vu-h" id="ifRoots">Jainism and Lord Mahavir</h2>
     <p>Jainism, one of the world&rsquo;s oldest spiritual philosophies, teaches enduring, universal principles of love and kindness.</p>
     <p>Lord Mahavir, a revered spiritual leader who graced the Indian subcontinent over 2,500 years ago, illuminated a path to inner peace through understanding and kindness toward all, a message that continues to guide the modern world.</p>
   </div>
-  <div class="if-band if-band--bleed"><img class="if-band__img" src="/assets/img/inspiration/if-mahavir-web.jpg" alt="Shrimad Rajchandra Jin Mandir, Dharampur" width="2400" height="1353" loading="lazy" decoding="async"></div>
+  <div class="ifsplit__media ifsplit__media--temple"><img src="/assets/img/inspiration/if-mahavir-web.jpg" alt="Shrimad Rajchandra Jin Mandir, Dharampur" width="2400" height="1353" loading="lazy" decoding="async"></div>
 </section>
 
 <section class="ifsplit ifsplit--white" aria-labelledby="ifShrimadji">
@@ -777,7 +780,7 @@ def render_inspiration():
     <p>Grounded in direct inner experience, He articulated the subtle truths of spirituality through His own life, valuable teachings, and influential writings, including Shri Atmasiddhi Shastra, blending deep philosophical insights with practical steps for inner transformation.</p>
     <p>Shrimad Rajchandraji&rsquo;s formative influence on Mahatma Gandhi&rsquo;s philosophy of truth and non-violence stands as a testament to the enduring impact of His message, which continues to resonate today.</p>
   </div>
-  <div class="ifsplit__media"><img src="/assets/img/inspiration/if-shrimadji.jpg" alt="Shrimad Rajchandraji" width="1920" height="1080" loading="lazy" decoding="async"></div>
+  <div class="ifsplit__media ifsplit__media--parallax"><img src="/assets/img/inspiration/if-shrimadji.jpg" alt="Shrimad Rajchandraji" width="1920" height="1080" loading="lazy" decoding="async"></div>
 </section>
 
 <section class="{'ifsplit ifsplit--lav' if founder_img else 'vu-shell vu-shell--lav'}" aria-labelledby="ifFounder">
@@ -797,12 +800,9 @@ def render_inspiration():
   <div class="container">
     <div class="ifvoices__head">
       <h2 class="vu-h" id="ifVoicesTitle">Voices of Respect</h2>
+      <h3 class="ifvoices__h3">A Movement of Interfaith and International Harmony</h3>
       <p class="ifvoices__intro">A beacon of unity that transcends faiths and boundaries, Pujya Gurudevshri&rsquo;s message and Mission resonate across traditions and communities.</p>
     </div>
-    <figure class="ifvoices__lead">
-      <img src="/assets/img/inspiration/if-gurudevshri-dalai-lama.jpg" alt="Pujya Gurudevshri Rakeshji with His Holiness the Dalai Lama" width="1400" height="929" loading="lazy" decoding="async">
-      <figcaption>Pujya Gurudevshri Rakeshji with His Holiness the Dalai Lama at the World Alliance of Religions: Peace Summit, Seoul, South Korea, 2014.</figcaption>
-    </figure>
     <div class="ifvoices__track">{quote_cards}</div>
     <div class="quote-wall__controls ifvoices__controls">
       <button class="quote-wall__btn" data-dir="prev" aria-label="Previous quote">&larr;</button>

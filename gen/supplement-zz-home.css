@@ -5,7 +5,7 @@
 
 /* ---------- Hero: per-slide crops so faces stay in frame ---------- */
 .hero-carousel__slide[data-slide="1"]::before { background-position: 50% 0%; }
-.hero-carousel__slide[data-slide="2"]::before { background-position: 50% 35%; }
+.hero-carousel__slide[data-slide="2"]::before { background-position: 50% 0%; }
 @media (max-width: 760px) { .hero-carousel__slide[data-slide="1"]::before { background-position: 18% 0%; } }
 
 /* ---------- Impact story: Laxibhai's photo in the portrait slot ---------- */
@@ -242,3 +242,13 @@
 @media (max-width: 640px) { .hero-carousel__ctas .btn { height: 52px; padding: 0 28px; font-size: 15px; } }
 /* Map key sits right under the map, not at the bottom of the column */
 .chapter-finder--v3 .homemap .cf-map__legend { position: static; margin-top: 0.75rem; }
+
+/* ---------- Naman, Oct 20: hero slides 2 and 3 zoomed out so heads aren't
+   cut. These two drop the 1.12 parallax headroom and pin the photo to the
+   top; the slow zoom and the downward parallax drift grow from the top edge,
+   so the top of the photo (the heads) always stays in frame. ---------- */
+.hero-carousel__slide[data-slide="1"]::before,
+.hero-carousel__slide[data-slide="2"]::before {
+  transform-origin: 50% 0%;
+  transform: translate3d(0, var(--hero-par, 0px), 0) scale(1);
+}
