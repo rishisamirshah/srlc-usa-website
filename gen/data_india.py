@@ -122,7 +122,7 @@ SRV = {
     # Not rendered (Naman, Aug 24): global statistics appear on the homepage and
     # Our Impact only. Kept for reference; the tab's stat flag is still open.
     "impact_h2": "Your gift joins a network that has reached millions.",
-    "impact": [("3.28M+", "students reached globally through Educational Care"), ("33M+", "lives touched globally across all SRLC programs")],
+    "impact": [("3.4M+", "students reached globally through Educational Care"), ("42M+", "lives touched globally across all SRLC programs")],
     "close_h2": "Be the reason a student graduates.",
     "close": "When a young person in Dharampur, India walks into a science lab for the first time, or earns a degree their family never had access to before, that is the outcome of your gift. SRV has made that possible for students across 238 villages. Your support makes it possible for the next generation.",
     "cta": "Support Shrimad Rajchandra Vidyapeeth",

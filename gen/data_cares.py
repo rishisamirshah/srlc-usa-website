@@ -12,7 +12,7 @@ CARES = [
     {
         "slug": "health-care", "us_img": 'US volunteers assembling hygiene kits or delivering to a hospital. Neighborly. Media Bank.', "num": "01", "name": "Health Care", "icon": "icon-Health_Care.png",
         "one": "Delivering a charitable hospital and rural medical camps to provide life-changing medical solutions for those lacking access or resources.",
-        "stat": ("8.35M+", "patients treated globally"),
+        "stat": ("16.4M+", "patients treated globally"),
         "opening": "Health Care delivers comprehensive medical services of high quality, free or deeply subsidized, for those who cannot access or afford them. From a charitable hospital to medical camps deep in rural India, the full spectrum of care reaches the people other systems overlook.",
         "hero_img": "Hospital camp checkup &middot; Media Bank",
         "india": "Rural communities in South Gujarat rank among the poorest in the country. Health Care covers primary, secondary, and tertiary care for those who cannot access or afford it, anchored by the Shrimad Rajchandra Hospital and Research Center and extended by outreach programs that carry treatment the last mile.",
@@ -27,12 +27,12 @@ CARES = [
         "story": ("Laxibhai&rsquo;s second chance", "Laxibhai, a 52-year-old farmer, was diagnosed with severe triple-vessel heart disease, the kind of diagnosis that ends a working life in a place without care. Instead, he received the region&rsquo;s first-ever cardiothoracic bypass surgery, performed entirely free of charge. Today he is back on his feet."),
         "cta": "Support Health Care",
         "title": "Health Care | Free and Affordable Treatment | SRLC USA",
-        "desc": "Hospitals, camps, and clinics bringing treatment to families who need it most. 8.35M+ patients treated globally. Support Health Care. SRLC USA.",
+        "desc": "Hospitals, camps, and clinics bringing treatment to families who need it most. 16.4M+ patients treated globally. Support Health Care. SRLC USA.",
     },
     {
         "slug": "educational-care", "us_img": 'Backpack or supply distribution at a US school. Bright, forward-looking. Media Bank.', "num": "02", "name": "Educational Care", "icon": "icon-Education_Care.png",
         "one": "Equipping underserved children with quality education, unlocking their potential to learn, grow, and lead.",
-        "stat": ("3.28M+", "students supported globally"),
+        "stat": ("3.4M+", "students supported globally"),
         "opening": "Educational Care provides children in need with education, value-based learning, and programs designed for their overall development, from schools and scholarships to the supplies a student needs to start the year ready.",
         "hero_img": "Students with new supplies &middot; Media Bank",
         "india": "Access to education is limited in one of the major tribal belts of South Gujarat. Educational Care answers with permanent schools, higher education, skilling, and outreach that carries learning to villages without it.",
@@ -46,7 +46,7 @@ CARES = [
         "story": ("Harshil&rsquo;s rank", "Harshil Patel was not among the top performers at Shrimad Rajchandra Vidyapeeth. His faculty saw something anyway, and mentored him through the NET exam. He cleared it with All India Rank 71. Today he is a PhD student in Chemistry at IIT Bombay."),
         "cta": "Support Educational Care",
         "title": "Educational Care | Schools and Scholarships | SRLC USA",
-        "desc": "Schools, scholarships, and supplies for students with potential and no resources. 3.28M+ students supported globally. SRLC USA.",
+        "desc": "Schools, scholarships, and supplies for students with potential and no resources. 3.4M+ students supported globally. SRLC USA.",
     },
     {
         "slug": "child-care", "us_img": "Volunteers packing children's care packages. Warm. Media Bank.", "num": "03", "name": "Child Care", "icon": "icon-Child_Care.png",

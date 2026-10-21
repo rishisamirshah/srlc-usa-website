@@ -17,11 +17,13 @@ resolve silently. Naman approves everything.
 
 ## Approved statistics — the only numbers allowed anywhere
 
+Updated Oct 21 (Naman: the 42M+ set from the Who We Are tab is the most current): 42M+ lives, 16.4M+ patients, 3.4M+ students.
+
 | Stat | Use |
 |---|---|
-| 33M+ lives touched globally | trust bar, homepage, global sections |
-| 8.35M+ patients treated globally | Health Care |
-| 3.28M+ students supported globally | Educational Care |
+| 42M+ lives touched globally | trust bar, homepage, global sections |
+| 16.4M+ patients treated globally | Health Care |
+| 3.4M+ students supported globally | Educational Care |
 | 12.24M+ people reached globally (Humanitarian Care) | Humanitarian Care |
 | 450K+ animals served globally | Animal Care |
 | 8.90M+ lives supported globally (Emergency Relief) | Emergency Relief Care |

@@ -13,11 +13,11 @@ US_FOOTPRINT = "chapters in 11 states and Washington, D.C."
 
 # Homepage stat row: live order and wording from the Homepage tab, as on Sept 7
 HOME_STATS = [
-    ("33M+", "Lives", "touched globally through various initiatives"),
+    ("42M+", "Lives", "touched globally through various initiatives"),
     ("8.90M+", "Lives", "benefitted globally through Emergency Relief initiatives"),
     ("12.24M+", "People", "benefitted globally through humanitarian initiatives"),
-    ("3.28M+", "Students", "supported globally by educational activities"),
-    ("8.35M+", "Patients", "treated at Shrimad Rajchandra Hospital"),
+    ("3.4M+", "Students", "supported globally by educational activities"),
+    ("16.4M+", "Patients", "treated globally through Health Care initiatives"),
     ("450K+", "Animals", "saved, treated, and rehabilitated globally"),
 ]
 
@@ -646,15 +646,15 @@ def render_our_impact(svg_inner):
       <p class="ft-body">{b}</p>
     </li>""" for i, (y, t, b) in enumerate(TIMELINE))
     # the Our Impact tab's own labels and order ("globally" on every figure, per A4)
-    six = [("33M+", "lives touched globally"), ("8.35M+", "patients treated globally"),
-           ("3.28M+", "students reached globally"), ("12.24M+", "reached through Humanitarian Care globally"),
+    six = [("42M+", "lives touched globally"), ("16.4M+", "patients treated globally"),
+           ("3.4M+", "students reached globally"), ("12.24M+", "reached through Humanitarian Care globally"),
            ("450K+", "animals saved, treated, or rehabilitated globally"),
            ("8.90M+", "supported through Emergency Relief Care globally")]
 
     body = page_header(
         "About Us",
         "Our impact",
-        "The work of Shrimad Rajchandra Love and Care began with volunteers bringing medicine to families in rural villages. Over two decades, it has grown into a global movement that has touched 33M+ lives globally.",
+        "The work of Shrimad Rajchandra Love and Care began with volunteers bringing medicine to families in rural villages. Over two decades, it has grown into a global movement that has touched 42M+ lives globally.",
         image="/assets/img/photos/awards.jpg",
     ) + f"""
 <section class="vu-shell vu-shell--lav vu-shell--first">
@@ -727,7 +727,7 @@ def render_our_impact(svg_inner):
 """
     return page(
         "Our Impact | Verified Global Results | SRLC USA",
-        "33M+ lives touched globally. Two decades of documented growth, independently accredited and published in full. Explore the results. SRLC USA.",
+        "42M+ lives touched globally. Two decades of documented growth, independently accredited and published in full. Explore the results. SRLC USA.",
         "/about/our-impact/", body)
 
 
