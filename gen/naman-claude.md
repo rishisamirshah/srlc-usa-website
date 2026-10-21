@@ -27,10 +27,10 @@ resolve silently. Naman approves everything.
 | 8.90M+ lives supported globally (Emergency Relief) | Emergency Relief Care |
 
 Every global figure is labeled global. NO US-specific stats are approved.
-BANNED (remove on sight): 27M+, 3.1M, 300K, 25+ cities, 400+ community
+BANNED (remove on sight): 27M+, 3.1M, 300K, 400+ community
 partners, $110K+ aid, 3 continents, per-state stat bands.
 The US footprint is stated as: chapters in 11 states and Washington, D.C.
-(22 centers). Never "25+ cities."
+(22 centers). "25+ cities" is accurate and approved (Naman, Oct 18).
 
 ## Trust language
 
