@@ -8,11 +8,13 @@ the homepage and Our Impact only; a Care page may carry one Care-specific
 figure, and none is approved yet). Kept for reference only.
 """
 
+import stats as S
+
 CARES = [
     {
         "slug": "health-care", "us_img": 'US volunteers assembling hygiene kits or delivering to a hospital. Neighborly. Media Bank.', "num": "01", "name": "Health Care", "icon": "icon-Health_Care.png",
         "one": "Delivering a charitable hospital and rural medical camps to provide life-changing medical solutions for those lacking access or resources.",
-        "stat": ("16.4M+", "patients treated globally"),
+        "stat": (S.PATIENTS, "patients treated globally"),
         "opening": "Health Care delivers comprehensive medical services of high quality, free or deeply subsidized, for those who cannot access or afford them. From a charitable hospital to medical camps deep in rural India, the full spectrum of care reaches the people other systems overlook.",
         "hero_img": "Hospital camp checkup &middot; Media Bank",
         "india": "Rural communities in South Gujarat rank among the poorest in the country. Health Care covers primary, secondary, and tertiary care for those who cannot access or afford it, anchored by the Shrimad Rajchandra Hospital and Research Center and extended by outreach programs that carry treatment the last mile.",
@@ -27,12 +29,12 @@ CARES = [
         "story": ("Laxibhai&rsquo;s second chance", "Laxibhai, a 52-year-old farmer, was diagnosed with severe triple-vessel heart disease, the kind of diagnosis that ends a working life in a place without care. Instead, he received the region&rsquo;s first-ever cardiothoracic bypass surgery, performed entirely free of charge. Today he is back on his feet."),
         "cta": "Support Health Care",
         "title": "Health Care | Free and Affordable Treatment | SRLC USA",
-        "desc": "Hospitals, camps, and clinics bringing treatment to families who need it most. 16.4M+ patients treated globally. Support Health Care. SRLC USA.",
+        "desc": f"Hospitals, camps, and clinics bringing treatment to families who need it most. {S.PATIENTS} patients treated globally. Support Health Care. SRLC USA.",
     },
     {
         "slug": "educational-care", "us_img": 'Backpack or supply distribution at a US school. Bright, forward-looking. Media Bank.', "num": "02", "name": "Educational Care", "icon": "icon-Education_Care.png",
         "one": "Equipping underserved children with quality education, unlocking their potential to learn, grow, and lead.",
-        "stat": ("3.4M+", "students supported globally"),
+        "stat": (S.STUDENTS, "students supported globally"),
         "opening": "Educational Care provides children in need with education, value-based learning, and programs designed for their overall development, from schools and scholarships to the supplies a student needs to start the year ready.",
         "hero_img": "Students with new supplies &middot; Media Bank",
         "india": "Access to education is limited in one of the major tribal belts of South Gujarat. Educational Care answers with permanent schools, higher education, skilling, and outreach that carries learning to villages without it.",
@@ -46,7 +48,7 @@ CARES = [
         "story": ("Harshil&rsquo;s rank", "Harshil Patel was not among the top performers at Shrimad Rajchandra Vidyapeeth. His faculty saw something anyway, and mentored him through the NET exam. He cleared it with All India Rank 71. Today he is a PhD student in Chemistry at IIT Bombay."),
         "cta": "Support Educational Care",
         "title": "Educational Care | Schools and Scholarships | SRLC USA",
-        "desc": "Schools, scholarships, and supplies for students with potential and no resources. 3.4M+ students supported globally. SRLC USA.",
+        "desc": f"Schools, scholarships, and supplies for students with potential and no resources. {S.STUDENTS} students supported globally. SRLC USA.",
     },
     {
         "slug": "child-care", "us_img": "Volunteers packing children's care packages. Warm. Media Bank.", "num": "03", "name": "Child Care", "icon": "icon-Child_Care.png",
@@ -120,7 +122,7 @@ CARES = [
     {
         "slug": "humanitarian-care", "us_img": 'US volunteers serving meals at a shelter. Warm, hands-on. Media Bank.', "num": "07", "name": "Humanitarian Care", "icon": "icon-Humanitarian_Care.png",
         "one": "Bringing hope to those in crisis by distributing essential resources, whenever and wherever they are needed most.",
-        "stat": ("12.24M+", "people reached globally"),
+        "stat": (S.HUMANITARIAN, "people reached globally"),
         "opening": "Humanitarian Care brings hope to those in crisis by distributing essential resources, whenever and wherever they are needed most.",
         "hero_img": "Relief distribution &middot; Media Bank",
         "india": "With purposeful compassion, Humanitarian Care helps ease pain and suffering through sustenance, emotional support, and vocational support, leading toward self-reliance and dignity. The work spans homes for people with physical disabilities, support for elder care homes and homes for the terminally ill, vocational training for families with low incomes, food distribution for people experiencing homelessness, and mass distribution of essential items to those in need.",
@@ -129,12 +131,12 @@ CARES = [
         "story": None,
         "cta": "Support Humanitarian Care",
         "title": "Humanitarian Care | Meals and Essentials | SRLC USA",
-        "desc": "Meals, essentials, and dignity for people facing hardship. 12.24M+ reached globally. Support Humanitarian Care. SRLC USA.",
+        "desc": f"Meals, essentials, and dignity for people facing hardship. {S.HUMANITARIAN} reached globally. Support Humanitarian Care. SRLC USA.",
     },
     {
         "slug": "animal-care", "num": "08", "name": "Animal Care", "icon": "icon-Animal_Care.png",
         "one": "Extending compassion and care to injured or abandoned animals through rescue, shelter, and treatment.",
-        "stat": ("450K+", "animals served globally"),
+        "stat": (S.ANIMALS, "animals served globally"),
         "opening": "Animal Care extends compassion to injured and abandoned animals through rescue, shelter, and treatment.",
         "hero_img": "An animal being tended &middot; Media Bank",
         "india": "Shrimad Rajchandra Jivamaitridham anchors this work: an animal sanctuary comprising an animal hospital, veterinary college, ahimsa experience center, and animal shelters. Satellite clinics and animal outreach programs extend rescue and treatment into the surrounding region.",
@@ -145,7 +147,7 @@ CARES = [
         "story": None,
         "cta": "Support Animal Care",
         "title": "Animal Care | Rescue and Sanctuary | SRLC USA",
-        "desc": "Rescue, veterinary treatment, and sanctuary for animals in need. 450K+ animals served globally. Support Animal Care. SRLC USA.",
+        "desc": f"Rescue, veterinary treatment, and sanctuary for animals in need. {S.ANIMALS} animals served globally. Support Animal Care. SRLC USA.",
     },
     {
         "slug": "environmental-care", "us_img": 'US volunteers at a beach or street cleanup. Energetic. Media Bank.', "num": "09", "name": "Environmental Care", "icon": "icon-Environmental_Care.png",
@@ -164,7 +166,7 @@ CARES = [
     {
         "slug": "emergency-relief-care", "num": "10", "name": "Emergency Relief Care", "icon": "icon-Emergency-Relief_Care.png",
         "one": "Rapid response with food, medicine, and essentials during floods, earthquakes, pandemics, and more, as well as long-term rehabilitation for affected communities.",
-        "stat": ("8.90M+", "lives supported globally"),
+        "stat": (S.EMERGENCY, "lives supported globally"),
         "opening": "Emergency Relief Care provides immediate response and long-term rehabilitation to communities affected by natural disasters and crises.",
         "hero_img": "Relief supplies staged &middot; Media Bank",
         "india": "When floods, droughts, or public health emergencies strike, relief arrives in two waves: immediate essentials in the first days, then the long work of rebuilding: schools and homes reconstructed for families who lost everything, dedicated care facilities during the pandemic, and door-to-door support for the communities hardest hit.",
@@ -173,7 +175,7 @@ CARES = [
         "story": None,
         "cta": "Support Emergency Relief Care",
         "title": "Emergency Relief Care | Rapid Disaster Response | SRLC USA",
-        "desc": "Food, medicine, and essentials delivered fast when disaster strikes. 8.90M+ lives supported globally. SRLC USA.",
+        "desc": f"Food, medicine, and essentials delivered fast when disaster strikes. {S.EMERGENCY} lives supported globally. SRLC USA.",
     },
 ]
 

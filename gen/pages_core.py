@@ -1,4 +1,5 @@
 """Renderers: homepage (approved v2 base), donate, about cluster, 404 — flat pass."""
+import stats as S
 import os
 import re
 from shell import (page, ph, page_header, flat_cta, trust_bar, impact_stats, pinned,
@@ -13,12 +14,12 @@ US_FOOTPRINT = "chapters in 11 states and Washington, D.C."
 
 # Homepage stat row: live order and wording from the Homepage tab, as on Sept 7
 HOME_STATS = [
-    ("42M+", "Lives", "touched globally through various initiatives"),
-    ("8.90M+", "Lives", "benefitted globally through Emergency Relief initiatives"),
-    ("12.24M+", "People", "benefitted globally through humanitarian initiatives"),
-    ("3.4M+", "Students", "supported globally by educational activities"),
-    ("16.4M+", "Patients", "treated globally through Health Care initiatives"),
-    ("450K+", "Animals", "saved, treated, and rehabilitated globally"),
+    (S.LIVES, "Lives", "touched globally through various initiatives"),
+    (S.EMERGENCY, "Lives", "benefitted globally through Emergency Relief initiatives"),
+    (S.HUMANITARIAN, "People", "benefitted globally through humanitarian initiatives"),
+    (S.STUDENTS, "Students", "supported globally by educational activities"),
+    (S.PATIENTS, "Patients", "treated globally through Health Care initiatives"),
+    (S.ANIMALS, "Animals", "saved, treated, and rehabilitated globally"),
 ]
 
 # Homepage 10 Care tiles: one photo per Care (placeholders from the filler set
@@ -556,8 +557,8 @@ def render_who_we_are():
     # unchanged; hero and the third section photo are his picks.
     hero = NAMAN.WWA_HERO
     support_img = slot("wwa-support") or photo("wwa-support", ["hospital+india", "india"], "community", min_w=1200)
-    stats = [("42M+", "lives touched globally"), ("16.4M+", "patients treated globally through Health Care initiatives"),
-             ("3.4M+", "students supported globally")]
+    stats = [(S.LIVES, "lives touched globally"), (S.PATIENTS, "patients treated globally through Health Care initiatives"),
+             (S.STUDENTS, "students supported globally")]
     stats_html = '<dl class="wwastats">' + "".join(
         f'<div class="wwastats__item"><dt class="wwastats__n">{n}</dt><dd class="wwastats__l">{l}</dd></div>' for n, l in stats) + "</dl>"
     support_pills = """<div class="pillrow pillrow--wrap">
@@ -646,15 +647,15 @@ def render_our_impact(svg_inner):
       <p class="ft-body">{b}</p>
     </li>""" for i, (y, t, b) in enumerate(TIMELINE))
     # the Our Impact tab's own labels and order ("globally" on every figure, per A4)
-    six = [("42M+", "lives touched globally"), ("16.4M+", "patients treated globally"),
-           ("3.4M+", "students reached globally"), ("12.24M+", "reached through Humanitarian Care globally"),
-           ("450K+", "animals saved, treated, or rehabilitated globally"),
-           ("8.90M+", "supported through Emergency Relief Care globally")]
+    six = [(S.LIVES, "lives touched globally"), (S.PATIENTS, "patients treated globally"),
+           (S.STUDENTS, "students reached globally"), (S.HUMANITARIAN, "reached through Humanitarian Care globally"),
+           (S.ANIMALS, "animals saved, treated, or rehabilitated globally"),
+           (S.EMERGENCY, "supported through Emergency Relief Care globally")]
 
     body = page_header(
         "About Us",
         "Our impact",
-        "The work of Shrimad Rajchandra Love and Care began with volunteers bringing medicine to families in rural villages. Over two decades, it has grown into a global movement that has touched 42M+ lives globally.",
+        f"The work of Shrimad Rajchandra Love and Care began with volunteers bringing medicine to families in rural villages. Over two decades, it has grown into a global movement that has touched {S.LIVES} lives globally.",
         image="/assets/img/photos/awards.jpg",
     ) + f"""
 <section class="vu-shell vu-shell--lav vu-shell--first">
@@ -727,7 +728,7 @@ def render_our_impact(svg_inner):
 """
     return page(
         "Our Impact | Verified Global Results | SRLC USA",
-        "42M+ lives touched globally. Two decades of documented growth, independently accredited and published in full. Explore the results. SRLC USA.",
+        f"{S.LIVES} lives touched globally. Two decades of documented growth, independently accredited and published in full. Explore the results. SRLC USA.",
         "/about/our-impact/", body)
 
 

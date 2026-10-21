@@ -1,0 +1,26 @@
+{
+  "lives": {
+    "display": "42M+",
+    "value": 42.0
+  },
+  "patients": {
+    "display": "16.4M+",
+    "value": 16.4
+  },
+  "students": {
+    "display": "3.4M+",
+    "value": 3.4
+  },
+  "humanitarian": {
+    "display": "12.8M+",
+    "value": 12.8
+  },
+  "animals": {
+    "display": "500K+",
+    "value": 500.0
+  },
+  "emergency": {
+    "display": "8.9M+",
+    "value": 8.9
+  }
+}

@@ -17,7 +17,7 @@ resolve silently. Naman approves everything.
 
 ## Approved statistics — the only numbers allowed anywhere
 
-Updated Oct 21 (Naman: the 42M+ set from the Who We Are tab is the most current): 42M+ lives, 16.4M+ patients, 3.4M+ students.
+Since Oct 21 the six global figures are not typed anywhere: gen/stats.py reads them from the counters on loveandcare.srmd.org at build time (Naman: that page is where SRLC pulls them from), caches the last good read in gen/stats_live.json, and gen/refresh_stats.sh redeploys daily when they change. Use S.LIVES, S.PATIENTS, S.STUDENTS, S.HUMANITARIAN, S.ANIMALS, S.EMERGENCY. The table below is historical.
 
 | Stat | Use |
 |---|---|

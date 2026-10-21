@@ -1,6 +1,7 @@
 """Renderers: Our Work — flat pass. Copy verbatim from the master doc tabs.
 Per-state stat bands are omitted (CLAUDE.md banned list) and flagged in the
 build log. End-of-page CTAs render as flat sections, never banners."""
+import stats as S
 from shell import (page, ph, page_header, flat_cta, filler, filler_entry, story_split, photo_alt, photo,
                    img_tag, pick_distinct, photo_src_tag, pinned)
 from data_media import slot
@@ -612,7 +613,7 @@ def render_africa():
 <section class="vu-shell vu-shell--lav">
   <div class="container">
     <h2 class="vu-h reveal">Proven far from here</h2>
-    <p class="vu-lead">Mission Africa did not start from zero and your gift does not land on an experiment. It extends a healthcare model refined over decades in Dharampur, India, where a 250-bed hospital accredited by the National Accreditation Board for Hospitals and Healthcare Providers (NABH) treats patients regardless of their ability to pay. The movement behind it has touched 42M+ lives globally, and volunteers across the United States help fund and power the work.</p>
+    <p class="vu-lead">Mission Africa did not start from zero and your gift does not land on an experiment. It extends a healthcare model refined over decades in Dharampur, India, where a 250-bed hospital accredited by the National Accreditation Board for Hospitals and Healthcare Providers (NABH) treats patients regardless of their ability to pay. The movement behind it has touched {S.LIVES} lives globally, and volunteers across the United States help fund and power the work.</p>
     <p class="africa-links">
       <a class="textlink" href="/our-work/10-care-program/">Our Causes<span aria-hidden="true"> &rarr;</span></a>
       <a class="textlink" href="/our-work/india/">India<span aria-hidden="true"> &rarr;</span></a>
