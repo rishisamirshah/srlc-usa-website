@@ -1,8 +1,8 @@
-/* Subtle scroll parallax (Naman, Oct 20): the Shrimad Rajchandraji and Pujya
-   Gurudevshri photos on Inspiration and Founder (an overscanned <img> that
-   drifts) and the homepage Laxibhai story photo (a background image whose
-   vertical position drifts around its crop, data-parallax-bg="x y").
-   Desktop only, off for reduced motion. */
+/* Subtle scroll parallax (Naman, Oct 20): the homepage Laxibhai story photo
+   (a background image whose vertical position drifts around its crop,
+   data-parallax-bg="x y"); .ifsplit__media--parallax imgs drift too (none on
+   the site since Naman took it off the Inspiration photos). Desktop only,
+   off for reduced motion. */
 (function () {
   var imgs = Array.prototype.slice.call(document.querySelectorAll('.ifsplit__media--parallax img'));
   var bgs = Array.prototype.slice.call(document.querySelectorAll('[data-parallax-bg]'));

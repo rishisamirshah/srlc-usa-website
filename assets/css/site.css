@@ -4988,60 +4988,52 @@ img[src$="mb-180.webp"] { object-position: 15% 50%; }
 }
 
 /* ---------- Two-column sections (Jainism, Shrimad Rajchandraji, Pujya
-   Gurudevshri): text left, photo right, both inside the page container and
-   the section's padding, so the three photos never touch (Naman, Oct 20).
-   Mandir and Shrimadji run the full height of their text block. ---------- */
+   Gurudevshri): inside the page container and the section's padding so the
+   photos never touch; photo and text each half the container minus the gap
+   (about 540px at full width); sides alternate, mandir left, Shrimadji right,
+   Gurudevshri left (Naman, Oct 20). Mandir and Shrimadji run the full height
+   of their text block; Gurudevshri is his head-to-knees crop at its own ratio,
+   top-aligned with the H2, and the third subsection runs full width below. ---------- */
 .ifsplit {
   --if-edge: max(var(--gutter), calc((100% - var(--container-max)) / 2 + var(--gutter)));
   display: grid; padding: var(--sec-pad) 0;
-  grid-template-columns: var(--if-edge) minmax(0, 7fr) clamp(2.5rem, 4.5vw, 4.5rem) minmax(0, 5fr) var(--if-edge);
-}
-/* Alternating sides (Naman, Oct 20): mandir left, Shrimadji right, Gurudevshri left */
-@media (min-width: 900px) {
-  .ifsplit--flip { grid-template-columns: var(--if-edge) minmax(0, 5fr) clamp(2.5rem, 4.5vw, 4.5rem) minmax(0, 7fr) var(--if-edge); }
-  .ifsplit--flip .ifsplit__copy { grid-column: 4; grid-row: 1; }
-  .ifsplit--flip .ifsplit__media { grid-column: 2; grid-row: 1; }
+  grid-template-columns: var(--if-edge) minmax(0, 1fr) clamp(2.5rem, 4.5vw, 4.5rem) minmax(0, 1fr) var(--if-edge);
 }
 .ifsplit--white { background: #FFFFFF; }
 .ifsplit--lav { background: var(--lav); }
-.ifsplit__copy { grid-column: 2; align-self: center; }
-.ifsplit__copy p, .ifvoices__intro, .ifvoice__cap { text-wrap: pretty; }
+.ifsplit__copy { grid-column: 2; grid-row: 1; align-self: center; }
+.ifsplit__copy p, .ifsplit__more p, .ifvoices__intro, .ifvoice__cap { text-wrap: pretty; }
 .ifsplit__copy > .vu-h:first-child { margin-top: 0 !important; }
-.ifsplit__copy > :last-child { margin-bottom: 0 !important; }
-.ifsplit__media { grid-column: 4; position: relative; min-height: clamp(380px, 32vw, 560px); background: #E7E3EC; }
+.ifsplit__copy > :last-child, .ifsplit__more > :last-child { margin-bottom: 0 !important; }
+.ifsplit__media { grid-column: 4; grid-row: 1; position: relative; min-height: clamp(380px, 32vw, 560px); background: #E7E3EC; }
 .ifsplit__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
-/* Temple: the spires stay in frame in the tall column. Gurudevshri: the
-   frame crops from the top (background) so his face and lap both stay. */
 .ifsplit__media--temple img { object-position: 16% 50%; }
-/* Gurudevshri: one 4:5 portrait at a fixed height, top-aligned with the H2;
-   the three subsections run on past it */
+.ifsplit__more { grid-column: 2 / 5; grid-row: 2; margin: clamp(2.5rem, 4vw, 3.5rem) 0 0; max-width: none; }
+.ifsplit__more p { max-width: none; }
+.ifsplit__more > h3:first-child { margin-top: 0; }
 @media (min-width: 900px) {
+  .ifsplit--flip .ifsplit__copy { grid-column: 4; }
+  .ifsplit--flip .ifsplit__media { grid-column: 2; }
   .ifsplit--founder .ifsplit__copy { align-self: start; }
-  .ifsplit__media--portrait { align-self: start; min-height: 0; aspect-ratio: 4 / 5; }
-}
-.ifsplit__media--portrait img { object-position: 50% 30%; }
-/* Subtle parallax on the two portraits (supplement-zzz-parallax.js),
-   desktop only; the image overscans the column so the shift never shows an edge */
-.ifsplit__media--parallax { overflow: hidden; }
-@media (min-width: 900px) {
-  .ifsplit__media--parallax img { top: -7%; height: 114%; will-change: transform; }
+  .ifsplit__media--portrait { align-self: start; min-height: 0; aspect-ratio: 1300 / 1501; }
 }
 @media (max-width: 899px) {
   .ifsplit { grid-template-columns: minmax(0, 1fr); padding: clamp(2.5rem, 8vw, 3.5rem) 0 0; }
   .ifsplit__media { grid-column: 1; grid-row: 1; min-height: 0; aspect-ratio: 4 / 3; margin: 0 var(--gutter); }
-  .ifsplit__media--portrait { aspect-ratio: 4 / 5; }
-  .ifsplit__copy { grid-column: 1; padding: clamp(2.5rem, 8vw, 3.5rem) var(--gutter) var(--sec-pad); }
+  .ifsplit__media--portrait { aspect-ratio: 1300 / 1501; }
+  .ifsplit__copy { grid-column: 1; grid-row: 2; padding: clamp(2.5rem, 8vw, 3.5rem) var(--gutter) var(--sec-pad); }
+  .ifsplit--founder .ifsplit__copy { padding-bottom: 0; }
+  .ifsplit__more { grid-column: 1; grid-row: 3; margin: clamp(1.5rem, 5vw, 2rem) 0 0; padding: 0 var(--gutter) var(--sec-pad); }
 }
 
 /* ---------- Voices of Respect: lavender band like the quote band; H2, H3
    and intro on the left edge, the carousel right under them. Slide 1 is the
-   Dalai Lama photo with its caption as the credit line. ---------- */
+   Dalai Lama photo, set exactly like the speaker slides. ---------- */
 .ifvoices { background: var(--lav-band); padding: var(--sec-pad) 0; }
 .ifvoices__head { max-width: 46rem; margin: 0 0 clamp(2rem, 3.5vw, 2.8rem); }
 .ifvoices__head .vu-h { margin: 0 0 1rem; }
 .ifvoices__h3 { margin: 1.5rem 0 1rem; }
 .ifvoices__intro { margin: 0; }
-.ifvoice--photo .ifvoice__cap { margin-top: 0; }
 
 .ifvoices__track { display: grid; }
 .ifvoice {

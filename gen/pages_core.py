@@ -718,7 +718,7 @@ def render_our_impact(svg_inner):
 
 
 IF_PATH = "/about/inspiration-and-founder/"
-FOUNDER_IMG = ("if-gurudevshri.jpg", 1600, 2000)  # Naman's DSC03898_NJ4.tiff, FOGRA39 -> sRGB via its profile, 4:5 on Gurudevshri alone
+FOUNDER_IMG = ("if-gurudevshri.jpg", 1300, 1501)  # Naman's DSC03898_NJ4.tiff, FOGRA39 -> sRGB via its profile, head to knees
 
 # Voices of Respect (Naman's Inspiration and Founder doc, Oct 19): five
 # speakers, Morari Bapu removed; quotes unchanged; each slide captions the
@@ -733,29 +733,29 @@ VOICES = [
 
 
 def render_inspiration():
-    slides = [(None, "Pujya Gurudevshri Rakeshji with His Holiness the Dalai Lama",
-               "at the World Alliance of Religions: Peace Summit, Seoul, South Korea, 2014.", "if-gurudevshri-dalai-lama.jpg")] + VOICES
-    quote_cards = "".join(f"""<figure class="quote-card ifvoice{' is-active' if i == 0 else ''}{'' if img else ' ifvoice--text'}{'' if q else ' ifvoice--photo'}">
-      {f'<img class="ifvoice__img" src="/assets/img/inspiration/{img}" alt="{n if not q else "Pujya Gurudevshri Rakeshji with " + n}" width="1400" height="930" loading="lazy" decoding="async">' if img else ''}
+    # Slide 1 is the Dalai Lama photo, set like the speaker slides: the
+    # Newsreader line in the quote position (no quote marks), the event as
+    # the credit line.
+    slides = [("Pujya Gurudevshri Rakeshji with His Holiness the Dalai Lama", "World Alliance of Religions: Peace Summit",
+               "Seoul, South Korea, 2014.", "if-gurudevshri-dalai-lama.jpg", False)] + [v + (True,) for v in VOICES]
+    quote_cards = "".join(f"""<figure class="quote-card ifvoice{' is-active' if i == 0 else ''}{'' if img else ' ifvoice--text'}">
+      {f'<img class="ifvoice__img" src="/assets/img/inspiration/{img}" alt="{"Pujya Gurudevshri Rakeshji with " + n if marks else q}" width="1400" height="930" loading="lazy" decoding="async">' if img else ''}
       <div class="ifvoice__copy">
-        {f'<blockquote class="ifvoice__quote">&ldquo;{q}&rdquo;</blockquote>' if q else ''}
-        <figcaption class="ifvoice__cap"><span class="ifvoice__name">{n}</span>{" " if not q else ", "}{r}</figcaption>
+        <blockquote class="ifvoice__quote">{"&ldquo;" + q + "&rdquo;" if marks else q}</blockquote>
+        <figcaption class="ifvoice__cap"><span class="ifvoice__name">{n}</span>, {r}</figcaption>
       </div>
-    </figure>""" for i, (q, n, r, img) in enumerate(slides))
+    </figure>""" for i, (q, n, r, img, marks) in enumerate(slides))
     qdots = "".join(f'<button class="qd{" is-active" if i == 0 else ""}" data-go="{i}" aria-label="Slide {i + 1}"></button>' for i in range(len(slides)))
 
-    # Founder portrait (Naman's DSC03898_NJ4.tiff, cropped 4:5 to Pujya
-    # Gurudevshri alone). Until it arrives the section keeps its text layout.
+    # Founder portrait: Naman's DSC03898_NJ4.tiff, colour-managed to sRGB,
+    # cropped head to knees with the chair in frame (his Oct 20 reference).
     founder_img = FOUNDER_IMG
-    founder_media = (f'''<div class="ifsplit__media ifsplit__media--portrait ifsplit__media--parallax"><img src="/assets/img/inspiration/{founder_img[0]}" alt="Pujya Gurudevshri Rakeshji" width="{founder_img[1]}" height="{founder_img[2]}" loading="lazy" decoding="async"></div>'''
-                     if founder_img else "")
 
     # Layout per Naman's Inspiration and Founder doc (Oct 19) and his Oct 20
-    # notes: one container edge for every section; Jainism, Shrimad
-    # Rajchandraji and Pujya Gurudevshri are two-column, text left (46rem
-    # measure) and the photo filling the rest at full section height; the
-    # Inner Awakening section is gone; the Dalai Lama photo is slide 1 of
-    # Voices of Respect.
+    # rounds: one container for every section; Jainism, Shrimad Rajchandraji
+    # and Pujya Gurudevshri are two-column on alternating sides, photo and
+    # text each half the container; the founder's third subsection runs full
+    # width under the photo; the Dalai Lama photo is slide 1 of Voices.
     body = f"""<section class="ifhero" aria-labelledby="ifHeroTitle">
   <div class="ifhero__inner">
     <p class="ifhero__kicker">A timeless legacy flowing through a present-day visionary</p>
@@ -780,20 +780,22 @@ def render_inspiration():
     <p>Mahatma Gandhi called Shrimad Rajchandraji his spiritual guide. Gandhi&rsquo;s philosophy of truth and non-violence took shape under His influence, and the two exchanged letters on faith and conduct for years. That influence stands as a testament to the enduring impact of His message, which continues to resonate today.</p>
     <p>Grounded in direct inner experience, He articulated the subtle truths of spirituality through His own life, valuable teachings, and influential writings. Chief among them is Shri Atmasiddhi Shastra, a verse work on the nature of the soul and the path to self-realization, which blends deep philosophical insight with practical steps for inner transformation.</p>
   </div>
-  <div class="ifsplit__media ifsplit__media--parallax"><img src="/assets/img/inspiration/if-shrimadji.jpg" alt="Shrimad Rajchandraji" width="1920" height="1080" loading="lazy" decoding="async"></div>
+  <div class="ifsplit__media"><img src="/assets/img/inspiration/if-shrimadji.jpg" alt="Shrimad Rajchandraji" width="1920" height="1080" loading="lazy" decoding="async"></div>
 </section>
 
-<section class="{'ifsplit ifsplit--lav ifsplit--flip ifsplit--founder' if founder_img else 'vu-shell vu-shell--lav'}" aria-labelledby="ifFounder">
-  <div class="{'ifsplit__copy' if founder_img else 'container'} prose">
+<section class="ifsplit ifsplit--lav ifsplit--flip ifsplit--founder" aria-labelledby="ifFounder">
+  <div class="ifsplit__copy prose">
     <h2 class="vu-h" id="ifFounder">Pujya Gurudevshri Rakeshji</h2>
     <h3>Legacy of Wisdom</h3>
     <p>Pujya Gurudevshri Rakeshji is an enlightened visionary, global ambassador of peace, and the founder of Shrimad Rajchandra Mission Dharampur, the spiritual organization from which this movement grew. Following the revered footsteps of Shrimad Rajchandraji, Pujya Gurudevshri carries forward a legacy of timeless wisdom, translating profound spiritual truths into transformative teachings that make spirituality accessible to all.</p>
     <h3>Steady Force of Compassion</h3>
     <p>Through Shrimad Rajchandra Love and Care (SRLC), Pujya Gurudevshri translates compassion into action. Guided by His philosophy of empathy and universal harmony, SRLC is a global organization whose initiatives address critical needs in health care, education, environmental sustainability, and social welfare across many countries. In His teaching, inner clarity and outward kindness are one path: what is understood within flows naturally into care for others.</p>
+  </div>
+  <div class="ifsplit__media ifsplit__media--portrait"><img src="/assets/img/inspiration/{founder_img[0]}" alt="Pujya Gurudevshri Rakeshji" width="{founder_img[1]}" height="{founder_img[2]}" loading="lazy" decoding="async"></div>
+  <div class="ifsplit__more prose">
     <h3>A Movement Reaching America</h3>
     <p>That vision has taken root across the United States and continues to grow. Through SRLC USA, volunteers in communities nationwide carry this spirit of selfless service into action. They serve their own neighborhoods through the 10 Care Program, and they support institutes in India and initiatives around the world.</p>
   </div>
-  {founder_media}
 </section>
 
 <section class="ifvoices" aria-labelledby="ifVoicesTitle">
