@@ -4988,37 +4988,48 @@ img[src$="mb-180.webp"] { object-position: 15% 50%; }
 }
 
 /* ---------- Two-column sections (Jainism, Shrimad Rajchandraji, Pujya
-   Gurudevshri): text on the container edge at the 46rem measure, the photo
-   filling the rest of the row at full section height ---------- */
+   Gurudevshri): text left, photo right, both inside the page container and
+   the section's padding, so the three photos never touch (Naman, Oct 20).
+   Mandir and Shrimadji run the full height of their text block. ---------- */
 .ifsplit {
-  display: grid;
-  grid-template-columns:
-    max(var(--gutter), calc((100% - var(--container-max)) / 2 + var(--gutter)))
-    minmax(0, 46rem) clamp(2.5rem, 4.5vw, 5rem) minmax(clamp(280px, 30vw, 440px), 1fr);
+  --if-edge: max(var(--gutter), calc((100% - var(--container-max)) / 2 + var(--gutter)));
+  display: grid; padding: var(--sec-pad) 0;
+  grid-template-columns: var(--if-edge) minmax(0, 7fr) clamp(2.5rem, 4.5vw, 4.5rem) minmax(0, 5fr) var(--if-edge);
+}
+/* Alternating sides (Naman, Oct 20): mandir left, Shrimadji right, Gurudevshri left */
+@media (min-width: 900px) {
+  .ifsplit--flip { grid-template-columns: var(--if-edge) minmax(0, 5fr) clamp(2.5rem, 4.5vw, 4.5rem) minmax(0, 7fr) var(--if-edge); }
+  .ifsplit--flip .ifsplit__copy { grid-column: 4; grid-row: 1; }
+  .ifsplit--flip .ifsplit__media { grid-column: 2; grid-row: 1; }
 }
 .ifsplit--white { background: #FFFFFF; }
 .ifsplit--lav { background: var(--lav); }
-.ifsplit__copy { grid-column: 2; padding: var(--sec-pad) 0; align-self: center; }
+.ifsplit__copy { grid-column: 2; align-self: center; }
 .ifsplit__copy p, .ifvoices__intro, .ifvoice__cap { text-wrap: pretty; }
 .ifsplit__copy > .vu-h:first-child { margin-top: 0 !important; }
 .ifsplit__copy > :last-child { margin-bottom: 0 !important; }
-.ifsplit__media { grid-column: 4; position: relative; min-height: clamp(420px, 36vw, 640px); background: #E7E3EC; }
+.ifsplit__media { grid-column: 4; position: relative; min-height: clamp(380px, 32vw, 560px); background: #E7E3EC; }
 .ifsplit__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
 /* Temple: the spires stay in frame in the tall column. Gurudevshri: the
    frame crops from the top (background) so his face and lap both stay. */
 .ifsplit__media--temple img { object-position: 16% 50%; }
-.ifsplit__media--portrait img { object-position: 30% 100%; }
-/* Subtle parallax on the two portraits (supplement-zzz-inspiration.js),
+/* Gurudevshri: one 4:5 portrait at a fixed height, top-aligned with the H2;
+   the three subsections run on past it */
+@media (min-width: 900px) {
+  .ifsplit--founder .ifsplit__copy { align-self: start; }
+  .ifsplit__media--portrait { align-self: start; min-height: 0; aspect-ratio: 4 / 5; }
+}
+.ifsplit__media--portrait img { object-position: 50% 30%; }
+/* Subtle parallax on the two portraits (supplement-zzz-parallax.js),
    desktop only; the image overscans the column so the shift never shows an edge */
 .ifsplit__media--parallax { overflow: hidden; }
 @media (min-width: 900px) {
   .ifsplit__media--parallax img { top: -7%; height: 114%; will-change: transform; }
 }
 @media (max-width: 899px) {
-  .ifsplit { grid-template-columns: minmax(0, 1fr); }
-  .ifsplit__media { grid-column: 1; grid-row: 1; min-height: 0; aspect-ratio: 4 / 3; }
+  .ifsplit { grid-template-columns: minmax(0, 1fr); padding: clamp(2.5rem, 8vw, 3.5rem) 0 0; }
+  .ifsplit__media { grid-column: 1; grid-row: 1; min-height: 0; aspect-ratio: 4 / 3; margin: 0 var(--gutter); }
   .ifsplit__media--portrait { aspect-ratio: 4 / 5; }
-  .ifsplit__media--portrait img { object-position: 30% 70%; }
   .ifsplit__copy { grid-column: 1; padding: clamp(2.5rem, 8vw, 3.5rem) var(--gutter) var(--sec-pad); }
 }
 

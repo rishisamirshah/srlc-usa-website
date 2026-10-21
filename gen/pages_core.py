@@ -718,7 +718,7 @@ def render_our_impact(svg_inner):
 
 
 IF_PATH = "/about/inspiration-and-founder/"
-FOUNDER_IMG = ("if-gurudevshri-tall.jpg", 1500, 2270)  # Naman's DSC03898_NJ4.tiff, FOGRA39 -> sRGB via its profile, 4:5 on Gurudevshri alone
+FOUNDER_IMG = ("if-gurudevshri.jpg", 1600, 2000)  # Naman's DSC03898_NJ4.tiff, FOGRA39 -> sRGB via its profile, 4:5 on Gurudevshri alone
 
 # Voices of Respect (Naman's Inspiration and Founder doc, Oct 19): five
 # speakers, Morari Bapu removed; quotes unchanged; each slide captions the
@@ -764,7 +764,7 @@ def render_inspiration():
   <img class="ifhero__figures" src="/assets/img/inspiration/if-hero-figures.png" alt="Lord Mahavir, Shrimad Rajchandraji, and Pujya Gurudevshri Rakeshji" width="833" height="903" loading="eager" fetchpriority="high" decoding="async">
 </section>
 
-<section class="ifsplit ifsplit--lav ifsplit--first" aria-labelledby="ifRoots">
+<section class="ifsplit ifsplit--lav ifsplit--flip ifsplit--first" aria-labelledby="ifRoots">
   <div class="ifsplit__copy prose">
     <h2 class="vu-h" id="ifRoots">Jainism and Lord Mahavir</h2>
     <p>Jainism, one of the world&rsquo;s oldest spiritual philosophies, teaches enduring, universal principles of love and kindness. Its teachings have shaped the lives of millions across the world and remain a living source of inspiration today.</p>
@@ -783,7 +783,7 @@ def render_inspiration():
   <div class="ifsplit__media ifsplit__media--parallax"><img src="/assets/img/inspiration/if-shrimadji.jpg" alt="Shrimad Rajchandraji" width="1920" height="1080" loading="lazy" decoding="async"></div>
 </section>
 
-<section class="{'ifsplit ifsplit--lav' if founder_img else 'vu-shell vu-shell--lav'}" aria-labelledby="ifFounder">
+<section class="{'ifsplit ifsplit--lav ifsplit--flip ifsplit--founder' if founder_img else 'vu-shell vu-shell--lav'}" aria-labelledby="ifFounder">
   <div class="{'ifsplit__copy' if founder_img else 'container'} prose">
     <h2 class="vu-h" id="ifFounder">Pujya Gurudevshri Rakeshji</h2>
     <h3>Legacy of Wisdom</h3>
