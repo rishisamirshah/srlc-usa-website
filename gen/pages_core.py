@@ -3,7 +3,7 @@ import stats as S
 import os
 import re
 from shell import (page, ph, page_header, flat_cta, trust_bar, impact_stats, pinned,
-                   recognition_chips, filler, photo, img_tag, story_split, face_style, face_bg, EMAIL, PHONE, EIN_LINE, IG, FB)
+                   recognition_chips, filler, photo, img_tag, story_split, stat_band, face_style, face_bg, EMAIL, PHONE, EIN_LINE, IG, FB)
 import data_naman as NAMAN
 from data_states import STATES, CAMPAIGNS
 from data_cares import CARES
@@ -630,105 +630,121 @@ def render_who_we_are():
         "/about/who-we-are/", body)
 
 
+# Our Impact timeline (Naman, Oct 22): (marker year, eyebrow, title, text, photo).
+# Milestone photos are still to come from Naman; until then a slide shows its
+# year large on lavender.
 TIMELINE = [
-    ("2006 to 2008", "Mobile care begins", "A mobile dispensary begins carrying medical care to rural doorsteps, and a mid-day meal program gives families one more reason to send their children to school."),
-    ("2009 to 2011", "Gurukul opens", "Shrimad Rajchandra Gurukul opens in Karanjveri, Gujarat, and a new neonatal intensive care unit begins providing critical care for premature newborns."),
-    ("2015", "First Love and Care Walk", "New York City hosts SRLC&rsquo;s first Love and Care Walk, with more than 550 participants."),
-    ("2016", "Vidyapeeth opens", "Shrimad Rajchandra Vidyapeeth opens as the first science college serving 238 villages of South Gujarat, and the Skill Development Center begins vocational training for tribal youth."),
-    ("2019", "GuideStar Platinum", "GuideStar awards SRLC its Platinum Seal for the highest level of transparency and accountability."),
-    ("2020", "UN recognition", "The United Nations grants SRLC Special Consultative Status. Vidyapeeth and Gurukul earn ISO 9001 and ISO 29990 certification."),
-    ("2021", "Pandemic relief", "COVID-19 relief reaches 50 cities on five continents, supporting 8.85M+ lives."),
-    ("2022", "The hospital opens", "The 250-bed Shrimad Rajchandra Hospital and Research Center opens, and its surgeons perform the region&rsquo;s first open-heart cardiothoracic surgery."),
-    ("2023", "NABH, and Nairobi", "The hospital earns NABH accreditation within its first year. In Nairobi, Kenya, a free eye and ENT medical camp treats 7,500+ patients."),
-    ("2024", "Mission Africa launches", "Mission Africa launches across 16 African nations. A mega-medical camp in Dharampur serves 25,000+ people, and US centers deliver 90,000+ educational items to 18,000+ students."),
+    ("2006", "2006 to 2008", "Mobile care begins", "A mobile dispensary begins carrying medical care to rural doorsteps, and a mid-day meal program gives families one more reason to send their children to school.", None),
+    ("2009", "2009 to 2011", "Gurukul opens", "Shrimad Rajchandra Gurukul opens in Karanjveri, Gujarat, and a new neonatal intensive care unit begins providing critical care for premature newborns.", None),
+    ("2015", "2015", "First Love and Care Walk", "New York City hosts SRLC&rsquo;s first Love and Care Walk, with more than 550 participants.", None),
+    ("2016", "2016", "Vidyapeeth opens", "Shrimad Rajchandra Vidyapeeth opens as a science college serving the villages of South Gujarat, and the Skill Development Center begins vocational training for tribal youth.", None),
+    ("2019", "2019", "GuideStar Platinum", "GuideStar awards SRLC its Platinum Seal for the highest level of transparency and accountability.", None),
+    ("2020", "2020", "UN recognition", "The United Nations grants SRLC Special Consultative Status. Vidyapeeth and Gurukul earn ISO 9001 and ISO 29990 certification.", None),
+    ("2021", "2021", "Pandemic relief", "COVID-19 relief reaches 50 cities on five continents, supporting 8.85M+ lives.", None),
+    ("2022", "2022", "The hospital opens", "The 250-bed Shrimad Rajchandra Hospital and Research Center opens, and its surgeons perform the region&rsquo;s first open-heart cardiothoracic surgery.", None),
+    ("2023", "2023", "NABH, and Nairobi", "The hospital earns NABH accreditation within its first year. In Nairobi, Kenya, a free eye and ENT medical camp treats 7,500+ patients.", None),
+    ("2024", "2024", "Mission Africa launches", "Mission Africa launches across 16 African nations. A mega-medical camp in Dharampur serves 25,000+ people, and US centers deliver 90,000+ educational items to 18,000+ students.", None),
 ]
 
 
+def impact_timeline():
+    """Interactive milestone timeline: a year rail (tabs) over one slide at a
+    time, photo left and copy right, prev/next arrows and an "x of n" counter.
+    Every slide shares one grid cell so switching never changes the section's
+    height. Behavior in supplement-zzz-timeline.js, styles in supplement-zzz-impact.css."""
+    n = len(TIMELINE)
+    tabs, panels = [], []
+    for i, (yr, eyebrow, title, text, img) in enumerate(TIMELINE):
+        on = i == 0
+        tabs.append(f'<button class="itl__yr" type="button" role="tab" id="itl-t{i + 1}" aria-controls="itl-p{i + 1}" '
+                    f'aria-selected="{"true" if on else "false"}" tabindex="{0 if on else -1}">'
+                    f'<span class="itl__sq" aria-hidden="true"></span><span class="itl__lbl">{yr}</span></button>')
+        media = img_tag(img) if img else f'<div class="itl__ph" aria-hidden="true">{yr}</div>'
+        panels.append(f"""<div class="itl__panel{' is-on' if on else ''}" role="tabpanel" id="itl-p{i + 1}" aria-labelledby="itl-t{i + 1}"{'' if on else ' aria-hidden="true" inert'}>
+      <div class="itl__media">{media}</div>
+      <div class="itl__copy">
+        <p class="itl__eyebrow">{eyebrow}</p>
+        <h3 class="itl__title">{title}</h3>
+        <p class="itl__text">{text}</p>
+        <div class="itl__nav">
+          <button class="itl__arrow" type="button" data-step="-1" aria-label="Previous milestone"{' disabled' if i == 0 else ''}><span aria-hidden="true">&larr;</span></button>
+          <button class="itl__arrow" type="button" data-step="1" aria-label="Next milestone"{' disabled' if i == n - 1 else ''}><span aria-hidden="true">&rarr;</span></button>
+          <span class="itl__count">{i + 1} of {n}</span>
+        </div>
+      </div>
+    </div>""")
+    return f"""<div class="itl" style="--i:0;--n:{n}">
+      <div class="itl__scroll">
+        <div class="itl__track" role="tablist" aria-label="Milestones by year">
+          <span class="itl__rail" aria-hidden="true"></span><span class="itl__fill" aria-hidden="true"></span>
+          {"".join(tabs)}
+        </div>
+      </div>
+      <div class="itl__panels">
+    {"".join(panels)}
+      </div>
+    </div>"""
+
+
 def render_our_impact(svg_inner):
-    nodes = "".join(f"""<li class="reveal" data-stagger="{i % 4 + 1}">
-      <span class="ft-year">{y}</span>
-      <h3 class="ft-name">{t}</h3>
-      <p class="ft-body">{b}</p>
-    </li>""" for i, (y, t, b) in enumerate(TIMELINE))
-    # the Our Impact tab's own labels and order ("globally" on every figure, per A4)
-    six = [(S.LIVES, "lives touched globally"), (S.PATIENTS, "patients treated globally"),
-           (S.STUDENTS, "students reached globally"), (S.HUMANITARIAN, "reached through Humanitarian Care globally"),
+    six = [(S.LIVES, "lives touched globally"),
+           (S.PATIENTS, "patients treated globally through Health Care initiatives"),
+           (S.STUDENTS, "students supported globally"),
+           (S.HUMANITARIAN, "reached globally through Humanitarian Care"),
            (S.ANIMALS, "animals saved, treated, or rehabilitated globally"),
-           (S.EMERGENCY, "supported through Emergency Relief Care globally")]
+           (S.EMERGENCY, "supported globally through Emergency Relief Care")]
+    # the US section is gone (Naman, Oct 22); its photo claim stays so the
+    # automatic picks on every later page keep their photos
+    photo("impact-us", ["us-food+alt:sandwiches", "us-food+us", "volunteers+us"], "community", min_w=1200)
+    caps = {"Candid Seal of Transparency": "Candid Gold Seal of Transparency, 2025",
+            "GreatNonprofits Top‑Rated, 2024": "GreatNonprofits Top‑Rated, 2024"}
 
     body = page_header(
         "About Us",
-        "Our impact",
-        f"The work of Shrimad Rajchandra Love and Care began with volunteers bringing medicine to families in rural villages. Over two decades, it has grown into a global movement that has touched {S.LIVES} lives globally.",
+        "Our Impact",
         image="/assets/img/photos/awards.jpg",
-    ) + f"""
-<section class="vu-shell vu-shell--lav vu-shell--first">
-  <div class="container">
-    <h2 class="vu-h reveal">Global results</h2>
-    <p class="vu-lead">SRLC USA is one chapter of a global movement carried largely by volunteers. The figures below reflect the movement&rsquo;s worldwide reach and behind them are individual people whose circumstances changed because someone was in a position to help.</p>
-    <div class="mt-6">{impact_stats(six, cols=3)}</div>
-  </div>
-</section>
-
-<section class="vu-shell vu-shell--cream">
+    ) + stat_band(
+        "Shrimad Rajchandra Love and Care began with volunteers bringing medicine to families in rural villages. The figures below reflect the global organization&rsquo;s reach, and behind each one are people whose circumstances changed because someone was in a position to help.",
+        six, pinned(160)) + f"""
+<section class="vu-shell vu-shell--cream oi-recog">
   <div class="container">
     <div class="vu-split">
       <div class="vu-split__copy">
         <h2 class="vu-h reveal">Independent recognition and accreditation</h2>
-        <p>The movement received Special Consultative Status from the United Nations Economic and Social Council in 2020, and GuideStar awarded its Platinum Seal for transparency and accountability in 2019. Independent recognition matters because it does not depend on our own account of the work. The 250-bed Shrimad Rajchandra Hospital and Research Center earned accreditation from the National Accreditation Board for Hospitals and Healthcare Providers (NABH) within its first year of operation.</p>
+        <p>The movement received Special Consultative Status from the United Nations Economic and Social Council in 2020, and Candid awarded its Gold Seal of Transparency in 2025. Independent recognition matters because it does not depend on our own account of the work. The 250-bed Shrimad Rajchandra Hospital and Research Center earned accreditation from the National Accreditation Board for Hospitals and Healthcare Providers (NABH) within its first year of operation.</p>
       </div>
       <div class="vu-split__photo">{img_tag(pinned(97))}</div>
     </div>
-    <div class="recognition-cluster fin-badges mt-8">{recognition_chips(links=True)}</div>
+    <div class="recognition-cluster fin-badges mt-8">{recognition_chips(links=True, caps=caps)}</div>
   </div>
 </section>
 
-<section class="vu-shell vu-shell--lav">
-  <div class="container">
-    <h2 class="vu-h reveal">An operating model built for efficiency</h2>
-    <p class="maxw-70">Because the programs are carried by experienced professionals and volunteers, administration costs remain low, and each initiative is managed against defined performance indicators. In practical terms, this means a greater share of every contribution reaches the programs it was intended to support.</p>
-  </div>
-</section>
+{story_split("An operating model built for efficiency", [
+    "Because the programs are carried by experienced professionals and volunteers, administration costs remain low, and each initiative is managed against defined performance indicators. In practical terms, this means a greater share of every contribution reaches the programs it was intended to support."],
+    pinned(30), tone="lav", mod="opm",
+    extra='<p class="storysplit__cta"><a class="btn btn--primary" href="/about/financials/">See Our Financials</a></p>')}
 
-<section class="vu-shell vu-shell--cream">
+<section class="vu-shell vu-shell--cream oi-growth" aria-labelledby="oi-growth">
   <div class="container">
-    <div class="vu-split">
-      <div class="vu-split__copy">
-        <h2 class="vu-h reveal">Results in the United States</h2>
-        <p>In the United States, volunteers organize recurring service programs in cities from Los Angeles to New York, preparing and sharing meals, assembling school supplies, and holding community care events with established local partners. In 2024, US centers distributed 90,000+ educational items, reaching 18,000+ students.</p>
-      </div>
-      <div class="vu-split__photo">{img_tag(photo("impact-us", ["us-food+alt:sandwiches", "us-food+us", "volunteers+us"], "community", min_w=1200))}</div>
-    </div>
-    <div class="mt-8">{editorial_map(svg_inner)}</div>
-    <p class="mt-6"><a class="btn btn--secondary" href="/our-work/united-states/">Explore the US chapters</a></p>
-  </div>
-</section>
-
-<section class="vu-shell vu-shell--lav">
-  <div class="container">
-    <h2 class="vu-h reveal">Two decades of documented growth</h2>
+    <h2 class="vu-h" id="oi-growth">Two decades of documented growth</h2>
     <p class="vu-lead">The milestones below are drawn from the movement&rsquo;s published record. They trace twenty years of steady growth, from volunteers delivering medicine to rural doorsteps to permanent institutes that now serve millions.</p>
-    <div class="tlwrap">
-      <ol class="founder-timeline vu-tl-rail">{nodes}</ol>
-      <figure class="tlwrap__photo">{img_tag(pinned(160))}</figure>
-    </div>
+    {impact_timeline()}
   </div>
 </section>
 
-<section class="vu-shell vu-shell--cream">
+<section class="vu-shell vu-shell--lav">
   <div class="container">
     <div class="vu-split vu-split--story">
     <div class="vu-split__copy">
     <h2 class="vu-h reveal">What these figures mean in practice</h2>
     <p class="vu-lead">Laxibhai, a 52-year-old farmer, had been living with triple-vessel heart disease, and the surgery he needed was beyond his family&rsquo;s means. He received the region&rsquo;s first cardiothoracic bypass at Shrimad Rajchandra Hospital at no cost, and he has since returned home to his fields. His recovery is one outcome among millions, and it is the kind of outcome every figure on this page represents.</p>
-    <p class="mt-6"><a class="textlink" href="/about/financials/">Read the full record on the Financials page<span aria-hidden="true"> &rarr;</span></a></p>
     </div>
     <div class="vu-split__photo vu-split__photo--portrait">{img_tag(NAMAN.STORY)}</div>
     </div>
   </div>
 </section>
 
-{flat_cta("Support work you can verify", "Each result presented here belongs to a program that can be examined, visited, and audited, and each of those programs welcomes new support. We invite you to explore the work, or to read the record for yourself.", "Explore the 10 Care Program", "/our-work/10-care-program/")}
+{flat_cta("Support work you can verify", "Each result presented here belongs to a program that can be examined, visited, and audited, and each of those programs welcomes new support. We invite you to explore the work, or to read the record for yourself.", "Explore the 10 Care Program", "/our-work/10-care-program/", second=("Donate", "/donate/"))}
 """
     return page(
         "Our Impact | Verified Global Results | SRLC USA",

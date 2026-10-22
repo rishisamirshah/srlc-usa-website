@@ -66,4 +66,5 @@ FACE_POS = {
 # section photos get this too (story_split mod="wwa").
 FACE_FIT = {
     "/assets/img/mb/mb-357.webp",   # Humanitarian Care, Indianapolis sandwich line
+    "/assets/img/mb/mb-30.webp",    # Our Impact operating model band, supply-kit table
 }

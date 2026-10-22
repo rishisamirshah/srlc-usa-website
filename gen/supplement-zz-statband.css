@@ -1,0 +1,18 @@
+/* Stat band (Naman, Oct 22): one photo under an 80% dark purple wash, a
+   centered white lead-in, then the figures in a centered 3x2 grid of white
+   Newsreader numbers (~68px) over white labels. No dividers. Markup from
+   stat_band() in shell.py. Loads in both bundles so the homepage and the Care
+   pages can use it later. */
+.statband { position: relative; isolation: isolate; overflow: hidden; background: #41214E; color: #FFFFFF; text-align: center; padding-block: clamp(4rem, 7vw, 6.5rem); }
+.statband__bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+.statband::before { content: ""; position: absolute; inset: 0; z-index: -1; background: rgba(65, 33, 78, 0.8); }
+.statband__lead { max-width: 48rem; margin: 0 auto; font-family: var(--font-body); font-size: clamp(1.06rem, 1.35vw, 1.22rem); line-height: 1.7; color: #FFFFFF; text-wrap: pretty; }
+.statband__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(2.5rem, 4vw, 3.5rem) clamp(1.5rem, 3vw, 3rem); max-width: 64rem; margin: clamp(2.75rem, 4.5vw, 4rem) auto 0; }
+.statband__stat { display: flex; flex-direction: column; align-items: center; }
+.statband__n { margin: 0; font-family: var(--font-display); font-size: clamp(3rem, 4.75vw, 4.25rem); font-weight: 400; line-height: 1; letter-spacing: -0.01em; color: #FFFFFF; font-variant-numeric: lining-nums; }
+.statband__l { max-width: 17rem; margin: 0.8rem 0 0; font-family: var(--font-body); font-size: 1rem; line-height: 1.45; color: #FFFFFF; text-wrap: balance; }
+@media (max-width: 640px) {
+  .statband__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.25rem 1.25rem; }
+  .statband__n { font-size: clamp(2.35rem, 11vw, 2.9rem); }
+  .statband__l { font-size: 0.94rem; }
+}

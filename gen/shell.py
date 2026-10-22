@@ -516,7 +516,7 @@ def ph(label, cls="", style="", tag=None):
 
 # Curated Media Bank hero per page, keyed by the page's H1.
 HERO_SLOTS = {
-    "Our impact": "impact-hero",
+    "Our Impact": "impact-hero",
     "The management team leading SRLC USA&rsquo;s work": "management-hero",
     "Financials": "financials-hero",
     "Volunteer with SRLC USA": "volunteer-hero",
@@ -658,6 +658,27 @@ def flat_cta(h2, body, label, href="/donate/", second=None):
 </section>"""
 
 
+def stat_band(lead, stats, img, label="Global results"):
+    """Full-width stat band (Naman, Oct 22): one photo under an 80% dark purple
+    wash, a centered lead-in, then the figures in a centered 3x2 grid of white
+    Newsreader numbers over white labels. Our Impact first; the homepage and
+    Care pages pick it up later. Styles in supplement-zz-statband.css (both bundles)."""
+    src, w, h, _ = img
+    # live face-safe crop for whatever shape the band takes (supplement-zzz-facefit.js)
+    fb = face_boxes(src)
+    crop = f' data-faces="{fb}" data-pos="50 50"' if fb else (f' style="{face_style(src)}"' if face_style(src) else "")
+    cells = "".join(
+        f'<div class="statband__stat"><p class="statband__n count-up">{v}</p><p class="statband__l">{l}</p></div>'
+        for v, l in stats)
+    return f"""<section class="statband" aria-label="{label}">
+  <img class="statband__bg"{crop} src="{src}" alt="" width="{w}" height="{h}" loading="lazy" decoding="async">
+  <div class="container statband__inner">
+    <p class="statband__lead">{lead}</p>
+    <div class="statband__grid">{cells}</div>
+  </div>
+</section>"""
+
+
 def impact_stats(stats, cols=None):
     cells = "".join(
         f'<div class="impact-stat reveal" data-stagger="{i % 4 + 1}"><p class="impact-stat__n count-up">{v}</p><p class="impact-stat__l">{l}</p></div>'
@@ -681,12 +702,15 @@ BADGE_LINKS = {
 }
 
 
-def recognition_chips(links=False, holders_only=False):
+def recognition_chips(links=False, holders_only=False, caps=None):
     """Flat one-row band of the two official badge images with captions, plus the ECOSOC line,
     thin dividers, no cards. Keeps the recognition-cluster__items class so
-    existing wrappers keep working."""
+    existing wrappers keep working. `caps` swaps in one-line captions (no holder
+    label), keyed by the standard caption."""
     def badge(src, w, h, alt, a, b):
-        if holders_only:
+        if caps:
+            cap = f'<figcaption class="recognition-badge__cap">{caps.get(b, b)}</figcaption>'
+        elif holders_only:
             # the footer seal module: a caption only where the holder is not SRLC USA
             cap = f'<figcaption class="recognition-badge__cap">{a}</figcaption>' if a != "SRLC USA" else ""
         else:
