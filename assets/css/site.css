@@ -3470,6 +3470,14 @@ html.no-js .donate-page .faq-item__body[hidden] { display: block; }
   --sec-lav-deep: #E7DDF0;
 }
 
+/* ---------- 0.0 Face-safe crops (Naman, Oct 22: no face cut off in any photo,
+   at any width). Per-photo positions live in gen/data_faces.py, solved by
+   gen/qa; they ride on the img as --fp (all widths), --fp-md (481-860px) and
+   --fp-sm (phones) and win over any component's own object-position. ---------- */
+img[style*="--fp:"] { object-position: var(--fp) !important; }
+@media (max-width: 860px) { img[style*="--fp-md:"] { object-position: var(--fp-md) !important; } }
+@media (max-width: 480px) { img[style*="--fp-sm:"] { object-position: var(--fp-sm) !important; } }
+
 /* ---------- 0.1 Border radius: zero, site-wide. Pills, dots and the Who We Are
    numbered circles (Naman, Oct 22) excepted. ---------- */
 *:not(.btn):not(.dot):not(.qd):not(.cf-pin__dot):not(.swatch):not(.hero-carousel__arrow):not(.progressrail a):not(.quote-wall__btn):not(.howwork__num) {
@@ -4064,7 +4072,7 @@ main > section + section { margin-top: 0; }
 .storysplit { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: stretch; }
 .storysplit--white { background: #FFFFFF; }
 .storysplit--lav { background: var(--color-lavender-white); }
-.storysplit__media { position: relative; min-height: clamp(400px, 44vw, 680px); background: #E7E3EC; }
+.storysplit__media { position: relative; overflow: hidden; min-height: clamp(400px, 44vw, 680px); background: #E7E3EC; }
 .storysplit__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .storysplit__copy {
   display: flex; flex-direction: column; justify-content: center; max-width: 680px;
@@ -4968,6 +4976,27 @@ img[src$="mb-180.webp"] { object-position: 15% 50%; }
 .site-footer__legal-block p:first-child { font-size: 0.825rem; }
 .site-footer__cols li a { display: inline-block; padding-block: 10px; margin-block: -10px; }
 
+/* Phone heroes are one fixed 39:64 box (640px tall at 390) and tablet heroes a
+   square, so a photo's crop is the same on every phone and every tablet and
+   gen/qa can keep every face in it (Naman, Oct 22) */
+@media (max-width: 480px) { .pagehead .container { min-height: calc(100vw * 64 / 39); } }
+@media (min-width: 481px) and (max-width: 860px) { .pagehead .container { min-height: 100vw; } }
+
+
+/* ---- supplement-zz-type.css ---- */
+/* Eyebrows, site-wide (Naman, Oct 22): 15px, 0.08em letter-spacing, weight
+   500, the spec the Inspiration hero kicker already follows. Loads after
+   supplement-zz-home.css and supplement-zz-refine.css, so it holds on the
+   homepage and every inner page. Case and color stay as each section has them. */
+.pagehead__eyebrow, .pagehead__eyebrow a, .hero-carousel__eyebrow, .ifhero__kicker,
+.storysplit__eyebrow, .howwork__eyebrow, .lotusband__eyebrow, .leadsec__eyebrow, .storyband__eyebrow,
+.takepart__eyebrow, .nlrow__eyebrow, .section-eyebrow, .donate-hero__eyebrow, .donate-strip__eyebrow,
+.way-card__eyebrow, .care-section__eyebrow, .mission-split__eyebrow, .institutes-section__eyebrow,
+.named-story__eyebrow, .edmap-kicker, .chapter-finder__search-title, .zipline label,
+.donate-page p.section-eyebrow, .donate-page p.donate-hero__eyebrow, .donate-page p.donate-strip__eyebrow, .donate-page .way-card__eyebrow {
+  font-size: 15px !important; letter-spacing: 0.08em !important; font-weight: 500 !important;
+}
+
 
 /* ---- supplement-zzz-inspiration.css ---- */
 /* Inspiration and Founder (Naman's page doc, Oct 19). Inner pages only, loads
@@ -5083,33 +5112,29 @@ img[src$="mb-180.webp"] { object-position: 15% 50%; }
   .pagehead--wwa .container { min-height: var(--wwa-h); }
   .pagehead--wwa .pagehead__img { object-position: 50% clamp(var(--wwa-h) - 75vw, 0.07 * var(--wwa-h) - 0.366 * 75vw, 0px); }
 }
-@media (min-width: 600px) and (max-width: 860px) {
+@media (min-width: 481px) and (max-width: 860px) {
   .pagehead--wwa .container { min-height: 100vw; }
   .pagehead--wwa .pagehead__img { object-position: 55% 50%; }
 }
-@media (max-width: 599px) {
+@media (max-width: 480px) {
   /* zoomed 1.25x from the bottom so most of the ceiling leaves the frame */
   .pagehead--wwa .container { min-height: calc(100vw * 64 / 39); }
   .pagehead--wwa .pagehead__img { object-position: 57.5% 50%; transform: scale(1.25); transform-origin: 50% 100%; }
 }
 
 /* ---------- Alternating sections (Who We Are, What We Support, Our
-   Communities). Side by side from 1280px: the row is as tall as the photo at
-   half width or the copy, whichever is taller, so the photo shows as much of
-   itself as it can; the copy fills its half with equal padding on both sides
-   and sits centered against the photo. Below 1280px the copy is too tall for
-   a half-width photo to keep every face, so the section stacks: copy on the
+   Communities). Side by side from 1280px (round 3): all three are one height,
+   the tallest one's (equal grid rows in .wwasplits), the text is a ~520px
+   column centered in its half with the same space on both sides, and the
+   photo fills its half. Below 1280px the section stacks: copy on the
    container edge, then the photo full width. Each photo carries its own crop
-   (--ss-pos side by side, --ss-pos-sm stacked) so no face is cut off. ---------- */
+   (--ss-pos side by side, --ss-pos-sm stacked), solved so no face is cut off. ---------- */
 .storysplit--wwa .storysplit__media img { object-position: var(--ss-pos, 50% 50%); }
 @media (min-width: 1280px) {
-  /* the photo's own height at half width is the row's minimum (a padding
-     spacer, since aspect-ratio would widen a stretched cell) */
+  .wwasplits { display: grid; grid-auto-rows: 1fr; }
   .storysplit--wwa .storysplit__media { min-height: 0; }
-  .storysplit--wwa .storysplit__media::before { content: ""; display: block; padding-top: calc(100% / (var(--ar))); }
   .storysplit.storysplit--wwa .storysplit__copy {
-    --ss-pad: clamp(2rem, 3.4vw, 5rem);
-    padding: clamp(2.25rem, 10vw - 90px, 4.5rem) max(var(--ss-pad), calc((100% - 38rem) / 2)) !important;
+    padding: clamp(3rem, 5vw, 4.5rem) max(2rem, calc((100% - 520px) / 2)) !important;
     justify-content: center;
   }
 }
@@ -5129,7 +5154,6 @@ img[src$="mb-180.webp"] { object-position: 15% 50%; }
   margin: 0 0 1rem; font-family: var(--font-body); font-size: 0.74rem; font-weight: 600;
   letter-spacing: 0.24em; text-transform: uppercase; color: var(--color-srlc-purple);
 }
-.storysplit__copy .storysplit__trust { margin-top: 1.4rem; font-size: 0.9rem; line-height: 1.5; color: var(--color-ink-muted); }
 
 /* What We Support: three equal stat columns, top-aligned so the figures share
    one line at every width; the three pills run on one row where they fit */
@@ -5140,8 +5164,9 @@ img[src$="mb-180.webp"] { object-position: 15% 50%; }
 .wwastats + .pillrow { margin-top: 2rem; }
 .storysplit--wwa .pillrow--wrap { display: flex; flex-wrap: wrap; gap: 0.7rem 0.6rem; }
 @media (min-width: 1280px) {
-  .storysplit--wwa .pillrow--wrap { gap: 0.7rem 0.45rem; }
-  .storysplit--wwa .pillrow--wrap .btn { padding-inline: 1rem; }
+  /* one row inside the 520px column */
+  .storysplit--wwa .pillrow--wrap { gap: 0.7rem 0.375rem; }
+  .storysplit--wwa .pillrow--wrap .btn { padding-inline: 0.8rem; font-size: 13.5px; }
 }
 
 /* ---------- How We Work: charity:water "Our approach" layout. Centered label
@@ -5174,6 +5199,10 @@ img[src$="mb-180.webp"] { object-position: 15% 50%; }
 .howwork--center .recognition-ecosoc { margin-inline: auto; max-width: 40rem; }
 @media (max-width: 1199px) { .howwork--center .howwork__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3rem clamp(1.5rem, 4vw, 3rem); } }
 @media (max-width: 640px) { .howwork--center .howwork__grid { grid-template-columns: minmax(0, 1fr); gap: 2.6rem; } }
+
+/* ---------- Why We Serve: half the band's old top and bottom space (round 3) ---------- */
+.lotusband--wwa { min-height: 0 !important; padding-block: clamp(2.75rem, 4.2vw, 4rem); }
+@media (max-width: 640px) { .lotusband--wwa { padding-top: 2.5rem !important; padding-bottom: 90px !important; } }
 
 .scroll-progress { position: fixed; top: 0; left: 0; height: 3px; width: 0;
   background: var(--color-warm-orange); z-index: 300; pointer-events: none; }

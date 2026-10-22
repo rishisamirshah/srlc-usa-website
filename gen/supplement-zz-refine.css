@@ -192,7 +192,7 @@
 .storysplit { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: stretch; }
 .storysplit--white { background: #FFFFFF; }
 .storysplit--lav { background: var(--color-lavender-white); }
-.storysplit__media { position: relative; min-height: clamp(400px, 44vw, 680px); background: #E7E3EC; }
+.storysplit__media { position: relative; overflow: hidden; min-height: clamp(400px, 44vw, 680px); background: #E7E3EC; }
 .storysplit__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .storysplit__copy {
   display: flex; flex-direction: column; justify-content: center; max-width: 680px;
@@ -1095,3 +1095,9 @@ img[src$="mb-180.webp"] { object-position: 15% 50%; }
 /* Footer: copyright line at the legal block's scale; 44px tap height on column links */
 .site-footer__legal-block p:first-child { font-size: 0.825rem; }
 .site-footer__cols li a { display: inline-block; padding-block: 10px; margin-block: -10px; }
+
+/* Phone heroes are one fixed 39:64 box (640px tall at 390) and tablet heroes a
+   square, so a photo's crop is the same on every phone and every tablet and
+   gen/qa can keep every face in it (Naman, Oct 22) */
+@media (max-width: 480px) { .pagehead .container { min-height: calc(100vw * 64 / 39); } }
+@media (min-width: 481px) and (max-width: 860px) { .pagehead .container { min-height: 100vw; } }

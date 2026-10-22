@@ -2,7 +2,7 @@
 Per-state stat bands are omitted (CLAUDE.md banned list) and flagged in the
 build log. End-of-page CTAs render as flat sections, never banners."""
 import stats as S
-from shell import (page, ph, page_header, flat_cta, filler, filler_entry, story_split, photo_alt, photo,
+from shell import (page, ph, page_header, flat_cta, filler, filler_entry, story_split, photo_alt, photo, face_bg,
                    img_tag, pick_distinct, photo_src_tag, pinned)
 from data_media import slot
 from data_states import STATES, CAMPAIGNS, US_HERO_BODY
@@ -324,7 +324,7 @@ def render_tencare_hub():
     """Hero, the tab's intro as its own section, then the ten Cares as photo
     tiles in the homepage grid (no numbers, no icons; one-liner on hover,
     accordion rows below 1024). Each tile links to its Care page."""
-    tiles = "".join(f"""<a class="caretile caretile--hub" href="/our-work/10-care-program/{c["slug"]}/" style="background-image:url('{CARE_TILES[c["slug"]]}')">
+    tiles = "".join(f"""<a class="caretile caretile--hub" href="/our-work/10-care-program/{c["slug"]}/" style="background-image:url('{CARE_TILES[c["slug"]]}'){";" + face_bg(CARE_TILES[c["slug"]]) if face_bg(CARE_TILES[c["slug"]]) else ""}">
         <span class="caretile__overlay" aria-hidden="true"></span>
         <span class="caretile__chip"><span class="caretile__name">{c["name"]}</span></span>
         <span class="caretile__hover"><span class="caretile__hover-h">{c["name"]}</span><span class="caretile__hover-p">{c["one"]}</span><span class="caretile__more">Explore {c["name"]}<span aria-hidden="true">&rarr;</span></span></span>

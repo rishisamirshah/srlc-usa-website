@@ -1,3 +1,4 @@
 .netlify/
 __pycache__/
 gen/__pycache__/
+gen/qa/.bin/

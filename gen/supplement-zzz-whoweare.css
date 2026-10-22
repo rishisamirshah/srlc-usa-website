@@ -14,33 +14,29 @@
   .pagehead--wwa .container { min-height: var(--wwa-h); }
   .pagehead--wwa .pagehead__img { object-position: 50% clamp(var(--wwa-h) - 75vw, 0.07 * var(--wwa-h) - 0.366 * 75vw, 0px); }
 }
-@media (min-width: 600px) and (max-width: 860px) {
+@media (min-width: 481px) and (max-width: 860px) {
   .pagehead--wwa .container { min-height: 100vw; }
   .pagehead--wwa .pagehead__img { object-position: 55% 50%; }
 }
-@media (max-width: 599px) {
+@media (max-width: 480px) {
   /* zoomed 1.25x from the bottom so most of the ceiling leaves the frame */
   .pagehead--wwa .container { min-height: calc(100vw * 64 / 39); }
   .pagehead--wwa .pagehead__img { object-position: 57.5% 50%; transform: scale(1.25); transform-origin: 50% 100%; }
 }
 
 /* ---------- Alternating sections (Who We Are, What We Support, Our
-   Communities). Side by side from 1280px: the row is as tall as the photo at
-   half width or the copy, whichever is taller, so the photo shows as much of
-   itself as it can; the copy fills its half with equal padding on both sides
-   and sits centered against the photo. Below 1280px the copy is too tall for
-   a half-width photo to keep every face, so the section stacks: copy on the
+   Communities). Side by side from 1280px (round 3): all three are one height,
+   the tallest one's (equal grid rows in .wwasplits), the text is a ~520px
+   column centered in its half with the same space on both sides, and the
+   photo fills its half. Below 1280px the section stacks: copy on the
    container edge, then the photo full width. Each photo carries its own crop
-   (--ss-pos side by side, --ss-pos-sm stacked) so no face is cut off. ---------- */
+   (--ss-pos side by side, --ss-pos-sm stacked), solved so no face is cut off. ---------- */
 .storysplit--wwa .storysplit__media img { object-position: var(--ss-pos, 50% 50%); }
 @media (min-width: 1280px) {
-  /* the photo's own height at half width is the row's minimum (a padding
-     spacer, since aspect-ratio would widen a stretched cell) */
+  .wwasplits { display: grid; grid-auto-rows: 1fr; }
   .storysplit--wwa .storysplit__media { min-height: 0; }
-  .storysplit--wwa .storysplit__media::before { content: ""; display: block; padding-top: calc(100% / (var(--ar))); }
   .storysplit.storysplit--wwa .storysplit__copy {
-    --ss-pad: clamp(2rem, 3.4vw, 5rem);
-    padding: clamp(2.25rem, 10vw - 90px, 4.5rem) max(var(--ss-pad), calc((100% - 38rem) / 2)) !important;
+    padding: clamp(3rem, 5vw, 4.5rem) max(2rem, calc((100% - 520px) / 2)) !important;
     justify-content: center;
   }
 }
@@ -60,7 +56,6 @@
   margin: 0 0 1rem; font-family: var(--font-body); font-size: 0.74rem; font-weight: 600;
   letter-spacing: 0.24em; text-transform: uppercase; color: var(--color-srlc-purple);
 }
-.storysplit__copy .storysplit__trust { margin-top: 1.4rem; font-size: 0.9rem; line-height: 1.5; color: var(--color-ink-muted); }
 
 /* What We Support: three equal stat columns, top-aligned so the figures share
    one line at every width; the three pills run on one row where they fit */
@@ -71,8 +66,9 @@
 .wwastats + .pillrow { margin-top: 2rem; }
 .storysplit--wwa .pillrow--wrap { display: flex; flex-wrap: wrap; gap: 0.7rem 0.6rem; }
 @media (min-width: 1280px) {
-  .storysplit--wwa .pillrow--wrap { gap: 0.7rem 0.45rem; }
-  .storysplit--wwa .pillrow--wrap .btn { padding-inline: 1rem; }
+  /* one row inside the 520px column */
+  .storysplit--wwa .pillrow--wrap { gap: 0.7rem 0.375rem; }
+  .storysplit--wwa .pillrow--wrap .btn { padding-inline: 0.8rem; font-size: 13.5px; }
 }
 
 /* ---------- How We Work: charity:water "Our approach" layout. Centered label
@@ -105,3 +101,7 @@
 .howwork--center .recognition-ecosoc { margin-inline: auto; max-width: 40rem; }
 @media (max-width: 1199px) { .howwork--center .howwork__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3rem clamp(1.5rem, 4vw, 3rem); } }
 @media (max-width: 640px) { .howwork--center .howwork__grid { grid-template-columns: minmax(0, 1fr); gap: 2.6rem; } }
+
+/* ---------- Why We Serve: half the band's old top and bottom space (round 3) ---------- */
+.lotusband--wwa { min-height: 0 !important; padding-block: clamp(2.75rem, 4.2vw, 4rem); }
+@media (max-width: 640px) { .lotusband--wwa { padding-top: 2.5rem !important; padding-bottom: 90px !important; } }

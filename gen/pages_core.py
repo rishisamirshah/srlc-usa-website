@@ -3,7 +3,7 @@ import stats as S
 import os
 import re
 from shell import (page, ph, page_header, flat_cta, trust_bar, impact_stats, pinned,
-                   recognition_chips, filler, photo, img_tag, story_split, EMAIL, PHONE, EIN_LINE, IG, FB)
+                   recognition_chips, filler, photo, img_tag, story_split, face_style, face_bg, EMAIL, PHONE, EIN_LINE, IG, FB)
 import data_naman as NAMAN
 from data_states import STATES, CAMPAIGNS
 from data_cares import CARES
@@ -72,8 +72,9 @@ def prose_photo(items, photo_key, tag=None, alt="", numbered=False, reverse=Fals
         blocks.append(f"<h3>{num}{t}</h3><p>{b}</p>")
     src = photo_key if photo_key.startswith("/assets/") else filler(photo_key, tag=tag)
     cls = "prosephoto prosephoto--reverse" if reverse else "prosephoto"
+    crop = f' style="{face_style(src)}"' if face_style(src) else ""
     return (f'<div class="{cls}"><div class="prosephoto__copy">{"".join(blocks)}</div>'
-            f'<div class="prosephoto__photo"><img src="{src}" alt="{alt}" width="1200" height="900" loading="lazy"></div></div>')
+            f'<div class="prosephoto__photo"><img{crop} src="{src}" alt="{alt}" width="1200" height="900" loading="lazy"></div></div>')
 
 
 def care_card_media(icon, name):
@@ -203,7 +204,7 @@ def render_home(svg_inner):
     # SRA "Our Unique Approach" tile: photo, flat veil, chip (number + name),
     # hover layer with the one-liner. Below 1024 the same markup collapses to
     # the SRA accordion rows (tap reveals the one-liner, tap again to open).
-    care_tiles = "".join(f"""<a class="caretile" href="/our-work/10-care-program/{c["slug"]}/" style="background-image:url('{NAMAN.CARE_TILES[c["slug"]]}'){";" + CARE_TILE_CROP[c["slug"]] if c["slug"] in CARE_TILE_CROP else ""}">
+    care_tiles = "".join(f"""<a class="caretile" href="/our-work/10-care-program/{c["slug"]}/" style="background-image:url('{NAMAN.CARE_TILES[c["slug"]]}'){";" + (CARE_TILE_CROP.get(c["slug"]) or face_bg(NAMAN.CARE_TILES[c["slug"]])) if c["slug"] in CARE_TILE_CROP or face_bg(NAMAN.CARE_TILES[c["slug"]]) else ""}">
         <span class="caretile__overlay" aria-hidden="true"></span>
         <span class="caretile__chip"><span class="caretile__num">{c["num"]}</span><span class="caretile__name">{c["name"]}</span></span>
         <span class="caretile__hover"><span class="caretile__hover-h">{c["num"]}<br>{c["name"]}</span><span class="caretile__hover-p">{nobreak(c["one"])}</span></span>
@@ -555,7 +556,9 @@ def render_who_we_are():
     # against the photo, and every photo is placed so no face is cut off
     # (site-wide rule); Why We Serve leads with "When there is love within";
     # How We Work follows the charity:water "Our approach" layout with
-    # numbered circles; no trailing periods on the H2s, per the doc.
+    # numbered circles; no trailing periods on the H2s, per the doc. Round 3:
+    # a ~500px text column centered in its half, the three sections one
+    # height (wrapped in .wwasplits), no 501(c)(3) line, shorter quote band.
     hero = NAMAN.WWA_HERO
     support_img = slot("wwa-support") or pinned(127)
     stats = [(S.LIVES, "lives touched globally"), (S.PATIENTS, "patients treated globally through Health Care initiatives"),
@@ -572,19 +575,19 @@ def render_who_we_are():
     </div>"""
     how = [
         ("Locally led", "Volunteers and experienced professionals run programs where they live. Because they give their time, more of every dollar reaches the programs it was given to support."),
-        ("Integrated, not isolated", "The same community is served by the hospital, the school, and the Center of Excellence for Women, with local leaders trained through community development programs."),
-        ("Measured against evidence", "Every initiative runs against defined performance indicators, with third-party impact audits and annual reports and Forms 990 published in full."),
-        ("Dignity, not dependency", "Programs are designed so people can do things for themselves. Communities are partners, not recipients."),
+        ("An integrated community", "The same community is served by the hospital, the school, and the Center of Excellence for Women, with local leaders trained through community development programs."),
+        ("Measured by evidence", "Every initiative runs against defined performance indicators, with third-party impact audits and annual reports and Forms 990 published in full."),
+        ("Dignity, not dependency", "Programs are designed to promote independence, so communities evolve from recipients to partners."),
     ]
     how_html = "".join(f'<div class="howwork__item"><span class="howwork__num" aria-hidden="true">{i}</span><h3>{t}</h3><p>{b}</p></div>'
                        for i, (t, b) in enumerate(how, 1))
 
     body = page_header("About SRLC USA", "Who We Are", image=hero[0], size=(hero[1], hero[2]), alt=hero[3], mod="wwa") + f"""
+<div class="wwasplits">
 {story_split("Care is not a profession. It is a practice.", [
     "Shrimad Rajchandra Love and Care (SRLC) USA is the US chapter of a global social impact organization that has been recognized by the United Nations for its humanitarian efforts. A <span class='nowrap'>501(c)(3)</span> organization, SRLC USA supports community development projects across India and Africa, and brings holistic care and joy to local communities throughout the US. With a presence in 25+ cities, SRLC USA focuses on raising funds and awareness in <span class='nowrap'>high-impact</span> areas, while putting compassion in action."],
     slot("wwa-who") or photo("wwa-who", ["volunteers", "us-community"], "community", min_w=1200), tone="white", mod="wwa",
-    pos="100% 50%", pos_sm="50% 50%",
-    extra='<p class="storysplit__trust">Registered <span class="nowrap">501(c)(3)</span> nonprofit &middot; EIN <span class="nowrap">81-5162502</span></p>')}
+    pos="100% 50%", pos_sm="50% 50%")}
 {story_split("High-impact projects across India and Africa", [
     "SRLC USA raises funds and awareness for Shrimad Rajchandra Love and Care, a global organization offering selfless service to underserved communities through 136 centers worldwide. Its work spans ten focus areas, together the 10 Care Program: Health Care, Educational Care, Child Care, Woman Care, Tribal Care, Community Care, Humanitarian Care, Animal Care, Environmental Care, and Emergency Relief Care. In India, that care stands as permanent institutes, including a <span class='nowrap'>NABH-accredited</span>, <span class='nowrap'>250-bed</span> charitable hospital. Across Africa, it reaches communities through Mission Africa."],
     support_img, reverse=True, tone="lav", eyebrow="What We Support", mod="wwa", pos="71% 50%", pos_sm="50% 50%",
@@ -593,7 +596,9 @@ def render_who_we_are():
     "SRLC USA chapters partner with local schools, food banks, hospitals, shelters, and senior homes. Three national programs anchor the year: Classroom of Change equips students at Title 1 schools with backpacks, learning materials, and digital tools; Meals of Love and Care packs and distributes food with local food banks and pantries <span class='nowrap'>year-round</span>; and Giving Tuesday, SRLC USA&rsquo;s largest annual campaign, channels donor support into the most pertinent global initiatives. Between them, chapters run blood drives, health awareness camps, hygiene kit assembly, senior home visits, tree plantings, neighborhood cleanups, animal shelter shifts, and disaster relief kit packing."],
     NAMAN.WWA_HOME, tone="white", eyebrow="Our Communities", mod="wwa", pos="51% 50%", pos_sm="50% 0%", extra=home_pills)}
 
-<section class="lotusband lotusband--page" aria-labelledby="wwa-why">
+</div>
+
+<section class="lotusband lotusband--page lotusband--wwa" aria-labelledby="wwa-why">
   <div class="lotusband__inner">
     <h2 class="lotusband__eyebrow" id="wwa-why">Why We Serve</h2>
     <p class="lotusband__quote">When there is love within, it flows naturally in the form of care.</p>

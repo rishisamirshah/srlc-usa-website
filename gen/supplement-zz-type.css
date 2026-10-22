@@ -1,0 +1,12 @@
+/* Eyebrows, site-wide (Naman, Oct 22): 15px, 0.08em letter-spacing, weight
+   500, the spec the Inspiration hero kicker already follows. Loads after
+   supplement-zz-home.css and supplement-zz-refine.css, so it holds on the
+   homepage and every inner page. Case and color stay as each section has them. */
+.pagehead__eyebrow, .pagehead__eyebrow a, .hero-carousel__eyebrow, .ifhero__kicker,
+.storysplit__eyebrow, .howwork__eyebrow, .lotusband__eyebrow, .leadsec__eyebrow, .storyband__eyebrow,
+.takepart__eyebrow, .nlrow__eyebrow, .section-eyebrow, .donate-hero__eyebrow, .donate-strip__eyebrow,
+.way-card__eyebrow, .care-section__eyebrow, .mission-split__eyebrow, .institutes-section__eyebrow,
+.named-story__eyebrow, .edmap-kicker, .chapter-finder__search-title, .zipline label,
+.donate-page p.section-eyebrow, .donate-page p.donate-hero__eyebrow, .donate-page p.donate-strip__eyebrow, .donate-page .way-card__eyebrow {
+  font-size: 15px !important; letter-spacing: 0.08em !important; font-weight: 500 !important;
+}

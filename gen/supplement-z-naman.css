@@ -13,6 +13,14 @@
   --sec-lav-deep: #E7DDF0;
 }
 
+/* ---------- 0.0 Face-safe crops (Naman, Oct 22: no face cut off in any photo,
+   at any width). Per-photo positions live in gen/data_faces.py, solved by
+   gen/qa; they ride on the img as --fp (all widths), --fp-md (481-860px) and
+   --fp-sm (phones) and win over any component's own object-position. ---------- */
+img[style*="--fp:"] { object-position: var(--fp) !important; }
+@media (max-width: 860px) { img[style*="--fp-md:"] { object-position: var(--fp-md) !important; } }
+@media (max-width: 480px) { img[style*="--fp-sm:"] { object-position: var(--fp-sm) !important; } }
+
 /* ---------- 0.1 Border radius: zero, site-wide. Pills, dots and the Who We Are
    numbered circles (Naman, Oct 22) excepted. ---------- */
 *:not(.btn):not(.dot):not(.qd):not(.cf-pin__dot):not(.swatch):not(.hero-carousel__arrow):not(.progressrail a):not(.quote-wall__btn):not(.howwork__num) {

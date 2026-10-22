@@ -6,9 +6,11 @@ approved homepage HTML v2, the Aug 22 edits list and the Aug 24 change list.
 No em dashes, approved stats only, spiritual content only on /about/inspiration-and-founder/.
 """
 import hashlib
+import os
 import re
 
 from data_media import POOL as MB_POOL, SLOTS as MB_SLOTS
+from data_faces import FACE_POS, FACE_FIT
 
 SITE = "https://srlcusa.netlify.app"  # staging; production per Aug decision is AWS Amplify
 EMAIL = "info@srlcusa.org"            # Naman, Oct 16; chapter addresses keep @srlc-usa.org until he rules
@@ -436,12 +438,46 @@ def pinned(n):
     return (p[0], p[2], p[3], p[4])
 
 
+def face_style(src):
+    """Inline crop vars for a photo in FACE_POS (data_faces.py), else ""."""
+    v = FACE_POS.get(src)
+    if not v:
+        return ""
+    if isinstance(v, str):
+        return f"--fp:{v}"
+    return ";".join(f"--fp{'' if k == 'pos' else '-' + k}:{p}" for k, p in v.items())
+
+
+_FACES = None
+
+
+def face_boxes(src):
+    """Detected face boxes for a photo as "x,y,w,h;..." (gen/qa/faces.jsonl), else ""."""
+    global _FACES
+    if _FACES is None:
+        import json
+        path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "qa", "faces.jsonl")
+        _FACES = {}
+        if os.path.exists(path):
+            for line in open(path):
+                d = json.loads(line)
+                _FACES["/" + d["file"]] = ";".join(",".join(f"{v:.3f}" for v in f[:4]) for f in d["faces"])
+    return _FACES.get(src, "")
+
+
+def face_bg(src):
+    """background-position for a background-image photo in FACE_POS, else ""."""
+    v = FACE_POS.get(src)
+    return f"background-position:{v if isinstance(v, str) else v['pos']}" if v else ""
+
+
 def img_tag(entry, cls="", loading="lazy", pos=None):
     src, w, h, alt = entry
     c = f' class="{cls}"' if cls else ""
     # portrait originals land in landscape frames: keep the heads in
     pos = pos or ("50% 15%" if h > w * 1.15 else None)
-    st = f' style="object-position:{pos}"' if pos else ""
+    fs = face_style(src)
+    st = f' style="{fs}"' if fs else (f' style="object-position:{pos}"' if pos else "")
     return f'<img{c}{st} src="{src}" alt="{_attr(alt)}" width="{w}" height="{h}" loading="{loading}" decoding="async">'
 
 
@@ -562,7 +598,7 @@ def page_header(eyebrow, h1, sub=None, cta=None, image=None, full=False, alt="",
     sub_html = f'<p class="pagehead__sub">{sub}</p>' if sub else ""
     cta_html = f'<div class="pagehead__cta">{cta}</div>' if cta else ""
     return f"""<section class="pagehead pagehead--photo{' pagehead--full' if full else ''}{f' pagehead--{mod}' if mod else ''}">
-  <img class="pagehead__img"{img_style(focal, pos)} src="{src}" alt="{alt}" width="{w}" height="{h}" loading="eager" fetchpriority="high" decoding="async">
+  <img class="pagehead__img"{f' style="{face_style(src)}"' if src in FACE_POS else img_style(focal, pos)} src="{src}" alt="{alt}" width="{w}" height="{h}" loading="eager" fetchpriority="high" decoding="async">
   <div class="pagehead__scrim"></div>
   <div class="container pagehead__inner">
     <p class="pagehead__eyebrow">{eyebrow}</p>
@@ -591,8 +627,11 @@ def story_split(h2, paras, img, reverse=False, tone="lav", extra="", compact=Fal
     cls = ("storysplit" + (" storysplit--reverse" if reverse else "") + f" storysplit--{tone}"
            + (" storysplit--compact" if compact else "") + (f" storysplit--{mod}" if mod else ""))
     crop = [f"--ss-{k}:{v}" for k, v in (("pos", pos), ("pos-sm", pos_sm)) if v]
+    # live face-safe crop (supplement-zzz-facefit.js); data-pos is the preferred framing
+    fp = pos or (FACE_POS[src] if isinstance(FACE_POS.get(src), str) else (FACE_POS.get(src) or {}).get("pos", "50% 50%"))
+    fit = f' data-faces="{face_boxes(src)}" data-pos="{fp.replace("%", "")}"' if (mod == "wwa" or src in FACE_FIT) and face_boxes(src) else ""
     return f"""<section class="{cls}">
-  <div class="storysplit__media" style="--ar:{w}/{h}{''.join(';' + c for c in crop)}"><img src="{src}" alt="{alt}" width="{w}" height="{h}" loading="lazy" decoding="async"></div>
+  <div class="storysplit__media" style="--ar:{w}/{h}{''.join(';' + c for c in crop)}"><img{f' style="{face_style(src)}"' if src in FACE_POS and not crop and not fit else ""}{fit} src="{src}" alt="{alt}" width="{w}" height="{h}" loading="lazy" decoding="async"></div>
   <div class="storysplit__copy">
     {eyebrow_html}<h2 class="storysplit__h">{h2}</h2>
     {body}{extra}
