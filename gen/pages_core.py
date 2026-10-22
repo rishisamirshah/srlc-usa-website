@@ -559,12 +559,9 @@ def render_who_we_are():
     # numbered circles; no trailing periods on the H2s, per the doc. Round 3:
     # a ~500px text column centered in its half, the three sections one
     # height (wrapped in .wwasplits), no 501(c)(3) line, shorter quote band.
+    # Later Oct 22: first H2 "Love and care in action", no stat row.
     hero = NAMAN.WWA_HERO
     support_img = slot("wwa-support") or pinned(127)
-    stats = [(S.LIVES, "lives touched globally"), (S.PATIENTS, "patients treated globally through Health Care initiatives"),
-             (S.STUDENTS, "students supported globally")]
-    stats_html = '<dl class="wwastats">' + "".join(
-        f'<div class="wwastats__item"><dt class="wwastats__n">{n}</dt><dd class="wwastats__l">{l}</dd></div>' for n, l in stats) + "</dl>"
     support_pills = """<div class="pillrow pillrow--wrap">
       <a class="btn btn--secondary" href="/our-work/10-care-program/">Explore the 10 Care Program</a>
       <a class="btn btn--secondary" href="/our-work/india/">Our Institutes in India</a>
@@ -584,14 +581,14 @@ def render_who_we_are():
 
     body = page_header("About SRLC USA", "Who We Are", image=hero[0], size=(hero[1], hero[2]), alt=hero[3], mod="wwa") + f"""
 <div class="wwasplits">
-{story_split("Care is not a profession. It is a practice.", [
+{story_split("Love and care in action", [
     "Shrimad Rajchandra Love and Care (SRLC) USA is the US chapter of a global social impact organization that has been recognized by the United Nations for its humanitarian efforts. A <span class='nowrap'>501(c)(3)</span> organization, SRLC USA supports community development projects across India and Africa, and brings holistic care and joy to local communities throughout the US. With a presence in 25+ cities, SRLC USA focuses on raising funds and awareness in <span class='nowrap'>high-impact</span> areas, while putting compassion in action."],
     slot("wwa-who") or photo("wwa-who", ["volunteers", "us-community"], "community", min_w=1200), tone="white", mod="wwa",
     pos="100% 50%", pos_sm="50% 50%")}
 {story_split("High-impact projects across India and Africa", [
     "SRLC USA raises funds and awareness for Shrimad Rajchandra Love and Care, a global organization offering selfless service to underserved communities through 136 centers worldwide. Its work spans ten focus areas, together the 10 Care Program: Health Care, Educational Care, Child Care, Woman Care, Tribal Care, Community Care, Humanitarian Care, Animal Care, Environmental Care, and Emergency Relief Care. In India, that care stands as permanent institutes, including a <span class='nowrap'>NABH-accredited</span>, <span class='nowrap'>250-bed</span> charitable hospital. Across Africa, it reaches communities through Mission Africa."],
     support_img, reverse=True, tone="lav", eyebrow="What We Support", mod="wwa", pos="71% 50%", pos_sm="50% 50%",
-    extra=stats_html + support_pills)}
+    extra=support_pills)}
 {story_split("Care and joy, close to home", [
     "SRLC USA chapters partner with local schools, food banks, hospitals, shelters, and senior homes. Three national programs anchor the year: Classroom of Change equips students at Title 1 schools with backpacks, learning materials, and digital tools; Meals of Love and Care packs and distributes food with local food banks and pantries <span class='nowrap'>year-round</span>; and Giving Tuesday, SRLC USA&rsquo;s largest annual campaign, channels donor support into the most pertinent global initiatives. Between them, chapters run blood drives, health awareness camps, hygiene kit assembly, senior home visits, tree plantings, neighborhood cleanups, animal shelter shifts, and disaster relief kit packing."],
     NAMAN.WWA_HOME, tone="white", eyebrow="Our Communities", mod="wwa", pos="51% 50%", pos_sm="50% 0%", extra=home_pills)}

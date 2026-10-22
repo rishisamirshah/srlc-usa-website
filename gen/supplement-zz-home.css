@@ -264,3 +264,8 @@
 }
 .nlrow__form input.form-name:focus { outline: 2px solid var(--color-srlc-purple); outline-offset: 1px; }
 @media (max-width: 760px) { .nlrow__form input.form-name { height: 46px; } }
+
+/* Naman, Oct 22: names share the first row, the email takes the whole second
+   row, and Subscribe runs full width on the third */
+.nlrow__form input[type="email"] { flex-basis: 100%; }
+.nlrow__form button[type="submit"] { flex: 1 1 100%; }
