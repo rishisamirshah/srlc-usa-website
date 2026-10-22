@@ -139,6 +139,10 @@ other cause page.
   before they appear on any deployed page.
 - Every image with an identifiable person: consent confirmed via the
   Media Bank. Placeholder-then-swap is fine on staging.
+- No face cut off in any photo, at any width (Naman, Oct 22, site-wide).
+  Zoom out or reposition until every face is fully in frame; a face fully
+  out of frame is fine, a partial one is not. Check crops with face
+  detection, not by eye.
 - Donation CTAs: destination pending Naman's ruling on designated giving
   forms. Until ruled, all giving CTAs route to /donate/ with no
   designation promises in copy.

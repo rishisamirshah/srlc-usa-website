@@ -573,10 +573,11 @@ def page_header(eyebrow, h1, sub=None, cta=None, image=None, full=False, alt="",
 </section>{lead_html}"""
 
 
-def story_split(h2, paras, img, reverse=False, tone="lav", extra="", compact=False, eyebrow=""):
+def story_split(h2, paras, img, reverse=False, tone="lav", extra="", compact=False, eyebrow="", mod="", pos="", pos_sm=""):
     """SRA two-column pattern: one paragraph beside a full-scale photo that
     runs to the viewport edge. Copy passes through unchanged. `eyebrow` is an
-    optional section label above the H2."""
+    optional section label above the H2; `mod` adds a page class; `pos` and
+    `pos_sm` set the photo's object-position side by side and stacked."""
     body = "".join(f"<p>{x}</p>" for x in paras)
     eyebrow_html = f'<p class="storysplit__eyebrow">{eyebrow}</p>\n    ' if eyebrow else ""
     if img is None:
@@ -588,9 +589,10 @@ def story_split(h2, paras, img, reverse=False, tone="lav", extra="", compact=Fal
 </section>"""
     src, w, h, alt = img
     cls = ("storysplit" + (" storysplit--reverse" if reverse else "") + f" storysplit--{tone}"
-           + (" storysplit--compact" if compact else ""))
+           + (" storysplit--compact" if compact else "") + (f" storysplit--{mod}" if mod else ""))
+    crop = [f"--ss-{k}:{v}" for k, v in (("pos", pos), ("pos-sm", pos_sm)) if v]
     return f"""<section class="{cls}">
-  <div class="storysplit__media"><img src="{src}" alt="{alt}" width="{w}" height="{h}" loading="lazy" decoding="async"></div>
+  <div class="storysplit__media" style="--ar:{w}/{h}{''.join(';' + c for c in crop)}"><img src="{src}" alt="{alt}" width="{w}" height="{h}" loading="lazy" decoding="async"></div>
   <div class="storysplit__copy">
     {eyebrow_html}<h2 class="storysplit__h">{h2}</h2>
     {body}{extra}

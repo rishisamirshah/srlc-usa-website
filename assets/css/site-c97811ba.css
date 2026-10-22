@@ -3470,8 +3470,9 @@ html.no-js .donate-page .faq-item__body[hidden] { display: block; }
   --sec-lav-deep: #E7DDF0;
 }
 
-/* ---------- 0.1 Border radius: zero, site-wide. Pills and dots excepted. ---------- */
-*:not(.btn):not(.dot):not(.qd):not(.cf-pin__dot):not(.swatch):not(.hero-carousel__arrow):not(.progressrail a):not(.quote-wall__btn) {
+/* ---------- 0.1 Border radius: zero, site-wide. Pills, dots and the Who We Are
+   numbered circles (Naman, Oct 22) excepted. ---------- */
+*:not(.btn):not(.dot):not(.qd):not(.cf-pin__dot):not(.swatch):not(.hero-carousel__arrow):not(.progressrail a):not(.quote-wall__btn):not(.howwork__num) {
   border-radius: 0 !important;
 }
 img.ph-media, .bio__photo, .donate-tile, .fc-newsletter, .lead-card, .chip-row a, .chip-row span,
@@ -5066,53 +5067,113 @@ img[src$="mb-180.webp"] { object-position: 15% 50%; }
 
 
 /* ---- supplement-zzz-whoweare.css ---- */
-/* Who We Are (Naman's round 1, Oct 20). Inner pages only, loads after
-   supplement-zz-refine.css. */
+/* Who We Are (Naman's rounds 1 and 2, Oct 20 and 22). Inner pages only, loads
+   after supplement-zz-refine.css. */
 
-/* Section labels above the story-split headings, same eyebrow as the rest of the site */
+/* ---------- Hero: eyebrow and H1 only. Wide screens: the hero is never
+   taller than the photo's own 4:3, so no one is cut at the sides, and the
+   photo rides as high as the back row's heads allow (7% headroom), which
+   takes the ceiling out and keeps every face clear of the headline. The
+   offset is measured on the image (75vw tall at full width), clamped so the
+   photo always covers the hero. Tablets get a square hero (all 20 faces in);
+   phones keep the usual tall hero with the crop edges falling between people.
+   Face positions come from the photo itself (Vision face detection). ---------- */
+@media (min-width: 861px) {
+  .pagehead--wwa { --wwa-h: min(clamp(460px, 78vh, 860px), 75vw); }
+  .pagehead--wwa .container { min-height: var(--wwa-h); }
+  .pagehead--wwa .pagehead__img { object-position: 50% clamp(var(--wwa-h) - 75vw, 0.07 * var(--wwa-h) - 0.366 * 75vw, 0px); }
+}
+@media (min-width: 600px) and (max-width: 860px) {
+  .pagehead--wwa .container { min-height: 100vw; }
+  .pagehead--wwa .pagehead__img { object-position: 55% 50%; }
+}
+@media (max-width: 599px) {
+  /* zoomed 1.25x from the bottom so most of the ceiling leaves the frame */
+  .pagehead--wwa .container { min-height: calc(100vw * 64 / 39); }
+  .pagehead--wwa .pagehead__img { object-position: 57.5% 50%; transform: scale(1.25); transform-origin: 50% 100%; }
+}
+
+/* ---------- Alternating sections (Who We Are, What We Support, Our
+   Communities). Side by side from 1280px: the row is as tall as the photo at
+   half width or the copy, whichever is taller, so the photo shows as much of
+   itself as it can; the copy fills its half with equal padding on both sides
+   and sits centered against the photo. Below 1280px the copy is too tall for
+   a half-width photo to keep every face, so the section stacks: copy on the
+   container edge, then the photo full width. Each photo carries its own crop
+   (--ss-pos side by side, --ss-pos-sm stacked) so no face is cut off. ---------- */
+.storysplit--wwa .storysplit__media img { object-position: var(--ss-pos, 50% 50%); }
+@media (min-width: 1280px) {
+  /* the photo's own height at half width is the row's minimum (a padding
+     spacer, since aspect-ratio would widen a stretched cell) */
+  .storysplit--wwa .storysplit__media { min-height: 0; }
+  .storysplit--wwa .storysplit__media::before { content: ""; display: block; padding-top: calc(100% / (var(--ar))); }
+  .storysplit.storysplit--wwa .storysplit__copy {
+    --ss-pad: clamp(2rem, 3.4vw, 5rem);
+    padding: clamp(2.25rem, 10vw - 90px, 4.5rem) max(var(--ss-pad), calc((100% - 38rem) / 2)) !important;
+    justify-content: center;
+  }
+}
+@media (min-width: 861px) and (max-width: 1279px) {
+  .storysplit--wwa { grid-template-columns: minmax(0, 1fr); }
+  .storysplit--wwa .storysplit__media { order: 2; min-height: 0; aspect-ratio: 3 / 2; }
+  .storysplit.storysplit--wwa .storysplit__copy {
+    padding: var(--sec-pad) max(var(--gutter), calc((100% - var(--container-max)) / 2 + var(--gutter))) !important;
+  }
+  .storysplit--wwa .storysplit__copy > * { max-width: 46rem; }
+}
+@media (max-width: 1279px) {
+  .storysplit--wwa .storysplit__media img { object-position: var(--ss-pos-sm, var(--ss-pos, 50% 50%)); }
+}
+
 .storysplit .storysplit__eyebrow {
   margin: 0 0 1rem; font-family: var(--font-body); font-size: 0.74rem; font-weight: 600;
   letter-spacing: 0.24em; text-transform: uppercase; color: var(--color-srlc-purple);
 }
 .storysplit__copy .storysplit__trust { margin-top: 1.4rem; font-size: 0.9rem; line-height: 1.5; color: var(--color-ink-muted); }
 
-/* What We Support: global stat row, three figures, above the pills */
-.wwastats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.4rem clamp(1rem, 2.4vw, 2rem); margin: 2rem 0 0; }
+/* What We Support: three equal stat columns, top-aligned so the figures share
+   one line at every width; the three pills run on one row where they fit */
+.wwastats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; gap: 0 clamp(0.9rem, 2.4vw, 2rem); margin: 2rem 0 0; }
 .wwastats__item { margin: 0; }
-.wwastats__n { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: clamp(1.9rem, 2.6vw, 2.4rem); line-height: 1.05; color: var(--color-srlc-purple); }
-.wwastats__l { margin: 0.45rem 0 0; font-size: 0.9rem; line-height: 1.45; color: var(--color-ink-muted); text-wrap: pretty; }
+.wwastats__n { margin: 0; white-space: nowrap; font-family: var(--font-display); font-weight: 500; font-size: clamp(1.6rem, 2.6vw, 2.4rem); line-height: 1.05; color: var(--color-srlc-purple); }
+.wwastats__l { margin: 0.45rem 0 0; font-size: clamp(0.8rem, 0.9vw, 0.9rem); line-height: 1.45; color: var(--color-ink-muted); text-wrap: pretty; }
 .wwastats + .pillrow { margin-top: 2rem; }
-/* the three What We Support pills wrap instead of running off a phone screen */
-@media (max-width: 600px) { .storysplit .pillrow.pillrow--wrap { display: flex; flex-wrap: wrap; } }
-@media (max-width: 420px) { .wwastats { grid-template-columns: minmax(0, 1fr); } }
+.storysplit--wwa .pillrow--wrap { display: flex; flex-wrap: wrap; gap: 0.7rem 0.6rem; }
+@media (min-width: 1280px) {
+  .storysplit--wwa .pillrow--wrap { gap: 0.7rem 0.45rem; }
+  .storysplit--wwa .pillrow--wrap .btn { padding-inline: 1rem; }
+}
 
-/* How We Work: charity:water "Our approach" layout. Centered label and
-   heading, four centered columns with no rules, numbers or circles; seals and
-   the Financials pill centered below. */
+/* ---------- How We Work: charity:water "Our approach" layout. Centered label
+   and heading, four centered columns with a numbered circle over each
+   heading and blurb, no rules; seals and the Financials pill centered below.
+   ---------- */
 .howwork--center { text-align: center; }
+.howwork--center .howwork__eyebrow { margin-bottom: 1rem; }  /* same label-to-heading gap as the sections above */
 .howwork--center .howwork__h { margin-inline: auto; }
 .howwork--center .howwork__grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2.4rem clamp(1.5rem, 3vw, 2.8rem);
-  margin-top: clamp(2.4rem, 4.5vw, 3.6rem);
+  grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2.8rem clamp(1.5rem, 2.6vw, 2.6rem);
+  margin-top: clamp(2.8rem, 5vw, 4rem);
 }
 .howwork--center .howwork__item { border-top: 0; padding-top: 0; }
-/* headings share a row, so every column's text starts on the same line */
+.howwork--center .howwork__num {
+  display: inline-grid; place-items: center; justify-self: center; width: 3rem; height: 3rem; margin: 0 auto 1.6rem;
+  border-radius: 50% !important; border: 1.5px solid var(--color-ink); background: #FD954F;
+  font-family: var(--font-body); font-size: 1.15rem; font-weight: 700; line-height: 1; color: var(--color-ink);
+}
+/* circle, heading and blurb share rows, so every column's text starts on the same line */
 @supports (grid-template-rows: subgrid) {
-  .howwork--center .howwork__item { display: grid; grid-row: span 2; grid-template-rows: subgrid; row-gap: 0; }
+  .howwork--center .howwork__item { display: grid; grid-row: span 3; grid-template-rows: subgrid; row-gap: 0; }
   .howwork--center .howwork__item h3 { align-self: end; }
 }
-.howwork--center .howwork__item h3 { font-size: clamp(1.25rem, 1.6vw, 1.4rem); margin-bottom: 0.8rem; }
-.howwork--center .howwork__item p { font-size: 1rem; line-height: 1.65; }
+.howwork--center .howwork__item h3 { font-size: clamp(1.2rem, 1.5vw, 1.35rem); margin-bottom: 0.75rem; }
+.howwork--center .howwork__item p { font-size: 1.02rem; line-height: 1.65; max-width: 22rem; margin-inline: auto; }
 .howwork--center .howwork__recog { border-top: 0; padding-top: 0; margin-top: clamp(3rem, 5.5vw, 4.2rem); }
 .howwork--center .howwork__recog .recognition-badges { justify-content: center !important; }
 .howwork--center .howwork__recog .recognition-badge { justify-items: center; text-align: center; }
 .howwork--center .recognition-ecosoc { margin-inline: auto; max-width: 40rem; }
-@media (max-width: 1199px) { .howwork--center .howwork__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.6rem clamp(1.5rem, 4vw, 3rem); } }
-@media (max-width: 640px) { .howwork--center .howwork__grid { grid-template-columns: minmax(0, 1fr); } }
-
-/* Hero: the approved subhead stays in the hero (it is longer than the site's
-   usual one-liner, so it gets a little more room) */
-.pagehead--wwa .pagehead__sub { max-width: 44rem; font-size: clamp(1.02rem, 1.25vw, 1.15rem); }
+@media (max-width: 1199px) { .howwork--center .howwork__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3rem clamp(1.5rem, 4vw, 3rem); } }
+@media (max-width: 640px) { .howwork--center .howwork__grid { grid-template-columns: minmax(0, 1fr); gap: 2.6rem; } }
 
 .scroll-progress { position: fixed; top: 0; left: 0; height: 3px; width: 0;
   background: var(--color-warm-orange); z-index: 300; pointer-events: none; }
