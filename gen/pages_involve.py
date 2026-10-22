@@ -126,7 +126,9 @@ def render_events():
         <input type="hidden" name="form-name" value="updates">
         <input type="hidden" name="source" value="events">
         <p class="hp-field"><input name="bot-field" tabindex="-1"></p>
-        <input type="email" name="email" required placeholder="Email address" aria-label="Email address" class="form-hidewrap">
+        <input type="text" name="first_name" required placeholder="First name" aria-label="First name" autocomplete="given-name" class="form-hidewrap form-name">
+        <input type="text" name="last_name" required placeholder="Last name" aria-label="Last name" autocomplete="family-name" class="form-hidewrap form-name">
+        <input type="email" name="email" required placeholder="Email address" aria-label="Email address" autocomplete="email" class="form-hidewrap">
         <button type="submit" class="btn btn--primary form-hidewrap">Subscribe</button>
         <span class="form-success">Thank you for subscribing. Please check your inbox to confirm your email.</span>
       </form>

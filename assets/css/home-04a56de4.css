@@ -4146,9 +4146,11 @@ main > section + section { margin-top: 0; }
 @media (max-width: 760px) { .nlrow__form input.form-name { height: 46px; } }
 
 /* Naman, Oct 22: names share the first row, the email takes the whole second
-   row, and Subscribe runs full width on the third */
+   row, and Subscribe runs full width on the third, in the row and the popup */
 .nlrow__form input[type="email"] { flex-basis: 100%; }
 .nlrow__form button[type="submit"] { flex: 1 1 100%; }
+.newsletter-modal__form input[type="email"] { flex: 1 1 100%; width: auto; }
+.newsletter-modal__form button[type="submit"] { flex: 1 1 100%; }
 
 
 /* ---- supplement-zz-type.css ---- */

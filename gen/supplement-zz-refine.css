@@ -1101,3 +1101,15 @@ img[src$="mb-180.webp"] { object-position: 15% 50%; }
    gen/qa can keep every face in it (Naman, Oct 22) */
 @media (max-width: 480px) { .pagehead .container { min-height: calc(100vw * 64 / 39); } }
 @media (min-width: 481px) and (max-width: 860px) { .pagehead .container { min-height: 100vw; } }
+
+/* Events newsletter row matches the homepage's (Naman, Oct 22): first and last
+   name share the first row, the email takes the second, Subscribe runs full
+   width on the third */
+.nlrow__form input.form-name {
+  flex: 1 1 calc(50% - 6px); min-width: 0; height: 52px; box-sizing: border-box; border-radius: 0; border: 1px solid #B9A8CE;
+  background: #FFFFFF; padding: 0 1rem; font: inherit; font-size: 1rem; color: var(--color-ink);
+}
+.nlrow__form input.form-name:focus { outline: 2px solid var(--color-srlc-purple); outline-offset: 1px; }
+.nlrow__form input[type="email"] { flex-basis: 100%; }
+.nlrow__form button[type="submit"] { flex: 1 1 100%; }
+@media (max-width: 760px) { .nlrow__form input.form-name { height: 46px; } }
