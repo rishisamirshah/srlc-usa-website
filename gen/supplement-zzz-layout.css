@@ -1,0 +1,122 @@
+/* Site-wide layout rules (Naman, Oct 24), inner pages. The homepage bundle
+   skips every supplement-zzz-* layer, so it waits on his answer there.
+   1. Page-end CTA sections: centered; heading, line, pills side by side,
+      solid primary first, outlined secondary second.
+   2. Text-only sections (no image): centered, text column about 720px. No
+      left-aligned text block with an empty right side anywhere.
+   3. Image and text sections: photo half, a 520px text column centered in
+      the other half, sides alternate, every split on a page the same height
+      (supplement-zzz-splits.js sets the height). */
+
+/* ---- 1. Page-end CTAs ---- */
+.flatcta .container, .statecta .container, .giftsec .giftsec__inner, .pagenext .pagenext__inner { text-align: center; }
+.flatcta__h, .statecta__h, .giftsec__h, .pagenext__line { margin-inline: auto !important; max-width: 46rem; }
+.flatcta__body, .flatcta p.flatcta__body, .statecta__p, .giftsec__p { max-width: 720px !important; margin-inline: auto !important; }
+.flatcta__actions, .statecta__actions, .pagenext__links { display: flex !important; flex-wrap: wrap; justify-content: center !important; gap: 0.75rem !important; }
+.giftsec .giftsec__inner { display: flex !important; flex-direction: column; align-items: center !important; gap: 0; }
+.giftsec__copy { max-width: 720px; margin-inline: auto; }
+.giftsec__inner > .btn, .giftsec__copy + .btn { margin-top: 1.5rem; }
+.giftsec__h + .btn { margin-top: 1.25rem; }
+.statenav { text-align: left; }
+
+/* ---- 2. Text-only sections ---- */
+/* leads under the hero and Why It Matters */
+.leadsec .container { text-align: center; }
+.leadsec__lead, .leadsec .leadsec__lead { max-width: 720px !important; margin-inline: auto !important; }
+.leadsec__eyebrow { margin-inline: auto; }
+/* text-only splits (Care pages without an India photo, Inspiration's America line) */
+.storysplit--text .container { text-align: center; }
+.storysplit--text .storysplit__h, .storysplit--text p { max-width: 720px !important; margin-inline: auto !important; }
+/* program lists under a split and on Vidyapeeth */
+.proglist { text-align: center; }
+.proglist__item { text-align: center; }
+.progsec .container { text-align: center; }
+.progsec__h, .progsec__intro, .progsec .container > p { max-width: 720px !important; margin-inline: auto !important; }
+/* state pages: Constantly Serving Communities */
+.statework .container { text-align: center; }
+.statework__h { margin-inline: auto; }
+.statework .state-single, .statework .tabs__panel { max-width: 720px; margin-inline: auto; display: block !important; }
+.statework .tabs__panel > * { max-width: 720px; margin-inline: auto; }
+.statework .lead-card { margin: 2.25rem auto 0 !important; max-width: 24rem; text-align: center; }
+.statework .partnerline { margin-inline: auto; }
+/* generic heading-and-text sections */
+.vu-shell .container > .vu-h, .vu-shell .container > .vu-lead,
+.vu-shell .container > .signup__head, .vu-shell .govrow { text-align: center; margin-inline: auto !important; }
+.vu-shell .container > .vu-lead { max-width: 720px; }
+.vu-shell .govrow { display: block !important; max-width: 720px; }
+.vu-shell .govrow + .govrow { margin-top: clamp(2.5rem, 4vw, 3.25rem); }
+.vu-shell .govrow .vu-lead { margin-inline: auto !important; }
+.vu-pair-grid, .vu-pair-grid .vu-card { text-align: center; }
+/* Financials: seals, documents, registration note */
+.fin-badges .recognition-badges { justify-content: center !important; }
+.fin-badges .recognition-badge { text-align: center; align-items: center; }
+.fin-badges .recognition-ecosoc { max-width: 720px; margin-inline: auto !important; text-align: center; }
+.vu-shell--narrow .container { text-align: center; }
+.vu-shell--narrow .container > * { max-width: 720px; margin-inline: auto !important; }
+.fin-report { max-width: 720px; margin-inline: auto !important; text-align: center; }
+.vu-doc-grid { text-align: center; }
+/* Volunteer: the sign-up form stacks under its centered heading */
+.signup { display: block !important; }
+.signup__head { max-width: 720px; }
+.signup__form { max-width: 720px; margin: clamp(2rem, 3.5vw, 2.75rem) auto 0 !important; }
+/* US hub: map heading, ZIP line, campaigns heading */
+.edmap-head, .edmap-section .zipline { text-align: center; margin-inline: auto; }
+.edmap-section .zipline { justify-content: center; display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; }
+.edmap-section #zipResult { margin-inline: auto; text-align: left; }
+.campaigns-head .container { text-align: center; }
+.vu-shell.campaigns-head { padding-bottom: clamp(2.5rem, 4vw, 3.5rem) !important; }
+/* Events gallery, peer institutes, Voices of Respect, Fundraise, Partner */
+.eventgal .container > h2, .eventgal .container > p, .eventgal__head { text-align: center; margin-inline: auto; }
+.instrow--peers .instrow__h, .instrow--peers .container > h2 { text-align: center; margin-inline: auto; }
+.ifvoices__head { text-align: center; margin-inline: auto; max-width: 720px; }
+.ifvoices__intro { margin-inline: auto !important; }
+/* donate: heading and intro blocks over full-width content */
+.donate-page .section-pad .container > .section-eyebrow,
+.donate-page .section-pad .container > h2,
+.donate-page .section-pad .container > .section-sub { text-align: center; margin-inline: auto !important; }
+
+/* ---- 3. Image and text sections ---- */
+@media (min-width: 861px) {
+  .storysplit:not(.storysplit--text) .storysplit__copy { max-width: none; justify-self: stretch; padding: clamp(3rem, 5vw, 4.5rem) max(2rem, calc((100% - 520px) / 2)) !important; }
+  .storysplit:not(.storysplit--text):not(.storysplit--wwa) { min-height: var(--split-h, 0px); }
+}
+.storysplit__cta { margin-top: 1.75rem !important; }
+.prose-list h3 { margin: 1.6rem 0 0.4rem; font-family: var(--font-display); font-size: 1.3rem; font-weight: 500; line-height: 1.25; color: var(--color-srlc-purple); }
+.prose-list h3:first-child { margin-top: 1.25rem; }
+.prose-list p { margin: 0 !important; }
+.prose-list .prosephoto__num { margin-right: 0.6rem; color: #FD954F; font-family: var(--font-display); }
+
+/* ---- page-specific follow-ups ---- */
+/* program lists: an odd last item sits centered under the pair above */
+@media (min-width: 761px) {
+  .proglist > .proglist__item:last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: calc((100% - clamp(2rem, 4vw, 3.5rem)) / 2); }
+}
+/* Financials registration note */
+.fin-legal, .fin-legal p { text-align: center !important; margin-inline: auto !important; }
+/* Our Impact recognition (centered like How We Work): larger seals */
+.oi-recog .container { text-align: center; }
+.oi-recog .recognition-badges { gap: clamp(2rem, 5vw, 4.5rem) !important; margin-top: clamp(1.5rem, 3vw, 2.25rem); }
+.oi-recog .recognition-badge__img { height: 112px !important; width: auto !important; }
+@media (max-width: 760px) { .oi-recog .recognition-badge__img { height: 88px !important; } }
+/* Donate: centered heads; the two side-by-side text sections stack, list centered under the head */
+.donate-page .section-head, #corporate-matching .section-head, #trust .section-head, #other-ways .section-head, #faq .section-head { max-width: 720px; margin-inline: auto !important; text-align: center !important; }
+.donate-page .section-head > *, #corporate-matching .section-head > *, #trust .section-head > *, #other-ways .section-head > *, #faq .section-head > * { margin-inline: auto !important; text-align: center !important; }
+#corporate-matching .dd-cta, #corporate-matching .dd-logos__h, #corporate-matching .dd-logos__qualifier { text-align: center; margin-inline: auto !important; }
+#trust .container, #trust .container * { text-align: center !important; }
+.donate-twocol { display: block !important; }
+.donate-page .donate-twocol .faq-list, .donate-twocol .check-wire { max-width: 720px !important; margin-inline: auto !important; }
+.donate-page .donate-twocol .faq-list { margin-top: clamp(2rem, 3.5vw, 2.75rem) !important; }
+.donate-twocol .check-wire, .donate-twocol .check-wire * { text-align: center !important; }
+.donate-twocol .check-wire { margin-top: 2.25rem !important; }
+/* Donate monthly strip: 520px copy column centered in its half */
+@media (min-width: 861px) {
+  .donate-strip--split .donate-strip__copy { padding-left: max(2rem, calc((100% - 520px) / 2)) !important; padding-right: max(2rem, calc((100% - 520px) / 2)) !important; }
+}
+/* Fundraise and Partner: fund pills, the questions line and the button centered */
+.fundpills { justify-content: center !important; }
+.fund-contact, .partner-cta, .events-more { text-align: center !important; }
+.eventgal .container > .vu-h { text-align: center; }
+/* seals stay centered when they stack on phones */
+.fin-badges .recognition-badges { display: flex !important; flex-wrap: wrap; justify-content: center !important; }
+.fin-badges .recognition-badge, .fin-badges .recognition-badge__link { display: flex !important; flex-direction: column; align-items: center !important; text-align: center !important; }
+.fin-badges .recognition-badge__cap { text-align: center !important; }

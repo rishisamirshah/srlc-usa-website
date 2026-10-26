@@ -10,7 +10,7 @@ import os
 import re
 
 from data_media import POOL as MB_POOL, SLOTS as MB_SLOTS
-from data_faces import FACE_POS, FACE_FIT
+from data_faces import FACE_POS, FACE_FIT, HERO_FIT
 
 SITE = "https://srlcusa.netlify.app"  # staging; production per Aug decision is AWS Amplify
 EMAIL = "info@srlcusa.org"            # Naman, Oct 16; chapter addresses keep @srlc-usa.org until he rules
@@ -235,9 +235,17 @@ def footer():
 """
 
 
+# Naman, Oct 24 (site-wide): no trailing periods on H2s. Applied to the built
+# body so data-driven headings follow too; "D.C." style endings keep theirs.
+# The homepage waits on his answer about the site-wide rules there.
+_H2_DOT = re.compile(r"(?<![A-Z]\.[A-Z])\.((?:</(?:em|span|strong)>)*\s*</h2>)")
+
+
 def page(title, desc, path, body, overlay=False):
     # Inner pages keep a solid header above the photo hero (SRA pattern); only the
     # homepage carousel passes overlay=True.
+    if path != "/":
+        body = _H2_DOT.sub(r"\1", body)
     return head(title, desc, path, overlay) + nav(overlay) + body + footer()
 
 
@@ -597,8 +605,21 @@ def page_header(eyebrow, h1, sub=None, cta=None, image=None, full=False, alt="",
     pos = pos or HERO_POS.get(src, "")
     sub_html = f'<p class="pagehead__sub">{sub}</p>' if sub else ""
     cta_html = f'<div class="pagehead__cta">{cta}</div>' if cta else ""
+    if src in HERO_FIT and face_boxes(src):
+        # live face-safe crop above 860px (no single crop works from 900 to 1920),
+        # faces kept out from under the headline; fixed tablet and phone crops below
+        v = FACE_POS.get(src, {})
+        v = v if isinstance(v, dict) else {"pos": v}
+        md = v.get("md", v["pos"])
+        st = f"object-position:{v['pos']};--fp-md:{md};--fp-sm:{v.get('sm', md)}"
+        crop_attr = (f' style="{st}" data-faces="{face_boxes(src)}" data-pos="{v["pos"].replace("%", "")}"'
+                     f' data-fit-min="861" data-avoid=".pagehead__inner > *"')
+    elif src in FACE_POS:
+        crop_attr = f' style="{face_style(src)}"'
+    else:
+        crop_attr = img_style(focal, pos)
     return f"""<section class="pagehead pagehead--photo{' pagehead--full' if full else ''}{f' pagehead--{mod}' if mod else ''}">
-  <img class="pagehead__img"{f' style="{face_style(src)}"' if src in FACE_POS else img_style(focal, pos)} src="{src}" alt="{alt}" width="{w}" height="{h}" loading="eager" fetchpriority="high" decoding="async">
+  <img class="pagehead__img"{crop_attr} src="{src}" alt="{alt}" width="{w}" height="{h}" loading="eager" fetchpriority="high" decoding="async">
   <div class="pagehead__scrim"></div>
   <div class="container pagehead__inner">
     <p class="pagehead__eyebrow">{eyebrow}</p>
@@ -609,31 +630,36 @@ def page_header(eyebrow, h1, sub=None, cta=None, image=None, full=False, alt="",
 </section>{lead_html}"""
 
 
-def story_split(h2, paras, img, reverse=False, tone="lav", extra="", compact=False, eyebrow="", mod="", pos="", pos_sm=""):
+def story_split(h2, paras, img, reverse=False, tone="lav", extra="", compact=False, eyebrow="", mod="", pos="", pos_sm="", sid="", h="h2"):
     """SRA two-column pattern: one paragraph beside a full-scale photo that
     runs to the viewport edge. Copy passes through unchanged. `eyebrow` is an
     optional section label above the H2; `mod` adds a page class; `pos` and
-    `pos_sm` set the photo's object-position side by side and stacked."""
+    `pos_sm` set the photo's object-position side by side and stacked; `sid`
+    is the section id; `h` the heading level. Site-wide (Naman, Oct 24): photo
+    half, a 520px text column centered in the other half, every split on a
+    page as tall as the tallest (supplement-zzz-layout.css/.js), and the photo
+    framed live so no face is cut (supplement-zzz-facefit.js)."""
     body = "".join(f"<p>{x}</p>" for x in paras)
     eyebrow_html = f'<p class="storysplit__eyebrow">{eyebrow}</p>\n    ' if eyebrow else ""
     if img is None:
-        return f"""<section class="storysplit storysplit--text storysplit--{tone}">
+        return f"""<section class="storysplit storysplit--text storysplit--{tone}"{f' id="{sid}"' if sid else ""}>
   <div class="container">
-    {eyebrow_html}<h2 class="storysplit__h">{h2}</h2>
+    {eyebrow_html}<{h} class="storysplit__h">{h2}</{h}>
     {body}{extra}
   </div>
 </section>"""
-    src, w, h, alt = img
+    src, iw, ih, alt = img
     cls = ("storysplit" + (" storysplit--reverse" if reverse else "") + f" storysplit--{tone}"
            + (" storysplit--compact" if compact else "") + (f" storysplit--{mod}" if mod else ""))
     crop = [f"--ss-{k}:{v}" for k, v in (("pos", pos), ("pos-sm", pos_sm)) if v]
     # live face-safe crop (supplement-zzz-facefit.js); data-pos is the preferred framing
     fp = pos or (FACE_POS[src] if isinstance(FACE_POS.get(src), str) else (FACE_POS.get(src) or {}).get("pos", "50% 50%"))
-    fit = f' data-faces="{face_boxes(src)}" data-pos="{fp.replace("%", "")}"' if (mod == "wwa" or src in FACE_FIT) and face_boxes(src) else ""
-    return f"""<section class="{cls}">
-  <div class="storysplit__media" style="--ar:{w}/{h}{''.join(';' + c for c in crop)}"><img{f' style="{face_style(src)}"' if src in FACE_POS and not crop and not fit else ""}{fit} src="{src}" alt="{alt}" width="{w}" height="{h}" loading="lazy" decoding="async"></div>
+    fit = f' data-faces="{face_boxes(src)}" data-pos="{fp.replace("%", "")}"' if face_boxes(src) else ""
+    sid_attr = f' id="{sid}"' if sid else ""
+    return f"""<section class="{cls}"{sid_attr}>
+  <div class="storysplit__media" style="--ar:{iw}/{ih}{''.join(';' + c for c in crop)}"><img{f' style="{face_style(src)}"' if src in FACE_POS and not crop and not fit else ""}{fit} src="{src}" alt="{alt}" width="{iw}" height="{ih}" loading="lazy" decoding="async"></div>
   <div class="storysplit__copy">
-    {eyebrow_html}<h2 class="storysplit__h">{h2}</h2>
+    {eyebrow_html}<{h} class="storysplit__h">{h2}</{h}>
     {body}{extra}
   </div>
 </section>"""
@@ -654,6 +680,49 @@ def flat_cta(h2, body, label, href="/donate/", second=None):
     <h2 class="flatcta__h">{h2}</h2>
     {body_html}
     <p class="flatcta__actions"><a class="btn btn--primary" href="{href}">{label}</a>{second_html}</p>
+  </div>
+</section>"""
+
+
+def story_spotlight(title, paras, img=None, cta=None, eyebrow="", pos="70 50", sid="", side="left", bg="#F7F4FF", tag="Story spotlight"):
+    """Story spotlight (Naman, Oct 24 mock; the stories on childrenssociety.org.uk):
+    the photo fills a wide band, set toward one side so the people take up
+    most of it, and the white story panel sits over the empty side, vertically
+    centered. The photo's open edge fades into `bg` (a light color matched to
+    the photo) so the panel never covers a face. `side` is where the panel
+    goes: put it on whichever side of the photo is empty. The photo drifts
+    slower than the page on wider screens (supplement-zz-spotlight.js); on
+    phones the photo sits on top and the panel below. Without a photo the panel
+    stands alone on lavender. Every story uses this, and no person appears on
+    two pages. Styles in supplement-zz-spotlight.css (both bundles)."""
+    body = "".join(f'<p class="spot__p">{x}</p>' for x in paras)
+    eyebrow_html = f'<p class="spot__eyebrow">{eyebrow}</p>' if eyebrow else ""
+    cta_html = f'<p class="spot__cta"><a class="btn btn--primary" href="{cta[1]}">{cta[0]}</a></p>' if cta else ""
+    hid = f"{sid}-h" if sid else "spot-h"
+    panel = f"""<div class="spot__panel">
+        {eyebrow_html}<h2 class="spot__h" id="{hid}">{title}</h2>
+        {body}{cta_html}
+      </div>"""
+    sid_attr = f' id="{sid}"' if sid else ""
+    if not img:
+        return f"""<section class="spot spot--text"{sid_attr} aria-labelledby="{hid}">
+  <div class="container">
+      {panel}
+  </div>
+</section>"""
+    src, w, h, alt = img
+    x, y = pos.split()
+    # framed live beside the panel: faces and shoulders whole and clear of it
+    fb = face_boxes(src)
+    fit = (f' data-faces="{fb}" data-pos="{pos}" data-pad="shoulders" data-avoid=".spot__panel" data-fit-min="1180"'
+           if fb else "")
+    return f"""<section class="spot spot--{side}"{sid_attr} style="--spot-bg:{bg};--spot-ar:{w}/{h}" aria-labelledby="{hid}">
+  <div class="spot__band">
+    <div class="spot__media"><img src="{src}" alt="{_attr(alt)}" width="{w}" height="{h}" style="object-position:{x}% {y}%"{fit} loading="lazy" decoding="async"></div>
+    {f'<p class="spot__tag">{tag}</p>' if tag else ""}
+    <div class="container spot__inner">
+      {panel}
+    </div>
   </div>
 </section>"""
 

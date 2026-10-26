@@ -46,3 +46,12 @@ STORY = ("/assets/img/naman/laxibhai-v2.webp", 850, 1024, "Laxibhai smiles from 
 # Who We Are (Naman, Oct 20): hero and the Care and Joy Close to Home photo
 WWA_HERO = ("/assets/img/naman/wwa-hero.webp", 2400, 1800, "SRLC USA volunteers gather around boxes of packed meal bags at a Meals of Love and Care drive.")
 WWA_HOME = ("/assets/img/naman/wwa-home.webp", 1800, 1510, "A volunteer hands school supplies to two smiling girls at a Classroom of Change distribution.")
+
+# Our Impact (Naman, Oct 24): milestone photos for the timeline and the
+# Bhavesh story spotlight, from his Drive links.
+TIMELINE_PHOTOS = {
+    "2009": ("/assets/img/naman/tl-gurukul.webp", 1600, 1069, "Students and teachers gather at the entrance of Shrimad Rajchandra Gurukul."),
+    "2016": ("/assets/img/naman/tl-vidyapeeth.webp", 1600, 900, "The Shrimad Rajchandra Vidyapeeth college building among green lawns."),
+    "2022": ("/assets/img/naman/tl-hospital.webp", 1600, 853, "The Shrimad Rajchandra Hospital and Research Center campus at dusk."),
+}
+BHAVESH = ("/assets/img/naman/story-bhavesh.webp", 2400, 1600, "Dr. Bhavesh Bhoya in graduation robes receives his medical degree certificate on stage.")

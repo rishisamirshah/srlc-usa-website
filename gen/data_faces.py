@@ -13,7 +13,7 @@ FACE_POS = {
     "/assets/img/mb/mb-160.webp": "16% 50%",
     "/assets/img/mb/mb-167.webp": "40% 18%",
     "/assets/img/mb/mb-172.webp": "54% 50%",
-    "/assets/img/mb/mb-176.webp": "34% 46%",
+    "/assets/img/mb/mb-176.webp": {"pos": "88% 46%", "md": "34% 46%", "sm": "18% 46%"},
     "/assets/img/mb/mb-195.webp": {"pos": "0% 30%", "md": "40% 26%", "sm": "90% 26%"},
     "/assets/img/mb/mb-208.webp": {"pos": "70% 36%", "md": "82% 42%", "sm": "30% 42%"},
     "/assets/img/mb/mb-209.webp": "50% 50%",
@@ -67,4 +67,15 @@ FACE_POS = {
 FACE_FIT = {
     "/assets/img/mb/mb-357.webp",   # Humanitarian Care, Indianapolis sandwich line
     "/assets/img/mb/mb-30.webp",    # Our Impact operating model band, supply-kit table
+}
+
+# Heroes framed live above 860px (supplement-zzz-facefit.js): at 900px wide no
+# single crop keeps every face whole and clear of the headline (Oct 24 audit).
+HERO_FIT = {
+    "/assets/img/mb/mb-208.webp",   # Health Care
+    "/assets/img/mb/mb-716.webp",   # Events
+    "/assets/img/mb/mb-81.webp",    # Center of Excellence for Women
+    "/assets/img/mb/mb-721.webp",   # Management Team (headline over faces at short screens)
+    "/assets/img/mb/mb-82.webp",    # Woman Care (same)
+    "/assets/img/mb/mb-195.webp",   # Our Impact and Child Care crowd, until Naman's new photo
 }

@@ -3,8 +3,8 @@ FAQs and Corporate Giving are Phase 2 (removed). Events / Fundraise / Partner
 have no content tabs yet: structure plus functional elements only, no invented
 copy. Banned figure "25+ cities" replaced with the approved footprint phrasing
 (conflict with tab copy flagged in the build log)."""
-from shell import page, ph, page_header, flat_cta, filler, photo, img_tag, pick_distinct, pinned, EMAIL, PHONE, IG, FB
-from pages_core import prose_photo, chapter_finder
+from shell import page, ph, page_header, flat_cta, filler, photo, img_tag, pick_distinct, pinned, story_split, EMAIL, PHONE, IG, FB
+from pages_core import chapter_finder
 
 US_FOOTPRINT = "chapters in 11 states and Washington, D.C."
 
@@ -18,15 +18,17 @@ def render_volunteer(svg_inner):
     ]
     # the Volunteer tab: no SRMD visual identifiers in chapter imagery
     why = pinned(497) or photo("volunteer-community", ["volunteers", "us-community", "us-events"], "community")
-    cards_html = prose_photo(cards, why[0], alt=why[3] or "SRLC USA volunteers at a chapter event")
+    why = (why[0], why[1], why[2], why[3] or "SRLC USA volunteers at a chapter event")
+    cards_html = '<div class="prose-list">' + "".join(f"<h3>{t}</h3><p>{b}</p>" for t, b in cards) + "</div>"
     steps = [
         ("01", "Sign up", "Fill out the form at the bottom of this page. Share where you are, what skills or interests you can offer, and how much time you have each month. It takes under two minutes."),
         ("02", "Meet your chapter", "A coordinator from the SRLC chapter in your area will reach out within a few days. They will introduce themselves and walk you through what the chapter is currently working on."),
         ("03", "Show up", "Attend your first event. Meet the people who make the chapter run. Most volunteers return for the next one within a month."),
     ]
     start = photo("volunteer-steps", ["us-classroom-of-change+us", "volunteers+us"], "community", min_w=1200)
-    steps_html = prose_photo([(t, b) for _, t, b in steps], start[0],
-                             alt=start[3] or "SRLC USA volunteers at a chapter event", numbered=True, reverse=True)
+    start = (start[0], start[1], start[2], start[3] or "SRLC USA volunteers at a chapter event")
+    steps_html = ('<div class="prose-list">' + "".join(
+        f'<h3><span class="prosephoto__num" aria-hidden="true">{n}</span>{t}</h3><p>{b}</p>' for n, t, b in steps) + "</div>")
     roles = ["Events and Logistics", "Food and Distribution", "Community Outreach", "Fundraising and Campaigns",
              "Communications and Social Media", "Healthcare Outreach", "University and Youth Programs",
              "Operations and Administration", "Chapter Leadership", "Internship", "Other"]
@@ -39,19 +41,9 @@ def render_volunteer(svg_inner):
         "Thousands of people across the nation give their time, their skills, and their energy to SRLC USA. Not because they have to. Because service is who they are.",
         cta='<a class="btn btn--primary" href="#signup">Volunteer With Us</a> <a class="btn btn--ghost" href="#find-chapter">Find My State&rsquo;s Chapter</a>',
     ) + f"""
-<section class="vu-shell vu-shell--lav vu-shell--first">
-  <div class="container">
-    <h2 class="vu-h reveal">More than volunteering. A community.</h2>
-    <div class="mt-6 reveal">{cards_html}</div>
-  </div>
-</section>
+{story_split("More than volunteering. A community.", [], why, reverse=True, tone="lav", extra=cards_html)}
 
-<section class="vu-shell vu-shell--cream">
-  <div class="container">
-    <h2 class="vu-h reveal">Getting started is simple</h2>
-    <div class="mt-6 reveal">{steps_html}</div>
-  </div>
-</section>
+{story_split("Getting started is simple", [], start, tone="white", extra=steps_html)}
 
 {chapter_finder(svg_inner, tone="lav")}
 

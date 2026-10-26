@@ -3,7 +3,7 @@ import stats as S
 import os
 import re
 from shell import (page, ph, page_header, flat_cta, trust_bar, impact_stats, pinned,
-                   recognition_chips, filler, photo, img_tag, story_split, stat_band, face_style, face_bg, EMAIL, PHONE, EIN_LINE, IG, FB)
+                   recognition_chips, filler, photo, img_tag, story_split, stat_band, story_spotlight, face_style, face_boxes, face_bg, EMAIL, PHONE, EIN_LINE, IG, FB)
 import data_naman as NAMAN
 from data_states import STATES, CAMPAIGNS
 from data_cares import CARES
@@ -630,20 +630,18 @@ def render_who_we_are():
         "/about/who-we-are/", body)
 
 
-# Our Impact timeline (Naman, Oct 22): (marker year, eyebrow, title, text, photo).
-# Milestone photos are still to come from Naman; until then a slide shows its
-# year large on lavender.
+# Our Impact timeline (Naman, Oct 22 and 24): (marker year, eyebrow, title,
+# text, photo). Slides without a photo yet show their year large on lavender.
 TIMELINE = [
     ("2006", "2006 to 2008", "Mobile care begins", "A mobile dispensary begins carrying medical care to rural doorsteps, and a mid-day meal program gives families one more reason to send their children to school.", None),
-    ("2009", "2009 to 2011", "Gurukul opens", "Shrimad Rajchandra Gurukul opens in Karanjveri, Gujarat, and a new neonatal intensive care unit begins providing critical care for premature newborns.", None),
+    ("2009", "2009 to 2011", "Gurukul opens", "Shrimad Rajchandra Gurukul opens in Karanjveri, Gujarat, and a new neonatal intensive care unit begins providing critical care for premature newborns.", NAMAN.TIMELINE_PHOTOS["2009"]),
     ("2015", "2015", "First Love and Care Walk", "New York City hosts SRLC&rsquo;s first Love and Care Walk, with more than 550 participants.", None),
-    ("2016", "2016", "Vidyapeeth opens", "Shrimad Rajchandra Vidyapeeth opens as a science college serving the villages of South Gujarat, and the Skill Development Center begins vocational training for tribal youth.", None),
-    ("2019", "2019", "GuideStar Platinum", "GuideStar awards SRLC its Platinum Seal for the highest level of transparency and accountability.", None),
-    ("2020", "2020", "UN recognition", "The United Nations grants SRLC Special Consultative Status. Vidyapeeth and Gurukul earn ISO 9001 and ISO 29990 certification.", None),
+    ("2016", "2016", "Vidyapeeth opens", "Shrimad Rajchandra Vidyapeeth opens as a science college serving the villages of South Gujarat, and the Skill Development Center begins vocational training for tribal youth.", NAMAN.TIMELINE_PHOTOS["2016"]),
+    ("2019", "2019 to 2020", "Independent recognition", "Candid recognizes SRLC for transparency and accountability, and the United Nations grants SRLC Special Consultative Status.", None),
     ("2021", "2021", "Pandemic relief", "COVID-19 relief reaches 50 cities on five continents, supporting 8.85M+ lives.", None),
-    ("2022", "2022", "The hospital opens", "The 250-bed Shrimad Rajchandra Hospital and Research Center opens, and its surgeons perform the region&rsquo;s first open-heart cardiothoracic surgery.", None),
+    ("2022", "2022", "The hospital opens", "The 250-bed Shrimad Rajchandra Hospital and Research Center opens, and its surgeons perform the region&rsquo;s first open-heart cardiothoracic surgery.", NAMAN.TIMELINE_PHOTOS["2022"]),
     ("2023", "2023", "NABH, and Nairobi", "The hospital earns NABH accreditation within its first year. In Nairobi, Kenya, a free eye and ENT medical camp treats 7,500+ patients.", None),
-    ("2024", "2024", "Mission Africa launches", "Mission Africa launches across 16 African nations. A mega-medical camp in Dharampur serves 25,000+ people, and US centers deliver 90,000+ educational items to 18,000+ students.", None),
+    ("2024", "2024", "Mission Africa launches", "Mission Africa launches across 16 African nations. A mega-medical camp in Dharampur serves 25,000+ people, and US centers deliver 90,000+ educational items to 18,000+ students.", "impact-hero"),
 ]
 
 
@@ -659,7 +657,15 @@ def impact_timeline():
         tabs.append(f'<button class="itl__yr" type="button" role="tab" id="itl-t{i + 1}" aria-controls="itl-p{i + 1}" '
                     f'aria-selected="{"true" if on else "false"}" tabindex="{0 if on else -1}">'
                     f'<span class="itl__sq" aria-hidden="true"></span><span class="itl__lbl">{yr}</span></button>')
-        media = img_tag(img) if img else f'<div class="itl__ph" aria-hidden="true">{yr}</div>'
+        if img == "impact-hero":  # Naman: 2024 uses the page's current hero photo
+            img = slot("impact-hero")
+        if img:
+            src, w, h, alt = img
+            fb = face_boxes(src)
+            fit = f' data-faces="{fb}" data-pos="50 50"' if fb else ""
+            media = f'<img{fit} src="{src}" alt="{alt}" width="{w}" height="{h}" loading="lazy" decoding="async">'
+        else:
+            media = f'<div class="itl__ph" aria-hidden="true">{yr}</div>'
         panels.append(f"""<div class="itl__panel{' is-on' if on else ''}" role="tabpanel" id="itl-p{i + 1}" aria-labelledby="itl-t{i + 1}"{'' if on else ' aria-hidden="true" inert'}>
       <div class="itl__media">{media}</div>
       <div class="itl__copy">
@@ -696,6 +702,7 @@ def render_our_impact(svg_inner):
     # the US section is gone (Naman, Oct 22); its photo claim stays so the
     # automatic picks on every later page keep their photos
     photo("impact-us", ["us-food+alt:sandwiches", "us-food+us", "volunteers+us"], "community", min_w=1200)
+    pinned(97)  # the dental photo left the page (Naman, Oct 24); its claim stays for the same reason
     caps = {"Candid Seal of Transparency": "Candid Gold Seal of Transparency, 2025",
             "GreatNonprofits Top‑Rated, 2024": "GreatNonprofits Top‑Rated, 2024"}
 
@@ -704,18 +711,13 @@ def render_our_impact(svg_inner):
         "Our Impact",
         image="/assets/img/photos/awards.jpg",
     ) + stat_band(
-        "Shrimad Rajchandra Love and Care began with volunteers bringing medicine to families in rural villages. The figures below reflect the global organization&rsquo;s reach, and behind each one are people whose circumstances changed because someone was in a position to help.",
+        "Shrimad Rajchandra Love and Care offers selfless service to underserved communities through 136 centers worldwide. Behind each figure below are people whose circumstances changed because someone was in a position to help.",
         six, pinned(160)) + f"""
-<section class="vu-shell vu-shell--cream oi-recog">
+<section class="vu-shell vu-shell--cream oi-recog" aria-labelledby="oi-recog-h">
   <div class="container">
-    <div class="vu-split">
-      <div class="vu-split__copy">
-        <h2 class="vu-h reveal">Independent recognition and accreditation</h2>
-        <p>The movement received Special Consultative Status from the United Nations Economic and Social Council in 2020, and Candid awarded its Gold Seal of Transparency in 2025. Independent recognition matters because it does not depend on our own account of the work. The 250-bed Shrimad Rajchandra Hospital and Research Center earned accreditation from the National Accreditation Board for Hospitals and Healthcare Providers (NABH) within its first year of operation.</p>
-      </div>
-      <div class="vu-split__photo">{img_tag(pinned(97))}</div>
-    </div>
-    <div class="recognition-cluster fin-badges mt-8">{recognition_chips(links=True, caps=caps)}</div>
+    <h2 class="vu-h" id="oi-recog-h">Independent recognition and accreditation</h2>
+    <p class="vu-lead">Independent recognition matters because it does not depend on our own account of the work. The 250-bed Shrimad Rajchandra Hospital and Research Center earned accreditation from the National Accreditation Board for Hospitals and Healthcare Providers (NABH) within its first year of operation.</p>
+    <div class="recognition-cluster fin-badges">{recognition_chips(links=True, caps=caps)}</div>
   </div>
 </section>
 
@@ -726,25 +728,18 @@ def render_our_impact(svg_inner):
 
 <section class="vu-shell vu-shell--cream oi-growth" aria-labelledby="oi-growth">
   <div class="container">
-    <h2 class="vu-h" id="oi-growth">Two decades of documented growth</h2>
-    <p class="vu-lead">The milestones below are drawn from the movement&rsquo;s published record. They trace twenty years of steady growth, from volunteers delivering medicine to rural doorsteps to permanent institutes that now serve millions.</p>
+    <h2 class="vu-h" id="oi-growth">Two Decades of Documented Growth</h2>
+    <p class="vu-lead">Twenty years of milestones, from early community programs to permanent institutes that now serve millions.</p>
     {impact_timeline()}
   </div>
 </section>
 
-<section class="vu-shell vu-shell--lav">
-  <div class="container">
-    <div class="vu-split vu-split--story">
-    <div class="vu-split__copy">
-    <h2 class="vu-h reveal">What these figures mean in practice</h2>
-    <p class="vu-lead">Laxibhai, a 52-year-old farmer, had been living with triple-vessel heart disease, and the surgery he needed was beyond his family&rsquo;s means. He received the region&rsquo;s first cardiothoracic bypass at Shrimad Rajchandra Hospital at no cost, and he has since returned home to his fields. His recovery is one outcome among millions, and it is the kind of outcome every figure on this page represents.</p>
-    </div>
-    <div class="vu-split__photo vu-split__photo--portrait">{img_tag(NAMAN.STORY)}</div>
-    </div>
-  </div>
-</section>
+{story_spotlight("Bhavesh&rsquo;s story", [
+    "Bhavesh Bhoya grew up in the village of Nani Kosbadi, the son of a farmer. After studying at Shrimad Rajchandra Gurukul, he set his sights on medicine. He missed the medical entrance exam on his first attempt, kept going, and passed. A scholarship through Shrimad Rajchandra Vidyavikas Yojana supported his medical degree. Today he is Dr. Bhavesh Bhoya, and through the Bhoya Foundation he runs health awareness camps for the tribal community near his village and provided basic medical care during the pandemic."],
+    NAMAN.BHAVESH, cta=("Support a student like Bhavesh", "/donate/"), eyebrow="Impact Story", pos="50 40",
+    bg="#DDEDFD", sid="oi-story")}
 
-{flat_cta("Support work you can verify", "Each result presented here belongs to a program that can be examined, visited, and audited, and each of those programs welcomes new support. We invite you to explore the work, or to read the record for yourself.", "Explore the 10 Care Program", "/our-work/10-care-program/", second=("Donate", "/donate/"))}
+{flat_cta("Support work you can verify", "Each result presented here belongs to a program that can be examined, visited, and audited, and each of those programs welcomes new support. We invite you to explore the work, or to read the record for yourself.", "Donate", "/donate/", second=("Explore the 10 Care Program", "/our-work/10-care-program/"))}
 """
     return page(
         "Our Impact | Verified Global Results | SRLC USA",
@@ -753,6 +748,10 @@ def render_our_impact(svg_inner):
 
 
 IF_PATH = "/about/inspiration-and-founder/"
+FOUNDER_COPY = """<h3>Legacy of Wisdom</h3>
+    <p>Pujya Gurudevshri Rakeshji is an enlightened visionary, global ambassador of peace, and the founder of Shrimad Rajchandra Mission Dharampur, the spiritual organization from which this movement grew. Following the revered footsteps of Shrimad Rajchandraji, Pujya Gurudevshri carries forward a legacy of timeless wisdom, translating profound spiritual truths into transformative teachings that make spirituality accessible to all.</p>
+    <h3>Steady Force of Compassion</h3>
+    <p>Through Shrimad Rajchandra Love and Care (SRLC), Pujya Gurudevshri translates compassion into action. Guided by His philosophy of empathy and universal harmony, SRLC is a global organization whose initiatives address critical needs in health care, education, environmental sustainability, and social welfare across many countries. In His teaching, inner clarity and outward kindness are one path: what is understood within flows naturally into care for others.</p>"""
 FOUNDER_IMG = ("if-gurudevshri.jpg", 1300, 1501)  # Naman's DSC03898_NJ4.tiff, FOGRA39 -> sRGB via its profile, head to knees
 
 # Voices of Respect (Naman's Inspiration and Founder doc, Oct 19): five
@@ -786,11 +785,10 @@ def render_inspiration():
     # cropped head to knees with the chair in frame (his Oct 20 reference).
     founder_img = FOUNDER_IMG
 
-    # Layout per Naman's Inspiration and Founder doc (Oct 19) and his Oct 20
-    # rounds: one container for every section; Jainism, Shrimad Rajchandraji
-    # and Pujya Gurudevshri are two-column on alternating sides, photo and
-    # text each half the container; the founder's third subsection runs full
-    # width under the photo; the Dalai Lama photo is slide 1 of Voices.
+    # Layout per Naman's site-wide rules (Oct 24): Jainism, Shrimad Rajchandraji
+    # and Pujya Gurudevshri are standard splits on alternating sides, all three
+    # the same height; the founder's third subsection is its own centered text
+    # section under them; the Dalai Lama photo is slide 1 of Voices.
     body = f"""<section class="ifhero" aria-labelledby="ifHeroTitle">
   <div class="ifhero__inner">
     <p class="ifhero__kicker">A timeless legacy flowing through a present-day visionary</p>
@@ -799,39 +797,23 @@ def render_inspiration():
   <img class="ifhero__figures" src="/assets/img/inspiration/if-hero-figures.png" alt="Lord Mahavir, Shrimad Rajchandraji, and Pujya Gurudevshri Rakeshji" width="833" height="903" loading="eager" fetchpriority="high" decoding="async">
 </section>
 
-<section class="ifsplit ifsplit--lav ifsplit--flip ifsplit--first" aria-labelledby="ifRoots">
-  <div class="ifsplit__copy prose">
-    <h2 class="vu-h" id="ifRoots">Jainism and Lord Mahavir</h2>
-    <p>Jainism, one of the world&rsquo;s oldest spiritual philosophies, teaches enduring, universal principles of love and kindness. Its teachings have shaped the lives of millions across the world and remain a living source of inspiration today.</p>
-    <p>Lord Mahavir, a revered spiritual leader, lived in India around 500 BCE. He illuminated a path to inner peace through understanding and kindness toward all. At the heart of that path is compassion for every living being, the root from which empathy grows. More than 2,500 years later, his message continues to guide the modern world.</p>
-  </div>
-  <div class="ifsplit__media ifsplit__media--temple"><img src="/assets/img/inspiration/if-mahavir-web.jpg" alt="Shrimad Rajchandra Jin Mandir, Dharampur" width="2400" height="1353" loading="lazy" decoding="async"></div>
-</section>
+{story_split("Jainism and Lord Mahavir", [
+    "Jainism, one of the world&rsquo;s oldest spiritual philosophies, teaches enduring, universal principles of love and kindness. Its teachings have shaped the lives of millions across the world and remain a living source of inspiration today.",
+    "Lord Mahavir, a revered spiritual leader, lived in India around 500 BCE. He illuminated a path to inner peace through understanding and kindness toward all. At the heart of that path is compassion for every living being, the root from which empathy grows. More than 2,500 years later, his message continues to guide the modern world."],
+    ("/assets/img/inspiration/if-mahavir-web.jpg", 2400, 1353, "Shrimad Rajchandra Jin Mandir, Dharampur"), tone="lav", mod="if", sid="ifRoots")}
 
-<section class="ifsplit ifsplit--white" aria-labelledby="ifShrimadji">
-  <div class="ifsplit__copy prose">
-    <h2 class="vu-h" id="ifShrimadji">Shrimad Rajchandraji</h2>
-    <p>In the late 19th century, the saint and poet-philosopher Shrimad Rajchandraji illuminated the wisdom of Lord Mahavir with remarkable clarity, shaping a spiritual path for a new era. He is described as self-realized: someone who had directly experienced the nature of the soul rather than only studied it.</p>
-    <p>Mahatma Gandhi called Shrimad Rajchandraji his spiritual guide. Gandhi&rsquo;s philosophy of truth and non-violence took shape under His influence, and the two exchanged letters on faith and conduct for years. That influence stands as a testament to the enduring impact of His message, which continues to resonate today.</p>
-    <p>Grounded in direct inner experience, He articulated the subtle truths of spirituality through His own life, valuable teachings, and influential writings. Chief among them is Shri Atmasiddhi Shastra, a verse work on the nature of the soul and the path to self-realization, which blends deep philosophical insight with practical steps for inner transformation.</p>
-  </div>
-  <div class="ifsplit__media"><img src="/assets/img/inspiration/if-shrimadji.jpg" alt="Shrimad Rajchandraji" width="1920" height="1080" loading="lazy" decoding="async"></div>
-</section>
+{story_split("Shrimad Rajchandraji", [
+    "In the late 19th century, the saint and poet-philosopher Shrimad Rajchandraji illuminated the wisdom of Lord Mahavir with remarkable clarity, shaping a spiritual path for a new era. He is described as self-realized: someone who had directly experienced the nature of the soul rather than only studied it.",
+    "Mahatma Gandhi called Shrimad Rajchandraji his spiritual guide. Gandhi&rsquo;s philosophy of truth and non-violence took shape under His influence, and the two exchanged letters on faith and conduct for years. That influence stands as a testament to the enduring impact of His message, which continues to resonate today.",
+    "Grounded in direct inner experience, He articulated the subtle truths of spirituality through His own life, valuable teachings, and influential writings. Chief among them is Shri Atmasiddhi Shastra, a verse work on the nature of the soul and the path to self-realization, which blends deep philosophical insight with practical steps for inner transformation."],
+    ("/assets/img/inspiration/if-shrimadji.jpg", 1920, 1080, "Shrimad Rajchandraji"), reverse=True, tone="white", mod="if", sid="ifShrimadji")}
 
-<section class="ifsplit ifsplit--lav ifsplit--flip ifsplit--founder" aria-labelledby="ifFounder">
-  <div class="ifsplit__copy prose">
-    <h2 class="vu-h" id="ifFounder">Pujya Gurudevshri Rakeshji</h2>
-    <h3>Legacy of Wisdom</h3>
-    <p>Pujya Gurudevshri Rakeshji is an enlightened visionary, global ambassador of peace, and the founder of Shrimad Rajchandra Mission Dharampur, the spiritual organization from which this movement grew. Following the revered footsteps of Shrimad Rajchandraji, Pujya Gurudevshri carries forward a legacy of timeless wisdom, translating profound spiritual truths into transformative teachings that make spirituality accessible to all.</p>
-    <h3>Steady Force of Compassion</h3>
-    <p>Through Shrimad Rajchandra Love and Care (SRLC), Pujya Gurudevshri translates compassion into action. Guided by His philosophy of empathy and universal harmony, SRLC is a global organization whose initiatives address critical needs in health care, education, environmental sustainability, and social welfare across many countries. In His teaching, inner clarity and outward kindness are one path: what is understood within flows naturally into care for others.</p>
-  </div>
-  <div class="ifsplit__media ifsplit__media--portrait"><img src="/assets/img/inspiration/{founder_img[0]}" alt="Pujya Gurudevshri Rakeshji" width="{founder_img[1]}" height="{founder_img[2]}" loading="lazy" decoding="async"></div>
-  <div class="ifsplit__more prose">
-    <h3>A Movement Reaching America</h3>
-    <p>That vision has taken root across the United States and continues to grow. Through SRLC USA, volunteers in communities nationwide carry this spirit of selfless service into action. They serve their own neighborhoods through the 10 Care Program, and they support institutes in India and initiatives around the world.</p>
-  </div>
-</section>
+{story_split("Pujya Gurudevshri Rakeshji", [], (f"/assets/img/inspiration/{founder_img[0]}", founder_img[1], founder_img[2], "Pujya Gurudevshri Rakeshji"),
+    tone="lav", mod="if", sid="ifFounder", extra=FOUNDER_COPY)}
+
+{story_split("A Movement Reaching America", [
+    "That vision has taken root across the United States and continues to grow. Through SRLC USA, volunteers in communities nationwide carry this spirit of selfless service into action. They serve their own neighborhoods through the 10 Care Program, and they support institutes in India and initiatives around the world."],
+    None, tone="white", h="h3")}
 
 <section class="ifvoices" aria-labelledby="ifVoicesTitle">
   <div class="container">

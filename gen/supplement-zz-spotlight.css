@@ -1,0 +1,41 @@
+/* Story spotlight (Naman, Oct 24 mock; the stories on childrenssociety.org.uk).
+   Wider screens: the photo fills the band from one side, its open edge fades
+   into --spot-bg (a light color matched to the photo), and the white story
+   panel sits over the empty side, vertically centered, so it never covers a
+   face. The photo drifts slower than the page (supplement-zz-spotlight.js).
+   Below 1180px (tablets, phones): photo on top, panel below. Markup from
+   story_spotlight() in shell.py; loads in both bundles. */
+.spot {
+  --spot-h: clamp(520px, 46vw, 680px);
+  --spot-pw: clamp(380px, 38vw, 560px);
+  --spot-edge: max(var(--gutter), calc((100vw - var(--container-max)) / 2 + var(--gutter)));
+  position: relative; overflow: hidden; background: var(--spot-bg, var(--color-lavender-white));
+}
+.spot__band { position: relative; display: flex; align-items: center; min-height: var(--spot-h); }
+/* the photo starts under the panel's inner half and runs to the far edge; the
+   framing script keeps every face and shoulder clear of the panel */
+.spot__media { position: absolute; top: -6%; bottom: -6%; right: 0; left: calc(var(--spot-edge) + var(--spot-pw) * 0.55); will-change: transform; }
+.spot--right .spot__media { left: 0; right: calc(var(--spot-edge) + var(--spot-pw) * 0.55); }
+.spot__media img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.spot__media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to right, var(--spot-bg) 0%, transparent 30%); }
+.spot--right .spot__media::after { background: linear-gradient(to left, var(--spot-bg) 0%, transparent 30%); }
+.spot__tag { position: absolute; z-index: 2; top: clamp(1rem, 1.7vw, 1.5rem); left: clamp(1rem, 1.7vw, 1.5rem); margin: 0; padding: 0.55rem 0.8rem; background: #2A1C36; color: #FFFFFF; font-family: var(--font-body); font-size: 13px; font-weight: 500; line-height: 1; letter-spacing: 0.06em; text-transform: uppercase; }
+.spot__inner { position: relative; z-index: 2; width: 100%; padding-block: clamp(3.5rem, 5vw, 4.5rem); }
+.spot__panel { box-sizing: border-box; max-width: var(--spot-pw); margin: 0; padding: clamp(2rem, 3.4vw, 3rem) clamp(1.75rem, 3.6vw, 3.25rem); background: #FFFFFF; text-align: left; }
+.spot--right .spot__panel { margin-left: auto; }
+.spot__eyebrow { margin: 0 0 0.7rem; font-family: var(--font-body); font-size: 15px; letter-spacing: 0.08em; font-weight: 500; text-transform: uppercase; color: var(--color-srlc-purple); }
+.spot__h { margin: 0; font-family: var(--font-display); font-size: var(--h2-size); font-weight: 500; line-height: 1.12; color: var(--color-srlc-purple); text-wrap: balance; }
+.spot__p { margin: 1.1rem 0 0; font-family: var(--font-body); font-size: 1.06rem; line-height: 1.72; color: var(--color-ink); text-wrap: pretty; }
+.spot__cta { margin: 1.75rem 0 0; }
+/* no photo yet: the panel alone on lavender */
+.spot--text { background: var(--color-lavender-white); padding-block: var(--sec-pad); }
+.spot--text .spot__panel { max-width: 760px; margin: 0 auto; }
+@media (max-width: 1179px) {
+  .spot:not(.spot--text) { background: var(--color-lavender-white); padding-bottom: var(--sec-pad); }
+  .spot__band { display: block; min-height: 0; }
+  .spot__media { position: relative; top: auto; bottom: auto; right: auto; left: auto; width: 100%; aspect-ratio: var(--spot-ar); transform: none !important; }
+  .spot__media::after { display: none; }
+  .spot__inner { padding-block: 0; }
+  .spot__panel, .spot--right .spot__panel { max-width: 760px; margin: 0 auto; }
+  .spot--text .spot__panel { margin: 0 auto; }
+}

@@ -2,7 +2,7 @@
 Per-state stat bands are omitted (CLAUDE.md banned list) and flagged in the
 build log. End-of-page CTAs render as flat sections, never banners."""
 import stats as S
-from shell import (page, ph, page_header, flat_cta, filler, filler_entry, story_split, photo_alt, photo, face_bg,
+from shell import (page, ph, page_header, flat_cta, filler, filler_entry, story_split, story_spotlight, photo_alt, photo, face_bg,
                    img_tag, pick_distinct, photo_src_tag, pinned)
 from data_media import slot
 from data_states import STATES, CAMPAIGNS, US_HERO_BODY
@@ -184,17 +184,11 @@ CAMPAIGN_PHOTO = {
 def render_us_hub(svg_inner):
     campaigns = ""
     for i, c in enumerate(CAMPAIGNS):
-        split_cls = "vu-split" if i % 2 == 0 else "vu-split vu-split--reverse"
         n, pos = CAMPAIGN_PHOTO[c["name"]]
-        img = img_tag(pinned(n), pos=pos)
-        campaigns += f"""<div class="{split_cls} reveal" id="{c["name"].lower().replace(" ", "-")}">
-      <div class="vu-split__copy">
-        <h3>{c["name"]}</h3>
-        <p>{c["body"].replace("Title 1", "Title&nbsp;1")}</p>
-        <a class="btn btn--secondary" href="/donate/">{c["cta"]}</a>
-      </div>
-      <div class="vu-split__photo">{img}</div>
-    </div>"""
+        cta = f'<p class="storysplit__cta"><a class="btn btn--secondary" href="/donate/">{c["cta"]}</a></p>'
+        campaigns += story_split(c["name"], [c["body"].replace("Title 1", "Title&nbsp;1")], pinned(n),
+                                 reverse=i % 2 == 1, tone="white" if i % 2 else "lav", extra=cta,
+                                 pos=pos, sid=c["name"].lower().replace(" ", "-"), h="h3")
 
     body = page_header(
         "Our Work &middot; Where We Serve",
@@ -231,12 +225,12 @@ def render_us_hub(svg_inner):
   </div>
 </section>
 
-<section class="vu-shell vu-shell--cream" id="campaigns">
+<section class="vu-shell vu-shell--cream campaigns-head" id="campaigns">
   <div class="container">
-    <h2 class="vu-h reveal">Our Campaigns</h2>
-    <div class="mt-6">{campaigns}</div>
+    <h2 class="vu-h">Our Campaigns</h2>
   </div>
 </section>
+{campaigns}
 
 {flat_cta("Find your chapter, or start where you are.", "Every highlighted state is an active SRLC USA chapter.", "Volunteer With Us", "/get-involved/volunteer/", ("Ways to Give", "/donate/"))}
 """
@@ -342,7 +336,7 @@ def render_tencare_hub():
   <div class="container pagenext__inner">
     <h2 class="pagenext__line">Continue Reading</h2>
     <div class="pagenext__links">
-      <a class="btn btn--secondary" href="/our-work/united-states/">United States</a>
+      <a class="btn btn--primary" href="/our-work/united-states/">United States</a>
       <a class="btn btn--secondary" href="/our-work/india/">India</a>
       <a class="btn btn--secondary" href="/our-work/mission-africa/">Mission Africa</a>
     </div>
@@ -379,16 +373,13 @@ def render_care(c):
                   else photo(f"{c['slug']}-us", CARE_US_ROUTE[c["slug"]] + ["volunteers+us"], "community", min_w=1200))
         us = story_split("In the United States", [c["us"]], us_img, reverse=True, tone="white")
 
+    # Stories use the story spotlight, and no person appears on two pages
+    # (Naman, Oct 24); Laxibhai stays on the homepage, so Health Care drops him.
+    # Photos for the other stories are still to come, so their panels stand alone.
     story = ""
-    if c["story"]:
+    if c["story"] and c["slug"] != "health-care":
         h, b = c["story"]
-        story = f"""<section class="storyband" aria-labelledby="story-h">
-  <div class="container storyband__inner">
-    <p class="storyband__eyebrow">Story</p>
-    <h2 class="storyband__h" id="story-h">{h}</h2>
-    <p class="storyband__body">{b}</p>
-  </div>
-</section>"""
+        story = story_spotlight(h, [b], eyebrow="Story", sid="story")
 
     body = page_header(
         '<a href="/our-work/10-care-program/">10 Care Program</a>',
@@ -580,6 +571,12 @@ def render_vidyapeeth():
 
 
 def render_africa():
+    africa_links = """<p class="africa-links">
+      <a class="textlink" href="/our-work/10-care-program/">Our Causes<span aria-hidden="true"> &rarr;</span></a>
+      <a class="textlink" href="/our-work/india/">India<span aria-hidden="true"> &rarr;</span></a>
+      <a class="textlink" href="/our-work/united-states/">United States<span aria-hidden="true"> &rarr;</span></a>
+    </p>"""
+    pinned(209)  # the second photo of the old pair; its claim stays so later automatic picks don't shift
     body = page_header(
         "Mission Africa",
         "Distance never decides who receives care",
@@ -587,17 +584,9 @@ def render_africa():
         cta='<a class="btn btn--primary" href="/donate/">Stand With Mission Africa</a>',
         image=filler("Mission Africa", "hospital"),
     ) + f"""
-<section class="vu-shell vu-shell--lav">
-  <div class="container">
-    <div class="vu-split vu-split--even">
-      <div class="vu-split__copy">
-        <h2 class="vu-h">Distance should not decide who gets care</h2>
-        <p>In much of the region Mission Africa serves, the barrier to health is not the treatment. It is the miles between a family and anyone who can provide it, the distance where a curable illness quietly becomes a permanent one. Launched in 2024 by Shrimad Rajchandra Love and Care (SRLC), Mission Africa now works across 16 countries in Africa to close that distance.</p>
-      </div>
-      <div class="vu-split__photo">{img_tag(pinned(185))}</div>
-    </div>
-  </div>
-</section>
+{story_split("Distance should not decide who gets care", [
+    "In much of the region Mission Africa serves, the barrier to health is not the treatment. It is the miles between a family and anyone who can provide it, the distance where a curable illness quietly becomes a permanent one. Launched in 2024 by Shrimad Rajchandra Love and Care (SRLC), Mission Africa now works across 16 countries in Africa to close that distance."],
+    pinned(185), reverse=True, tone="lav")}
 
 <section class="vu-shell vu-shell--cream">
   <div class="container">
@@ -610,18 +599,9 @@ def render_africa():
   </div>
 </section>
 
-<section class="vu-shell vu-shell--lav">
-  <div class="container">
-    <h2 class="vu-h reveal">Proven far from here</h2>
-    <p class="vu-lead">Mission Africa did not start from zero and your gift does not land on an experiment. It extends a healthcare model refined over decades in Dharampur, India, where a 250-bed hospital accredited by the National Accreditation Board for Hospitals and Healthcare Providers (NABH) treats patients regardless of their ability to pay. The movement behind it has touched {S.LIVES} lives globally, and volunteers across the United States help fund and power the work.</p>
-    <p class="africa-links">
-      <a class="textlink" href="/our-work/10-care-program/">Our Causes<span aria-hidden="true"> &rarr;</span></a>
-      <a class="textlink" href="/our-work/india/">India<span aria-hidden="true"> &rarr;</span></a>
-      <a class="textlink" href="/our-work/united-states/">United States<span aria-hidden="true"> &rarr;</span></a>
-    </p>
-    <div class="photopair">{img_tag(pinned(310))}{img_tag(pinned(209))}</div>
-  </div>
-</section>
+{story_split("Proven far from here", [
+    f"Mission Africa did not start from zero and your gift does not land on an experiment. It extends a healthcare model refined over decades in Dharampur, India, where a 250-bed hospital accredited by the National Accreditation Board for Hospitals and Healthcare Providers (NABH) treats patients regardless of their ability to pay. The movement behind it has touched {S.LIVES} lives globally, and volunteers across the United States help fund and power the work."],
+    pinned(310), tone="lav", extra=africa_links)}
 
 {flat_cta("Help the next camp happen", "Somewhere right now, a mother is measuring the distance between her child and a doctor. Your gift shortens it. Put medicine on the road, and hope alongside it.", "Stand With Mission Africa")}
 """
