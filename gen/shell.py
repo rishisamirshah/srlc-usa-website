@@ -771,7 +771,7 @@ BADGE_LINKS = {
 }
 
 
-def recognition_chips(links=False, holders_only=False, caps=None):
+def recognition_chips(links=False, holders_only=False, caps=None, ecosoc=True):
     """Flat one-row band of the two official badge images with captions, plus the ECOSOC line,
     thin dividers, no cards. Keeps the recognition-cluster__items class so
     existing wrappers keep working. `caps` swaps in one-line captions (no holder
@@ -794,4 +794,4 @@ def recognition_chips(links=False, holders_only=False, caps=None):
         return f'<figure class="recognition-badge">{fig}</figure>'
     items = "".join(badge(*row) for row in BADGES)
     return (f'<div class="recognition-cluster__items recognition-badges">{items}</div>'
-            f'<p class="recognition-ecosoc">{ECOSOC_LINE}</p>')
+            + (f'<p class="recognition-ecosoc">{ECOSOC_LINE}</p>' if ecosoc else ""))

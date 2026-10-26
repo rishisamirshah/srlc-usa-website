@@ -634,7 +634,7 @@
   if (!root) return;
 
   /* Giving widget: frequency toggle, amount tiles, custom amount, outcome line.
-     The CTA stays a mailto labelled "Email us to give" (no card processor yet);
+     The Donate button stays a mailto until Stripe is wired (Naman, Oct 25);
      the amount and frequency ride in the subject line. */
   (function () {
     var amounts = Array.prototype.slice.call(root.querySelectorAll(".donate-amount"));
@@ -663,10 +663,10 @@
       if (amt) {
         var shown = Number(amt).toLocaleString("en-US", { maximumFractionDigits: 2 });
         cta.setAttribute("href", mailBase + encodeURIComponent(" ($" + shown + (monthly ? " monthly" : "") + ")"));
-        outcome.textContent = "Your $" + shown + (monthly ? "/mo" : "") + " gift funds " + sel.outcome + ".";
+        outcome.textContent = "Your $" + shown + (monthly ? "/mo" : "") + " gift can fund " + sel.outcome + ".";
       } else {
         cta.setAttribute("href", mailBase + (monthly ? encodeURIComponent(" (monthly)") : ""));
-        outcome.textContent = "Enter an amount to see exactly what it funds.";
+        outcome.textContent = "Enter an amount to see what it can fund.";
       }
     }
     function selectFreq(f) {

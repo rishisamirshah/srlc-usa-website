@@ -1,27 +1,14 @@
-"""Donate page, ported from Naman's donate.html (Aug 30 send).
-
-Section order, copy, widget behaviour, FAQ, trust signals and the monthly
-strip follow his file. Adaptations, each noted in the build report:
-  - site shell (nav/footer/head) comes from shell.page(); his inlined shell
-    CSS/nav/footer are dropped
-  - giving CTAs are mailto links labelled "Email us to give" until a card
-    processor exists (Naman, Aug 22); tax language is the approved
-    "to the extent permitted by law" form, never "100% tax-deductible"
-  - flat design rules (4px radius, no glow shadows, no gradients) win where
-    his style block conflicts
-  - Unsplash hotlink replaced by the local filler photo
-  - the corporate matching logo wall from the current page is kept under the
-    label naman-claude.md prescribes ("Corporate matching gift eligibility")
+"""Donate page. Built from Naman's donate.html (Aug 30) and rewritten from the
+Donate tab of the content doc (Oct 25): general fund only, hero form with a
+Donate button (a mailto until Stripe is wired), Gillaben's story spotlight,
+Give monthly, Give with confidence, More ways to give (charity:water's grid)
+and the FAQ. Tax language stays in the "to the extent permitted by law" form.
 """
 import os
-from shell import img_tag, photo, page, EMAIL
-
-MATCH_QUALIFIER = ("These are examples of companies with employee matching\u2011gift programs. "
-                   "Logos are the property of their respective owners and do not imply "
-                   "partnership with or endorsement of SRLC USA.")
+from shell import img_tag, photo, page, story_spotlight, recognition_chips, EMAIL
+import data_naman as NAMAN
 
 MAIL_GIVE = f"mailto:{EMAIL}?subject=Donation%20to%20SRLC%20USA"
-MAIL_MONTHLY = f"mailto:{EMAIL}?subject=Monthly%20donation%20to%20SRLC%20USA"
 
 
 HERO_PATH = "/assets/img/fillers/children-smiling.jpg"  # Naman's hero photo (Unsplash 1488521787991), local copy
@@ -88,54 +75,80 @@ def _partner_marquee():
 </div>"""
 
 
+# Dollar-to-outcome lines are placeholders in the doc's format ("Your $25 gift
+# can fund ..."); every one needs finance sign-off before launch (Donate tab flag 1).
 AMOUNTS = [
     ("25", "essential medicines for one child for a month", False),
     ("50", "school supplies for one student for a term", True),
     ("100", "hot meals for 50 underserved patients", False),
     ("250", "skills training for one rural woman for a month", False),
-    ("custom", "the program you choose", False),
+    ("custom", "care where the need is greatest", False),
 ]
 
+# More ways to give (Donate tab, Oct 25): charity:water's grid, one purple line
+# illustration per item. Crypto is tabled; stock is email-only for now.
 WAYS = [
-    ("Appreciated stock", "Give stock or securities.",
-     "Donating appreciated stock often avoids capital gains and gives you a deduction at fair market value. Our broker details are ready when you are.",
-     f"mailto:{EMAIL}?subject=Stock%20gift%20inquiry", "Talk to our team"),
-    ("Donor-advised funds", "Recommend a DAF grant.",
-     "SRLC USA is grant-eligible through Fidelity Charitable, Schwab Charitable, Vanguard Charitable, and most major DAF sponsors. EIN 81-5162502.",
-     f"mailto:{EMAIL}?subject=DAF%20grant%20inquiry", "Get DAF instructions"),
-    ("Cryptocurrency", "Give crypto.",
-     "We accept Bitcoin, Ethereum, and most major tokens through a compliant processor. You receive a fair-market-value tax receipt within 48 hours.",
-     f"mailto:{EMAIL}?subject=Crypto%20gift%20inquiry", "Start a crypto gift"),
-    ("Corporate matching", "Double your impact at work.",
-     "Thousands of US employers match nonprofit gifts at 1:1 or 2:1. Submit our EIN to your HR or matching platform; we will confirm the match.",
-     "#corporate-matching", "Explore matching gifts"),
+    ("matching", "Corporate matching",
+     "Many employers match their employees&rsquo; gifts. Use our <span class='nowrap'>EIN 81-5162502</span> with your company&rsquo;s matching program.",
+     "#matching-logos", "Find your employer&rsquo;s match"),
+    ("daf", "Donor-advised funds",
+     "Recommend a grant to SRLC USA from your donor-advised fund using our <span class='nowrap'>EIN 81-5162502</span>.",
+     f"mailto:{EMAIL}?subject=DAF%20grant%20to%20SRLC%20USA", "Give from your DAF"),
+    ("stock", "Gifts of stock",
+     "Give stock or other securities. Email us and our team will share the details.",
+     f"mailto:{EMAIL}?subject=Gift%20of%20stock%20to%20SRLC%20USA", "Email us to give stock"),
+    ("check", "Check or wire",
+     "Mail checks payable to SRLC USA to 500 Paterson Plank Rd #33685, Union City, NJ 07087.",
+     f"mailto:{EMAIL}?subject=Wire%20transfer%20to%20SRLC%20USA", "Ask about a wire transfer"),
 ]
 
-TRUST = [
-    # Stripe "Payment security" signal held until card processing is live (Naman, Aug 22).
-    ('<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/>',
-     "Tax receipts in 48 hours",
-     "An IRS-compliant receipt arrives in your inbox within 48 hours of every gift. Year-end summaries are emailed each January for monthly donors."),
-    ('<circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/>',
-     "Public Form 990",
-     'Our latest Form 990 and audited financials are posted in full. Read them on the <a href="/about/financials/">Financials page</a>.'),
+_INK = 'fill="none" stroke="#693D84" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"'
+_TINT = "#EFE6F8"
+WAY_ICONS = {
+    # two hearts: a gift and its match
+    "matching": f'''<g transform="translate(13 -5)"><path d="M24 50S8 40.5 8 29.5C8 23.7 12.2 20 17 20c3.2 0 5.6 1.7 7 4 1.4-2.3 3.8-4 7-4 4.8 0 9 3.7 9 9.5C40 40.5 24 50 24 50z" fill="#FFFFFF"/></g>
+      <path d="M24 52S8 42.5 8 31.5C8 25.7 12.2 22 17 22c3.2 0 5.6 1.7 7 4 1.4-2.3 3.8-4 7-4 4.8 0 9 3.7 9 9.5C40 42.5 24 52 24 52z" fill="{_TINT}"/>
+      <path d="M52 8v6M49 11h6"/>''',
+    # a grant letter: envelope with a heart card
+    "daf": f'''<path d="M9 30L32 15l23 15v22H9z" fill="{_TINT}"/>
+      <rect x="17" y="19" width="30" height="24" rx="1.5" fill="#FFFFFF"/>
+      <path d="M32 36s-6-3.6-6-7.6c0-2 1.5-3.4 3.2-3.4 1.2 0 2.2.7 2.8 1.6.6-.9 1.6-1.6 2.8-1.6 1.7 0 3.2 1.4 3.2 3.4 0 4-6 7.6-6 7.6z" fill="{_TINT}"/>
+      <path d="M9 31l23 14 23-14v21H9z" fill="{_TINT}"/>
+      <path d="M9 52l18-12M55 52L37 40"/>''',
+    # a rising chart
+    "stock": f'''<rect x="9" y="11" width="46" height="42" rx="2" fill="{_TINT}"/>
+      <path d="M9 21h46M15 16h3M21 16h3"/>
+      <path d="M16 45l9-9 7 6 13-14"/>
+      <path d="M39 28h6v6"/>''',
+    # a signed check and a pen
+    "check": f'''<rect x="5" y="22" width="42" height="25" rx="2" fill="{_TINT}"/>
+      <path d="M11 30h14M11 41c3-3 5 2 8-1s4 1 6-1M31 41h10"/>
+      <path d="M41 36l15-19 3.5 3-15 19-5.5 2z" fill="#FFFFFF"/>
+      <path d="M52.5 22l3.5 3"/>''',
+}
+
+# Give with confidence (Donate tab, Oct 25): three short items, then the seals
+CONFIDENCE = [
+    ("Tax-deductible", "SRLC USA is a registered 501(c)(3) nonprofit, <span class='nowrap'>EIN 81-5162502</span>. You receive a tax receipt by email for every gift."),
+    ("Open financials", 'Our Form 990 and financial reports are published in full on our <a href="/about/financials/">Financials page</a>.'),
+    ("Independently recognized", "SRLC USA holds the Candid Gold Seal of Transparency and is a GreatNonprofits Top-Rated nonprofit."),
 ]
+SEAL_CAPS = {"Candid Seal of Transparency": "Candid Gold Seal of Transparency, 2025",
+             "GreatNonprofits Top‑Rated, 2024": "GreatNonprofits Top‑Rated, 2024"}
 
 FAQ = [
     ("Is my donation tax-deductible?",
-     "Yes. SRLC USA is a registered <span class='nowrap'>501(c)(3)</span> nonprofit, <span class='nowrap'>EIN 81-5162502</span>. Every gift made through srlcusa.org is tax deductible to the extent permitted by law. No goods or services are exchanged in return for your gift."),
+     "Yes. SRLC USA is a registered <span class='nowrap'>501(c)(3)</span> nonprofit, <span class='nowrap'>EIN 81-5162502</span>. Your gift is tax-deductible to the extent permitted by law, and no goods or services are provided in return."),
     ("When will I receive my tax receipt?",
-     f'Within 48 hours of your gift, you receive an IRS-compliant receipt by email. Monthly donors also get a year-end summary in January, listing every gift from the prior calendar year. If a receipt does not arrive, email <a href="mailto:{EMAIL}">{EMAIL}</a> and we will resend it the same day.'),
-    ("Can I cancel or change my monthly gift?",
-     f'Anytime. There is no minimum commitment, no cancellation fee, and no phone tree. Email <a href="mailto:{EMAIL}">{EMAIL}</a> or log in to your donor portal to update the amount, change the program, pause, or cancel. Changes take effect on your next billing date.'),
+     f'You receive a tax receipt by email after your gift. If it doesn&rsquo;t arrive, email <a href="mailto:{EMAIL}">{EMAIL}</a> and we&rsquo;ll resend it.'),
+    ("Can I change or cancel my monthly gift?",
+     f'Yes, at any time. Email <a href="mailto:{EMAIL}">{EMAIL}</a> with the change you&rsquo;d like to make.'),
     ("How is my gift used?",
-     'Every gift goes to the program you designate. If you do not designate, gifts are directed to the Care with the most urgent unmet need that month. Overhead and fundraising costs are benchmarked against the most efficient US nonprofits in our category. See the current ratio on the <a href="/about/financials/">Financials page</a>.'),
-    ("Can I donate by check, wire, or ACH?",
-     f'Yes. Checks payable to <strong>SRLC USA</strong> can be mailed to 500 Paterson Plank Rd #33685, Union City, NJ 07087. For wire or ACH instructions, or to set up a recurring bank transfer, email <a href="mailto:{EMAIL}">{EMAIL}</a> and our team will respond within one business day.'),
-    ("Can international donors give to SRLC USA?",
-     "Yes. Anyone with an internationally accepted credit card or DAF can give through srlcusa.org. Please note that tax-deductibility applies under US law; donors outside the US should consult a local tax adviser about deductibility in their country. For SRLC programs based in India, our parent organization offers separate India-domiciled giving options."),
-    ("Will my contact information be shared?",
-     "No. SRLC USA does not sell, rent, or trade donor data. Our full privacy policy outlines exactly what we store, how long we store it, and how to request deletion."),
+     'Gifts made on this page go to Shrimad Rajchandra Love and Care&rsquo;s general fund, so support can go where the need is greatest across the 10 Care Program. Our Form 990 and financial reports are on our <a href="/about/financials/">Financials page</a>.'),
+    ("Can donors outside the US give?",
+     "Yes. You can give with any internationally accepted credit card. Tax deductibility applies under US law, so donors outside the US should check how their gift is treated in their own country."),
+    ("Will my information be shared?",
+     "No. SRLC USA does not sell, rent, or trade donor information. Our privacy policy explains what we store and how to request deletion."),
 ]
 
 
@@ -148,23 +161,12 @@ def _amount_tiles():
 
 
 def _ways():
-    items = []
-    for i, (eyebrow, h, body, href, cta) in enumerate(WAYS):
-        pid = f"way-panel-{i + 1}"
-        items.append(f"""<div class="faq-item">
-        <h3 class="faq-item__h"><button type="button" class="faq-item__btn" aria-expanded="false" aria-controls="{pid}">
-          <span class="way-summary">
-            <span class="way-card__eyebrow">{eyebrow}</span>
-            <span class="way-summary__h">{h}</span>
-          </span>
-          <span class="faq-item__icon" aria-hidden="true"></span>
-        </button></h3>
-        <div class="faq-item__body" id="{pid}" hidden>
-          <p>{body}</p>
-          <a class="textlink way-card__cta" href="{href}">{cta}<span aria-hidden="true">&nbsp;&rarr;</span></a>
-        </div>
-      </div>""")
-    return "\n      ".join(items)
+    return "\n      ".join(f"""<div class="way">
+        <svg class="way__icon" viewBox="0 0 64 64" width="72" height="72" aria-hidden="true" {_INK}>{WAY_ICONS[key]}</svg>
+        <h3 class="way__h">{h}</h3>
+        <p class="way__p">{body}</p>
+        <a class="way__link" href="{href}">{cta}</a>
+      </div>""" for key, h, body, href, cta in WAYS)
 
 
 def _faq():
@@ -180,22 +182,16 @@ def _faq():
     return "\n      ".join(items)
 
 
-def _trust():
-    cards = "".join(f"""
-      <article class="trust-sig">
-        <h3 class="trust-sig__h">{h}</h3>
-        <p class="trust-sig__body">{body}</p>
-      </article>""" for _, h, body in TRUST)
-    cards += """
-      <article class="trust-sig">
-        <h3 class="trust-sig__h">501(c)(3) registered</h3>
-        <p class="trust-sig__body"><span class="nowrap">EIN 81-5162502</span>. Incorporated in New Jersey. Contributions are tax deductible to the extent permitted by law.</p>
-      </article>"""
-    return cards
-
-
 def render_donate():
+    # Donate tab rewrite (Naman, Oct 25): general fund only, no cause or center
+    # picker; six sections; site-wide rules (plain headings, centered text).
     hero_img, hero_w, hero_h = _hero_img()
+    story_img = NAMAN.TIMELINE_PHOTOS["2022"]  # the hospital, until Gillaben's photo arrives
+    confidence = "".join(f"""
+      <div class="confidence-item">
+        <h3 class="confidence-item__h">{h}</h3>
+        <p class="confidence-item__p">{p}</p>
+      </div>""" for h, p in CONFIDENCE)
     body = f"""<div class="donate-page">
 
 <section class="donate-hero" aria-labelledby="page-title">
@@ -206,20 +202,18 @@ def render_donate():
     <div class="donate-hero__grid">
       <div class="donate-hero__copy">
         <div class="donate-hero__title">
-          <p class="donate-hero__eyebrow">Make a Gift</p>
-          <h1 class="donate-hero__h" id="page-title">Every dollar funds a specific outcome.</h1>
+          <h1 class="donate-hero__h" id="page-title">Give care where it&rsquo;s needed most</h1>
         </div>
         <div class="donate-hero__detail">
-          <p class="donate-hero__sub">Choose an amount. We'll show you exactly what it funds. Contributions are tax deductible to the extent permitted by law.</p>
+          <p class="donate-hero__sub">Your gift supports Shrimad Rajchandra Love and Care&rsquo;s work across the 10 Care Program, directed to the programs where the need is greatest.</p>
           <div class="donate-hero__meta">
-            <span class="nowrap">501(c)(3) registered</span>
+            <span class="nowrap">501(c)(3) nonprofit</span>
             <span class="nowrap">EIN 81-5162502</span>
-            <span class="nowrap">Tax-deductible</span>
+            <span>Tax-deductible to the extent permitted by law</span>
           </div>
         </div>
       </div>
       <aside class="donate-widget" id="donate-form" aria-label="Donation form">
-        <h2 class="donate-widget__h">Start with an amount.</h2>
         <div class="donate-toggle" role="group" aria-label="Gift frequency">
           <button type="button" class="donate-toggle__btn" data-freq="one-time" aria-pressed="true">One time</button>
           <button type="button" class="donate-toggle__btn" data-freq="monthly" aria-pressed="false">Monthly</button>
@@ -231,78 +225,56 @@ def render_donate():
           <span class="donate-custom__symbol" aria-hidden="true">$</span>
           <input class="donate-custom__input" type="number" min="1" inputmode="decimal" aria-label="Custom amount in US dollars" placeholder="Enter amount">
         </div>
-        <p class="donate-widget__outcome" id="donate-outcome" aria-live="polite">Your $50 gift funds school supplies for one student for a term.</p>
-        <a class="btn btn--primary btn--lg donate-widget__cta" id="donate-cta" href="{MAIL_GIVE}%20(%2450)" data-mail="{MAIL_GIVE}">Email us to give</a>
+        <p class="donate-widget__outcome" id="donate-outcome" aria-live="polite">Your $50 gift can fund school supplies for one student for a term.</p>
+        <!-- placeholder until Stripe is wired (Hardik and the CRM team): still opens an email -->
+        <a class="btn btn--primary btn--lg donate-widget__cta" id="donate-cta" href="{MAIL_GIVE}%20(%2450)" data-mail="{MAIL_GIVE}">Donate</a>
+        <p class="donate-widget__larger">Planning a larger gift? Email <a href="mailto:{EMAIL}?subject=Planning%20a%20larger%20gift">{EMAIL}</a> and our team will reach out.</p>
       </aside>
     </div>
   </div>
 </section>
 
-<section class="section-pad section--white" id="corporate-matching" aria-label="Corporate matching gifts">
-  <div class="container">
-    <div class="section-head">
-      <h2 class="section-h">Double Your Impact</h2>
-      <p class="section-sub">Thousands of companies match the donations their employees make to nonprofits like SRLC USA. Some also match volunteer hours.</p>
+{story_spotlight("Gillaben&rsquo;s story", [
+    "For more than 12 years, Gillaben lived with a lump before she finally sought help at Shrimad Rajchandra Hospital and Research Center, where she was diagnosed with breast cancer. After surgery and several rounds of chemotherapy, with her family and medical team beside her, she recovered. Today she shares her story across her village, encouraging others to seek diagnosis and treatment early, because acting sooner can change everything."],
+    story_img, cta=("Donate today", "#donate-form"), eyebrow="Impact Story", pos="70 50", bg="#F7F4FF", sid="donate-story")}
+
+<section class="donate-strip donate-strip--split" id="monthly" aria-label="Give monthly">
+  <div class="donate-strip__media">{img_tag(photo("donate-monthly", ["child-care+india", "health-care+india", "educational-care+india"], "children", min_w=1200))}</div>
+  <div class="donate-strip__copy">
+    <h2 class="donate-strip__h">Give monthly</h2>
+    <p class="donate-strip__body">A monthly gift gives our programs steady support they can plan around. You can change or cancel it at any time by emailing {EMAIL}.</p>
+    <div class="donate-strip__ctas">
+      <a class="btn btn--primary" href="#donate-form" data-select-freq="monthly">Give monthly</a>
     </div>
-    <!-- Double the Donation employer search returns here once the account and
-         API key are live (owner: Hardik); the disabled mock is out until then. -->
-    <p class="dd-cta"><a class="textlink" href="#donate-form">Make your gift now and submit your match request today.<span aria-hidden="true">&nbsp;&rarr;</span></a></p>
-    <div class="dd-logos">
-      <p class="section-eyebrow dd-logos__h">Corporate matching gift eligibility</p>
-      <p class="dd-logos__qualifier">{MATCH_QUALIFIER}</p>
+  </div>
+</section>
+
+<section class="section-pad section--white donate-confidence" id="confidence" aria-labelledby="confidence-h">
+  <div class="container">
+    <h2 class="section-h" id="confidence-h">Give with confidence</h2>
+    <div class="confidence-items">{confidence}
+    </div>
+    <div class="recognition-cluster fin-badges">{recognition_chips(links=True, caps=SEAL_CAPS, ecosoc=False)}</div>
+    <p class="confidence-cta"><a class="btn btn--primary" href="/about/financials/">See Our Financials</a></p>
+  </div>
+</section>
+
+<section class="section-pad section--lavender donate-ways" id="more-ways" aria-labelledby="ways-h">
+  <div class="container">
+    <h2 class="section-h" id="ways-h">More ways to give</h2>
+    <div class="ways-grid">
+      {_ways()}
+    </div>
+    <div class="ways-logos" id="matching-logos">
+      <p class="ways-logos__cap">Companies with employee matching-gift programs include:</p>
       {_partner_marquee()}
     </div>
   </div>
 </section>
 
-<section class="donate-strip donate-strip--split" id="monthly" aria-label="Become a monthly donor">
-  <div class="donate-strip__media">{img_tag(photo("donate-monthly", ["child-care+india", "health-care+india", "educational-care+india"], "children", min_w=1200))}</div>
-  <div class="donate-strip__copy">
-    <p class="donate-strip__eyebrow">Sustaining gifts</p>
-    <h2 class="donate-strip__h">A monthly gift sustains a Care every month of the year. <em>Not just today.</em></h2>
-    <p class="donate-strip__body">Monthly donors are the backbone of SRLC USA. $25 a month is essential medicines for a different patient every month. $60 a month is one full mobile clinic day, twelve villages a year. Set it once.</p>
-    <div class="donate-strip__ctas">
-      <a class="btn btn--primary" href="{MAIL_MONTHLY}%20(%2425%20monthly)">Become a monthly donor at $25</a>
-      <a class="btn btn--ghost" href="#donate-form" data-select-freq="monthly">Choose another monthly amount</a>
-    </div>
-  </div>
-</section>
-
-<section class="section-pad section--lavender" id="other-ways" aria-label="Other ways to give">
-  <div class="container donate-twocol">
-    <div class="section-head">
-      <p class="section-eyebrow">Other ways to give</p>
-      <h2 class="section-h">More than a credit card. <em>Many paths, one mission.</em></h2>
-      <p class="section-sub">Stock, donor-advised funds, crypto, and corporate matching can deepen your gift's impact and your tax benefit. Our team will guide you through the steps.</p>
-    </div>
-    <div class="faq-list ways-accordion">
-      {_ways()}
-    </div>
-    <div class="check-wire">
-      <h3 class="check-wire__h">Prefer to give by check or wire?</h3>
-      <p class="check-wire__body">Make checks payable to <strong>SRLC USA</strong>, <span class="nowrap">EIN 81-5162502</span>, and mail to 500 Paterson Plank Rd #33685, Union City, NJ 07087. For wires, email <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
-    </div>
-  </div>
-</section>
-
-<section class="section-pad section--white" id="trust" aria-label="Trust signals">
+<section class="section-pad section--white donate-faq" id="faq" aria-labelledby="faq-h">
   <div class="container">
-    <div class="section-head">
-      <p class="section-eyebrow">Trust, sourced</p>
-      <h2 class="section-h">Your gift is safe, tracked, and reported.</h2>
-      <p class="section-sub">SRLC USA is built for the donor who reads the fine print. Here is what we publish, encrypt, and confirm.</p>
-    </div>
-    <div class="trust-signals">{_trust()}
-    </div>
-  </div>
-</section>
-
-<section class="section-pad section--lavender" id="faq" aria-label="Donor questions">
-  <div class="container donate-twocol">
-    <div class="section-head">
-      <p class="section-eyebrow">Before you give</p>
-      <h2 class="section-h">Honest answers to the questions donors actually ask.</h2>
-    </div>
+    <h2 class="section-h" id="faq-h">Questions about giving</h2>
     <div class="faq-list">
       {_faq()}
     </div>
@@ -313,5 +285,5 @@ def render_donate():
 """
     return page(
         "Donate | SRLC USA",
-        "Give to SRLC USA. $25 funds essential medicines for one patient for a month. One-time or monthly. 501(c)(3), EIN 81-5162502. Contributions are tax deductible to the extent permitted by law.",
+        "Give to SRLC USA, a 501(c)(3) nonprofit. Your gift supports the 10 Care Program where the need is greatest. One-time and monthly giving.",
         "/donate/", body)

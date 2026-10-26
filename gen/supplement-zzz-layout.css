@@ -98,16 +98,6 @@
 .oi-recog .recognition-badges { gap: clamp(2rem, 5vw, 4.5rem) !important; margin-top: clamp(1.5rem, 3vw, 2.25rem); }
 .oi-recog .recognition-badge__img { height: 112px !important; width: auto !important; }
 @media (max-width: 760px) { .oi-recog .recognition-badge__img { height: 88px !important; } }
-/* Donate: centered heads; the two side-by-side text sections stack, list centered under the head */
-.donate-page .section-head, #corporate-matching .section-head, #trust .section-head, #other-ways .section-head, #faq .section-head { max-width: 720px; margin-inline: auto !important; text-align: center !important; }
-.donate-page .section-head > *, #corporate-matching .section-head > *, #trust .section-head > *, #other-ways .section-head > *, #faq .section-head > * { margin-inline: auto !important; text-align: center !important; }
-#corporate-matching .dd-cta, #corporate-matching .dd-logos__h, #corporate-matching .dd-logos__qualifier { text-align: center; margin-inline: auto !important; }
-#trust .container, #trust .container * { text-align: center !important; }
-.donate-twocol { display: block !important; }
-.donate-page .donate-twocol .faq-list, .donate-twocol .check-wire { max-width: 720px !important; margin-inline: auto !important; }
-.donate-page .donate-twocol .faq-list { margin-top: clamp(2rem, 3.5vw, 2.75rem) !important; }
-.donate-twocol .check-wire, .donate-twocol .check-wire * { text-align: center !important; }
-.donate-twocol .check-wire { margin-top: 2.25rem !important; }
 /* Donate monthly strip: 520px copy column centered in its half */
 @media (min-width: 861px) {
   .donate-strip--split .donate-strip__copy { padding-left: max(2rem, calc((100% - 520px) / 2)) !important; padding-right: max(2rem, calc((100% - 520px) / 2)) !important; }
