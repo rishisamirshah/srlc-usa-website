@@ -2,7 +2,8 @@
    inside its frame, by the 6% the photo runs past the frame at each end
    (supplement-zz-px.css), so an edge never shows. Off where the CSS keeps the
    photo flush with its frame (phones, tablets, reduced motion). The QA audit
-   sets window.__pxForce to -1 or 1 to hold every photo at one end. */
+   sets window.__pxForce to -1 or 1 to hold every photo at the far end it can
+   actually reach (a hero starts mid-drift, never at -1). */
 (function () {
   var imgs = Array.prototype.slice.call(document.querySelectorAll('img.px'));
   if (!imgs.length) return;
@@ -17,7 +18,14 @@
       var r = frame.getBoundingClientRect();
       if (force === undefined && (r.bottom < -room || r.top > vh + room)) return;
       // -1 as the frame enters at the bottom of the screen, +1 as it leaves at the top
-      var p = force !== undefined ? force : Math.max(-1, Math.min(1, (vh - r.top) / (vh + r.height) * 2 - 1));
+      var p = Math.max(-1, Math.min(1, (vh - r.top) / (vh + r.height) * 2 - 1));
+      if (force !== undefined) {
+        // QA: the far end this frame can actually reach while scrolling
+        var top = r.top + window.scrollY, maxS = Math.max(0, document.documentElement.scrollHeight - vh);
+        var lo = Math.max(-1, Math.min(1, (vh - top) / (vh + r.height) * 2 - 1));
+        var hi = Math.max(-1, Math.min(1, (vh - (top - maxS)) / (vh + r.height) * 2 - 1));
+        p = Math.max(lo, Math.min(hi, force));
+      }
       img.style.setProperty('--py', (p * room).toFixed(1) + 'px');
     });
   }

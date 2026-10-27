@@ -5150,6 +5150,19 @@ img[src$="mb-180.webp"] { object-position: 15% 50%; }
   .donate-page .donate-hero__media img.px[data-px-hold] { top: 0 !important; height: 100% !important; transform: scale(var(--fz, 1)) !important; }
 }
 
+/* Corporate matching (Naman, Oct 27): centered heading and line, the EIN line
+   in the employer search plugin's spot, then the logo strip */
+.donate-matching .container { text-align: center; }
+.donate-matching__line { max-width: 720px; margin: 1rem auto 0; font-size: 1.06rem; line-height: 1.7; color: var(--color-ink); }
+.donate-matching .ways-logos { margin-top: clamp(2rem, 3.5vw, 2.75rem); }
+.donate-matching__ein { max-width: 720px; margin: 1.25rem auto 0; font-size: 1.06rem; font-weight: 600; color: var(--color-ink); }
+#matching { scroll-margin-top: 90px; }
+/* six amounts in a 3x2 grid: Other takes one cell like the rest */
+.donate-page .donate-amount[data-amt="custom"] { grid-column: auto !important; }
+/* the organization's name stays on one line, except where a 320px screen
+   is narrower than the name itself */
+@media (max-width: 359px) { .donate-hero__sub .nowrap { white-space: normal; } }
+
 
 /* ---- supplement-zzz-impact.css ---- */
 /* Our Impact (Naman, Oct 22). Inner-page layer, skipped in the home bundle. */

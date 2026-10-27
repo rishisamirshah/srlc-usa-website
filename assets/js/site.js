@@ -790,7 +790,8 @@
    inside its frame, by the 6% the photo runs past the frame at each end
    (supplement-zz-px.css), so an edge never shows. Off where the CSS keeps the
    photo flush with its frame (phones, tablets, reduced motion). The QA audit
-   sets window.__pxForce to -1 or 1 to hold every photo at one end. */
+   sets window.__pxForce to -1 or 1 to hold every photo at the far end it can
+   actually reach (a hero starts mid-drift, never at -1). */
 (function () {
   var imgs = Array.prototype.slice.call(document.querySelectorAll('img.px'));
   if (!imgs.length) return;
@@ -805,7 +806,14 @@
       var r = frame.getBoundingClientRect();
       if (force === undefined && (r.bottom < -room || r.top > vh + room)) return;
       // -1 as the frame enters at the bottom of the screen, +1 as it leaves at the top
-      var p = force !== undefined ? force : Math.max(-1, Math.min(1, (vh - r.top) / (vh + r.height) * 2 - 1));
+      var p = Math.max(-1, Math.min(1, (vh - r.top) / (vh + r.height) * 2 - 1));
+      if (force !== undefined) {
+        // QA: the far end this frame can actually reach while scrolling
+        var top = r.top + window.scrollY, maxS = Math.max(0, document.documentElement.scrollHeight - vh);
+        var lo = Math.max(-1, Math.min(1, (vh - top) / (vh + r.height) * 2 - 1));
+        var hi = Math.max(-1, Math.min(1, (vh - (top - maxS)) / (vh + r.height) * 2 - 1));
+        p = Math.max(lo, Math.min(hi, force));
+      }
       img.style.setProperty('--py', (p * room).toFixed(1) + 'px');
     });
   }
@@ -919,14 +927,23 @@
   if (!imgs.length) return;
   var ZOOMS = [1, 1.05, 1.1, 1.15, 1.2, 1.25, 1.3];
 
-  // head boxes, each with the face's height last (a forced cut takes the smallest face)
+  // head boxes: [left, top, right, bottom, face height, shoulders left,
+  // shoulders right, prominent]. A prominent person (face at least 8% of the
+  // photo's height) counts as in only with the shoulders in too, so nobody
+  // in the foreground is sliced at a side edge (Naman, Oct 27); a forced cut
+  // takes the smallest face.
+  var BIG = 0.08;
   function heads(img, up) {
     var sh = img.getAttribute('data-pad') === 'shoulders';
     return img.getAttribute('data-faces').split(';').map(function (s) {
       var f = s.split(',').map(Number);
-      return sh
-        ? [Math.max(0, f[0] - 0.9 * f[2]), Math.max(0, f[1] - up * f[3]), Math.min(1, f[0] + 1.9 * f[2]), Math.min(1, f[1] + 2.2 * f[3]), f[3]]
-        : [Math.max(0, f[0] - 0.2 * f[2]), Math.max(0, f[1] - up * f[3]), Math.min(1, f[0] + 1.2 * f[2]), Math.min(1, f[1] + 1.1 * f[3]), f[3]];
+      var big = f[3] >= BIG;
+      var box = sh
+        ? [Math.max(0, f[0] - 0.9 * f[2]), Math.max(0, f[1] - up * f[3]), Math.min(1, f[0] + 1.9 * f[2]), Math.min(1, f[1] + 2.2 * f[3])]
+        : [Math.max(0, f[0] - 0.2 * f[2]), Math.max(0, f[1] - up * f[3]), Math.min(1, f[0] + 1.2 * f[2]), Math.min(1, f[1] + 1.1 * f[3])];
+      var wl = big ? Math.max(0, Math.min(box[0], f[0] - 0.55 * f[2])) : box[0];
+      var wr = big ? Math.min(1, Math.max(box[2], f[0] + 1.55 * f[2])) : box[2];
+      return box.concat([f[3], wl, wr, big]);
     });
   }
 
@@ -942,17 +959,44 @@
     return extra > 2 ? extra / 2 : 0;
   }
 
-  function avoidRects(img, drift) {
+  // the drift positions this photo can actually reach: p runs from -1 (frame
+  // entering at the bottom of the screen) to +1 (leaving at the top), but a
+  // frame already on screen at the top of the page, or still on screen at
+  // the very bottom, never reaches the far end (a hero starts near 0)
+  function reach(img) {
+    var r = img.parentElement.getBoundingClientRect(), vh = window.innerHeight;
+    var top = r.top + window.scrollY, h = r.height;
+    var maxS = Math.max(0, document.documentElement.scrollHeight - vh);
+    function p(sy) { return Math.max(-1, Math.min(1, (vh - (top - sy)) / (vh + h) * 2 - 1)); }
+    return [p(0), p(maxS)];
+  }
+
+  // the text boxes in the photo box's own coordinates, stretched over every
+  // drift position the photo can reach (it moves p * room against the text)
+  function avoidRects(img, room, pr) {
     var sel = img.getAttribute('data-avoid'), sec = img.closest('section');
     var op = img.offsetParent;
     if (!sel || !sec || !op) return [];
     // the photo's untransformed box (offsets ignore the zoom and the drift)
     var opr = op.getBoundingClientRect();
     var ir = { left: opr.left + op.clientLeft + img.offsetLeft, top: opr.top + op.clientTop + img.offsetTop };
-    return Array.prototype.slice.call(sec.querySelectorAll(sel)).map(function (e) {
-      var r = e.getBoundingClientRect();
-      return [r.left - ir.left, r.top - ir.top - drift, r.right - ir.left, r.bottom - ir.top + drift];
-    }).filter(function (r) { return r[2] > r[0] && r[3] > r[1]; });
+    // the lines of text themselves, not the element boxes (a short eyebrow's
+    // box spans the whole container); a block holding other blocks (a story
+    // panel) counts whole
+    var out = [];
+    Array.prototype.forEach.call(sec.querySelectorAll(sel), function (e) {
+      var rects = [e.getBoundingClientRect()];
+      if (e.textContent.trim() && !e.querySelector('div, p, h1, h2, h3, h4, ul, ol')) {
+        var rg = document.createRange();
+        rg.selectNodeContents(e);
+        rects = Array.prototype.slice.call(rg.getClientRects());
+      }
+      rects.forEach(function (r) {
+        if (r.width > 0 && r.height > 0)
+          out.push([r.left - ir.left, r.top - ir.top - pr[1] * room, r.right - ir.left, r.bottom - ir.top - pr[0] * room]);
+      });
+    });
+    return out;
   }
 
   function clear(img) {
@@ -968,11 +1012,15 @@
     if (!bw || !bh || !img.naturalWidth || getComputedStyle(img).objectFit !== 'cover') return;
     var o = overscan(img);
     var best = settle(img, bw, bh, o);
-    if (o && (best.key[0] > 0 || best.key[1] > 0)) {
-      // the drift would cut a head or slide a face under the text: if the
-      // photo holding still does better, hold it
+    if (o) {
+      // if holding still would cut fewer heads, keep more faces clear of the
+      // text, or keep a prominent person the drift loses, hold the photo still
       var calm = settle(img, bw, img.parentElement.clientHeight, 0);
-      if (better(calm.key.slice(0, 2), best.key.slice(0, 2))) { img.setAttribute('data-px-hold', ''); return; }  // the box change refits it
+      img._drift = best; img._calm = calm;  // for QA
+      if (better([calm.key[0], calm.key[1], -calm.big], [best.key[0], best.key[1], -best.big])) {
+        img.setAttribute('data-px-hold', '');  // the box change refits it
+        return;
+      }
     }
     apply(img, best);
   }
@@ -990,8 +1038,10 @@
   }
 
   function search(img, bw, bh, o, up) {
-    var m = o ? 2 * o / bh : 0;  // share of the box that can scroll out of view, each end
-    var av = avoidRects(img, o);
+    // share of the box that can scroll out of view at the top and at the bottom
+    var pr = o ? reach(img) : [0, 0];
+    var mt = o ? o * (1 - pr[0]) / bh : 0, mb = o ? o * (1 + pr[1]) / bh : 0;
+    var av = avoidRects(img, o, pr);
     var s = Math.max(bw / img.naturalWidth, bh / img.naturalHeight);
     var wx0 = bw / (img.naturalWidth * s), wy0 = bh / (img.naturalHeight * s);
     var hs = heads(img, up);
@@ -1004,13 +1054,14 @@
         for (var py = 0; py <= 100; py += (wy < 0.999 ? 1 : 101)) {
           var ppy = wy < 0.999 ? py : 50;
           var l = px / 100 * (1 - wx), t = ppy / 100 * (1 - wy), r = l + wx, b = t + wy;
-          var st = t + m * wy, sb = b - m * wy;  // always on screen
-          var cut = 0, inn = 0, txt = 0;
+          var st = t + mt * wy, sb = b - mb * wy;  // always on screen
+          var cut = 0, inn = 0, txt = 0, big = 0;
           for (var i = 0; i < hs.length; i++) {
             var h = hs[i];
             if (h[2] <= l || h[0] >= r || h[3] <= t || h[1] >= b) continue;
-            if (h[0] >= l - 1e-4 && h[2] <= r + 1e-4 && h[1] >= st - 1e-4 && (open || h[3] <= sb + 1e-4)) {
+            if (h[5] >= l - 1e-4 && h[6] <= r + 1e-4 && h[1] >= st - 1e-4 && (open || h[3] <= sb + 1e-4)) {
               inn++;
+              if (h[7]) big++;
               var x0 = (h[0] - l) / wx * bw, y0 = (h[1] - t) / wy * bh, x1 = (h[2] - l) / wx * bw, y1 = (h[3] - t) / wy * bh;
               for (var k = 0; k < av.length; k++) {
                 if (x0 < av[k][2] && x1 > av[k][0] && y0 < av[k][3] && y1 > av[k][1]) { txt++; break; }
@@ -1018,7 +1069,7 @@
             } else cut += h[4];
           }
           var key = [cut, txt, -inn, z, Math.abs(px - pref[0]) + Math.abs(ppy - pref[1])];
-          if (!best || better(key, best.key)) best = { key: key, px: px, py: ppy, z: z };
+          if (!best || better(key, best.key)) best = { key: key, px: px, py: ppy, z: z, big: big };
         }
       }
     });

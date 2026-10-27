@@ -82,15 +82,23 @@ AMOUNTS = [
     ("50", "school supplies for one student for a term", True),
     ("100", "hot meals for 50 underserved patients", False),
     ("250", "skills training for one rural woman for a month", False),
+    ("500", "care where the need is greatest", False),
     ("custom", "care where the need is greatest", False),
 ]
+
+# Corporate matching (Donate tab, Oct 27). Hardik's employer search plugin
+# takes the EIN line's place once it is live; the logo strip stays under it.
+MATCH_H = "Find your employer&rsquo;s match"
+MATCH_LINE = ("Many companies match the gifts their employees make to nonprofits. Search for your employer "
+              "to see whether your gift qualifies and how to request the match.")
+MATCH_EIN = "Use our <span class='nowrap'>EIN 81-5162502</span> when you submit a match request through your employer."
 
 # More ways to give (Donate tab, Oct 25): charity:water's grid, one purple line
 # illustration per item. Crypto is tabled; stock is email-only for now.
 WAYS = [
     ("matching", "Corporate matching",
      "Many employers match their employees&rsquo; gifts. Use our <span class='nowrap'>EIN 81-5162502</span> with your company&rsquo;s matching program.",
-     "#matching-logos", "Find your employer&rsquo;s match"),
+     "#matching", "Find your employer&rsquo;s match"),
     ("daf", "Donor-advised funds",
      "Recommend a grant to SRLC USA from your donor-advised fund using our <span class='nowrap'>EIN 81-5162502</span>.",
      f"mailto:{EMAIL}?subject=DAF%20grant%20to%20SRLC%20USA", "Give from your DAF"),
@@ -186,7 +194,7 @@ def render_donate():
     # Donate tab rewrite (Naman, Oct 25): general fund only, no cause or center
     # picker; six sections; site-wide rules (plain headings, centered text).
     hero_img, hero_w, hero_h = _hero_img()
-    story_img = NAMAN.TIMELINE_PHOTOS["2022"]  # the hospital, until Gillaben's photo arrives
+    story_img = NAMAN.TIMELINE_PHOTOS["2022"]  # the hospital, until her photo arrives
     confidence = "".join(f"""
       <div class="confidence-item">
         <h3 class="confidence-item__h">{h}</h3>
@@ -205,7 +213,7 @@ def render_donate():
           <h1 class="donate-hero__h" id="page-title">Give care where it&rsquo;s needed most</h1>
         </div>
         <div class="donate-hero__detail">
-          <p class="donate-hero__sub">Your gift supports Shrimad Rajchandra Love and Care&rsquo;s work across the 10 Care Program, directed to the programs where the need is greatest.</p>
+          <p class="donate-hero__sub">Your gift supports <span class="nowrap">Shrimad Rajchandra Love and Care&rsquo;s</span> work across the 10 Care Program, directed to the programs where the need is greatest.</p>
           <div class="donate-hero__meta">
             <span class="nowrap">501(c)(3) nonprofit</span>
             <span class="nowrap">EIN 81-5162502</span>
@@ -234,9 +242,18 @@ def render_donate():
   </div>
 </section>
 
-{story_spotlight("Gillaben&rsquo;s story", [
-    "For more than 12 years, Gillaben lived with a lump before she finally sought help at Shrimad Rajchandra Hospital and Research Center, where she was diagnosed with breast cancer. After surgery and several rounds of chemotherapy, with her family and medical team beside her, she recovered. Today she shares her story across her village, encouraging others to seek diagnosis and treatment early, because acting sooner can change everything."],
-    story_img, cta=("Donate today", "#donate-form"), eyebrow="Impact Story", pos="70 50", bg="#F7F4FF", sid="donate-story")}
+<section class="section-pad section--white donate-matching" id="matching" aria-labelledby="matching-h">
+  <div class="container">
+    <h2 class="section-h" id="matching-h">{MATCH_H}</h2>
+    <p class="donate-matching__line">{MATCH_LINE}</p>
+    <!-- Hardik's employer search plugin replaces the EIN line once it is live -->
+    <p class="donate-matching__ein">{MATCH_EIN}</p>
+    <div class="ways-logos" id="matching-logos">
+      <p class="ways-logos__cap">Companies with employee matching-gift programs include:</p>
+      {_partner_marquee()}
+    </div>
+  </div>
+</section>
 
 <section class="donate-strip donate-strip--split" id="monthly" aria-label="Give monthly">
   <div class="donate-strip__media">{px_img(photo("donate-monthly", ["child-care+india", "health-care+india", "educational-care+india"], "children", min_w=1200))}</div>
@@ -249,6 +266,19 @@ def render_donate():
   </div>
 </section>
 
+<section class="section-pad section--white donate-ways" id="more-ways" aria-labelledby="ways-h">
+  <div class="container">
+    <h2 class="section-h" id="ways-h">More ways to give</h2>
+    <div class="ways-grid">
+      {_ways()}
+    </div>
+  </div>
+</section>
+
+{story_spotlight("Back to being a child", [
+    "She loved to run and play, until breathing became hard. Doctors found a hole between the upper chambers of her heart and closed it surgically, using her own heart tissue. For her family, the cost could have been impossible. Her treatment was free. Today she is back to running, playing, and being a child."],
+    story_img, cta=("Donate today", "#donate-form"), eyebrow="Impact Story", pos="70 50", bg="#F7F4FF", sid="donate-story")}
+
 <section class="section-pad section--white donate-confidence" id="confidence" aria-labelledby="confidence-h">
   <div class="container">
     <h2 class="section-h" id="confidence-h">Give with confidence</h2>
@@ -259,20 +289,7 @@ def render_donate():
   </div>
 </section>
 
-<section class="section-pad section--lavender donate-ways" id="more-ways" aria-labelledby="ways-h">
-  <div class="container">
-    <h2 class="section-h" id="ways-h">More ways to give</h2>
-    <div class="ways-grid">
-      {_ways()}
-    </div>
-    <div class="ways-logos" id="matching-logos">
-      <p class="ways-logos__cap">Companies with employee matching-gift programs include:</p>
-      {_partner_marquee()}
-    </div>
-  </div>
-</section>
-
-<section class="section-pad section--white donate-faq" id="faq" aria-labelledby="faq-h">
+<section class="section-pad section--lavender donate-faq" id="faq" aria-labelledby="faq-h">
   <div class="container">
     <h2 class="section-h" id="faq-h">Questions about giving</h2>
     <div class="faq-list">
