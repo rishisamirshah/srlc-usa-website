@@ -5,7 +5,7 @@ Give monthly, Give with confidence, More ways to give (charity:water's grid)
 and the FAQ. Tax language stays in the "to the extent permitted by law" form.
 """
 import os
-from shell import img_tag, photo, page, story_spotlight, recognition_chips, EMAIL
+from shell import img_tag, px_img, photo, page, story_spotlight, recognition_chips, EMAIL
 import data_naman as NAMAN
 
 MAIL_GIVE = f"mailto:{EMAIL}?subject=Donation%20to%20SRLC%20USA"
@@ -196,7 +196,7 @@ def render_donate():
 
 <section class="donate-hero" aria-labelledby="page-title">
   <div class="donate-hero__media" aria-hidden="true">
-    <img src="{hero_img}" alt="" width="{hero_w}" height="{hero_h}" loading="eager" fetchpriority="high" decoding="async" >
+    {px_img((hero_img, hero_w, hero_h, ""), avoid=".donate-widget, .donate-hero__h, .donate-hero__sub", loading="eager")}
   </div>
   <div class="container">
     <div class="donate-hero__grid">
@@ -239,7 +239,7 @@ def render_donate():
     story_img, cta=("Donate today", "#donate-form"), eyebrow="Impact Story", pos="70 50", bg="#F7F4FF", sid="donate-story")}
 
 <section class="donate-strip donate-strip--split" id="monthly" aria-label="Give monthly">
-  <div class="donate-strip__media">{img_tag(photo("donate-monthly", ["child-care+india", "health-care+india", "educational-care+india"], "children", min_w=1200))}</div>
+  <div class="donate-strip__media">{px_img(photo("donate-monthly", ["child-care+india", "health-care+india", "educational-care+india"], "children", min_w=1200))}</div>
   <div class="donate-strip__copy">
     <h2 class="donate-strip__h">Give monthly</h2>
     <p class="donate-strip__body">A monthly gift gives our programs steady support they can plan around. You can change or cancel it at any time by emailing {EMAIL}.</p>

@@ -68,14 +68,3 @@ FACE_FIT = {
     "/assets/img/mb/mb-357.webp",   # Humanitarian Care, Indianapolis sandwich line
     "/assets/img/mb/mb-30.webp",    # Our Impact operating model band, supply-kit table
 }
-
-# Heroes framed live above 860px (supplement-zzz-facefit.js): at 900px wide no
-# single crop keeps every face whole and clear of the headline (Oct 24 audit).
-HERO_FIT = {
-    "/assets/img/mb/mb-208.webp",   # Health Care
-    "/assets/img/mb/mb-716.webp",   # Events
-    "/assets/img/mb/mb-81.webp",    # Center of Excellence for Women
-    "/assets/img/mb/mb-721.webp",   # Management Team (headline over faces at short screens)
-    "/assets/img/mb/mb-82.webp",    # Woman Care (same)
-    "/assets/img/mb/mb-195.webp",   # Our Impact and Child Care crowd, until Naman's new photo
-}

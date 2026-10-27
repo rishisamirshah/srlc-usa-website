@@ -1,5 +1,6 @@
-/* Donate page (ported from Naman's donate.html): giving widget, accordions,
-   hero parallax. Everything bails unless .donate-page is on the page. */
+/* Donate page (ported from Naman's donate.html): giving widget and accordions;
+   the hero drifts with the site-wide parallax (supplement-zz-px.js).
+   Everything bails unless .donate-page is on the page. */
 (function () {
   "use strict";
   var root = document.querySelector(".donate-page");
@@ -90,22 +91,4 @@
     });
   });
 
-  /* Subtle hero parallax: image lags scroll by 12%, capped at 50px. Desktop only, reduced-motion safe. */
-  (function () {
-    var MAX_SHIFT = 50, FACTOR = 0.12;
-    var hero = root.querySelector(".donate-hero");
-    if (!hero) return;
-    var mqDesktop = window.matchMedia("(min-width: 900px)");
-    var mqMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    var ticking = false;
-    function apply() {
-      ticking = false;
-      if (!mqDesktop.matches || mqMotion.matches) { hero.style.removeProperty("--hero-par"); return; }
-      hero.style.setProperty("--hero-par", Math.min(window.scrollY * FACTOR, MAX_SHIFT).toFixed(2) + "px");
-    }
-    window.addEventListener("scroll", function () {
-      if (!ticking) { ticking = true; requestAnimationFrame(apply); }
-    }, { passive: true });
-    apply();
-  })();
 })();

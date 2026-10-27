@@ -1,0 +1,23 @@
+/* Site-wide parallax (Naman, Oct 27): one subtle strength for large photos
+   only: page heroes, half-width and full-width section photos, the story
+   spotlight and the stat band background. Never on tiles, cards, timeline
+   photos, carousel slides, seals, logos or icons. The photo runs 6% past its
+   frame at the top and bottom and drifts inside it (supplement-zz-px.js);
+   the live face crop (supplement-zzz-facefit.js) keeps every face inside the
+   band that stays visible at every scroll position, or holds the photo still
+   where no crop can. Wider screens only, never with reduced motion. */
+img[data-faces] { transform: scale(var(--fz, 1)); transform-origin: var(--fo, 50% 50%); }
+@media (min-width: 861px) and (prefers-reduced-motion: no-preference) {
+  img.px {
+    position: absolute !important; left: 0 !important; right: auto !important; top: -6% !important; bottom: auto !important;
+    width: 100% !important; height: 112% !important; max-width: none !important;
+    transform: translate3d(0, var(--py, 0px), 0) scale(var(--fz, 1)) !important; transform-origin: var(--fo, 50% 50%) !important;
+    will-change: transform;
+  }
+  /* a photo whose heads sit at its own edge holds still rather than lose a
+     head to the drift (supplement-zzz-facefit.js sets data-px-hold) */
+  img.px[data-px-hold] { top: 0 !important; height: 100% !important; transform: scale(var(--fz, 1)) !important; }
+  /* the sky heroes keep their zoom toward the ground line */
+  .pagehead--sky .pagehead__img.px { --fz: 1.2; --fo: 50% 100%; }
+}
+@media (min-width: 1281px) and (prefers-reduced-motion: no-preference) { .pagehead--sky .pagehead__img.px { --fz: 1.08; } }

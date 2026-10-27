@@ -2,7 +2,7 @@
 Per-state stat bands are omitted (CLAUDE.md banned list) and flagged in the
 build log. End-of-page CTAs render as flat sections, never banners."""
 import stats as S
-from shell import (page, ph, page_header, flat_cta, filler, filler_entry, story_split, story_spotlight, photo_alt, photo, face_bg,
+from shell import (page, ph, page_header, flat_cta, filler, filler_entry, story_split, story_spotlight, photo_alt, photo, face_bg, px_img,
                    img_tag, pick_distinct, photo_src_tag, pinned)
 from data_media import slot
 from data_states import STATES, CAMPAIGNS, US_HERO_BODY
@@ -253,7 +253,7 @@ def render_state(s, idx):
         band = gal[0][:1] + gal[0][2:] if gal else photo(f"state-{s['slug']}-band", [f"state-{s['slug']}"], "community", min_w=1200, strict=True)
         if band and band[0] != hero[0]:
             gallery = f"""<section class="stategal" aria-label="{s["name"]} chapter photo">
-  <div class="container"><div class="stategal__grid stategal__grid--1">{img_tag(band)}</div></div>
+  <div class="container"><div class="stategal__grid stategal__grid--1"><div class="stategal__frame">{px_img(band)}</div></div></div>
 </section>"""
     else:
         imgs = "".join(img_tag((p[0], p[2], p[3], p[4])) for p in gal)

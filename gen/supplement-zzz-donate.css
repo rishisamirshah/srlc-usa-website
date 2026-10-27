@@ -35,3 +35,11 @@
   .confidence-items { grid-template-columns: minmax(0, 1fr); }
   .ways-grid { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* site-wide parallax on the hero and the monthly photo (Naman, Oct 27); the
+   older hero rules pin its transform, so these restate the drift */
+.donate-page .donate-hero__media, .donate-strip--split .donate-strip__media { overflow: hidden; }
+@media (min-width: 861px) and (prefers-reduced-motion: no-preference) {
+  .donate-page .donate-hero__media img.px { position: absolute !important; top: -6% !important; height: 112% !important; transform: translate3d(0, var(--py, 0px), 0) scale(var(--fz, 1)) !important; transform-origin: var(--fo, 50% 50%) !important; }
+  .donate-page .donate-hero__media img.px[data-px-hold] { top: 0 !important; height: 100% !important; transform: scale(var(--fz, 1)) !important; }
+}

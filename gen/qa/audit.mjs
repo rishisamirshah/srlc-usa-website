@@ -3,6 +3,8 @@
 // (object-fit/background-size math, clipped by overflow ancestors and the
 // viewport), then each detected face is OK, out of frame, CUT, HAIR (face in,
 // top of head clipped) or under TEXT (a heading/paragraph sits on the face).
+// PX_FORCE=-1 or 1 holds every parallax photo at that end of its drift
+// (supplement-zz-px.js), to check faces at both extremes of the scroll.
 import { chromium } from '/Users/rishi/Documents/SRA-USA/sra-usa-ash/node_modules/playwright/index.mjs';
 import fs from 'fs';
 const DIR = new URL('.', import.meta.url).pathname;
@@ -17,6 +19,7 @@ const issues = [], seen = [];
 for (const path of paths) for (const [w, vh] of widths) {
   const p = await b.newPage({ viewport: { width: w, height: vh } });
   await p.addInitScript(() => { try { sessionStorage.setItem('nl-modal-shown', '1'); } catch (e) {} });
+  if (process.env.PX_FORCE) await p.addInitScript(f => { window.__pxForce = f; }, Number(process.env.PX_FORCE));
   await p.goto(base + path, { waitUntil: 'networkidle' }).catch(() => {});
   await p.addStyleTag({ content: '.reveal{opacity:1!important;transform:none!important}' });
   await p.evaluate(async () => { document.querySelectorAll('img[loading=lazy]').forEach(i => i.loading = 'eager'); for (let y = 0; y < document.body.scrollHeight; y += 700) { scrollTo(0, y); await new Promise(r => setTimeout(r, 120)); } scrollTo(0, 0); await new Promise(r => setTimeout(r, 300)); });

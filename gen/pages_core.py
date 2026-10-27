@@ -752,7 +752,9 @@ FOUNDER_COPY = """<h3>Legacy of Wisdom</h3>
     <p>Pujya Gurudevshri Rakeshji is an enlightened visionary, global ambassador of peace, and the founder of Shrimad Rajchandra Mission Dharampur, the spiritual organization from which this movement grew. Following the revered footsteps of Shrimad Rajchandraji, Pujya Gurudevshri carries forward a legacy of timeless wisdom, translating profound spiritual truths into transformative teachings that make spirituality accessible to all.</p>
     <h3>Steady Force of Compassion</h3>
     <p>Through Shrimad Rajchandra Love and Care (SRLC), Pujya Gurudevshri translates compassion into action. Guided by His philosophy of empathy and universal harmony, SRLC is a global organization whose initiatives address critical needs in health care, education, environmental sustainability, and social welfare across many countries. In His teaching, inner clarity and outward kindness are one path: what is understood within flows naturally into care for others.</p>"""
-FOUNDER_IMG = ("if-gurudevshri.jpg", 1300, 1501)  # Naman's DSC03898_NJ4.tiff, FOGRA39 -> sRGB via its profile, head to knees
+# Naman's DSC03898_NJ4.tiff, FOGRA39 -> sRGB via its profile, head to knees;
+# box (1840,480,4430,3990) leaves room above the head for the parallax drift (Oct 27)
+FOUNDER_IMG = ("if-gurudevshri-v2.jpg", 1300, 1762)
 
 # Voices of Respect (Naman's Inspiration and Founder doc, Oct 19): five
 # speakers, Morari Bapu removed; quotes unchanged; each slide captions the
@@ -809,7 +811,7 @@ def render_inspiration():
     ("/assets/img/inspiration/if-shrimadji.jpg", 1920, 1080, "Shrimad Rajchandraji"), reverse=True, tone="white", mod="if", sid="ifShrimadji")}
 
 {story_split("Pujya Gurudevshri Rakeshji", [], (f"/assets/img/inspiration/{founder_img[0]}", founder_img[1], founder_img[2], "Pujya Gurudevshri Rakeshji"),
-    tone="lav", mod="if", sid="ifFounder", extra=FOUNDER_COPY)}
+    tone="lav", mod="if", sid="ifFounder", extra=FOUNDER_COPY, head="1.1")}
 
 {story_split("A Movement Reaching America", [
     "That vision has taken root across the United States and continues to grow. Through SRLC USA, volunteers in communities nationwide carry this spirit of selfless service into action. They serve their own neighborhoods through the 10 Care Program, and they support institutes in India and initiatives around the world."],

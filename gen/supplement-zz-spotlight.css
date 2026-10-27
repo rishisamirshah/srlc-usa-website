@@ -2,7 +2,7 @@
    Wider screens: the photo fills the band from one side, its open edge fades
    into --spot-bg (a light color matched to the photo), and the white story
    panel sits over the empty side, vertically centered, so it never covers a
-   face. The photo drifts slower than the page (supplement-zz-spotlight.js).
+   face. The photo drifts slower than the page (supplement-zz-px.js).
    Below 1180px (tablets, phones): photo on top, panel below. Markup from
    story_spotlight() in shell.py; loads in both bundles. */
 .spot {
@@ -14,9 +14,9 @@
 .spot__band { position: relative; display: flex; align-items: center; min-height: var(--spot-h); }
 /* the photo starts under the panel's inner half and runs to the far edge; the
    framing script keeps every face and shoulder clear of the panel */
-.spot__media { position: absolute; top: -6%; bottom: -6%; right: 0; left: calc(var(--spot-edge) + var(--spot-pw) * 0.55); will-change: transform; }
+.spot__media { position: absolute; top: 0; bottom: 0; right: 0; left: calc(var(--spot-edge) + var(--spot-pw) * 0.55); overflow: hidden; }
 .spot--right .spot__media { left: 0; right: calc(var(--spot-edge) + var(--spot-pw) * 0.55); }
-.spot__media img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.spot__media img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
 .spot__media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to right, var(--spot-bg) 0%, transparent 30%); }
 .spot--right .spot__media::after { background: linear-gradient(to left, var(--spot-bg) 0%, transparent 30%); }
 .spot__tag { position: absolute; z-index: 2; top: clamp(1rem, 1.7vw, 1.5rem); left: clamp(1rem, 1.7vw, 1.5rem); margin: 0; padding: 0.55rem 0.8rem; background: #2A1C36; color: #FFFFFF; font-family: var(--font-body); font-size: 13px; font-weight: 500; line-height: 1; letter-spacing: 0.06em; text-transform: uppercase; }
@@ -33,7 +33,9 @@
 @media (max-width: 1179px) {
   .spot:not(.spot--text) { background: var(--color-lavender-white); padding-bottom: var(--sec-pad); }
   .spot__band { display: block; min-height: 0; }
-  .spot__media { position: relative; top: auto; bottom: auto; right: auto; left: auto; width: 100%; aspect-ratio: var(--spot-ar); transform: none !important; }
+  .spot__media { position: relative; top: auto; bottom: auto; right: auto; left: auto; width: 100%; aspect-ratio: var(--spot-ar); }
+  /* stacked, the photo shows whole, so it holds still */
+  .spot__media img.px { top: 0 !important; height: 100% !important; transform: none !important; }
   .spot__media::after { display: none; }
   .spot__inner { padding-block: 0; }
   .spot__panel, .spot--right .spot__panel { max-width: 760px; margin: 0 auto; }

@@ -10,7 +10,7 @@ import os
 import re
 
 from data_media import POOL as MB_POOL, SLOTS as MB_SLOTS
-from data_faces import FACE_POS, FACE_FIT, HERO_FIT
+from data_faces import FACE_POS, FACE_FIT
 
 SITE = "https://srlcusa.netlify.app"  # staging; production per Aug decision is AWS Amplify
 EMAIL = "info@srlcusa.org"            # Naman, Oct 16; chapter addresses keep @srlc-usa.org until he rules
@@ -489,6 +489,23 @@ def img_tag(entry, cls="", loading="lazy", pos=None):
     return f'<img{c}{st} src="{src}" alt="{_attr(alt)}" width="{w}" height="{h}" loading="{loading}" decoding="async">'
 
 
+def px_img(entry, cls="", fit_min=861, avoid="", head="", loading="lazy"):
+    """A large photo that drifts with the site-wide parallax (supplement-zz-px.js)
+    and, when it has people, is framed live so every face stays whole at every
+    scroll position (supplement-zzz-facefit.js). For heroes and section photos
+    only; tiles, cards and carousels use img_tag."""
+    src, w, h, alt = entry
+    fb = face_boxes(src)
+    v = FACE_POS.get(src)
+    pos = (v if isinstance(v, str) else v["pos"]) if v else "50% 50%"
+    attrs = f' style="object-position:{pos}"'
+    if fb:
+        attrs += (f' data-faces="{fb}" data-pos="{pos.replace("%", "")}"' + (f' data-fit-min="{fit_min}"' if fit_min else "")
+                  + (f' data-avoid="{avoid}"' if avoid else "") + (f' data-head="{head}"' if head else ""))
+    return (f'<img class="{("px " + cls).strip()}"{attrs} src="{src}" alt="{_attr(alt)}" width="{w}" height="{h}" '
+            f'loading="{loading}" decoding="async">')
+
+
 def photo_alt(src, fallback=""):
     """Curated description for a Media Bank photo, else the fallback."""
     for p in MB_POOL:
@@ -605,21 +622,24 @@ def page_header(eyebrow, h1, sub=None, cta=None, image=None, full=False, alt="",
     pos = pos or HERO_POS.get(src, "")
     sub_html = f'<p class="pagehead__sub">{sub}</p>' if sub else ""
     cta_html = f'<div class="pagehead__cta">{cta}</div>' if cta else ""
-    if src in HERO_FIT and face_boxes(src):
-        # live face-safe crop above 860px (no single crop works from 900 to 1920),
-        # faces kept out from under the headline; fixed tablet and phone crops below
-        v = FACE_POS.get(src, {})
-        v = v if isinstance(v, dict) else {"pos": v}
+    fb = face_boxes(src)
+    if src in FACE_POS:
+        # the fixed tablet and phone crops stay in CSS; above 860px the crop is live
+        v = FACE_POS[src] if isinstance(FACE_POS[src], dict) else {"pos": FACE_POS[src]}
         md = v.get("md", v["pos"])
-        st = f"object-position:{v['pos']};--fp-md:{md};--fp-sm:{v.get('sm', md)}"
-        crop_attr = (f' style="{st}" data-faces="{face_boxes(src)}" data-pos="{v["pos"].replace("%", "")}"'
-                     f' data-fit-min="861" data-avoid=".pagehead__inner > *"')
-    elif src in FACE_POS:
-        crop_attr = f' style="{face_style(src)}"'
+        crop_attr = f' style="object-position:{v["pos"]};--fp-md:{md};--fp-sm:{v.get("sm", md)}"'
+        pref = v["pos"]
     else:
         crop_attr = img_style(focal, pos)
+        pref = pos or "50% 42%"
+    if fb:
+        # every hero with people is framed live above 860px, where it also
+        # drifts with the parallax (Naman, Oct 27): every face whole at every
+        # scroll position and clear of the headline
+        crop_attr += (f' data-faces="{fb}" data-pos="{pref.replace("%", "")}"'
+                      f' data-fit-min="861" data-avoid=".pagehead__inner > *"')
     return f"""<section class="pagehead pagehead--photo{' pagehead--full' if full else ''}{f' pagehead--{mod}' if mod else ''}">
-  <img class="pagehead__img"{crop_attr} src="{src}" alt="{alt}" width="{w}" height="{h}" loading="eager" fetchpriority="high" decoding="async">
+  <img class="pagehead__img px"{crop_attr} src="{src}" alt="{alt}" width="{w}" height="{h}" loading="eager" fetchpriority="high" decoding="async">
   <div class="pagehead__scrim"></div>
   <div class="container pagehead__inner">
     <p class="pagehead__eyebrow">{eyebrow}</p>
@@ -630,12 +650,13 @@ def page_header(eyebrow, h1, sub=None, cta=None, image=None, full=False, alt="",
 </section>{lead_html}"""
 
 
-def story_split(h2, paras, img, reverse=False, tone="lav", extra="", compact=False, eyebrow="", mod="", pos="", pos_sm="", sid="", h="h2"):
+def story_split(h2, paras, img, reverse=False, tone="lav", extra="", compact=False, eyebrow="", mod="", pos="", pos_sm="", sid="", h="h2", head=""):
     """SRA two-column pattern: one paragraph beside a full-scale photo that
     runs to the viewport edge. Copy passes through unchanged. `eyebrow` is an
     optional section label above the H2; `mod` adds a page class; `pos` and
     `pos_sm` set the photo's object-position side by side and stacked; `sid`
-    is the section id; `h` the heading level. Site-wide (Naman, Oct 24): photo
+    is the section id; `h` the heading level; `head` the room kept above each
+    face, in face heights (Naman, Oct 27: never cut a head). Site-wide (Naman, Oct 24): photo
     half, a 520px text column centered in the other half, every split on a
     page as tall as the tallest (supplement-zzz-layout.css/.js), and the photo
     framed live so no face is cut (supplement-zzz-facefit.js)."""
@@ -657,7 +678,7 @@ def story_split(h2, paras, img, reverse=False, tone="lav", extra="", compact=Fal
     fit = f' data-faces="{face_boxes(src)}" data-pos="{fp.replace("%", "")}"' if face_boxes(src) else ""
     sid_attr = f' id="{sid}"' if sid else ""
     return f"""<section class="{cls}"{sid_attr}>
-  <div class="storysplit__media" style="--ar:{iw}/{ih}{''.join(';' + c for c in crop)}"><img{f' style="{face_style(src)}"' if src in FACE_POS and not crop and not fit else ""}{fit} src="{src}" alt="{alt}" width="{iw}" height="{ih}" loading="lazy" decoding="async"></div>
+  <div class="storysplit__media" style="--ar:{iw}/{ih}{''.join(';' + c for c in crop)}"><img class="px"{f' style="{face_style(src)}"' if src in FACE_POS and not crop and not fit else ""}{fit}{f' data-head="{head}"' if head else ""} src="{src}" alt="{alt}" width="{iw}" height="{ih}" loading="lazy" decoding="async"></div>
   <div class="storysplit__copy">
     {eyebrow_html}<{h} class="storysplit__h">{h2}</{h}>
     {body}{extra}
@@ -718,7 +739,7 @@ def story_spotlight(title, paras, img=None, cta=None, eyebrow="", pos="70 50", s
            if fb else "")
     return f"""<section class="spot spot--{side}"{sid_attr} style="--spot-bg:{bg};--spot-ar:{w}/{h}" aria-labelledby="{hid}">
   <div class="spot__band">
-    <div class="spot__media"><img src="{src}" alt="{_attr(alt)}" width="{w}" height="{h}" style="object-position:{x}% {y}%"{fit} loading="lazy" decoding="async"></div>
+    <div class="spot__media"><img class="px" src="{src}" alt="{_attr(alt)}" width="{w}" height="{h}" style="object-position:{x}% {y}%"{fit} loading="lazy" decoding="async"></div>
     {f'<p class="spot__tag">{tag}</p>' if tag else ""}
     <div class="container spot__inner">
       {panel}
@@ -740,7 +761,7 @@ def stat_band(lead, stats, img, label="Global results"):
         f'<div class="statband__stat"><p class="statband__n count-up">{v}</p><p class="statband__l">{l}</p></div>'
         for v, l in stats)
     return f"""<section class="statband" aria-label="{label}">
-  <img class="statband__bg"{crop} src="{src}" alt="" width="{w}" height="{h}" loading="lazy" decoding="async">
+  <img class="statband__bg px"{crop} src="{src}" alt="" width="{w}" height="{h}" loading="lazy" decoding="async">
   <div class="container statband__inner">
     <p class="statband__lead">{lead}</p>
     <div class="statband__grid">{cells}</div>
