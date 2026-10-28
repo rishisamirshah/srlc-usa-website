@@ -704,19 +704,6 @@ def render_our_impact(svg_inner):
     ) + stat_band(
         "Shrimad Rajchandra Love and Care offers selfless service to underserved communities through 136 centers worldwide. Behind each figure below are people whose circumstances changed because someone was in a position to help.",
         six, pinned(160)) + f"""
-<section class="vu-shell vu-shell--cream oi-recog" aria-labelledby="oi-recog-h">
-  <div class="container">
-    <h2 class="vu-h" id="oi-recog-h">Independent recognition and accreditation</h2>
-    <p class="vu-lead">Independent recognition matters because it does not depend on our own account of the work. The 250-bed Shrimad Rajchandra Hospital and Research Center earned accreditation from the National Accreditation Board for Hospitals and Healthcare Providers (NABH) within its first year of operation.</p>
-    <div class="recognition-cluster fin-badges">{recognition_chips(links=True, caps=caps)}</div>
-  </div>
-</section>
-
-{story_split("An operating model built for efficiency", [
-    "Because the programs are carried by experienced professionals and volunteers, administration costs remain low, and each initiative is managed against defined performance indicators. In practical terms, this means a greater share of every contribution reaches the programs it was intended to support."],
-    pinned(30), tone="lav", mod="opm",
-    extra='<p class="storysplit__cta"><a class="btn btn--primary" href="/about/financials/">See Our Financials</a></p>')}
-
 <section class="vu-shell vu-shell--cream oi-growth" aria-labelledby="oi-growth">
   <div class="container">
     <h2 class="vu-h" id="oi-growth">Two Decades of Documented Growth</h2>
@@ -725,10 +712,23 @@ def render_our_impact(svg_inner):
   </div>
 </section>
 
+{story_split("An operating model built for efficiency", [
+    "Because the programs are carried by experienced professionals and volunteers, administration costs remain low, and each initiative is managed against defined performance indicators. In practical terms, this means a greater share of every contribution reaches the programs it was intended to support."],
+    pinned(30), tone="lav", mod="opm",
+    extra='<p class="storysplit__cta"><a class="btn btn--primary" href="/about/financials/">See Our Financials</a></p>')}
+
 {story_spotlight("Bhavesh&rsquo;s story", [
     "Bhavesh Bhoya grew up in the village of Nani Kosbadi, the son of a farmer. After studying at Shrimad Rajchandra Gurukul, he set his sights on medicine. He missed the medical entrance exam on his first attempt, kept going, and passed. A scholarship through Shrimad Rajchandra Vidyavikas Yojana supported his medical degree. Today he is Dr. Bhavesh Bhoya, and through the Bhoya Foundation he runs health awareness camps for the tribal community near his village and provided basic medical care during the pandemic."],
     NAMAN.BHAVESH, cta=("Support a student like Bhavesh", "/donate/"), eyebrow="Impact Story", pos="100 50",
     bg="#DDEDFD", sid="oi-story", keep="0.30,0.375,0.78,0.90", fill=True)}
+
+<section class="vu-shell vu-shell--cream oi-recog" aria-labelledby="oi-recog-h">
+  <div class="container">
+    <h2 class="vu-h" id="oi-recog-h">Independent recognition and accreditation</h2>
+    <p class="vu-lead">Independent recognition matters because it does not depend on our own account of the work. The 250-bed Shrimad Rajchandra Hospital and Research Center earned accreditation from the National Accreditation Board for Hospitals and Healthcare Providers (NABH) within its first year of operation.</p>
+    <div class="recognition-cluster fin-badges">{recognition_chips(links=True, caps=caps)}</div>
+  </div>
+</section>
 
 {flat_cta("Support work you can verify", "The results on this page come from programs whose financials are published in full. Give to support them, or explore the 10 Care Program first.", "Donate", "/donate/", second=("Explore the 10 Care Program", "/our-work/10-care-program/"))}
 """
@@ -746,6 +746,12 @@ FOUNDER_COPY = """<h3>Legacy of Wisdom</h3>
 # Naman's DSC03898_NJ4.tiff, FOGRA39 -> sRGB via its profile, head to knees;
 # box (1840,480,4430,3990) leaves room above the head for the parallax drift (Oct 27)
 FOUNDER_IMG = ("if-gurudevshri-v2.jpg", 1300, 1762)
+# Naman's Oct 28 framing of that photo (TIFF box 1848,1056 to 4440,3992: just
+# above the hair to the bottom of the original, both shoulders), as shares of
+# the crop; it must always show whole. Shrimadji and Pujya Gurudevshri share
+# one frame of that shape so the two sections match.
+FOUNDER_KEEP = "0.003,0.162,0.997,0.996"
+IF_FRAME = "2592/2936"
 
 # Voices of Respect (Naman's Inspiration and Founder doc, Oct 19): five
 # speakers, Morari Bapu removed; quotes unchanged; each slide captions the
@@ -799,10 +805,11 @@ def render_inspiration():
     "In the late 19th century, the saint and poet-philosopher Shrimad Rajchandraji illuminated the wisdom of Lord Mahavir with remarkable clarity, shaping a spiritual path for a new era. He is described as self-realized: someone who had directly experienced the nature of the soul rather than only studied it.",
     "Mahatma Gandhi called Shrimad Rajchandraji his spiritual guide. Gandhi&rsquo;s philosophy of truth and non-violence took shape under His influence, and the two exchanged letters on faith and conduct for years. That influence stands as a testament to the enduring impact of His message, which continues to resonate today.",
     "Grounded in direct inner experience, He articulated the subtle truths of spirituality through His own life, valuable teachings, and influential writings. Chief among them is Shri Atmasiddhi Shastra, a verse work on the nature of the soul and the path to self-realization, which blends deep philosophical insight with practical steps for inner transformation."],
-    ("/assets/img/inspiration/if-shrimadji.jpg", 1920, 1080, "Shrimad Rajchandraji"), reverse=True, tone="white", mod="if", sid="ifShrimadji")}
+    ("/assets/img/inspiration/if-shrimadji.jpg", 1920, 1080, "Shrimad Rajchandraji"), reverse=True, tone="white", mod="if", sid="ifShrimadji",
+    frame=IF_FRAME, keep="0.30,0.02,0.70,0.98")}
 
 {story_split("Pujya Gurudevshri Rakeshji", [], (f"/assets/img/inspiration/{founder_img[0]}", founder_img[1], founder_img[2], "Pujya Gurudevshri Rakeshji"),
-    tone="lav", mod="if", sid="ifFounder", extra=FOUNDER_COPY, head="1.1")}
+    tone="lav", mod="if", sid="ifFounder", extra=FOUNDER_COPY, frame=IF_FRAME, keep=FOUNDER_KEEP)}
 
 {story_split("A Movement Reaching America", [
     "That vision has taken root across the United States and continues to grow. Through SRLC USA, volunteers in communities nationwide carry this spirit of selfless service into action. They serve their own neighborhoods through the 10 Care Program, and they support institutes in India and initiatives around the world."],
