@@ -3881,16 +3881,19 @@ main > section + section { margin-top: 0; }
 /* Site-wide parallax (Naman, Oct 27): one subtle strength for large photos
    only: page heroes, half-width and full-width section photos, the story
    spotlight and the stat band background. Never on tiles, cards, timeline
-   photos, carousel slides, seals, logos or icons. The photo runs 6% past its
-   frame at the top and bottom and drifts inside it (supplement-zz-px.js);
+   photos, carousel slides, seals, logos or icons. The photo runs --pxr past
+   its frame at the top and bottom and drifts inside it (supplement-zz-px.js);
    the live face crop (supplement-zzz-facefit.js) keeps every face inside the
    band that stays visible at every scroll position, or holds the photo still
    where no crop can. Wider screens only, never with reduced motion. */
+/* how far the photo runs past its frame at each end, which is the drift: one
+   strength everywhere (Naman, Oct 27: a little more noticeable) */
+:root { --pxr: 10%; }
 img[data-faces] { transform: scale(var(--fz, 1)); transform-origin: var(--fo, 50% 50%); }
 @media (min-width: 861px) and (prefers-reduced-motion: no-preference) {
   img.px {
-    position: absolute !important; left: 0 !important; right: auto !important; top: -6% !important; bottom: auto !important;
-    width: 100% !important; height: 112% !important; max-width: none !important;
+    position: absolute !important; left: 0 !important; right: auto !important; top: calc(-1 * var(--pxr)) !important; bottom: auto !important;
+    width: 100% !important; height: calc(100% + 2 * var(--pxr)) !important; max-width: none !important;
     transform: translate3d(0, var(--py, 0px), 0) scale(var(--fz, 1)) !important; transform-origin: var(--fo, 50% 50%) !important;
     will-change: transform;
   }
@@ -5043,13 +5046,13 @@ img[src$="mb-180.webp"] { object-position: 15% 50%; }
 .spot__media img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; }
 .spot__media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to right, var(--spot-bg) 0%, transparent 30%); }
 .spot--right .spot__media::after { background: linear-gradient(to left, var(--spot-bg) 0%, transparent 30%); }
-.spot__tag { position: absolute; z-index: 2; top: clamp(1rem, 1.7vw, 1.5rem); left: clamp(1rem, 1.7vw, 1.5rem); margin: 0; padding: 0.55rem 0.8rem; background: #2A1C36; color: #FFFFFF; font-family: var(--font-body); font-size: 13px; font-weight: 500; line-height: 1; letter-spacing: 0.06em; text-transform: uppercase; }
 .spot__inner { position: relative; z-index: 2; width: 100%; padding-block: clamp(3.5rem, 5vw, 4.5rem); }
 .spot__panel { box-sizing: border-box; max-width: var(--spot-pw); margin: 0; padding: clamp(2rem, 3.4vw, 3rem) clamp(1.75rem, 3.6vw, 3.25rem); background: #FFFFFF; text-align: left; }
 .spot--right .spot__panel { margin-left: auto; }
 .spot__eyebrow { margin: 0 0 0.7rem; font-family: var(--font-body); font-size: 15px; letter-spacing: 0.08em; font-weight: 500; text-transform: uppercase; color: var(--color-srlc-purple); }
-.spot__h { margin: 0; font-family: var(--font-display); font-size: var(--h2-size); font-weight: 500; line-height: 1.12; color: var(--color-srlc-purple); text-wrap: balance; }
+.spot__h { margin: 0; font-family: var(--font-display); font-size: var(--h2-size, clamp(2rem, 3.2vw, 2.8rem)); font-weight: 500; line-height: 1.12; color: var(--color-srlc-purple); text-wrap: balance; }
 .spot__p { margin: 1.1rem 0 0; font-family: var(--font-body); font-size: 1.06rem; line-height: 1.72; color: var(--color-ink); text-wrap: pretty; }
+.spot__note { margin: 0.9rem 0 0; font-family: var(--font-body); font-size: 0.86rem; line-height: 1.5; color: var(--color-ink-muted); }
 .spot__cta { margin: 1.75rem 0 0; }
 /* no photo yet: the panel alone on lavender */
 .spot--text { background: var(--color-lavender-white); padding-block: var(--sec-pad); }
@@ -5057,7 +5060,9 @@ img[src$="mb-180.webp"] { object-position: 15% 50%; }
 @media (max-width: 1179px) {
   .spot:not(.spot--text) { background: var(--color-lavender-white); padding-bottom: var(--sec-pad); }
   .spot__band { display: block; min-height: 0; }
-  .spot__media { position: relative; top: auto; bottom: auto; right: auto; left: auto; width: 100%; aspect-ratio: var(--spot-ar); }
+  /* stacked, the photo shows at its own shape, a tall portrait capped so it
+     never runs past most of the screen */
+  .spot__media { position: relative; top: auto; bottom: auto; right: auto; left: auto; width: 100%; aspect-ratio: var(--spot-ar); max-height: 75vh; }
   /* stacked, the photo shows whole, so it holds still */
   .spot__media img.px { top: 0 !important; height: 100% !important; transform: none !important; }
   .spot__media::after { display: none; }
@@ -5146,7 +5151,7 @@ img[src$="mb-180.webp"] { object-position: 15% 50%; }
    older hero rules pin its transform, so these restate the drift */
 .donate-page .donate-hero__media, .donate-strip--split .donate-strip__media { overflow: hidden; }
 @media (min-width: 861px) and (prefers-reduced-motion: no-preference) {
-  .donate-page .donate-hero__media img.px { position: absolute !important; top: -6% !important; height: 112% !important; transform: translate3d(0, var(--py, 0px), 0) scale(var(--fz, 1)) !important; transform-origin: var(--fo, 50% 50%) !important; }
+  .donate-page .donate-hero__media img.px { position: absolute !important; top: calc(-1 * var(--pxr)) !important; height: calc(100% + 2 * var(--pxr)) !important; transform: translate3d(0, var(--py, 0px), 0) scale(var(--fz, 1)) !important; transform-origin: var(--fo, 50% 50%) !important; }
   .donate-page .donate-hero__media img.px[data-px-hold] { top: 0 !important; height: 100% !important; transform: scale(var(--fz, 1)) !important; }
 }
 
@@ -5162,6 +5167,13 @@ img[src$="mb-180.webp"] { object-position: 15% 50%; }
 /* the organization's name stays on one line, except where a 320px screen
    is narrower than the name itself */
 @media (max-width: 359px) { .donate-hero__sub .nowrap { white-space: normal; } }
+
+/* hero trust items (Naman, Oct 27): one line where all three fit, otherwise
+   stacked evenly, never two on one line and one below */
+.donate-page .donate-hero__detail { container-type: inline-size; }
+@container (max-width: 660px) {
+  .donate-page .donate-hero__meta { flex-direction: column; align-items: flex-start; gap: 0.45rem !important; }
+}
 
 
 /* ---- supplement-zzz-impact.css ---- */

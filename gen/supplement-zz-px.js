@@ -1,5 +1,5 @@
 /* Site-wide parallax (Naman, Oct 27): each img.px drifts slower than the page
-   inside its frame, by the 6% the photo runs past the frame at each end
+   inside its frame, by the --pxr the photo runs past the frame at each end
    (supplement-zz-px.css), so an edge never shows. Off where the CSS keeps the
    photo flush with its frame (phones, tablets, reduced motion). The QA audit
    sets window.__pxForce to -1 or 1 to hold every photo at the far end it can

@@ -301,20 +301,11 @@ def render_home(svg_inner):
   </div>
 </section>
 
-<section class="named-story" aria-label="Impact story">
-  <div class="named-story__grid">
-    <div class="named-story__media named-story__media--photo" role="img" aria-label="{story_img[3]}" data-parallax-bg="57 30" style="background-image:url('{story_img[0]}');background-position:57% 30%"></div>
-    <div class="named-story__copy-wrap">
-      <div class="named-story__copy reveal" data-stagger="1">
-        <p class="named-story__eyebrow">Impact Story &middot; Laxibhai</p>
-        <p class="named-story__quote">A 52-year-old farmer received the region&rsquo;s <span class="nowrap">first-ever</span> cardiothoracic bypass surgery, performed entirely free of charge. Today he is back on his feet.</p>
-        <p class="named-story__attribution">Laxibhai&rsquo;s second chance</p>
-        <p class="named-story__attribution-meta">Health Care &middot; Shrimad Rajchandra Hospital and Research Center</p>
-        <a class="btn btn--primary named-story__btn" href="/our-work/10-care-program/health-care/">Explore Health Care</a>
-      </div>
-    </div>
-  </div>
-</section>
+{story_spotlight("Laxibhai&rsquo;s second chance", [
+    "A 52-year-old farmer received the region&rsquo;s <span class=\"nowrap\">first-ever</span> cardiothoracic bypass surgery, performed entirely free of charge. Today he is back on his feet."],
+    story_img, cta=("Explore Health Care", "/our-work/10-care-program/health-care/"), eyebrow="Impact Story &middot; Laxibhai",
+    note="Health Care &middot; Shrimad Rajchandra Hospital and Research Center", pos="100 40", bg="#F7F4FF",
+    sid="home-story", keep="0.30,0.26,0.84,0.62", fill=True)}
 
 <section class="institutes-section instrow" aria-labelledby="instrow-h">
   <div class="container">
@@ -736,10 +727,10 @@ def render_our_impact(svg_inner):
 
 {story_spotlight("Bhavesh&rsquo;s story", [
     "Bhavesh Bhoya grew up in the village of Nani Kosbadi, the son of a farmer. After studying at Shrimad Rajchandra Gurukul, he set his sights on medicine. He missed the medical entrance exam on his first attempt, kept going, and passed. A scholarship through Shrimad Rajchandra Vidyavikas Yojana supported his medical degree. Today he is Dr. Bhavesh Bhoya, and through the Bhoya Foundation he runs health awareness camps for the tribal community near his village and provided basic medical care during the pandemic."],
-    NAMAN.BHAVESH, cta=("Support a student like Bhavesh", "/donate/"), eyebrow="Impact Story", pos="50 40",
-    bg="#DDEDFD", sid="oi-story")}
+    NAMAN.BHAVESH, cta=("Support a student like Bhavesh", "/donate/"), eyebrow="Impact Story", pos="100 50",
+    bg="#DDEDFD", sid="oi-story", keep="0.30,0.375,0.78,0.90", fill=True)}
 
-{flat_cta("Support work you can verify", "Each result presented here belongs to a program that can be examined, visited, and audited, and each of those programs welcomes new support. We invite you to explore the work, or to read the record for yourself.", "Donate", "/donate/", second=("Explore the 10 Care Program", "/our-work/10-care-program/"))}
+{flat_cta("Support work you can verify", "The results on this page come from programs whose financials are published in full. Give to support them, or explore the 10 Care Program first.", "Donate", "/donate/", second=("Explore the 10 Care Program", "/our-work/10-care-program/"))}
 """
     return page(
         "Our Impact | Verified Global Results | SRLC USA",

@@ -705,7 +705,7 @@ def flat_cta(h2, body, label, href="/donate/", second=None):
 </section>"""
 
 
-def story_spotlight(title, paras, img=None, cta=None, eyebrow="", pos="70 50", sid="", side="left", bg="#F7F4FF", tag="Story spotlight"):
+def story_spotlight(title, paras, img=None, cta=None, eyebrow="", pos="70 50", sid="", side="left", bg="#F7F4FF", keep="", fill=False, note=""):
     """Story spotlight (Naman, Oct 24 mock; the stories on childrenssociety.org.uk):
     the photo fills a wide band, set toward one side so the people take up
     most of it, and the white story panel sits over the empty side, vertically
@@ -715,8 +715,11 @@ def story_spotlight(title, paras, img=None, cta=None, eyebrow="", pos="70 50", s
     slower than the page on wider screens (supplement-zz-spotlight.js); on
     phones the photo sits on top and the panel below. Without a photo the panel
     stands alone on lavender. Every story uses this, and no person appears on
-    two pages. Styles in supplement-zz-spotlight.css (both bundles)."""
-    body = "".join(f'<p class="spot__p">{x}</p>' for x in paras)
+    two pages. `keep` ("x0,y0,x1,y1", shares of the photo) is an area that
+    must stay whole; `fill` frames as close as that allows; `note` is a small
+    line under the story. Styles in
+    supplement-zz-spotlight.css (both bundles)."""
+    body = "".join(f'<p class="spot__p">{x}</p>' for x in paras) + (f'<p class="spot__note">{note}</p>' if note else "")
     eyebrow_html = f'<p class="spot__eyebrow">{eyebrow}</p>' if eyebrow else ""
     cta_html = f'<p class="spot__cta"><a class="btn btn--primary" href="{cta[1]}">{cta[0]}</a></p>' if cta else ""
     hid = f"{sid}-h" if sid else "spot-h"
@@ -736,11 +739,11 @@ def story_spotlight(title, paras, img=None, cta=None, eyebrow="", pos="70 50", s
     # framed live beside the panel: faces and shoulders whole and clear of it
     fb = face_boxes(src)
     fit = (f' data-faces="{fb}" data-pos="{pos}" data-pad="shoulders" data-avoid=".spot__panel" data-fit-min="1180"'
+           + (f' data-keep="{keep}"' if keep else "") + (" data-fill" if fill else "")
            if fb else "")
     return f"""<section class="spot spot--{side}"{sid_attr} style="--spot-bg:{bg};--spot-ar:{w}/{h}" aria-labelledby="{hid}">
   <div class="spot__band">
     <div class="spot__media"><img class="px" src="{src}" alt="{_attr(alt)}" width="{w}" height="{h}" style="object-position:{x}% {y}%"{fit} loading="lazy" decoding="async"></div>
-    {f'<p class="spot__tag">{tag}</p>' if tag else ""}
     <div class="container spot__inner">
       {panel}
     </div>

@@ -2,7 +2,7 @@
    A photo with data-faces (face boxes from gen/qa, as shares of the photo)
    gets the object-position, and if needed a slight zoom, that leaves every
    face fully in or fully out of its visible crop at the size it actually has
-   on screen; redone whenever the photo's box changes size. Order of
+   on screen; redone whenever the photo's frame changes size. Order of
    preference: no face cut, no face under the data-avoid text, most faces in,
    least zoom, closest to data-pos. Without JS the CSS crop stands.
    - data-avoid: a selector inside the photo's section whose text faces stay
@@ -13,17 +13,22 @@
      chest, and may run past the bottom of the frame.
    - data-head: room kept above the face, in face heights (default 0.6, eased
      to 0.45 where nothing fits with 0.6).
-   - Parallax photos (img.px, supplement-zz-px.js) drift inside a frame
-     shorter than the photo, so every face must sit in the band that stays
-     visible at every scroll position (Naman, Oct 27). Where no crop can do
-     that (a head right at the photo's own edge) or the drift would slide a
-     face under the text, the photo holds still (data-px-hold) instead.
-   The zoom and its origin go out as --fz and --fo, so the parallax drift and
-   the zoom share one transform. */
+   - data-keep="x0,y0,x1,y1": an area (shares of the photo) that must stay
+     whole at every scroll position, like caps and a diploma.
+   - data-fill: prefer the closest crop that still keeps everything whole.
+   Parallax photos (img.px, supplement-zz-px.js) drift inside a frame shorter
+   than the photo, so every face must sit in the band that stays visible at
+   every scroll position (Naman, Oct 27). Each photo gets the strongest drift
+   that keeps every face and person whole (10% of its frame, stepping down to
+   4%); one that can't drift at all holds still (data-px-hold).
+   The zoom and its origin go out as --fz and --fo, so the drift and the zoom
+   share one transform; the drift goes out as --pxr. */
 (function () {
   var imgs = Array.prototype.slice.call(document.querySelectorAll('img[data-faces]'));
   if (!imgs.length) return;
   var ZOOMS = [1, 1.05, 1.1, 1.15, 1.2, 1.25, 1.3];
+  var FILL_ZOOMS = [1, 1.05, 1.1, 1.15, 1.2, 1.25, 1.3, 1.35, 1.4, 1.5, 1.6];
+  var ROOMS = [0.10, 0.08, 0.06, 0.04];  // drift, as a share of the frame height
 
   // head boxes: [left, top, right, bottom, face height, shoulders left,
   // shoulders right, prominent]. A prominent person (face at least 8% of the
@@ -50,11 +55,11 @@
     return false;
   }
 
-  // how far the photo runs past its frame top and bottom while parallax is on
-  function overscan(img) {
-    if (!img.classList.contains('px') || !img.parentElement) return 0;
-    var extra = img.offsetHeight - img.parentElement.clientHeight;
-    return extra > 2 ? extra / 2 : 0;
+  // parallax runs on this photo at this width (the CSS turns it on at 861px
+  // and up, never with reduced motion)
+  function drifting(img) {
+    return img.classList.contains('px') && window.innerWidth >= 861 &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   }
 
   // the drift positions this photo can actually reach: p runs from -1 (frame
@@ -69,18 +74,14 @@
     return [p(0), p(maxS)];
   }
 
-  // the text boxes in the photo box's own coordinates, stretched over every
-  // drift position the photo can reach (it moves p * room against the text)
+  // the text lines in the photo box's coordinates (the box sits `room` above
+  // the frame), stretched over every drift position the photo can reach (it
+  // moves p * room against the text). A short eyebrow counts by its words, not
+  // its full-width box; a block holding other blocks (a story panel) counts whole.
   function avoidRects(img, room, pr) {
     var sel = img.getAttribute('data-avoid'), sec = img.closest('section');
-    var op = img.offsetParent;
-    if (!sel || !sec || !op) return [];
-    // the photo's untransformed box (offsets ignore the zoom and the drift)
-    var opr = op.getBoundingClientRect();
-    var ir = { left: opr.left + op.clientLeft + img.offsetLeft, top: opr.top + op.clientTop + img.offsetTop };
-    // the lines of text themselves, not the element boxes (a short eyebrow's
-    // box spans the whole container); a block holding other blocks (a story
-    // panel) counts whole
+    if (!sel || !sec) return [];
+    var fr = img.parentElement.getBoundingClientRect();
     var out = [];
     Array.prototype.forEach.call(sec.querySelectorAll(sel), function (e) {
       var rects = [e.getBoundingClientRect()];
@@ -91,7 +92,7 @@
       }
       rects.forEach(function (r) {
         if (r.width > 0 && r.height > 0)
-          out.push([r.left - ir.left, r.top - ir.top - pr[1] * room, r.right - ir.left, r.bottom - ir.top - pr[0] * room]);
+          out.push([r.left - fr.left, r.top - fr.top + room - pr[1] * room, r.right - fr.left, r.bottom - fr.top + room - pr[0] * room]);
       });
     });
     return out;
@@ -101,26 +102,35 @@
     img.style.objectPosition = img._pos0 || '';
     img.style.removeProperty('--fz');
     img.style.removeProperty('--fo');
+    img.style.removeProperty('--pxr');
+    img.removeAttribute('data-px-hold');
   }
 
   function fit(img) {
     var min = Number(img.getAttribute('data-fit-min') || 0);
     if (min && window.innerWidth < min) { clear(img); return; }
-    var bw = img.clientWidth, bh = img.clientHeight;
-    if (!bw || !bh || !img.naturalWidth || getComputedStyle(img).objectFit !== 'cover') return;
-    var o = overscan(img);
-    var best = settle(img, bw, bh, o);
-    if (o) {
-      // if holding still would cut fewer heads, keep more faces clear of the
-      // text, or keep a prominent person the drift loses, hold the photo still
-      var calm = settle(img, bw, img.parentElement.clientHeight, 0);
-      img._drift = best; img._calm = calm;  // for QA
-      if (better([calm.key[0], calm.key[1], -calm.big], [best.key[0], best.key[1], -best.big])) {
-        img.setAttribute('data-px-hold', '');  // the box change refits it
-        return;
+    var frame = img.parentElement;
+    var fw = frame.clientWidth, fh = frame.clientHeight;
+    if (!fw || !fh || !img.naturalWidth || getComputedStyle(img).objectFit !== 'cover') return;
+    var calm = settle(img, fw, fh, 0);
+    img._calm = calm;  // for QA
+    if (drifting(img)) {
+      // the strongest drift that does as well as holding still: no more heads
+      // cut, no more faces under the text, no prominent person lost
+      for (var i = 0; i < ROOMS.length; i++) {
+        var o = ROOMS[i] * fh, best = settle(img, fw, fh + 2 * o, o);
+        if (!better([calm.key[0], calm.key[1], -calm.big], [best.key[0], best.key[1], -best.big])) {
+          img._drift = best;
+          img.removeAttribute('data-px-hold');
+          img.style.setProperty('--pxr', ROOMS[i] * 100 + '%');
+          apply(img, best);
+          return;
+        }
       }
+      img.setAttribute('data-px-hold', '');
     }
-    apply(img, best);
+    img.style.removeProperty('--pxr');
+    apply(img, calm);
   }
 
   // the best crop with generous room above heads, or with the usual room when
@@ -135,6 +145,7 @@
     return best;
   }
 
+  // bw x bh: the photo box (frame plus the drift room o above and below)
   function search(img, bw, bh, o, up) {
     // share of the box that can scroll out of view at the top and at the bottom
     var pr = o ? reach(img) : [0, 0];
@@ -144,9 +155,12 @@
     var wx0 = bw / (img.naturalWidth * s), wy0 = bh / (img.naturalHeight * s);
     var hs = heads(img, up);
     var open = img.getAttribute('data-pad') === 'shoulders';
+    var keep = img.getAttribute('data-keep');
+    keep = keep ? keep.split(',').map(Number) : null;
+    var fill = img.hasAttribute('data-fill');
     var pref = (img.getAttribute('data-pos') || '50 50').split(' ').map(Number);
     var best = null;
-    ZOOMS.forEach(function (z) {
+    (fill ? FILL_ZOOMS : ZOOMS).forEach(function (z) {
       var wx = wx0 / z, wy = wy0 / z;
       for (var px = 0; px <= 100; px += 2) {
         for (var py = 0; py <= 100; py += (wy < 0.999 ? 1 : 101)) {
@@ -154,6 +168,7 @@
           var l = px / 100 * (1 - wx), t = ppy / 100 * (1 - wy), r = l + wx, b = t + wy;
           var st = t + mt * wy, sb = b - mb * wy;  // always on screen
           var cut = 0, inn = 0, txt = 0, big = 0;
+          if (keep && !(keep[0] >= l - 1e-4 && keep[2] <= r + 1e-4 && keep[1] >= st - 1e-4 && keep[3] <= sb + 1e-4)) cut += 1;
           for (var i = 0; i < hs.length; i++) {
             var h = hs[i];
             if (h[2] <= l || h[0] >= r || h[3] <= t || h[1] >= b) continue;
@@ -166,7 +181,7 @@
               }
             } else cut += h[4];
           }
-          var key = [cut, txt, -inn, z, Math.abs(px - pref[0]) + Math.abs(ppy - pref[1])];
+          var key = [cut, txt, -inn, fill ? -z : z, Math.abs(px - pref[0]) + Math.abs(ppy - pref[1])];
           if (!best || better(key, best.key)) best = { key: key, px: px, py: ppy, z: z, big: big };
         }
       }
@@ -190,12 +205,18 @@
   var t;
   window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(all, 120); });
   window.addEventListener('load', all);
-  // refit whenever a photo's box changes size (equal-height splits, fonts,
-  // parallax switching on or off at a breakpoint)
+  // refit whenever a photo's frame changes size (equal-height splits, fonts)
   if (window.ResizeObserver) {
     var ro = new ResizeObserver(function (entries) {
-      entries.forEach(function (e) { if (e.target.complete) fit(e.target); });
+      entries.forEach(function (e) {
+        var img = e.target._fitImg;
+        if (img && img.complete) fit(img);
+      });
     });
-    imgs.forEach(function (img) { ro.observe(img); });
+    imgs.forEach(function (img) {
+      if (!img.parentElement) return;
+      img.parentElement._fitImg = img;
+      ro.observe(img.parentElement);
+    });
   }
 })();

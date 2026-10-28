@@ -1,16 +1,19 @@
 /* Site-wide parallax (Naman, Oct 27): one subtle strength for large photos
    only: page heroes, half-width and full-width section photos, the story
    spotlight and the stat band background. Never on tiles, cards, timeline
-   photos, carousel slides, seals, logos or icons. The photo runs 6% past its
-   frame at the top and bottom and drifts inside it (supplement-zz-px.js);
+   photos, carousel slides, seals, logos or icons. The photo runs --pxr past
+   its frame at the top and bottom and drifts inside it (supplement-zz-px.js);
    the live face crop (supplement-zzz-facefit.js) keeps every face inside the
    band that stays visible at every scroll position, or holds the photo still
    where no crop can. Wider screens only, never with reduced motion. */
+/* how far the photo runs past its frame at each end, which is the drift: one
+   strength everywhere (Naman, Oct 27: a little more noticeable) */
+:root { --pxr: 10%; }
 img[data-faces] { transform: scale(var(--fz, 1)); transform-origin: var(--fo, 50% 50%); }
 @media (min-width: 861px) and (prefers-reduced-motion: no-preference) {
   img.px {
-    position: absolute !important; left: 0 !important; right: auto !important; top: -6% !important; bottom: auto !important;
-    width: 100% !important; height: 112% !important; max-width: none !important;
+    position: absolute !important; left: 0 !important; right: auto !important; top: calc(-1 * var(--pxr)) !important; bottom: auto !important;
+    width: 100% !important; height: calc(100% + 2 * var(--pxr)) !important; max-width: none !important;
     transform: translate3d(0, var(--py, 0px), 0) scale(var(--fz, 1)) !important; transform-origin: var(--fo, 50% 50%) !important;
     will-change: transform;
   }
