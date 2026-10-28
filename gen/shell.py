@@ -650,17 +650,15 @@ def page_header(eyebrow, h1, sub=None, cta=None, image=None, full=False, alt="",
 </section>{lead_html}"""
 
 
-def story_split(h2, paras, img, reverse=False, tone="lav", extra="", compact=False, eyebrow="", mod="", pos="", pos_sm="", sid="", h="h2", head="", frame="", keep=""):
+def story_split(h2, paras, img, reverse=False, tone="lav", extra="", compact=False, eyebrow="", mod="", pos="", pos_sm="", sid="", h="h2", head="", keep=""):
     """SRA two-column pattern: one paragraph beside a full-scale photo that
     runs to the viewport edge. Copy passes through unchanged. `eyebrow` is an
     optional section label above the H2; `mod` adds a page class; `pos` and
     `pos_sm` set the photo's object-position side by side and stacked; `sid`
     is the section id; `h` the heading level; `head` the room kept above each
-    face, in face heights (Naman, Oct 27: never cut a head); `frame` (an
-    aspect ratio) sets the photo in a frame of that shape inside its half
-    instead of stretching it to the section's height, for portraits that must
-    show whole (Naman, Oct 28); `keep` ("x0,y0,x1,y1", shares of the photo) is
-    an area that must stay whole. Site-wide (Naman, Oct 24): photo
+    face, in face heights (Naman, Oct 27: never cut a head); `keep`
+    ("x0,y0,x1,y1", shares of the photo) is an area that must stay whole at
+    every drift position. Site-wide (Naman, Oct 24): photo
     half, a 520px text column centered in the other half, every split on a
     page as tall as the tallest (supplement-zzz-layout.css/.js), and the photo
     framed live so no face is cut (supplement-zzz-facefit.js)."""
@@ -682,7 +680,7 @@ def story_split(h2, paras, img, reverse=False, tone="lav", extra="", compact=Fal
     fit = f' data-faces="{face_boxes(src)}" data-pos="{fp.replace("%", "")}"' if face_boxes(src) else ""
     sid_attr = f' id="{sid}"' if sid else ""
     return f"""<section class="{cls}"{sid_attr}>
-  <div class="storysplit__media{' storysplit__media--framed' if frame else ''}" style="--ar:{iw}/{ih}{f';--frame-ar:{frame}' if frame else ''}{''.join(';' + c for c in crop)}">{'<div class="storysplit__frame">' if frame else ''}<img class="px"{f' style="{face_style(src)}"' if src in FACE_POS and not crop and not fit else ""}{fit}{f' data-head="{head}"' if head else ""}{f' data-keep="{keep}"' if keep and fit else ""} src="{src}" alt="{alt}" width="{iw}" height="{ih}" loading="lazy" decoding="async">{'</div>' if frame else ''}</div>
+  <div class="storysplit__media" style="--ar:{iw}/{ih}{''.join(';' + c for c in crop)}"><img class="px"{f' style="{face_style(src)}"' if src in FACE_POS and not crop and not fit else ""}{fit}{f' data-head="{head}"' if head else ""}{f' data-keep="{keep}"' if keep and fit else ""} src="{src}" alt="{alt}" width="{iw}" height="{ih}" loading="lazy" decoding="async"></div>
   <div class="storysplit__copy">
     {eyebrow_html}<{h} class="storysplit__h">{h2}</{h}>
     {body}{extra}

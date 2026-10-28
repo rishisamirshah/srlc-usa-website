@@ -746,12 +746,11 @@ FOUNDER_COPY = """<h3>Legacy of Wisdom</h3>
 # Naman's DSC03898_NJ4.tiff, FOGRA39 -> sRGB via its profile, head to knees;
 # box (1840,480,4430,3990) leaves room above the head for the parallax drift (Oct 27)
 FOUNDER_IMG = ("if-gurudevshri-v2.jpg", 1300, 1762)
-# Naman's Oct 28 framing of that photo (TIFF box 1848,1056 to 4440,3992: just
-# above the hair to the bottom of the original, both shoulders), as shares of
-# the crop; it must always show whole. Shrimadji and Pujya Gurudevshri share
-# one frame of that shape so the two sections match.
-FOUNDER_KEEP = "0.003,0.162,0.997,0.996"
-IF_FRAME = "2592/2936"
+# Head with room above the hair, and both shoulders, as shares of each photo:
+# always whole at every drift position (Naman, Oct 28). Both portraits run
+# the full height of their section and drift, zoomed only as far as that needs.
+FOUNDER_KEEP = "0.02,0.18,0.62,0.46"
+SHRIMADJI_KEEP = "0.33,0.10,0.70,0.70"
 
 # Voices of Respect (Naman's Inspiration and Founder doc, Oct 19): five
 # speakers, Morari Bapu removed; quotes unchanged; each slide captions the
@@ -806,10 +805,10 @@ def render_inspiration():
     "Mahatma Gandhi called Shrimad Rajchandraji his spiritual guide. Gandhi&rsquo;s philosophy of truth and non-violence took shape under His influence, and the two exchanged letters on faith and conduct for years. That influence stands as a testament to the enduring impact of His message, which continues to resonate today.",
     "Grounded in direct inner experience, He articulated the subtle truths of spirituality through His own life, valuable teachings, and influential writings. Chief among them is Shri Atmasiddhi Shastra, a verse work on the nature of the soul and the path to self-realization, which blends deep philosophical insight with practical steps for inner transformation."],
     ("/assets/img/inspiration/if-shrimadji.jpg", 1920, 1080, "Shrimad Rajchandraji"), reverse=True, tone="white", mod="if", sid="ifShrimadji",
-    frame=IF_FRAME, keep="0.30,0.02,0.70,0.98")}
+    keep=SHRIMADJI_KEEP)}
 
 {story_split("Pujya Gurudevshri Rakeshji", [], (f"/assets/img/inspiration/{founder_img[0]}", founder_img[1], founder_img[2], "Pujya Gurudevshri Rakeshji"),
-    tone="lav", mod="if", sid="ifFounder", extra=FOUNDER_COPY, frame=IF_FRAME, keep=FOUNDER_KEEP)}
+    tone="lav", mod="if", sid="ifFounder", extra=FOUNDER_COPY, keep=FOUNDER_KEEP)}
 
 {story_split("A Movement Reaching America", [
     "That vision has taken root across the United States and continues to grow. Through SRLC USA, volunteers in communities nationwide carry this spirit of selfless service into action. They serve their own neighborhoods through the 10 Care Program, and they support institutes in India and initiatives around the world."],

@@ -5103,7 +5103,8 @@ img[src$="mb-180.webp"] { object-position: 15% 50%; }
 .takepart__eyebrow, .nlrow__eyebrow, .section-eyebrow, .donate-hero__eyebrow, .donate-strip__eyebrow,
 .way-card__eyebrow, .care-section__eyebrow, .mission-split__eyebrow, .institutes-section__eyebrow,
 .named-story__eyebrow, .edmap-kicker, .chapter-finder__search-title, .zipline label,
-.donate-page p.section-eyebrow, .donate-page p.donate-hero__eyebrow, .donate-page p.donate-strip__eyebrow, .donate-page .way-card__eyebrow {
+.donate-page p.section-eyebrow, .donate-page p.donate-hero__eyebrow, .donate-page p.donate-strip__eyebrow, .donate-page .way-card__eyebrow,
+.spot__eyebrow, .itl__eyebrow, .donate-page p.spot__eyebrow {
   font-size: 15px !important; letter-spacing: 0.08em !important; font-weight: 500 !important;
 }
 
@@ -5295,14 +5296,6 @@ img[src$="mb-180.webp"] { object-position: 15% 50%; }
 
 /* ---------- Continue Reading on the same container as the rest ---------- */
 .pagenext--if .pagenext__inner { padding-inline: var(--gutter); }
-
-/* Shrimadji and Pujya Gurudevshri (Naman, Oct 28): one frame of the same
-   shape (his framing of the founder photo) inside each half, centered against
-   the text, so both portraits show whole at the same size instead of
-   stretching to the section's height */
-.storysplit__media--framed { display: flex; align-items: center; background: transparent !important; }
-.storysplit__frame { position: relative; width: 100%; aspect-ratio: var(--frame-ar); overflow: hidden; background: #E7E3EC; }
-@media (max-width: 860px) { .storysplit__media--framed { aspect-ratio: auto !important; min-height: 0 !important; } }
 
 
 /* ---- supplement-zzz-layout.css ---- */

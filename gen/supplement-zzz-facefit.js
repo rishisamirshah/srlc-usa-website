@@ -115,16 +115,22 @@
     var calm = settle(img, fw, fh, 0);
     img._calm = calm;  // for QA
     if (drifting(img)) {
-      // the strongest drift that does as well as holding still: no more heads
-      // cut, no more faces under the text, no prominent person lost
-      for (var i = 0; i < ROOMS.length; i++) {
-        var o = ROOMS[i] * fh, best = settle(img, fw, fh + 2 * o, o);
-        if (!better([calm.key[0], calm.key[1], -calm.big], [best.key[0], best.key[1], -best.big])) {
-          img._drift = best;
-          img.removeAttribute('data-px-hold');
-          img.style.setProperty('--pxr', ROOMS[i] * 100 + '%');
-          apply(img, best);
-          return;
+      // the strongest drift that does as well as holding still (no more heads
+      // cut, no more faces under the text, no prominent person lost), first
+      // without zooming in further than holding still needs (a gentler drift
+      // beats a tighter framing), then with any zoom
+      var opts = ROOMS.map(function (r) { var o = r * fh; return [r, settle(img, fw, fh + 2 * o, o)]; });
+      for (var pass = 0; pass < 2; pass++) {
+        for (var i = 0; i < opts.length; i++) {
+          var best = opts[i][1];
+          if (pass === 0 && best.z > calm.z) continue;
+          if (!better([calm.key[0], calm.key[1], -calm.big], [best.key[0], best.key[1], -best.big])) {
+            img._drift = best;
+            img.removeAttribute('data-px-hold');
+            img.style.setProperty('--pxr', opts[i][0] * 100 + '%');
+            apply(img, best);
+            return;
+          }
         }
       }
       img.setAttribute('data-px-hold', '');

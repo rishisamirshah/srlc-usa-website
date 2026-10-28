@@ -50,9 +50,10 @@ def _logo_box(path, area=2200, max_w=124, max_h=36):
 LOGO_NAMES = {
     "1024px-Cisco_logo.svg.png": "Cisco", "1280px-Lilly-Logo.svg.png": "Lilly", "2560px-3M_wordmark.svg.png": "3M",
     "600px-Gap_logo.svg.png": "Gap", "ATT_logo_2016.png": "AT&amp;T", "Bank-of-America-logo.png": "Bank of America",
-    "Capital-one-logo.png": "Capital One", "Hilton.png": "Hilton", "Intel_logo_2006-2020.svg.png": "Intel",
-    "Walmart-Logo.jpg": "Walmart", "adobe.png": "Adobe", "cbre.png": "CBRE", "chevron-hallmark-twitter.png": "Chevron",
-    "ebay.png": "eBay", "facebook.png": "Facebook",
+    "Capital-one-logo.png": "Capital One", "Hilton.png": "Hilton", "Walmart-Logo.jpg": "Walmart", "adobe.png": "Adobe",
+    "apple.png": "Apple", "cbre.png": "CBRE", "chevron-hallmark-twitter.png": "Chevron", "deloitte.png": "Deloitte",
+    "ebay.png": "eBay", "google.png": "Google", "intel.png": "Intel", "jpmorganchase.png": "JPMorganChase",
+    "linkedin.png": "LinkedIn", "meta.png": "Meta", "microsoft.png": "Microsoft",
 }
 
 
