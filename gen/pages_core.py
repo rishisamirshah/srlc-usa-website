@@ -7,6 +7,7 @@ from shell import (page, ph, page_header, flat_cta, trust_bar, impact_stats, pin
 import data_naman as NAMAN
 from data_states import STATES, CAMPAIGNS
 from data_cares import CARES
+from data_trustees import TRUSTEES
 from data_media import slot
 from pages_work import cf_map, editorial_map, flipcard, inst_photo, state_chips
 
@@ -847,36 +848,61 @@ def render_inspiration():
 
 
 def render_management():
-    """Document C spec build. The roster is BLOCKING (Naman-approved names,
-    roles, and 45 to 70 word bios do not exist yet); the grid ships as labeled
-    placeholder slots, per the build rules."""
-    slots = "".join(f"""<div class="bio reveal" data-stagger="{i % 4 + 1}">
-      <div class="bio__photo" style="display:grid;place-items:center;background:#E7E3EC"><span style="font-family:var(--font-body);font-size:.72rem;color:#6B6472;text-align:center;padding:.6rem">Portrait pending</span></div>
-      <p class="bio__name" style="color:var(--color-ink-muted)">Roster pending approval</p>
-    </div>""" for i in range(4))
-    body = page_header(
-        "About Us",
-        "The management team leading SRLC USA&rsquo;s work",
-        "We are a 501(c)(3) nonprofit. Every person who sets strategy, approves the budget, and answers for results is named here, with what they oversee.",
-    ) + f"""
-<section class="vu-shell vu-shell--lav vu-shell--first">
+    """Management Team tab (Oct 29), modeled on the Gates Foundation leadership
+    page: a split text intro with no hero, one carousel of large portrait cards
+    for the Board of Trustees (bio over the photo on hover, or on tap), then
+    the page-end links."""
+    cards = "".join(f"""<li class="tcard">
+        <button class="tcard__media" type="button" aria-expanded="false" aria-controls="bio-{slug}">
+          <img src="/assets/img/trustees/{slug}.jpg" alt="{name}" width="720" height="960" loading="lazy" decoding="async">
+          <span class="tcard__bio" id="bio-{slug}">{"".join(f'<span class="tcard__p">{x}</span>' for x in bio)}</span>
+          <span class="visually-hidden">Show {name}&rsquo;s bio</span>
+        </button>
+        <p class="tcard__name">{name}</p>
+        <p class="tcard__title">{title}</p>
+      </li>""" for slug, name, title, bio in TRUSTEES)
+    body = f"""<section class="mgmt-intro" aria-labelledby="mgmt-h">
   <div class="container">
-    <div class="govrow">
-      <h2 class="vu-h reveal">How we govern</h2>
-      <p class="vu-lead">SRLC USA is the United States chapter of Shrimad Rajchandra Love and Care, holder of UN ECOSOC Special Consultative Status.</p>
+    <div class="mgmt-intro__grid">
+      <div class="mgmt-intro__head">
+        <p class="mgmt-intro__eyebrow">About SRLC USA</p>
+        <h1 class="mgmt-intro__h" id="mgmt-h">Management Team</h1>
+      </div>
+      <p class="mgmt-intro__p">SRLC USA is led by a Board of Trustees who bring experience from medicine, finance, technology, education, and business. Together they set the organization&rsquo;s direction, oversee its finances, and guide the national campaigns that raise funds and awareness for SRLC&rsquo;s work in the US, India, and Africa.</p>
     </div>
-    <div class="govrow">
-      <h2 class="vu-h reveal">The roster</h2>
-      <p class="vu-lead">Leadership names, roles, and bios publish here once approved. Each person appears with a consistent portrait and a short account of what they oversee.</p>
-    </div>
+    <hr class="mgmt-intro__rule">
   </div>
 </section>
 
-{flat_cta("The record behind the roster", "Annual filings and financial statements are published in full on the Financials page.", "Read Our Annual Report", "/about/financials/#documents")}
+<section class="trustees" aria-labelledby="trustees-h">
+  <div class="container trustees__head">
+    <h2 class="trustees__h" id="trustees-h">Board of Trustees</h2>
+    <div class="trustees__arrows">
+      <button class="trustees__arrow" type="button" data-step="-1" aria-label="Previous trustees" disabled><span aria-hidden="true">&larr;</span></button>
+      <button class="trustees__arrow" type="button" data-step="1" aria-label="Next trustees"><span aria-hidden="true">&rarr;</span></button>
+    </div>
+  </div>
+  <div class="trustees__viewport">
+    <ul class="trustees__track">
+      {cards}
+    </ul>
+  </div>
+</section>
+
+<section class="pagenext pagenext--if">
+  <div class="container pagenext__inner">
+    <h2 class="pagenext__line">See how SRLC USA works, what it has achieved, and how its finances are reported.</h2>
+    <div class="pagenext__links">
+      <a class="btn btn--primary" href="/about/who-we-are/">Who We Are</a>
+      <a class="btn btn--secondary" href="/about/our-impact/">Our Impact</a>
+      <a class="btn btn--secondary" href="/about/financials/">Financials</a>
+    </div>
+  </div>
+</section>
 """
     return page(
-        "Management Team | Leadership at SRLC USA",
-        "Meet the people who direct the programs, finances, and compliance of SRLC USA, a 501(c)(3) nonprofit. See who is accountable and what they oversee. SRLC USA.",
+        "Management Team | SRLC USA Board of Trustees",
+        "Meet the Board of Trustees leading SRLC USA, with experience across medicine, finance, technology, and education. See their roles and full profiles.",
         "/about/management-team/", body)
 
 
