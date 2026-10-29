@@ -10,7 +10,7 @@ import os
 import re
 
 from data_media import POOL as MB_POOL, SLOTS as MB_SLOTS
-from data_faces import FACE_POS, FACE_FIT
+from data_faces import FACE_POS, FACE_FIT, HERO_TEXT_OK
 
 SITE = "https://srlcusa.netlify.app"  # staging; production per Aug decision is AWS Amplify
 EMAIL = "info@srlcusa.org"            # Naman, Oct 16; chapter addresses keep @srlc-usa.org until he rules
@@ -637,7 +637,8 @@ def page_header(eyebrow, h1, sub=None, cta=None, image=None, full=False, alt="",
         # drifts with the parallax (Naman, Oct 27): every face whole at every
         # scroll position and clear of the headline
         crop_attr += (f' data-faces="{fb}" data-pos="{pref.replace("%", "")}"'
-                      f' data-fit-min="861" data-avoid=".pagehead__inner > *"')
+                      f' data-fit-min="861" data-avoid=".pagehead__inner > *"'
+                      + (" data-px-text" if src in HERO_TEXT_OK else ""))
     return f"""<section class="pagehead pagehead--photo{' pagehead--full' if full else ''}{f' pagehead--{mod}' if mod else ''}">
   <img class="pagehead__img px"{crop_attr} src="{src}" alt="{alt}" width="{w}" height="{h}" loading="eager" fetchpriority="high" decoding="async">
   <div class="pagehead__scrim"></div>

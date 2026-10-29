@@ -68,3 +68,10 @@ FACE_FIT = {
     "/assets/img/mb/mb-357.webp",   # Humanitarian Care, Indianapolis sandwich line
     "/assets/img/mb/mb-30.webp",    # Our Impact operating model band, supply-kit table
 }
+
+# Heroes that drift even when the headline passes over a face on the way:
+# a crowd that fills the whole frame never leaves the headline a clear spot
+# (Naman, Oct 28: the Our Impact hero should move like the rest).
+HERO_TEXT_OK = {
+    "/assets/img/mb/mb-195.webp",   # Our Impact and Child Care crowd hero
+}

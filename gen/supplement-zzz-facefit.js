@@ -16,6 +16,8 @@
    - data-keep="x0,y0,x1,y1": an area (shares of the photo) that must stay
      whole at every scroll position, like caps and a diploma.
    - data-fill: prefer the closest crop that still keeps everything whole.
+   - data-px-text: drift even if the data-avoid text passes over a face on the
+     way (a crowd that fills the whole frame, Naman, Oct 28).
    Parallax photos (img.px, supplement-zz-px.js) drift inside a frame shorter
    than the photo, so every face must sit in the band that stays visible at
    every scroll position (Naman, Oct 27). Each photo gets the strongest drift
@@ -120,11 +122,14 @@
       // without zooming in further than holding still needs (a gentler drift
       // beats a tighter framing), then with any zoom
       var opts = ROOMS.map(function (r) { var o = r * fh; return [r, settle(img, fw, fh + 2 * o, o)]; });
+      // data-px-text: the text may pass over a face during the drift (still
+      // kept as clear as possible), for a crowd that fills the whole frame
+      var textOk = img.hasAttribute('data-px-text');
       for (var pass = 0; pass < 2; pass++) {
         for (var i = 0; i < opts.length; i++) {
           var best = opts[i][1];
           if (pass === 0 && best.z > calm.z) continue;
-          if (!better([calm.key[0], calm.key[1], -calm.big], [best.key[0], best.key[1], -best.big])) {
+          if (!better([calm.key[0], textOk ? 0 : calm.key[1], -calm.big], [best.key[0], textOk ? 0 : best.key[1], -best.big])) {
             img._drift = best;
             img.removeAttribute('data-px-hold');
             img.style.setProperty('--pxr', opts[i][0] * 100 + '%');
