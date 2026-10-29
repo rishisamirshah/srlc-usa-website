@@ -79,6 +79,8 @@ for src in todo:
 
 s = open(SITE).read()
 head, body = s.split('FACE_POS = {', 1)
+end = body.index('\n}\n') + 3  # FACE_POS ends at the first closing brace on its own line
+body, tail = body[:end], body[end:]
 cur_map = ast.literal_eval('{' + body)
 cur_map.update(new)
 lines = ['FACE_POS = {']
@@ -86,5 +88,5 @@ for k in sorted(cur_map):
     v = cur_map[k]
     val = f'"{v}"' if isinstance(v, str) else '{' + ', '.join(f'"{a}": "{b}"' for a, b in v.items()) + '}'
     lines.append(f'    "{k}": {val},')
-open(SITE, 'w').write(head + '\n'.join(lines) + '\n}\n')
+open(SITE, 'w').write(head + '\n'.join(lines) + '\n}\n' + tail)
 print(len(new), 'updated,', len(cur_map), 'total')

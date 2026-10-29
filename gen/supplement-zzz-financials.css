@@ -1,0 +1,37 @@
+/* Financials (Naman, Oct 29), modeled on charity: water's financials page.
+   Inner-page layer, skipped in the home bundle. */
+
+/* the annual report cover sits on a panel of its own sage */
+#annual-report .storysplit__media { background: #C7C6A8; }
+
+/* Financial filings: a thin rule above; the seals in a narrow column on the
+   left, the heading and the Form 990 year grid on the right */
+.filings { padding: 0 0 var(--sec-pad); background: #FFFFFF; }
+.filings .container { border-top: 1px solid var(--color-rule); padding-top: var(--sec-pad); }
+.filings__grid { display: grid; grid-template-columns: minmax(200px, 260px) minmax(0, 1fr); gap: clamp(2.5rem, 6vw, 6rem); align-items: start; }
+.filings__seals .recognition-badges { display: flex !important; flex-direction: column; align-items: flex-start !important; gap: 2rem !important; }
+.filings__seals .recognition-badge, .filings__seals .recognition-badge__link { display: flex !important; flex-direction: column; align-items: flex-start !important; text-align: left !important; border: 0 !important; padding: 0 !important; }
+.filings__seals .recognition-badge__img { height: 88px !important; width: auto !important; }
+.filings__seals .recognition-badge__cap { margin-top: 0.75rem; text-align: left !important; font-size: 0.9rem; max-width: 15rem; }
+.filings__seals .recognition-ecosoc { margin: 2rem 0 0 !important; max-width: 16rem; text-align: left !important; font-size: 0.86rem; line-height: 1.55; color: var(--color-ink-muted); }
+.filings__h { margin: 0; font-family: var(--font-display); font-size: var(--h2-size); font-weight: 500; line-height: 1.12; color: var(--color-srlc-purple); }
+.f990 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2rem 1.5rem; margin: clamp(1.75rem, 3vw, 2.5rem) 0 0; padding: 0; list-style: none; }
+.f990__item { display: flex; flex-direction: column; gap: 0.35rem; padding-top: 1rem; border-top: 1px solid var(--color-rule); }
+.f990__year { font-family: var(--font-body); font-size: 1.15rem; font-weight: 700; color: var(--color-ink); }
+.f990__link { width: fit-content; font-size: 1rem; color: var(--color-srlc-purple); text-decoration: underline; text-underline-offset: 3px; }
+.f990__link:hover { text-decoration-thickness: 2px; }
+.filings__note { margin: 0; font-size: 0.88rem; line-height: 1.6; color: var(--color-ink-muted); }
+.filings__note:first-of-type { margin-top: clamp(2rem, 3.5vw, 2.75rem); }
+.filings__note a { color: var(--color-srlc-purple); }
+@media (max-width: 860px) {
+  .filings__grid { grid-template-columns: minmax(0, 1fr); }
+  .filings__seals { order: 2; }
+  .filings__seals .recognition-badges { flex-direction: row; flex-wrap: wrap; gap: 2rem 2.5rem !important; }
+}
+@media (max-width: 640px) { .f990 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+/* stacked on phones and tablets, a slightly taller frame and a closer zoom
+   keep the cover large */
+@media (max-width: 860px) {
+  #annual-report .storysplit__media { aspect-ratio: 5 / 4 !important; }
+  #annual-report .storysplit__media img { --fz: 1.3 !important; --fo: 50% 50% !important; object-position: 50% 50% !important; }
+}

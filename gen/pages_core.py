@@ -906,45 +906,78 @@ def render_management():
         "/about/management-team/", body)
 
 
-F990_YEARS = ["2024", "2023", "2022", "2021", "2020", "2019", "2018", "2017"]
+# Form 990s on ProPublica's Nonprofit Explorer: the exact links on the live
+# srlcusa.org/financials page (Financials tab, Oct 29)
+F990 = [
+    ("2024", "https://projects.propublica.org/nonprofits/organizations/815162502/202523209349302107/full"),
+    ("2023", "https://projects.propublica.org/nonprofits/organizations/815162502/202403169349306460/full"),
+    ("2022", "https://projects.propublica.org/nonprofits/organizations/815162502/202343189349315819/full"),
+    ("2021", "https://projects.propublica.org/nonprofits/organizations/815162502/202213199349324241/full"),
+    ("2020", "https://projects.propublica.org/nonprofits/organizations/815162502/202123199349320037/full"),
+    ("2019", "https://projects.propublica.org/nonprofits/display_990/815162502/04_2021_prefixes_81-82%2F815162502_201912_990_2021040517878046"),
+    ("2018", "https://projects.propublica.org/nonprofits/display_990/815162502/06_2020_prefixes_75-82%2F815162502_201812_990_2020060917181604"),
+    ("2017", "https://projects.propublica.org/nonprofits/display_990/815162502/02_2019_prefixes_81-84%2F815162502_201712_990_2019021116084759"),
+]
+ANNUAL_REPORT_PDF = "https://srlcusa.org/wp-content/uploads/2026/03/Annual-Report-2024-25.pdf"
+# the report's cover on a panel of its own sage, so it shows flat and large
+ANNUAL_REPORT_IMG = ("/assets/img/financials/annual-report-2024-25.webp", 1600, 1400,
+                     "The cover of Shrimad Rajchandra Love and Care's 2024-2025 Annual Report.")
 
 
 def render_financials():
-    cards = "".join(f"""<div class="vu-card vu-card--stack reveal" data-stagger="{i % 4 + 1}">
-      <h3 class="vu-card__h">{y} Form 990</h3>
-      <div class="vu-card__body"><p>Annual IRS filing.</p><p><a class="textlink" href="mailto:{EMAIL}?subject=Request%3A%20{y}%20Form%20990">Request a copy<span aria-hidden="true"> &rarr;</span></a></p></div>
-    </div>""" for i, y in enumerate(F990_YEARS))
+    """Financials tab (Oct 29), modeled on charity: water's financials page:
+    hero, intro, the annual report as an image and text feature, the Form 990
+    year grid with the seals in a column beside it, then the page-end links."""
+    hero = pinned(175)  # two schoolgirls at a laptop in class: a program photo with people
+    years = "".join(f"""<li class="f990__item">
+          <span class="f990__year">{y}</span>
+          <a class="f990__link" href="{u}" target="_blank" rel="noopener">Form 990<span class="visually-hidden"> for {y} (opens ProPublica)</span></a>
+        </li>""" for y, u in F990)
+    caps = {"Candid Seal of Transparency": "Candid &middot; Gold Seal of Transparency 2025",
+            "GreatNonprofits Top\u2011Rated, 2024": "GreatNonprofits &middot; Top\u2011Rated 2024"}
     body = page_header(
         "About Us",
         "Financials",
-        "We know how much it matters to you that your gift reaches the people it&rsquo;s meant for. It matters just as much to us. That&rsquo;s why every filing, report, and financial record we produce is published here in full, for anyone to read.",
-        image="/assets/img/photos/event-recent.jpg", mod="sky",
+        "We know it matters to you that your gift is used well. It matters to us, too. Our IRS Form 990 filings and our latest annual report are published here so you can see how SRLC USA raises and spends its funds.",
+        image=hero[0], size=(hero[1], hero[2]), alt=hero[3],
     ) + f"""
-<section class="vu-shell vu-shell--lav vu-shell--first vu-shell--narrow">
-  <div class="container"><div class="recognition-cluster fin-badges">{recognition_chips(links=True)}</div></div>
-</section>
+{story_split("The 2024&ndash;2025 Annual Report", [
+    "Shrimad Rajchandra Love and Care&rsquo;s 2024&ndash;2025 Annual Report covers a year of work across all ten areas of the 10 Care Program, from Health Care and Educational Care to Animal Care and Emergency Relief Care, along with SRLC&rsquo;s international centers. It is the fullest picture of the programs SRLC USA raises funds for."],
+    ANNUAL_REPORT_IMG, tone="lav", eyebrow="Annual Report", sid="annual-report", keep="0.30,0.18,0.70,0.82",
+    extra=f'<p class="storysplit__cta"><a class="btn btn--primary" href="{ANNUAL_REPORT_PDF}" target="_blank" rel="noopener">Read the Annual Report</a></p>')}
 
-<section class="vu-shell vu-shell--cream" id="documents">
+<section class="filings" id="documents" aria-labelledby="filings-h">
   <div class="container">
-    <h2 class="vu-h reveal">Documents by year</h2>
-    <div class="vu-card vu-card--stack fin-report reveal">
-      <h3 class="vu-card__h">Annual Report 2024&ndash;2025</h3>
-      <div class="vu-card__body"><p>The year in programs, numbers, and people.</p><p><a class="btn btn--secondary" href="mailto:{EMAIL}?subject=Request%3A%20Annual%20Report%202024-2025">Request a copy</a></p></div>
+    <div class="filings__grid">
+      <aside class="filings__seals" aria-label="Independent recognition">
+        <div class="recognition-cluster">{recognition_chips(links=True, caps=caps)}</div>
+      </aside>
+      <div class="filings__main">
+        <h2 class="filings__h" id="filings-h">Financial filings</h2>
+        <ul class="f990">
+        {years}
+        </ul>
+        <p class="filings__note">Form 990 filings open on ProPublica&rsquo;s Nonprofit Explorer.</p>
+        <p class="filings__note">Additional financial information is available on request at <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
+      </div>
     </div>
-    <div class="vu-doc-grid">{cards}</div>
   </div>
 </section>
 
-<section class="vu-shell vu-shell--lav vu-shell--narrow">
-  <div class="container fin-legal">
-    <p>{EIN_LINE.replace("EIN 81-5162502", '<span class="nowrap">EIN 81-5162502</span>')}</p>
-    <p>Additional financial information is available on request at <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
+<section class="pagenext pagenext--if">
+  <div class="container pagenext__inner">
+    <h2 class="pagenext__line">See the results these funds support and the people who oversee them.</h2>
+    <div class="pagenext__links">
+      <a class="btn btn--primary" href="/about/our-impact/">Our Impact</a>
+      <a class="btn btn--secondary" href="/about/management-team/">Management Team</a>
+      <a class="btn btn--secondary" href="/donate/">Donate</a>
+    </div>
   </div>
 </section>
 """
     return page(
-        "Financials | Form 990 and Reports | SRLC USA",
-        "Annual filings, financial statements, and governing documents, published in full. SRLC USA is a 501(c)(3) nonprofit. EIN on page.",
+        "Financials | Form 990s and Annual Report | SRLC USA",
+        "SRLC USA IRS Form 990 filings from 2017 to 2024 and the 2024-2025 Annual Report covering the 10 Care Program. A 501(c)(3) nonprofit.",
         "/about/financials/", body)
 
 

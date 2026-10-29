@@ -543,7 +543,6 @@ def ph(label, cls="", style="", tag=None):
 HERO_SLOTS = {
     "Our Impact": "impact-hero",
     "The management team leading SRLC USA&rsquo;s work": "management-hero",
-    "Financials": "financials-hero",
     "Volunteer with SRLC USA": "volunteer-hero",
     "Events": "events-hero",
     "Start a Fundraiser for SRLC USA": "fundraise-hero",

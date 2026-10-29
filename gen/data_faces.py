@@ -13,6 +13,7 @@ FACE_POS = {
     "/assets/img/mb/mb-160.webp": "16% 50%",
     "/assets/img/mb/mb-167.webp": "40% 18%",
     "/assets/img/mb/mb-172.webp": "54% 50%",
+    "/assets/img/mb/mb-175.webp": {"pos": "50% 32%", "md": "50% 32%", "sm": "24% 32%"},
     "/assets/img/mb/mb-176.webp": {"pos": "88% 46%", "md": "34% 46%", "sm": "18% 46%"},
     "/assets/img/mb/mb-195.webp": {"pos": "0% 30%", "md": "40% 26%", "sm": "90% 26%"},
     "/assets/img/mb/mb-208.webp": {"pos": "70% 36%", "md": "82% 42%", "sm": "30% 42%"},
