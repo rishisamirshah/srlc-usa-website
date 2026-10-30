@@ -75,4 +75,5 @@ FACE_FIT = {
 # (Naman, Oct 28: the Our Impact hero should move like the rest).
 HERO_TEXT_OK = {
     "/assets/img/mb/mb-195.webp",   # Our Impact and Child Care crowd hero
+    "/assets/img/photos/school-children-hero.jpg",  # 10 Care Program hub (homepage slide 1 is a carousel, not this hero)
 }

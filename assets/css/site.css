@@ -5554,7 +5554,8 @@ img[src$="mb-180.webp"] { object-position: 15% 50%; }
 /* hero: the site hero, with its one extra line */
 .pagehead--tencare .pagehead__sub { max-width: 560px; font-size: 19px; line-height: 1.55; color: rgba(255, 255, 255, 0.92); margin: 16px 0 0; }
 
-/* care bar: sticks under the header while the panels are on screen */
+/* care bar: sticks under the header while the panels are on screen (its
+   wrapper .tencare ends with the last panel, so the bar scrolls away there) */
 .carebar { position: sticky; top: var(--hdr); z-index: 40; height: var(--bar-h); background: #FFFFFF; border-bottom: 1px solid var(--color-rule); }
 .carebar ul { display: flex; align-items: stretch; justify-content: space-between; gap: 18px; height: 100%; max-width: var(--container-max); margin: 0 auto; padding: 0 var(--gutter); list-style: none; overflow-x: auto; scrollbar-width: none; }
 .carebar ul::-webkit-scrollbar { display: none; }

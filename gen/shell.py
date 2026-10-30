@@ -589,7 +589,7 @@ def img_style(focal="", pos=""):
     return f' style="{";".join(parts)}"' if parts else ""
 
 
-def page_header(eyebrow, h1, sub=None, cta=None, image=None, full=False, alt="", size=None, mod="", focal="", pos="", keep_sub=False):
+def page_header(eyebrow, h1, sub=None, cta=None, image=None, full=False, alt="", size=None, mod="", focal="", pos="", keep_sub=False, fit_all=False):
     """SRA-pattern page header over a real photo: one small eyebrow line, short
     single-color H1, flat dark-purple scrim for contrast. `image` is an /assets
     path; otherwise a filler chosen from the H1. `full` renders the full-bleed,
@@ -635,8 +635,10 @@ def page_header(eyebrow, h1, sub=None, cta=None, image=None, full=False, alt="",
         # every hero with people is framed live above 860px, where it also
         # drifts with the parallax (Naman, Oct 27): every face whole at every
         # scroll position and clear of the headline
+        # fit_all: framed live at every width too, for a hero with no solved
+        # tablet and phone crops
         crop_attr += (f' data-faces="{fb}" data-pos="{pref.replace("%", "")}"'
-                      f' data-fit-min="861" data-avoid=".pagehead__inner > *"'
+                      + ("" if fit_all else ' data-fit-min="861"') + ' data-avoid=".pagehead__inner > *"'
                       + (" data-px-text" if src in HERO_TEXT_OK else ""))
     return f"""<section class="pagehead pagehead--photo{' pagehead--full' if full else ''}{f' pagehead--{mod}' if mod else ''}">
   <img class="pagehead__img px"{crop_attr} src="{src}" alt="{alt}" width="{w}" height="{h}" loading="eager" fetchpriority="high" decoding="async">

@@ -5,6 +5,7 @@ import stats as S
 from shell import (page, ph, page_header, flat_cta, filler, filler_entry, story_split, story_spotlight, photo_alt, photo, px_img, face_boxes,
                    img_tag, pick_distinct, photo_src_tag, pinned)
 from data_media import slot
+from data_naman import SLIDE_1
 from data_states import STATES, CAMPAIGNS, US_HERO_BODY
 from data_cares import CARES, TEN_CARE_INTRO
 from data_india import INSTITUTES, INDIA_INTRO, SRV
@@ -338,14 +339,16 @@ def render_tencare_hub():
       <a class="panel__link" href="/our-work/10-care-program/{c["slug"]}/">Explore {c["name"]} <span aria-hidden="true">&rarr;</span></a>
     </div></div>
   </section>"""
-    # a volunteer group at work, not one Care's subject; a wider hero is being sourced
-    hero = pinned(334) or photo("10 Care Program hero", ["volunteers+india", "community-care+india", "educational-care+india"], "community", min_w=1600)
-    body = page_header("Our Work", "10 Care Program", TENCARE_HERO_DESC, image=hero[0], size=(hero[1], hero[2]),
-                       alt=hero[3], pos="50% 14%", keep_sub=True, mod="tencare") + f"""
+    # Naman, Oct 30: the students photo from homepage slide 1 until a wider one comes in
+    pinned(334)  # the old hero's claim stays so later automatic picks don't shift
+    body = page_header("Our Work", "10 Care Program", TENCARE_HERO_DESC, image=SLIDE_1[0], size=(SLIDE_1[1], SLIDE_1[2]),
+                       alt=SLIDE_1[3], keep_sub=True, mod="tencare", fit_all=True) + f"""
+<div class="tencare">
 <nav class="carebar" aria-label="The ten Cares">
   <ul id="carebar">{bar}</ul>
 </nav>
 <div class="panels" id="panels">{panels}
+</div>
 </div>
 <section class="pagenext">
   <div class="container pagenext__inner">
