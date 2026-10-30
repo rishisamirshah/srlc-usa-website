@@ -10,7 +10,8 @@
    shadow, linked to the PDF; the text centered to the cover's height; both
    inside the page width; no parallax. Cover above the text on phones. */
 .areport { padding: var(--sec-pad) 0; background: var(--color-lavender-white); }
-.areport__grid { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(2.5rem, 6vw, 5.5rem); align-items: center; }
+/* cover and text centered together as one group, 64px apart (Naman, Oct 29) */
+.areport__grid { display: grid; grid-template-columns: auto minmax(0, 520px); justify-content: center; gap: 64px; align-items: center; }
 .areport__cover { display: block; width: clamp(240px, 26vw, 360px); line-height: 0; box-shadow: 0 2px 6px rgba(31, 19, 38, 0.10), 0 14px 32px rgba(31, 19, 38, 0.14); transition: transform 0.2s ease, box-shadow 0.2s ease; }
 .areport__cover img { display: block; width: 100%; height: auto; }
 .areport__cover:hover { transform: translateY(-2px); box-shadow: 0 3px 8px rgba(31, 19, 38, 0.12), 0 18px 38px rgba(31, 19, 38, 0.18); }
@@ -21,22 +22,21 @@
 .areport__p { margin: 1.1rem 0 0; font-size: 1.06rem; line-height: 1.7; color: var(--color-ink); text-wrap: pretty; }
 .areport__cta { margin: 1.75rem 0 0; }
 @media (max-width: 760px) {
-  .areport__grid { grid-template-columns: minmax(0, 1fr); gap: 2.25rem; justify-items: center; }
+  .areport__grid { grid-template-columns: minmax(0, 1fr); gap: 2.25rem; justify-items: center; justify-content: stretch; }
   .areport__cover { width: min(300px, 72vw); }
   .areport__copy { max-width: none; justify-self: stretch; }
 }
 @media (prefers-reduced-motion: reduce) { .areport__cover { transition: none; } }
 
-/* Financial filings: a thin rule above; the seals in a narrow column on the
-   left, the heading and the Form 990 year grid on the right */
+/* Financial filings: the seals in a narrow column on the left, the heading
+   and the Form 990 year grid on the right */
 .filings { padding: 0 0 var(--sec-pad); background: #FFFFFF; }
-.filings .container { border-top: 1px solid var(--color-rule); padding-top: var(--sec-pad); }
+.filings .container { padding-top: var(--sec-pad); }
 .filings__grid { display: grid; grid-template-columns: minmax(200px, 260px) minmax(0, 1fr); gap: clamp(2.5rem, 6vw, 6rem); align-items: start; }
 .filings__seals .recognition-badges { display: flex !important; flex-direction: column; align-items: flex-start !important; gap: 2rem !important; }
 .filings__seals .recognition-badge, .filings__seals .recognition-badge__link { display: flex !important; flex-direction: column; align-items: flex-start !important; text-align: left !important; border: 0 !important; padding: 0 !important; }
 .filings__seals .recognition-badge__img { height: 88px !important; width: auto !important; }
 .filings__seals .recognition-badge__cap { margin-top: 0.75rem; text-align: left !important; font-size: 0.9rem; max-width: 15rem; }
-.filings__seals .recognition-ecosoc { margin: 2rem 0 0 !important; max-width: 16rem; text-align: left !important; font-size: 0.86rem; line-height: 1.55; color: var(--color-ink-muted); }
 .filings__h { margin: 0; font-family: var(--font-display); font-size: var(--h2-size); font-weight: 500; line-height: 1.12; color: var(--color-srlc-purple); }
 .f990 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2rem 1.5rem; margin: clamp(1.75rem, 3vw, 2.5rem) 0 0; padding: 0; list-style: none; }
 .f990__item { display: flex; flex-direction: column; gap: 0.35rem; padding-top: 1rem; border-top: 1px solid var(--color-rule); }

@@ -960,7 +960,7 @@ def render_financials():
   <div class="container">
     <div class="filings__grid">
       <aside class="filings__seals" aria-label="Independent recognition">
-        <div class="recognition-cluster">{recognition_chips(links=True, caps=caps)}</div>
+        <div class="recognition-cluster">{recognition_chips(links=True, caps=caps, ecosoc=False)}</div>
       </aside>
       <div class="filings__main">
         <h2 class="filings__h" id="filings-h">Financial filings</h2>
