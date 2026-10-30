@@ -1,8 +1,31 @@
 /* Financials (Naman, Oct 29), modeled on charity: water's financials page.
    Inner-page layer, skipped in the home bundle. */
 
-/* the annual report cover sits on a panel of its own sage */
-#annual-report .storysplit__media { background: #C7C6A8; }
+/* intro under the hero (Naman, Oct 29): two sentences, so a smaller serif,
+   a narrower column and half the usual padding */
+.pagehead--fin + .leadsec { padding: calc(var(--section-standard) / 2) 0; }
+.pagehead--fin + .leadsec .leadsec__lead { max-width: 640px !important; font-size: 22px !important; line-height: 1.55 !important; }
+
+/* Annual Report (Naman, Oct 29): the cover at its own proportions with a light
+   shadow, linked to the PDF; the text centered to the cover's height; both
+   inside the page width; no parallax. Cover above the text on phones. */
+.areport { padding: var(--sec-pad) 0; background: var(--color-lavender-white); }
+.areport__grid { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(2.5rem, 6vw, 5.5rem); align-items: center; }
+.areport__cover { display: block; width: clamp(240px, 26vw, 360px); line-height: 0; box-shadow: 0 2px 6px rgba(31, 19, 38, 0.10), 0 14px 32px rgba(31, 19, 38, 0.14); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.areport__cover img { display: block; width: 100%; height: auto; }
+.areport__cover:hover { transform: translateY(-2px); box-shadow: 0 3px 8px rgba(31, 19, 38, 0.12), 0 18px 38px rgba(31, 19, 38, 0.18); }
+.areport__cover:focus-visible { outline: 2px solid var(--color-srlc-purple); outline-offset: 6px; }
+.areport__copy { max-width: 520px; }
+.areport__eyebrow { margin: 0 0 0.9rem; font-family: var(--font-body); font-size: 15px; letter-spacing: 0.08em; font-weight: 500; text-transform: uppercase; color: var(--color-srlc-purple); }
+.areport__h { margin: 0; font-family: var(--font-display); font-size: var(--h2-size); font-weight: 500; line-height: 1.12; color: var(--color-srlc-purple); text-wrap: balance; }
+.areport__p { margin: 1.1rem 0 0; font-size: 1.06rem; line-height: 1.7; color: var(--color-ink); text-wrap: pretty; }
+.areport__cta { margin: 1.75rem 0 0; }
+@media (max-width: 760px) {
+  .areport__grid { grid-template-columns: minmax(0, 1fr); gap: 2.25rem; justify-items: center; }
+  .areport__cover { width: min(300px, 72vw); }
+  .areport__copy { max-width: none; justify-self: stretch; }
+}
+@media (prefers-reduced-motion: reduce) { .areport__cover { transition: none; } }
 
 /* Financial filings: a thin rule above; the seals in a narrow column on the
    left, the heading and the Form 990 year grid on the right */
@@ -29,9 +52,3 @@
   .filings__seals .recognition-badges { flex-direction: row; flex-wrap: wrap; gap: 2rem 2.5rem !important; }
 }
 @media (max-width: 640px) { .f990 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-/* stacked on phones and tablets, a slightly taller frame and a closer zoom
-   keep the cover large */
-@media (max-width: 860px) {
-  #annual-report .storysplit__media { aspect-ratio: 5 / 4 !important; }
-  #annual-report .storysplit__media img { --fz: 1.3 !important; --fo: 50% 50% !important; object-position: 50% 50% !important; }
-}

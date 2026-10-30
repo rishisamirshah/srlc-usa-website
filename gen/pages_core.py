@@ -919,9 +919,9 @@ F990 = [
     ("2017", "https://projects.propublica.org/nonprofits/display_990/815162502/02_2019_prefixes_81-84%2F815162502_201712_990_2019021116084759"),
 ]
 ANNUAL_REPORT_PDF = "https://srlcusa.org/wp-content/uploads/2026/03/Annual-Report-2024-25.pdf"
-# the report's cover on a panel of its own sage, so it shows flat and large
-ANNUAL_REPORT_IMG = ("/assets/img/financials/annual-report-2024-25.webp", 1600, 1400,
-                     "The cover of Shrimad Rajchandra Love and Care's 2024-2025 Annual Report.")
+# the report's cover at its own proportions (Naman, Oct 29)
+ANNUAL_REPORT_COVER = ("/assets/img/financials/annual-report-2024-25-cover.webp", 840, 1187,
+                       "The cover of Shrimad Rajchandra Love and Care's 2024-2025 Annual Report.")
 
 
 def render_financials():
@@ -939,12 +939,22 @@ def render_financials():
         "About Us",
         "Financials",
         "We know it matters to you that your gift is used well. It matters to us, too. Our IRS Form 990 filings and our latest annual report are published here so you can see how SRLC USA raises and spends its funds.",
-        image=hero[0], size=(hero[1], hero[2]), alt=hero[3],
+        image=hero[0], size=(hero[1], hero[2]), alt=hero[3], mod="fin",
     ) + f"""
-{story_split("The 2024&ndash;2025 Annual Report", [
-    "Shrimad Rajchandra Love and Care&rsquo;s 2024&ndash;2025 Annual Report covers a year of work across all ten areas of the 10 Care Program, from Health Care and Educational Care to Animal Care and Emergency Relief Care, along with SRLC&rsquo;s international centers. It is the fullest picture of the programs SRLC USA raises funds for."],
-    ANNUAL_REPORT_IMG, tone="lav", eyebrow="Annual Report", sid="annual-report", keep="0.30,0.18,0.70,0.82",
-    extra=f'<p class="storysplit__cta"><a class="btn btn--primary" href="{ANNUAL_REPORT_PDF}" target="_blank" rel="noopener">Read the Annual Report</a></p>')}
+<section class="areport" id="annual-report" aria-labelledby="areport-h">
+  <div class="container areport__grid">
+    <a class="areport__cover" href="{ANNUAL_REPORT_PDF}" target="_blank" rel="noopener">
+      <img src="{ANNUAL_REPORT_COVER[0]}" alt="{ANNUAL_REPORT_COVER[3]}" width="{ANNUAL_REPORT_COVER[1]}" height="{ANNUAL_REPORT_COVER[2]}" loading="lazy" decoding="async">
+      <span class="visually-hidden"> (opens the PDF)</span>
+    </a>
+    <div class="areport__copy">
+      <p class="areport__eyebrow">Annual Report</p>
+      <h2 class="areport__h" id="areport-h">The 2024&ndash;2025 Annual Report</h2>
+      <p class="areport__p">Shrimad Rajchandra Love and Care&rsquo;s 2024&ndash;2025 Annual Report covers a year of work across all ten areas of the 10 Care Program, from Health Care and Educational Care to Animal Care and Emergency Relief Care, along with SRLC&rsquo;s international centers. It is the fullest picture of the programs SRLC USA raises funds for.</p>
+      <p class="areport__cta"><a class="btn btn--primary" href="{ANNUAL_REPORT_PDF}" target="_blank" rel="noopener">Read the Annual Report</a></p>
+    </div>
+  </div>
+</section>
 
 <section class="filings" id="documents" aria-labelledby="filings-h">
   <div class="container">
