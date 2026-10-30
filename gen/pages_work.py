@@ -316,8 +316,6 @@ def render_state(s, idx):
 
 # Hero line (Naman, Oct 30): the hub's original intro, word for word
 TENCARE_HERO_DESC = TEN_CARE_INTRO
-# one-liners on this page that differ from the shared Care copy (Naman, Oct 30)
-TENCARE_ONE = {"tribal-care": "Supporting Indigenous communities in rural India and Africa through far-reaching social and economic programs."}
 
 
 def render_tencare_hub():
@@ -337,7 +335,7 @@ def render_tencare_hub():
     <img class="panel__img px"{fit} src="{src}" alt="" width="2560" height="1440" loading="{'eager' if i == 0 else 'lazy'}" decoding="async">
     <div class="panel__copy"><div class="panel__num" aria-hidden="true">{i + 1:02d}</div><div class="panel__txt">
       <h2 id="{c["slug"]}-h">{c["name"]}</h2>
-      <p>{TENCARE_ONE.get(c["slug"], c["one"])}</p>
+      <p>{c["one"]}</p>
       <a class="panel__link" href="/our-work/10-care-program/{c["slug"]}/">Explore {c["name"]} <span aria-hidden="true">&rarr;</span></a>
     </div></div>
   </section>"""

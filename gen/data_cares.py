@@ -85,7 +85,7 @@ CARES = [
     },
     {
         "slug": "tribal-care", "num": "05", "name": "Tribal Care", "icon": "icon-Tribal_Care.png",
-        "one": "Supporting Indigenous communities in rural India through far-reaching social and economic programs.",
+        "one": "Supporting Indigenous communities in rural India and Africa through far-reaching social and economic programs.",
         "stat": None,
         "opening": "Tribal Care supports Indigenous communities in rural India through far-reaching social and economic programs, carrying health, education, and opportunity to communities that other systems overlook.",
         "hero_img": "Rural community program &middot; Media Bank",
