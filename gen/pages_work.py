@@ -2,11 +2,10 @@
 Per-state stat bands are omitted (CLAUDE.md banned list) and flagged in the
 build log. End-of-page CTAs render as flat sections, never banners."""
 import stats as S
-from shell import (page, ph, page_header, flat_cta, filler, filler_entry, story_split, story_spotlight, photo_alt, photo, face_bg, px_img,
+from shell import (page, ph, page_header, flat_cta, filler, filler_entry, story_split, story_spotlight, photo_alt, photo, px_img, face_boxes,
                    img_tag, pick_distinct, photo_src_tag, pinned)
 from data_media import slot
 from data_states import STATES, CAMPAIGNS, US_HERO_BODY
-from data_naman import CARE_TILES
 from data_cares import CARES, TEN_CARE_INTRO
 from data_india import INSTITUTES, INDIA_INTRO, SRV
 
@@ -314,24 +313,40 @@ def render_state(s, idx):
     return page(s["meta_title"], s["meta_desc"], f'/our-work/united-states/{s["slug"]}/', body)
 
 
+TENCARE_HERO_DESC = ("The 10 Care Program brings all of SRLC&rsquo;s work together in ten areas of care, from hospitals "
+                     "and schools to animal rescue and disaster relief, for the welfare of people, animals, and the environment.")
+
+
 def render_tencare_hub():
-    """Hero, the tab's intro as its own section, then the ten Cares as photo
-    tiles in the homepage grid (no numbers, no icons; one-liner on hover,
-    accordion rows below 1024). Each tile links to its Care page."""
-    tiles = "".join(f"""<a class="caretile caretile--hub" href="/our-work/10-care-program/{c["slug"]}/" style="background-image:url('{CARE_TILES[c["slug"]]}'){";" + face_bg(CARE_TILES[c["slug"]]) if face_bg(CARE_TILES[c["slug"]]) else ""}">
-        <span class="caretile__overlay" aria-hidden="true"></span>
-        <span class="caretile__chip"><span class="caretile__name">{c["name"]}</span></span>
-        <span class="caretile__hover"><span class="caretile__hover-h">{c["name"]}</span><span class="caretile__hover-p">{c["one"]}</span><span class="caretile__more">Explore {c["name"]}<span aria-hidden="true">&rarr;</span></span></span>
-      </a>""" for c in CARES)
-    # a volunteer group at work, not one Care's subject (the sanctuary echoed the Animal Care tile)
+    """Naman's approved mock (Oct 29-30): the hero with one extra line, a care
+    bar that sticks under the site header while the panels are on screen, then
+    the ten Cares as full-height photo panels (his 2560x1440 files, parallax
+    and a gentle snap to each panel), then Continue Reading."""
+    bar = "".join(f'<li><a href="#{c["slug"]}"><span>{i + 1:02d}</span>{c["name"].replace(" Care", "")}</a></li>'
+                  for i, c in enumerate(CARES))
+    panels = ""
+    for i, c in enumerate(CARES):
+        src = f"/assets/img/tencare/{c['slug']}.webp"
+        fb = face_boxes(src)
+        fit = f' data-faces="{fb}" data-pos="50 50" data-avoid=".panel__num, .panel__txt > *"' if fb else ""
+        panels += f"""
+  <section class="panel" id="{c["slug"]}" aria-labelledby="{c["slug"]}-h">
+    <img class="panel__img px"{fit} src="{src}" alt="" width="2560" height="1440" loading="{'eager' if i == 0 else 'lazy'}" decoding="async">
+    <div class="panel__copy"><div class="panel__num" aria-hidden="true">{i + 1:02d}</div><div class="panel__txt">
+      <h2 id="{c["slug"]}-h">{c["name"]}</h2>
+      <p>{c["one"]}</p>
+      <a class="panel__link" href="/our-work/10-care-program/{c["slug"]}/">Explore {c["name"]} <span aria-hidden="true">&rarr;</span></a>
+    </div></div>
+  </section>"""
+    # a volunteer group at work, not one Care's subject; a wider hero is being sourced
     hero = pinned(334) or photo("10 Care Program hero", ["volunteers+india", "community-care+india", "educational-care+india"], "community", min_w=1600)
-    body = page_header("Our Work", "10 Care Program", image=hero[0], size=(hero[1], hero[2]), alt=hero[3], pos="50% 14%") + f"""
-<section class="care-section care-section--hub" aria-label="The ten Cares">
-  <div class="container">
-    <p class="leadsec__lead">{TEN_CARE_INTRO}</p>
-    <div class="caregrid">{tiles}</div>
-  </div>
-</section>
+    body = page_header("Our Work", "10 Care Program", TENCARE_HERO_DESC, image=hero[0], size=(hero[1], hero[2]),
+                       alt=hero[3], pos="50% 14%", keep_sub=True, mod="tencare") + f"""
+<nav class="carebar" aria-label="The ten Cares">
+  <ul id="carebar">{bar}</ul>
+</nav>
+<div class="panels" id="panels">{panels}
+</div>
 <section class="pagenext">
   <div class="container pagenext__inner">
     <h2 class="pagenext__line">Continue Reading</h2>

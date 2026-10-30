@@ -1,0 +1,46 @@
+/* 10 Care Program hub (Naman's approved mock, Oct 29-30). Inner-page layer,
+   skipped in the home bundle. --hdr is the site header's height, set by
+   supplement-zzz-tencare.js (72px, 60px on phones). */
+:root { --hdr: 72px; --bar-h: 62px; --plum-deep: #2E1A3D; --peach: #F6D5B8; }
+@media (max-width: 640px) { :root { --hdr: 60px; } }
+
+/* hero: the site hero, with its one extra line */
+.pagehead--tencare .pagehead__sub { max-width: 560px; font-size: 19px; line-height: 1.55; color: rgba(255, 255, 255, 0.92); margin: 16px 0 0; }
+
+/* care bar: sticks under the header while the panels are on screen */
+.carebar { position: sticky; top: var(--hdr); z-index: 40; height: var(--bar-h); background: #FFFFFF; border-bottom: 1px solid var(--color-rule); }
+.carebar ul { display: flex; align-items: stretch; justify-content: space-between; gap: 18px; height: 100%; max-width: var(--container-max); margin: 0 auto; padding: 0 var(--gutter); list-style: none; overflow-x: auto; scrollbar-width: none; }
+.carebar ul::-webkit-scrollbar { display: none; }
+.carebar li { flex: none; display: flex; }
+.carebar a { display: flex; align-items: center; padding: 0 2px; border-bottom: 2px solid transparent; font: 600 15px var(--font-body); color: var(--color-ink-muted); text-decoration: none; white-space: nowrap; transition: color 0.25s, border-color 0.25s; }
+.carebar a span { margin-right: 6px; font-weight: 500; color: #A897BC; font-variant-numeric: tabular-nums; }
+.carebar a.cur { color: var(--color-srlc-purple); border-bottom-color: var(--color-srlc-purple); }
+.carebar a:focus-visible { outline: 2px solid var(--color-srlc-purple); outline-offset: -2px; }
+/* desktop: all ten fit with no sideways scroll, so nothing looks cut off */
+@media (min-width: 1280px) {
+  .carebar ul { overflow: visible; gap: 10px; }
+  .carebar a { font-size: 14px; letter-spacing: -0.01em; }
+  .carebar a span { margin-right: 5px; }
+}
+
+/* panels: ten full-height sections, normal scrolling, the photo drifting with
+   the site-wide parallax (supplement-zz-px.css) and framed so no face is cut */
+.panels { background: var(--plum-deep); }
+.panel { position: relative; display: flex; align-items: flex-end; height: calc(100vh - var(--hdr) - var(--bar-h)); min-height: 560px; overflow: hidden; background: var(--plum-deep); scroll-margin-top: calc(var(--hdr) + var(--bar-h)); }
+.panel__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+.panel::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(30, 16, 40, 0.85) 0%, rgba(30, 16, 40, 0.45) 36%, rgba(30, 16, 40, 0) 60%); pointer-events: none; }
+.panel__copy { position: relative; z-index: 2; display: flex; align-items: flex-end; gap: 28px; width: 100%; max-width: var(--container-max); margin: 0 auto; padding: 0 var(--gutter) 7vh; color: #FFFFFF; }
+.panel__num { margin-bottom: 8px; font: 400 clamp(90px, 12vw, 170px)/0.8 var(--font-display); color: rgba(255, 255, 255, 0.92); }
+.panel__txt { max-width: 520px; }
+.panel__txt h2 { margin: 0 0 12px; font: 500 clamp(34px, 4.2vw, 58px)/1 var(--font-display); color: #FFFFFF; }
+.panel__txt p { margin: 0 0 16px; font: 400 17px/1.5 var(--font-body); color: rgba(255, 255, 255, 0.92); }
+.panel__link { padding-bottom: 3px; border-bottom: 1px solid var(--peach); font: 500 14px var(--font-body); letter-spacing: 0.08em; text-transform: uppercase; color: var(--peach); text-decoration: none; }
+.panel__link:hover { color: #FFFFFF; border-bottom-color: #FFFFFF; }
+.panel__link:focus-visible { outline: 2px solid var(--peach); outline-offset: 4px; }
+
+@media (max-width: 768px) {
+  .panel { height: 85vh; min-height: 480px; }
+  .panel__copy { flex-direction: column; align-items: flex-start; gap: 4px; padding-bottom: 40px; }
+  .panel__num { font-size: 72px; }
+  .carebar ul { justify-content: flex-start; }
+}
